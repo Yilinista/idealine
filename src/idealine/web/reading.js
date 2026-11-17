@@ -131,7 +131,7 @@
   function highlight(text, terms) {
     const parts = terms.filter(t => typeof t === 'string' && t.trim()).map(t => t.trim().split(/[\s-]+/).map(w => w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('[\\s-]+'));
     if (!parts.length) return esc(text);
-    return String(text).split(new RegExp(`(${parts.join('|')})`,'igu')).map((part,i) => i%2 ? `<mark>${esc(part)}</mark>` : esc(part)).join('');
+    return String(text).split(new RegExp(`((?:${parts.join('|')})(?:e?s)?)`,'igu')).map((part,i) => i%2 ? `<mark>${esc(part)}</mark>` : esc(part)).join('');
   }
 
   function quoteCard(q, { lang = 'en', terms = [], label = '', featured = false } = {}) {
@@ -146,6 +146,19 @@
       ${q.warning ? `<p class="source-warning">${esc(T[q.warning])}</p>` : ''}
       <div class="source-actions">${url ? `<a class="paper-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(T.open)}</a>` : `<span class="muted">${esc(T.noLink)}</span>`}<button type="button" data-copy="${esc(q.id)}">${esc(T.copy)}</button><a class="passage-link" href="#q-${esc(q.id)}" data-passage="${esc(q.id)}" aria-label="${esc(T.link)}">#</a></div>
       <div class="copy-status" role="status" aria-live="polite"></div>
+    </article>`;
+  }
+
+  function quoteRow(q, { lang = 'en', terms = [], sense = '' } = {}) {
+    const T = TEXT[lang] || TEXT.en, url = safeUrl(q.review?.checkedUrl) || safeUrl(q.url);
+    const title = esc(q.title || '');
+    return `<article class="quote-row" id="sample-${esc(q.id)}">
+      <div class="qr-year">${esc(q.year || '—')}</div>
+      <div class="qr-body"><blockquote>${highlight(q.text, terms)}</blockquote>
+      <p class="qr-cite">${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title} <span>· ${esc(q.authors || T.unknownAuthor)}</span></p>
+      <div class="qr-foot">${sense ? `<span class="qr-tag" title="${esc(T.suggestedMeaning)}">${esc(sense)}</span>` : ''}${q.fromTitle ? `<span class="qr-tag plain">${esc(T.titleOnly)}</span>` : ''}${q.warning ? `<span class="qr-warn">${esc(T[q.warning])}</span>` : ''}
+      <span class="qr-actions"><button type="button" data-copy="${esc(q.id)}">${esc(T.copy)}</button><a href="#q-${esc(q.id)}" data-passage="${esc(q.id)}" aria-label="${esc(T.link)}" title="${esc(T.link)}">#</a></span></div>
+      <div class="copy-status" role="status" aria-live="polite"></div></div>
     </article>`;
   }
 
@@ -170,17 +183,17 @@
       <aside class="reading-aside"><span class="eyebrow">${esc(T.question)}</span><p>${esc(localized(d.readingGuide?.question,lang) || T.defaultQuestion)}</p><a href="#evidence" data-browse>${esc(T.browse)} <span>↘</span></a><div class="aside-count">${esc(T.matches(model.quotes.length))}</div></aside></div>
       <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
       <p>${esc(d.model ? T.meaningNote : opts.pending ? T.modelPending : T.noModel)}</p><div class="evidence-filters">
-      <label>${esc(T.year)}<select data-filter="year"><option value="">${esc(T.allYears)}</option>${years.map(y=>`<option>${y}</option>`).join('')}${model.quotes.some(q=>!q.year) ? `<option value="unknown">${esc(T.unknownYear)}</option>` : ''}</select></label>
-      ${senseKeys.some(k=>k!=='untagged') ? `<label>${esc(T.meaning)}<select data-filter="sense"><option value="">${esc(T.allMeanings)}</option>${senseKeys.map(k=>`<option value="${esc(k)}">${esc(senseMap.get(k) || T.untagged)}</option>`).join('')}</select></label>` : ''}
-      <label>${esc(T.sort)}<select data-filter="order"><option value="newest">${esc(T.newest)}</option><option value="oldest">${esc(T.oldest)}</option></select></label></div>
-      <p class="filter-status" role="status" aria-live="polite"></p><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
+      <label><span>${esc(T.year)}</span><span class="select"><select data-filter="year"><option value="">${esc(T.allYears)}</option>${years.map(y=>`<option>${y}</option>`).join('')}${model.quotes.some(q=>!q.year) ? `<option value="unknown">${esc(T.unknownYear)}</option>` : ''}</select></span></label>
+      ${senseKeys.some(k=>k!=='untagged') ? `<label><span>${esc(T.meaning)}</span><span class="select"><select data-filter="sense"><option value="">${esc(T.allMeanings)}</option>${senseKeys.map(k=>`<option value="${esc(k)}">${esc(senseMap.get(k) || T.untagged)}</option>`).join('')}</select></span></label>` : ''}
+      <label><span>${esc(T.sort)}</span><span class="select"><select data-filter="order"><option value="newest">${esc(T.newest)}</option><option value="oldest">${esc(T.oldest)}</option></select></span></label>
+      <p class="filter-status" role="status" aria-live="polite"></p></div><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
       <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details>`;
     const browser = host.querySelector('.evidence-browser'), list = host.querySelector('.quote-results'), more = host.querySelector('.load-more');
     let limit = 12;
     function refresh() {
       const opts = Object.fromEntries([...host.querySelectorAll('[data-filter]')].map(s=>[s.dataset.filter,s.value]));
       const filtered = filterQuotes(model.quotes,opts);
-      list.innerHTML = filtered.slice(0,limit).map(q=>card(q,false)).join('') || `<p class="empty-state">${esc(T.none)}</p>`;
+      list.innerHTML = filtered.slice(0,limit).map(q=>quoteRow(q,{lang,terms,sense:q.sense ? senseMap.get(q.sense) || '' : ''})).join('') || `<p class="empty-state">${esc(T.none)}</p>`;
       host.querySelector('.filter-status').textContent = T.shown(Math.min(limit,filtered.length),filtered.length);
       more.hidden = filtered.length <= limit;
     }
@@ -246,7 +259,7 @@
     const libraries=[spec.i18nJs,spec.timelineJs,spec.readingJs].map(noEnd).join('\n');
     return `<!doctype html>\n<html lang="${lang==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.term)} · idealine</title><style>${spec.css}</style></head><body>${body}<script type="application/json" id="data">${JSON.stringify(d).replace(/</g,'\\u003c')}</script><script>${libraries}\nIdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent),${JSON.stringify(lang)});</script></body></html>`;
   }
-  const api={TEXT,safeUrl,readingModel,filterQuotes,citationText,highlight,quoteCard,renderReadingBrief,mountPage,pageHtml};
+  const api={TEXT,safeUrl,readingModel,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
   global.IdealineReading=api;
   if(typeof module!=='undefined' && module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

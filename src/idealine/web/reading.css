@@ -32,7 +32,7 @@ button,a,summary,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .source-type{font-size:.69rem;color:var(--muted);margin:6px 0 10px}
 .source-type span{color:var(--muted)}
 .source-card blockquote{font-size:1.22rem;line-height:1.65;letter-spacing:-.008em;margin:0;padding:0;border:0;overflow-wrap:anywhere}
-mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decoration:none;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .1em}
+mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decoration:none;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0;border-radius:2px;box-shadow:0 0 0 2px var(--quote-mark)}
 .reading-note{font-size:.82rem;color:var(--ink-soft);margin:16px 0 0;line-height:1.6}
 .reading-note b{font-weight:600;color:var(--accent);margin-right:5px}
 .source-citation{border-top:1px solid var(--line);padding-top:14px;margin-top:20px}
@@ -57,13 +57,12 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .evidence-browser>summary,.method-panel>summary,.timeline-diagnostics>summary{font-size:.94rem;color:var(--fg);font-weight:600;cursor:pointer}
 .evidence-browser>summary span{font-size:.75rem;margin-left:8px;font-weight:400;color:var(--muted)}
 .evidence-browser>p,.method-panel>p{font-size:.84rem;max-width:76ch}
-.evidence-filters{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0 14px}
-.evidence-filters label{display:flex;flex-direction:column;gap:4px;font-size:.72rem;flex:1;min-width:140px;max-width:330px}
-.evidence-filters select{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:5px;padding:8px;font-size:.8rem;min-width:0;max-width:100%}
-.filter-status{font-size:.77rem;color:var(--muted)}
-.quote-results{max-width:780px}
-.quote-results .source-card blockquote{font-size:1.06rem}
-.load-more{padding:9px 18px;border:1px solid var(--accent);border-radius:5px;background:transparent;color:var(--accent);cursor:pointer}
+.evidence-filters{display:flex;gap:10px 12px;flex-wrap:wrap;align-items:flex-end;max-width:780px;margin:18px 0 6px}
+.evidence-filters label{display:flex;flex-direction:column;gap:4px;font-size:.72rem;color:var(--muted);min-width:0;flex:0 1 auto}
+.evidence-filters select{height:34px;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:0 32px 0 10px;font-size:.8rem;min-width:120px;max-width:280px;text-overflow:ellipsis}
+.filter-status{font-size:.75rem;color:var(--muted);margin:0 0 8px auto;font-variant-numeric:tabular-nums}
+.quote-results{max-width:780px;border-top:1px solid var(--line);margin-top:6px}
+.load-more{margin-top:16px;padding:9px 18px;border:1px solid var(--accent);border-radius:5px;background:transparent;color:var(--accent);cursor:pointer}
 .empty-state{border:1px dashed var(--line);padding:24px;border-radius:8px;font-size:.88rem}
 .usage-panel{border-top:1px solid var(--line);padding-top:24px;margin-top:30px}
 .usage-panel>p{font-size:.78rem;color:var(--muted);max-width:76ch;margin:8px 0 22px}
@@ -93,9 +92,6 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home .chip{font-size:.77rem;padding:4px 10px;background:transparent;border:1px solid var(--line);color:var(--ink-soft);border-radius:4px}
 .home .chip:hover{border-color:var(--accent);color:var(--accent)}
 .home .keyline{font-size:.74rem;margin-top:13px}
-.home .opts{max-width:none;margin:10px 0 0;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:0;background:transparent}
-.home .opts>summary{font-size:.76rem;padding:8px 0}
-.home .opts[open]{padding:10px 0 16px}
 .home #formmsg{margin:0;grid-column:1/-1;min-height:0}
 .home #formmsg:not(:empty){padding-top:12px}
 .home #result{margin-top:38px;border-top:1px solid var(--line);padding-top:24px}
@@ -126,3 +122,61 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .card>.tlbar{padding:0 16px}
 /* The roots spectrum scales down on narrow screens instead of widening the page. */
 .roots svg{max-width:100%;height:auto}
+
+/* Native selects get one look everywhere: same height as inputs, a quiet chevron. */
+.select{position:relative;display:block}
+.select select{appearance:none;-webkit-appearance:none;cursor:pointer;width:100%}
+.select::after{content:"";position:absolute;right:13px;top:50%;width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+
+/* Disclosure headings share one chevron instead of the browser triangle. */
+.evidence-browser>summary,.method-panel>summary,.file-tools>summary,.timeline-diagnostics>summary,.home .opts>summary{list-style:none;display:flex;align-items:center;gap:10px;width:fit-content}
+.evidence-browser>summary::-webkit-details-marker,.method-panel>summary::-webkit-details-marker,.file-tools>summary::-webkit-details-marker,.timeline-diagnostics>summary::-webkit-details-marker,.home .opts>summary::-webkit-details-marker{display:none}
+.evidence-browser>summary::before,.method-panel>summary::before,.file-tools>summary::before,.timeline-diagnostics>summary::before,.home .opts>summary::before{content:"";flex:none;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
+.evidence-browser[open]>summary::before,.method-panel[open]>summary::before,.file-tools[open]>summary::before,.timeline-diagnostics[open]>summary::before,.home .opts[open]>summary::before{transform:rotate(45deg)}
+.evidence-browser>summary span{margin-left:0;font-variant-numeric:tabular-nums}
+
+/* Evidence list: compact rows, year first, so many passages can be scanned. */
+.quote-row{display:grid;grid-template-columns:52px minmax(0,1fr);gap:0 16px;padding:18px 0;border-bottom:1px solid var(--line);scroll-margin:20px}
+.quote-row:focus{outline:2px solid var(--accent);outline-offset:4px}
+.qr-year{font-size:.84rem;font-weight:600;color:var(--ink-soft);font-variant-numeric:tabular-nums;padding-top:3px}
+.quote-row blockquote{font-size:1rem;line-height:1.7;color:var(--fg);margin:0;padding:0;border:0;overflow-wrap:anywhere}
+.qr-cite{font-size:.8rem;color:var(--muted);margin:8px 0 0;line-height:1.5;overflow-wrap:anywhere}
+.qr-cite a{color:var(--fg);font-weight:600;text-decoration:none}
+.qr-cite a:hover{color:var(--accent);text-decoration:underline}
+.qr-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:8px;font-size:.73rem}
+.qr-tag{padding:1px 9px;border-radius:999px;background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--accent);line-height:1.6}
+.qr-tag.plain{background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted)}
+.qr-warn{background:var(--warning-bg);color:var(--fg);padding:1px 8px;border-radius:4px;line-height:1.6}
+.qr-actions{margin-left:auto;display:flex;gap:2px}
+.qr-actions button,.qr-actions a{background:none;border:0;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:5px;text-decoration:none;font-size:.73rem;line-height:1.4}
+.qr-actions button:hover,.qr-actions a:hover{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.quote-row .copy-status:not(:empty){margin-top:6px}
+
+/* Settings: three labelled groups in one card, fields sized to their content. */
+.home .opts{max-width:none;margin:12px 0 0;padding:0;border:0;border-radius:0;background:transparent}
+.home .opts[open]{padding:0}
+.home .opts>summary{font-size:.8rem;color:var(--muted);padding:6px 0}
+.home .opts>summary:hover{color:var(--fg)}
+.opts-body{margin-top:10px;max-width:880px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.opts-group{display:grid;grid-template-columns:190px minmax(0,1fr);gap:10px 28px;padding:20px 24px}
+.opts-group+.opts-group{border-top:1px solid var(--line)}
+.opts-head h3{font-size:.88rem;font-weight:600;margin:0;color:var(--fg)}
+.opts-head p{font-size:.76rem;color:var(--muted);margin:4px 0 0;line-height:1.5}
+.opts-fields{display:flex;flex-direction:column;gap:12px;min-width:0}
+.opts .field-row,.opts .opts-fields.field-row{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px}
+.opts .field-row>.field{flex:1 1 200px;min-width:0}
+.opts .field-row>.field.grow{flex:2 1 300px}
+.opts .field>label{display:block;font-size:.74rem;color:var(--muted);margin-bottom:4px}
+.opts input:not([type=checkbox]),.opts select{height:38px;padding:0 12px;font-size:.88rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);width:100%}
+.opts .select select{padding-right:34px}
+.opts input:not([type=checkbox]):focus,.opts select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.opts .inline{display:flex;gap:8px}
+.opts .inline input{flex:1;min-width:0}
+.home .opts .btn.ghost{height:38px;padding:0 14px;font-size:.82rem;border-radius:6px}
+.field-note{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:.78rem}
+.field-note:has(#keycheck:empty) #keycheck{display:none}
+.home .opts .privacy{font-size:.76rem;color:var(--muted);margin:0;line-height:1.55}
+.opts label.check{font-size:.8rem}
+@media(max-width:760px){.opts-group{grid-template-columns:1fr;padding:16px}.evidence-filters label{flex:1 1 140px}.evidence-filters select{max-width:none}.filter-status{flex-basis:100%;margin:0}}
+@media(max-width:460px){.quote-row{grid-template-columns:1fr}.qr-year{padding:0 0 2px}.qr-actions{margin-left:0}}
+#keyrow .field-note{margin-top:8px}

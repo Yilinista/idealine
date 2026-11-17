@@ -102,7 +102,7 @@ nav a:hover{color:var(--fg)}
 .opts[open]{padding-bottom:16px}
 .row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
 .row>*{flex:1 1 220px;min-width:0}
-.opts input,.opts select{width:100%;font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+.opts input{width:100%;font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
 .opts label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:3px}
 .opts label.check{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--fg);margin:0}
 .opts label.check input{width:auto}
@@ -184,28 +184,39 @@ TRACE_FORM = """
   <div class="chips">{chips}</div>
   <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
   <details class="opts" id="opts">
-    <summary data-i18n="optsSummary">Options and model key</summary>
-    <div class="row">
-      <div><label for="provider" data-i18n="providerLabel">Model</label><select id="provider"><option value="none" data-i18n="providerNone">No model (free: usage curve + key papers)</option></select></div>
-    </div>
-    <div id="keyrow" hidden>
-      <div class="row">
-        <div><label for="key" data-i18n="keyLabel">API key</label><input id="key" type="password" spellcheck="false" autocomplete="off"></div>
-        <div><label for="model" data-i18n="modelLabel">Model ID</label><input id="model" spellcheck="false"></div>
-      </div>
-      <div class="actions"><button class="btn ghost" id="save-key" type="button" data-i18n="saveKey">Save and check key</button><span id="keycheck" role="status" aria-live="polite"></span><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
-    </div>
-    <p class="privacy" id="privacy"></p>
-    <div class="row">
-      <div><label for="aliases" data-i18n="aliasesLabel">Other spellings (optional, comma-separated)</label><input id="aliases" maxlength="200" data-i18n-ph="aliasesPh" placeholder="e.g. mixture-of-experts, MoE layer"></div>
-      <div><label for="meaning" data-i18n="meaningLabel">Which meaning? (optional; used with a model key)</label><input id="meaning" maxlength="200" data-i18n-ph="meaningPh" placeholder="e.g. AI agents that plan and use tools on their own"></div>
-    </div>
-    <div class="row">
-      <div><label for="oakey" data-i18n="oakeyLabel">OpenAlex key (optional, free; use it if OpenAlex says the daily budget is used up)</label><input id="oakey" type="password" spellcheck="false" autocomplete="off"></div>
-    </div>
-    <div class="actions">
-      <label class="check"><input type="checkbox" id="remember"> <span data-i18n="remember">Remember my keys on this device (not on a shared computer)</span></label>
-      <button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button>
+    <summary data-i18n="optsSummary">Settings: model key and search options</summary>
+    <div class="opts-body">
+      <section class="opts-group">
+        <div class="opts-head"><h3 data-i18n="optsModelH">Model</h3><p data-i18n="optsModelP">Optional. Adds eras, milestones and meaning labels.</p></div>
+        <div class="opts-fields">
+          <div class="field"><label for="provider" data-i18n="providerLabel">Model</label><div class="select"><select id="provider"><option value="none" data-i18n="providerNone">No model (free: usage curve + key papers)</option></select></div></div>
+          <div id="keyrow" hidden>
+            <div class="field-row">
+              <div class="field grow"><label for="key" data-i18n="keyLabel">API key</label><div class="inline"><input id="key" type="password" spellcheck="false" autocomplete="off"><button class="btn ghost" id="save-key" type="button" data-i18n="saveKey">Check &amp; save</button></div></div>
+              <div class="field"><label for="model" data-i18n="modelLabel">Model ID</label><input id="model" spellcheck="false"></div>
+            </div>
+            <div class="field-note"><span id="keycheck" role="status" aria-live="polite"></span><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
+          </div>
+          <p class="privacy" id="privacy"></p>
+        </div>
+      </section>
+      <section class="opts-group">
+        <div class="opts-head"><h3 data-i18n="optsSearchH">Search</h3><p data-i18n="optsSearchP">Optional. Narrow what counts as this term.</p></div>
+        <div class="opts-fields field-row">
+          <div class="field"><label for="aliases" data-i18n="aliasesLabel">Other spellings, comma-separated</label><input id="aliases" maxlength="200" data-i18n-ph="aliasesPh" placeholder="e.g. mixture-of-experts, MoE layer"></div>
+          <div class="field"><label for="meaning" data-i18n="meaningLabel">Which meaning? (needs a model)</label><input id="meaning" maxlength="200" data-i18n-ph="meaningPh" placeholder="e.g. AI agents that plan and use tools on their own"></div>
+        </div>
+      </section>
+      <section class="opts-group">
+        <div class="opts-head"><h3 data-i18n="optsDeviceH">OpenAlex &amp; this device</h3><p data-i18n="optsDeviceP">Only needed if OpenAlex says the daily budget is used up.</p></div>
+        <div class="opts-fields">
+          <div class="field"><label for="oakey" data-i18n="oakeyLabel">OpenAlex key (free)</label><input id="oakey" type="password" spellcheck="false" autocomplete="off"></div>
+          <div class="field-note">
+            <label class="check"><input type="checkbox" id="remember"> <span data-i18n="remember">Remember keys on this device (not on a shared computer)</span></label>
+            <button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button>
+          </div>
+        </div>
+      </section>
     </div>
   </details>
 </form>
