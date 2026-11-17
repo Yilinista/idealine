@@ -621,3 +621,16 @@ test('model menus list only chat models that can return JSON, and never fail lou
   assert.deepEqual(await P.listModels('anthropic', 'k', async () => { throw new Error('offline'); }), []);
   assert.deepEqual(await P.listModels('anthropic', 'k', async () => resp(401, {})), []);
 });
+
+test('evidence period filter accepts single years, ranges and unknown', () => {
+  const qs=[{id:'a',year:2026},{id:'b',year:2015},{id:'c',year:null},{id:'d',year:1999}];
+  assert.deepEqual(R.filterQuotes(qs,{year:'2010-2019'}).map(q=>q.id),['b']);
+  assert.deepEqual(R.filterQuotes(qs,{year:'0-1999'}).map(q=>q.id),['d']);
+  assert.deepEqual(R.filterQuotes(qs,{year:'2026'}).map(q=>q.id),['a']);
+  assert.deepEqual(R.filterQuotes(qs,{year:'unknown'}).map(q=>q.id),['c']);
+});
+
+test('"other meanings" groups every meaning that only shares the words', () => {
+  const qs=[{id:'a',year:1,sense:'s1'},{id:'b',year:1,sense:'s2'},{id:'c',year:1,sense:'s3'}];
+  assert.deepEqual(R.filterQuotes(qs,{sense:'other',others:new Set(['s2','s3'])}).map(q=>q.id).sort(),['b','c']);
+});

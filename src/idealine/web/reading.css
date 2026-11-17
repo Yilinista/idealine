@@ -202,3 +202,22 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .opts label.check{display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--muted);margin:0}
 .opts label.check input{width:auto;height:auto}
 @media(max-width:460px){.opts-body{padding:16px 14px 12px}.keymeta{flex-wrap:wrap}.keymeta .select{flex-basis:100%;order:3}}
+
+/* Evidence filters: meaning and period as chips with counts, order as a toggle. */
+.ev-filters{max-width:780px;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
+.frow{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:start}
+.flabel{font-size:.74rem;color:var(--muted);padding-top:6px}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:.78rem;line-height:1.4;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink-soft);cursor:pointer}
+.fchip i,.qr-tag i{display:inline-block;width:7px;height:7px;border-radius:50%;flex:none}
+.qr-tag i{margin-right:5px;vertical-align:1px}
+.fchip .n{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.fchip:hover{border-color:var(--accent)}
+.fchip[aria-pressed=true]{background:color-mix(in srgb,var(--accent) 10%,var(--panel));border-color:var(--accent);color:var(--fg)}
+.fchip[aria-pressed=true] .n{color:var(--accent)}
+.fbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
+.fbar .filter-status{margin:0}
+.sortseg{display:inline-flex;border:1px solid var(--line);border-radius:8px;padding:2px;background:var(--panel)}
+.sortseg button{font:inherit;font-size:.74rem;border:0;background:transparent;color:var(--muted);padding:3px 10px;border-radius:6px;cursor:pointer}
+.sortseg button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+@media(max-width:460px){.frow{grid-template-columns:1fr;gap:4px}.flabel{padding-top:0}}

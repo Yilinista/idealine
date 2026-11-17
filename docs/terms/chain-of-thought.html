@@ -295,6 +295,25 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .opts label.check{display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--muted);margin:0}
 .opts label.check input{width:auto;height:auto}
 @media(max-width:460px){.opts-body{padding:16px 14px 12px}.keymeta{flex-wrap:wrap}.keymeta .select{flex-basis:100%;order:3}}
+
+/* Evidence filters: meaning and period as chips with counts, order as a toggle. */
+.ev-filters{max-width:780px;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
+.frow{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:start}
+.flabel{font-size:.74rem;color:var(--muted);padding-top:6px}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:.78rem;line-height:1.4;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink-soft);cursor:pointer}
+.fchip i,.qr-tag i{display:inline-block;width:7px;height:7px;border-radius:50%;flex:none}
+.qr-tag i{margin-right:5px;vertical-align:1px}
+.fchip .n{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.fchip:hover{border-color:var(--accent)}
+.fchip[aria-pressed=true]{background:color-mix(in srgb,var(--accent) 10%,var(--panel));border-color:var(--accent);color:var(--fg)}
+.fchip[aria-pressed=true] .n{color:var(--accent)}
+.fbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
+.fbar .filter-status{margin:0}
+.sortseg{display:inline-flex;border:1px solid var(--line);border-radius:8px;padding:2px;background:var(--panel)}
+.sortseg button{font:inherit;font-size:.74rem;border:0;background:transparent;color:var(--muted);padding:3px 10px;border-radius:6px;cursor:pointer}
+.sortseg button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+@media(max-width:460px){.frow{grid-template-columns:1fr;gap:4px}.flabel{padding-top:0}}
 </style></head>
 <body>
 <a class="skip-link" href="#reading">Skip to sources</a>
@@ -1316,6 +1335,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       note: 'Reading note', earlier: 'An earlier sampled use', different: 'Another sampled use', recent: 'A recent sampled use',
       dateWarning: 'Sparse early record — check the date', futureWarning: 'Date is after this snapshot — check the source',
       year: 'Year', allYears: 'All years', meaning: 'Suggested meaning', allMeanings: 'All meanings',
+      period: 'Period', meaningShort: 'Meaning', otherMeanings: 'Other meanings', otherTip: 'Meanings that only share the words', all: 'All', decade: d => `${d}s`, earlier: y => `${y} and earlier`, newestShort: 'Newest', oldestShort: 'Oldest',
       sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', more: 'Show more passages',
       shown: (n, total) => `${n} of ${total} passages`, matches: n => `${n} passages in the sample`,
       none: 'No passages match these filters. Try another year or meaning.',
@@ -1344,6 +1364,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       earlier: '样本中较早的用法', different: '另一种样本用法', recent: '样本中较新的用法',
       dateWarning: '稀疏早期记录，请核对日期', futureWarning: '日期晚于数据快照，请核对来源',
       year: '年份', allYears: '所有年份', meaning: '建议词义', allMeanings: '所有词义', sort: '排序',
+      period: '年代', meaningShort: '词义', otherMeanings: '其他意思', otherTip: '只是同名、与本时间线无关的意思', all: '全部', decade: d => `${d} 年代`, earlier: y => `${y} 年及以前`, newestShort: '最新', oldestShort: '最早',
       newest: '从新到旧', oldest: '从旧到新', more: '显示更多原文',
       shown: (n, total) => `已显示 ${n} / ${total} 段原文`, matches: n => `样本包含 ${n} 段原文`,
       none: '没有符合筛选条件的原文。请换一个年份或词义。',
@@ -1412,12 +1433,51 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     return { quotes, featured, curated, counts, snapshot };
   }
 
-  function filterQuotes(quotes, {year = '', sense = '', order = 'newest'} = {}) {
-    return quotes.filter(q => (!year || String(q.year || 'unknown') === year) && (!sense || (q.sense || 'untagged') === sense))
+  const senseKey = q => (q.sense && q.sense !== 'unclear' ? q.sense : 'untagged');
+  // year: '' (all), 'unknown', a single year, or a range 'from-to'.
+  function inYear(q, year) {
+    if (!year) return true;
+    if (year === 'unknown') return !q.year;
+    const [a, b = a] = String(year).split('-').map(Number);
+    return !!q.year && q.year >= a && q.year <= b;
+  }
+  // sense 'other' means any key in `others` (meanings that only share the words).
+  function filterQuotes(quotes, {year = '', sense = '', order = 'newest', others = null} = {}) {
+    return quotes.filter(q => inYear(q, year) && (!sense || (sense === 'other' && others ? others.has(senseKey(q)) : senseKey(q) === sense)))
       .sort((a,b) => {
         if (a.year == null || b.year == null) return a.year == null ? (b.year == null ? 0 : 1) : -1;
         return (a.year-b.year) * (order === 'oldest' ? 1 : -1);
       });
+  }
+
+  // Year chips: the three latest years one by one, older years by decade (the newest
+  // four decades; anything older in one "and earlier" chip). Few years: one chip each.
+  function yearBuckets(quotes, T) {
+    const ys = [...new Set(quotes.map(q => q.year).filter(Number.isFinite))].sort((a, b) => b - a);
+    const n = v => quotes.filter(q => inYear(q, v)).length;
+    let out = [];
+    if (ys.length <= 6) out = ys.map(y => ({ v: `${y}`, label: `${y}` }));
+    else {
+      const recent = ys.slice(0, 3), cut = recent[2];
+      out = recent.map(y => ({ v: `${y}`, label: `${y}` }));
+      const decades = [...new Set(ys.filter(y => y < cut).map(y => Math.floor(y / 10) * 10))].sort((a, b) => b - a);
+      const keep = decades.slice(0, 4), rest = decades.slice(4);
+      for (const d of keep) {
+        const hi = Math.min(d + 9, cut - 1);
+        out.push({ v: `${d}-${hi}`, label: hi === d + 9 ? T.decade(d) : d === hi ? `${d}` : `${d}–${hi}` });
+      }
+      if (rest.length) out.push({ v: `0-${rest[0] + 9}`, label: T.earlier(rest[0] + 9) });
+    }
+    if (quotes.some(q => !q.year)) out.push({ v: 'unknown', label: T.unknownYear });
+    return out.map(b => ({ ...b, n: n(b.v) })).filter(b => b.n);
+  }
+
+  // Same colours as the timeline: related meanings in order, other meanings and
+  // unlabelled passages in two greys.
+  const PALETTE = ['#4c6ef5', '#e8590c', '#2b8a3e', '#ae3ec9', '#c92a2a', '#1098ad', '#f59f00', '#5c7cfa'];
+  function senseColors(senses) {
+    const m = new Map((senses || []).filter(s => s.related).map((s, i) => [s.key, PALETTE[i % PALETTE.length]]));
+    return key => (key === 'untagged' ? '#adb5bd' : m.get(key) || '#868e96');
   }
 
   function citationText(q, lang = 'en') {
@@ -1447,14 +1507,14 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     </article>`;
   }
 
-  function quoteRow(q, { lang = 'en', terms = [], sense = '' } = {}) {
+  function quoteRow(q, { lang = 'en', terms = [], sense = '', color = '' } = {}) {
     const T = TEXT[lang] || TEXT.en, url = safeUrl(q.review?.checkedUrl) || safeUrl(q.url);
     const title = esc(q.title || '');
     return `<article class="quote-row" id="sample-${esc(q.id)}">
       <div class="qr-year">${esc(q.year || '—')}</div>
       <div class="qr-body"><blockquote>${highlight(q.text, terms)}</blockquote>
       <p class="qr-cite">${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title} <span>· ${esc(q.authors || T.unknownAuthor)}</span></p>
-      <div class="qr-foot">${sense ? `<span class="qr-tag" title="${esc(T.suggestedMeaning)}">${esc(sense)}</span>` : ''}${q.fromTitle ? `<span class="qr-tag plain">${esc(T.titleOnly)}</span>` : ''}${q.warning ? `<span class="qr-warn">${esc(T[q.warning])}</span>` : ''}
+      <div class="qr-foot">${sense ? `<span class="qr-tag" title="${esc(T.suggestedMeaning)}">${color ? `<i style="background:${esc(color)}"></i>` : ''}${esc(sense)}</span>` : ''}${q.fromTitle ? `<span class="qr-tag plain">${esc(T.titleOnly)}</span>` : ''}${q.warning ? `<span class="qr-warn">${esc(T[q.warning])}</span>` : ''}
       <span class="qr-actions"><button type="button" data-copy="${esc(q.id)}">${esc(T.copy)}</button><a href="#q-${esc(q.id)}" data-passage="${esc(q.id)}" aria-label="${esc(T.link)}" title="${esc(T.link)}">#</a></span></div>
       <div class="copy-status" role="status" aria-live="polite"></div></div>
     </article>`;
@@ -1470,8 +1530,16 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const senseMap = new Map((d.senses || []).map(s => [s.key, s.label]));
     const card = (q, featured, index) => quoteCard(q, {lang, terms, featured,
       label: featured ? [T.earlier,T.different,T.recent][index] : q.sense ? `${T.suggestedMeaning}: ${senseMap.get(q.sense) || T.untagged}` : T.untagged});
-    const years = [...new Set(model.quotes.map(q => q.year).filter(Boolean))].sort((a,b)=>b-a);
-    const senseKeys = [...new Set(model.quotes.map(q=>q.sense || 'untagged'))];
+    const colorOf = senseColors(d.senses);
+    const present = new Set(model.quotes.map(senseKey));
+    const order = [...(d.senses || []).filter(s => s.related), ...(d.senses || []).filter(s => !s.related)].map(s => s.key);
+    // Meanings this timeline follows get their own chip; meanings that only share the
+    // words go together under "Other meanings".
+    const related = new Set((d.senses || []).filter(s => s.related).map(s => s.key));
+    const others = new Set([...present].filter(k => k !== 'untagged' && !related.has(k)));
+    const senseKeys = [...order.filter(k => related.has(k) && present.has(k)), ...(others.size ? ['other'] : []), ...(present.has('untagged') ? ['untagged'] : [])];
+    const buckets = yearBuckets(model.quotes, T);
+    const chip = (v, label, n, color, tip) => `<button type="button" class="fchip" data-v="${esc(v)}"${tip ? ` title="${esc(tip)}"` : ''}>${color ? `<i style="background:${esc(color)}"></i>` : ''}${esc(label)}<span class="n">${n}</span></button>`;
     host.innerHTML = `<div class="brief-meta"><span>${esc(T.scope)}</span><span>${esc(T.saved)} ${esc(d.generated || '—')}</span></div>
       <section class="timeline-main" aria-label="${esc(T.timelineTitle)}">${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<p class="headline" data-part="headline"></p>
       <div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div>
@@ -1480,22 +1548,25 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       ${model.featured.map((q,i)=>card(q,true,i)).join('') || `<p class="empty-state">${esc(model.quotes.length ? T.noFeatured : T.noQuotes)}</p>`}</section>
       <aside class="reading-aside"><span class="eyebrow">${esc(T.question)}</span><p>${esc(localized(d.readingGuide?.question,lang) || T.defaultQuestion)}</p><a href="#evidence" data-browse>${esc(T.browse)} <span>↘</span></a><div class="aside-count">${esc(T.matches(model.quotes.length))}</div></aside></div>
       <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
-      <p>${esc(d.model ? T.meaningNote : opts.pending ? T.modelPending : T.noModel)}</p><div class="evidence-filters">
-      <label><span>${esc(T.year)}</span><span class="select"><select data-filter="year"><option value="">${esc(T.allYears)}</option>${years.map(y=>`<option>${y}</option>`).join('')}${model.quotes.some(q=>!q.year) ? `<option value="unknown">${esc(T.unknownYear)}</option>` : ''}</select></span></label>
-      ${senseKeys.some(k=>k!=='untagged') ? `<label><span>${esc(T.meaning)}</span><span class="select"><select data-filter="sense"><option value="">${esc(T.allMeanings)}</option>${senseKeys.map(k=>`<option value="${esc(k)}">${esc(senseMap.get(k) || T.untagged)}</option>`).join('')}</select></span></label>` : ''}
-      <label><span>${esc(T.sort)}</span><span class="select"><select data-filter="order"><option value="newest">${esc(T.newest)}</option><option value="oldest">${esc(T.oldest)}</option></select></span></label>
-      <p class="filter-status" role="status" aria-live="polite"></p></div><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
+      <p>${esc(d.model ? T.meaningNote : opts.pending ? T.modelPending : T.noModel)}</p><div class="ev-filters">
+      ${senseKeys.some(k=>k!=='untagged') ? `<div class="frow"><span class="flabel">${esc(T.meaningShort)}</span><div class="fchips" data-f="sense" role="group" aria-label="${esc(T.meaning)}">${chip('', T.all, model.quotes.length)}${senseKeys.map(k=>k === 'other' ? chip('other', T.otherMeanings, model.quotes.filter(q=>others.has(senseKey(q))).length, '#868e96', T.otherTip) : chip(k, senseMap.get(k) || T.untagged, model.quotes.filter(q=>senseKey(q)===k).length, colorOf(k))).join('')}</div></div>` : ''}
+      ${buckets.length > 1 ? `<div class="frow"><span class="flabel">${esc(T.period)}</span><div class="fchips" data-f="year" role="group" aria-label="${esc(T.year)}">${chip('', T.all, model.quotes.length)}${buckets.map(b=>chip(b.v, b.label, b.n)).join('')}</div></div>` : ''}
+      <div class="fbar"><p class="filter-status" role="status" aria-live="polite"></p><div class="sortseg" data-f="order" role="group" aria-label="${esc(T.sort)}"><button type="button" data-v="newest">${esc(T.newestShort)}</button><button type="button" data-v="oldest">${esc(T.oldestShort)}</button></div></div></div><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
       <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details>`;
     const browser = host.querySelector('.evidence-browser'), list = host.querySelector('.quote-results'), more = host.querySelector('.load-more');
     let limit = 12;
+    const state = { sense: '', year: '', order: 'newest' };
     function refresh() {
-      const opts = Object.fromEntries([...host.querySelectorAll('[data-filter]')].map(s=>[s.dataset.filter,s.value]));
-      const filtered = filterQuotes(model.quotes,opts);
-      list.innerHTML = filtered.slice(0,limit).map(q=>quoteRow(q,{lang,terms,sense:q.sense ? senseMap.get(q.sense) || '' : ''})).join('') || `<p class="empty-state">${esc(T.none)}</p>`;
+      host.querySelectorAll('[data-f]').forEach(g => g.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === state[g.dataset.f]))));
+      const filtered = filterQuotes(model.quotes,{...state,others});
+      list.innerHTML = filtered.slice(0,limit).map(q=>quoteRow(q,{lang,terms,sense:q.sense && senseMap.has(q.sense) ? senseMap.get(q.sense) : '',color:colorOf(senseKey(q))})).join('') || `<p class="empty-state">${esc(T.none)}</p>`;
       host.querySelector('.filter-status').textContent = T.shown(Math.min(limit,filtered.length),filtered.length);
       more.hidden = filtered.length <= limit;
     }
-    host.querySelectorAll('[data-filter]').forEach(s=>s.addEventListener('change',()=>{limit=12;refresh();}));
+    host.querySelector('.ev-filters').addEventListener('click', ev => {
+      const b = ev.target.closest('[data-f] button'); if (!b) return;
+      state[b.closest('[data-f]').dataset.f] = b.dataset.v; limit = 12; refresh();
+    });
     more.addEventListener('click',()=>{limit+=12;refresh();});
     refresh();
     function reveal(id) {
@@ -1504,7 +1575,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       let target = [...host.querySelectorAll('.featured-source')].find(el=>el.id===`q-${id}`);
       if (!target) {
         browser.open = true;
-        host.querySelectorAll('[data-filter]').forEach(s=>{s.value = s.dataset.filter==='order' ? 'newest' : '';});
+        Object.assign(state, { sense: '', year: '', order: 'newest' });
         limit = model.quotes.length; refresh();
         target = [...list.children].find(el=>el.id===`sample-${id}`);
       }
