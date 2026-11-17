@@ -124,9 +124,18 @@
   providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(true); keyChecked = false; showCheck(null); syncKeyline(); });
   syncProvider(true);
   renderSeg();
+  // The OpenAlex key needs no check, so save it as soon as "remember" is on (ready-made
+  // pages never run a live search, which used to be the only place it was saved).
+  function saveOaKey() {
+    const v = $('oakey').value.trim();
+    if (remember.checked && v) store.set('idealine.openalexKey', v);
+    else if (!v) store.del('idealine.openalexKey');
+  }
   remember.addEventListener('change', () => {
     if (!remember.checked) { store.del(KEY_PREFIX + providerSel.value); store.del('idealine.openalexKey'); }
+    else saveOaKey();
   });
+  $('oakey').addEventListener('input', saveOaKey);
   $('forget').addEventListener('click', () => {
     Object.keys(P.PROVIDERS).forEach(id => store.del(KEY_PREFIX + id));
     store.del('idealine.openalexKey');
