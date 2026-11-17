@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRISPR · idealine</title>
+<meta name="description" content="Where the term CRISPR came from and how its meaning changed, with quotes from the papers.">
+<style>
+:root{--bg:#fbfaf7;--panel:#ffffff;--fg:#1c1b19;--muted:#6d6a63;--ink-soft:#4a4844;--line:#e4e0d6;--accent:#3b5bdb;--on-accent:#ffffff;
+--ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
+--bar:#cfc8b8;--era1:rgba(59,91,219,.07);--era2:rgba(183,121,31,.08);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1014;--panel:#161920;--fg:#ecebe6;--muted:#9a978f;--ink-soft:#c9c6be;--line:#2a2e37;--accent:#f0b85a;--on-accent:#1a1408;
+--ancestor:#b6a6ff;--origin:#5fd3c4;--coined:#7ea2ff;--popularized:#7bd88f;--redefined:#f0b85a;--applied:#a99cf5;--critique:#ff8a65;
+--bar:#3a4050;--era1:rgba(240,184,90,.07);--era2:rgba(110,180,255,.07);--glow:rgba(240,184,90,.12);--shadow:0 12px 40px rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -120px,var(--glow) 0%,transparent 70%) no-repeat,var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.brand{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand a{color:inherit}
+h1{font-family:ui-serif,Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
+.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px;color:var(--ink-soft)}
+.meta{color:var(--muted);font-size:.86rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:22px;box-shadow:var(--shadow);overflow:hidden}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg text{fill:var(--fg);font-size:11.5px}
+svg .muted{fill:var(--muted)}
+.ms{cursor:pointer;outline:none}
+.ms circle{stroke:var(--panel);stroke-width:2.5}
+.ms:hover circle,.ms:focus circle,.ms.sel circle{stroke:var(--fg)}
+.ms.sel text{font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.hint{font-size:.8rem;color:var(--muted);padding:10px 16px 0}
+.detail{padding:18px 20px}
+.kind{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.detail h2{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
+.detail h2 a{color:inherit}
+.why{margin:0 0 10px}
+.status{font-size:.78rem;color:var(--muted)}
+blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line);color:var(--fg)}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
+blockquote cite a{color:inherit}
+mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
+.era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
+.era h3{margin:2px 0 6px;font-size:1rem}
+.era p{margin:0;font-size:.92rem}
+details{margin-top:28px;color:var(--muted);font-size:.88rem}
+details summary{cursor:pointer}
+footer{margin-top:36px;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+</style></head>
+<body><main>
+<div class="brand"><a href="https://github.com/Yilinista/idealine">idealine</a> · where did this idea come from?</div>
+<h1>CRISPR</h1>
+<p class="summary">CRISPR began in the early 2000s as a name for a family of repeated DNA sequences found in bacterial and archaeal genomes, which researchers then showed to be part of an adaptive immune system against viruses and plasmids. Since 2013 it has mainly meant a programmable, RNA-guided toolkit, above all CRISPR-Cas9, used for genome editing, genetic screens, gene regulation, diagnostics and emerging therapies.</p>
+<p class="meta">125,120 papers in OpenAlex use this term (1800–2027). Proposed by <code>claude-opus-5-5</code> from 160 quoted sentences only; every milestone shows its quotes so you can check it.</p>
+<div class="card">
+  <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
+  <div class="scroller"><div data-part="chart"></div></div>
+  <div class="legend" data-part="legend"></div>
+  <div class="detail" data-part="detail" aria-live="polite"></div>
+</div>
+<div class="eras" data-part="eras"></div>
+<details><summary>How this was made and what it can miss</summary>
+<p>Counts and papers come from <a href="https://openalex.org">OpenAlex</a>, searching titles and abstracts for the exact phrase. Sentences come from abstracts, so works without an abstract (often older books and essays) only appear if the newer papers name them. Labels are generated and can be wrong; the quotes are the evidence. Generated 2026-11-17.</p>
+</details>
+<footer>Made with <a href="https://github.com/Yilinista/idealine">idealine</a>. Want another term? <a href="https://yilinista.github.io/idealine/">Trace it yourself</a>.</footer>
+</main>
+<script type="application/json" id="data">{"term": "CRISPR", "aliases": ["CRISPR-Cas9"], "summary": "CRISPR began in the early 2000s as a name for a family of repeated DNA sequences found in bacterial and archaeal genomes, which researchers then showed to be part of an adaptive immune system against viruses and plasmids. Since 2013 it has mainly meant a programmable, RNA-guided toolkit, above all CRISPR-Cas9, used for genome editing, genetic screens, gene regulation, diagnostics and emerging therapies.", "counts": [[1800, 1], [1879, 1], [1891, 1], [1905, 2], [1911, 1], [1917, 1], [1945, 1], [1947, 1], [1951, 1], [1952, 4], [1953, 1], [1955, 2], [1957, 2], [1962, 2], [1963, 2], [1964, 3], [1967, 1], [1970, 2], [1971, 3], [1972, 9], [1973, 9], [1974, 8], [1975, 12], [1976, 6], [1977, 8], [1978, 12], [1979, 11], [1980, 8], [1981, 13], [1982, 9], [1983, 9], [1984, 17], [1985, 14], [1986, 11], [1987, 16], [1988, 25], [1989, 12], [1990, 18], [1991, 20], [1992, 11], [1993, 11], [1994, 15], [1995, 6], [1996, 4], [1997, 7], [1998, 6], [1999, 7], [2000, 16], [2001, 4], [2002, 7], [2003, 5], [2004, 13], [2005, 13], [2006, 13], [2007, 35], [2008, 36], [2009, 58], [2010, 86], [2011, 131], [2012, 211], [2013, 515], [2014, 1099], [2015, 2169], [2016, 4082], [2017, 5628], [2018, 7494], [2019, 9093], [2020, 9677], [2021, 9854], [2022, 11086], [2023, 12719], [2024, 13328], [2025, 17750], [2026, 19651], [2027, 1]], "total": 125120, "model": "claude-opus-5-5", "generated": "2026-11-17", "lang": "en", "evidenceCount": 160, "eras": [{"start": 2002, "end": 2006, "label": "Mysterious prokaryotic repeats", "meaning": "CRISPR named a family of clustered, regularly spaced repeat elements separated by unique spacers in prokaryotic genomes, whose function was still being worked out.", "evidence": [{"id": "E22", "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).", "title": "Identification of genes that are associated with DNA repeats in prokaryotes", "year": 2002, "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x", "authors": "Ruud Jansen et al.", "fromTitle": false}, {"id": "E23", "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.", "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies", "year": 2005, "url": "https://doi.org/10.1099/mic.0.27437-0", "authors": "Christine Pourcel et al.", "fromTitle": false}, {"id": "E24", "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.", "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "year": 2005, "url": "https://doi.org/10.1099/mic.0.28048-0", "authors": "Alexander Bolotin et al.", "fromTitle": false}, {"id": "E25", "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.", "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action", "year": 2006, "url": "https://doi.org/10.1186/1745-6150-1-7", "authors": "Kira S. Makarova et al.", "fromTitle": false}]}, {"start": 2007, "end": 2012, "label": "Bacterial adaptive immune system", "meaning": "CRISPR and its Cas genes were understood as an RNA-guided defense system that gives bacteria and archaea acquired immunity against phages and plasmids.", "evidence": [{"id": "E27", "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.", "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "year": 2007, "url": "https://doi.org/10.1128/jb.01412-07", "authors": "Hélène Deveau et al.", "fromTitle": false}, {"id": "E28", "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).", "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "year": 2008, "url": "https://doi.org/10.1126/science.1159689", "authors": "Stan J. J. Brouns et al.", "fromTitle": false}, {"id": "E29", "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.", "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA", "year": 2008, "url": "https://doi.org/10.1126/science.1165771", "authors": "Luciano A. Marraffini et al.", "fromTitle": false}, {"id": "E30", "text": "In many Bacteria and most Archaea, clustered regularly interspaced short palindromic repeats (CRISPR) form peculiar genetic loci, which provide acquired immunity against viruses and plasmids by targeting nucleic acid in a sequence-specific manner.", "title": "CRISPR/Cas, the Immune System of Bacteria and Archaea", "year": 2010, "url": "https://doi.org/10.1126/science.1179555", "authors": "Philippe Horvath et al.", "fromTitle": false}, {"id": "E31", "text": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA", "title": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA", "year": 2010, "url": "https://doi.org/10.1038/nature09523", "authors": "Josiane E. Garneau et al.", "fromTitle": true}, {"id": "E33", "text": "Evolution and classification of the CRISPR–Cas systems", "title": "Evolution and classification of the CRISPR–Cas systems", "year": 2011, "url": "https://doi.org/10.1038/nrmicro2577", "authors": "Kira S. Makarova et al.", "fromTitle": true}, {"id": "E34", "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.", "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "year": 2012, "url": "https://doi.org/10.1073/pnas.1208507109", "authors": "Giedrius Gasiūnas et al.", "fromTitle": false}]}, {"start": 2013, "end": 2016, "label": "Programmable genome-editing tool", "meaning": "CRISPR-Cas9 was repurposed as an RNA-guided nuclease for editing genomes in human cells, animals, plants and microbes, for genome-wide screens and for control of gene expression.", "evidence": [{"id": "E35", "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.", "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "year": 2013, "url": "https://doi.org/10.1126/science.1231143", "authors": "Le Cong et al.", "fromTitle": false}, {"id": "E36", "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.", "title": "RNA-Guided Human Genome Engineering via Cas9", "year": 2013, "url": "https://doi.org/10.1126/science.1232033", "authors": "Prashant Mali et al.", "fromTitle": false}, {"id": "E38", "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.", "title": "RNA-programmed genome editing in human cells", "year": 2013, "url": "https://doi.org/10.7554/elife.00471", "authors": "Martin Jínek et al.", "fromTitle": false}, {"id": "E39", "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "year": 2013, "url": "https://doi.org/10.1016/j.cell.2013.02.022", "authors": "Lei S. Qi et al.", "fromTitle": true}, {"id": "E50", "text": "Genome engineering using the CRISPR-Cas9 system", "title": "Genome engineering using the CRISPR-Cas9 system", "year": 2013, "url": "https://doi.org/10.1038/nprot.2013.143", "authors": "F. Ann Ran et al.", "fromTitle": true}, {"id": "E53", "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.", "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "year": 2013, "url": "https://doi.org/10.1126/science.1247005", "authors": "Ophir Shalem et al.", "fromTitle": false}, {"id": "E60", "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "year": 2014, "url": "https://doi.org/10.1016/j.cell.2014.05.010", "authors": "Patrick D. Hsu et al.", "fromTitle": true}, {"id": "E64", "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.", "title": "The new frontier of genome engineering with CRISPR-Cas9", "year": 2014, "url": "https://doi.org/10.1126/science.1258096", "authors": "Jennifer A. Doudna et al.", "fromTitle": false}]}, {"start": 2017, "end": 2026, "label": "Diversified platform and therapies", "meaning": "CRISPR became a broad technology platform spanning RNA-targeting Cas13, diagnostics based on Cas12 and Cas13, perturbation screens, crop engineering and clinical in vivo editing.", "evidence": [{"id": "E84", "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.", "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "year": 2017, "url": "https://doi.org/10.1126/science.aam9321", "authors": "Jonathan S. Gootenberg et al.", "fromTitle": false}, {"id": "E86", "text": "RNA targeting with CRISPR–Cas13", "title": "RNA targeting with CRISPR–Cas13", "year": 2017, "url": "https://doi.org/10.1038/nature24049", "authors": "Omar O. Abudayyeh et al.", "fromTitle": true}, {"id": "E95", "text": "CRISPR is becoming an indispensable tool in biological research.", "title": "The CRISPR tool kit for genome editing and beyond", "year": 2018, "url": "https://doi.org/10.1038/s41467-018-04252-2", "authors": "Mazhar Adli", "fromTitle": false}, {"id": "E98", "text": "The diversity, modularity, and efficacy of CRISPR-Cas systems are driving a biotechnological revolution.", "title": "CRISPR-Cas guides the future of genetic engineering", "year": 2018, "url": "https://doi.org/10.1126/science.aat5011", "authors": "Gavin J. Knott et al.", "fromTitle": false}, {"id": "E109", "text": "CRISPR–Cas12-based detection of SARS-CoV-2", "title": "CRISPR–Cas12-based detection of SARS-CoV-2", "year": 2020, "url": "https://doi.org/10.1038/s41587-020-0513-4", "authors": "James P. Broughton et al.", "fromTitle": true}, {"id": "E112", "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "year": 2021, "url": "https://doi.org/10.1056/nejmoa2107454", "authors": "Julian David Gillmore et al.", "fromTitle": true}, {"id": "E113", "text": "CRISPR-based diagnostics", "title": "CRISPR-based diagnostics", "year": 2021, "url": "https://doi.org/10.1038/s41551-021-00760-7", "authors": "Michael M. Kaminski et al.", "fromTitle": true}, {"id": "E121", "text": "CRISPR-based diagnostic platforms have gained significant momentum in recent years, enabling highly sensitive and specific detection of pathogens and diseases.", "title": "CRISPR-on-Chip for Point-of-Care Diagnostics", "year": 2026, "url": "https://doi.org/10.1021/acsnano.5c19771", "authors": "Nazente Atçeken et al.", "fromTitle": false}, {"id": "E128", "text": "CRISPR-Cas genome-editing technologies have emerged as powerful tools for precise DNA and RNA modulation, offering promising therapeutic strategies for neurodegenerative disorders such as Alzheimer's disease (AD), Parkinson's disease (PD), Huntington's disease (HD), and amyotrophic lateral sclerosis (ALS).", "title": "CRISPR–Cas technologies in neurodegenerative disorders: mechanistic insights, therapeutic potential, and translational challenges", "year": 2026, "url": "https://doi.org/10.3389/fneur.2025.1737468", "authors": "Raya Kh. Yashooa et al.", "fromTitle": false}, {"id": "E137", "text": "We develop Spatial Perturb-Seq, an in vivo CRISPR technology that interrogates multiple genes within single cells of intact tissues, compatible with both sequencing-based and probe-based spatial technologies.", "title": "Spatial perturb-seq: single-cell functional genomics within intact tissue architecture", "year": 2026, "url": "https://doi.org/10.1038/s41467-026-69677-6", "authors": "Kimberle Shen et al.", "fromTitle": false}]}], "milestones": [{"year": 2002, "kind": "coined", "title": "Identification of genes that are associated with DNA repeats in prokaryotes", "why": "The authors proposed the name 'clustered regularly interspaced short palindromic repeats (CRISPR)' for this family of repeats.", "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x", "workTitle": "Identification of genes that are associated with DNA repeats in prokaryotes", "authors": "Ruud Jansen et al.", "link": "in-sample", "evidence": [{"id": "E22", "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).", "title": "Identification of genes that are associated with DNA repeats in prokaryotes", "year": 2002, "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x", "authors": "Ruud Jansen et al.", "fromTitle": false}]}, {"year": 2005, "kind": "redefined", "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "why": "This work showed that the spacers come from foreign DNA, linking the repeats to phage and plasmid sequences.", "url": "https://doi.org/10.1099/mic.0.28048-0", "workTitle": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "authors": "Alexander Bolotin et al.", "link": "in-sample", "evidence": [{"id": "E23", "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.", "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies", "year": 2005, "url": "https://doi.org/10.1099/mic.0.27437-0", "authors": "Christine Pourcel et al.", "fromTitle": false}, {"id": "E24", "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.", "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "year": 2005, "url": "https://doi.org/10.1099/mic.0.28048-0", "authors": "Alexander Bolotin et al.", "fromTitle": false}]}, {"year": 2006, "kind": "redefined", "title": "A putative RNA-interference-based immune system in prokaryotes", "why": "It reinterpreted CRISPR-cas, previously linked to DNA repair, as a hypothesized RNAi-like immune system.", "url": "https://doi.org/10.1186/1745-6150-1-7", "workTitle": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action", "authors": "Kira S. Makarova et al.", "link": "in-sample", "evidence": [{"id": "E25", "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.", "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action", "year": 2006, "url": "https://doi.org/10.1186/1745-6150-1-7", "authors": "Kira S. Makarova et al.", "fromTitle": false}]}, {"year": 2007, "kind": "redefined", "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "why": "It linked CRISPR experimentally to acquired resistance against bacteriophages.", "url": "https://doi.org/10.1128/jb.01412-07", "workTitle": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "authors": "Hélène Deveau et al.", "link": "in-sample", "evidence": [{"id": "E27", "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.", "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "year": 2007, "url": "https://doi.org/10.1128/jb.01412-07", "authors": "Hélène Deveau et al.", "fromTitle": false}]}, {"year": 2008, "kind": "redefined", "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "why": "It showed that small CRISPR RNAs guide antiviral defense, establishing the RNA-guided mechanism.", "url": "https://doi.org/10.1126/science.1159689", "workTitle": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "authors": "Stan J. J. Brouns et al.", "link": "in-sample", "evidence": [{"id": "E28", "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).", "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "year": 2008, "url": "https://doi.org/10.1126/science.1159689", "authors": "Stan J. J. Brouns et al.", "fromTitle": false}, {"id": "E29", "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.", "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA", "year": 2008, "url": "https://doi.org/10.1126/science.1165771", "authors": "Luciano A. Marraffini et al.", "fromTitle": false}]}, {"year": 2012, "kind": "redefined", "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "why": "It characterized Cas9 as an RNA-guided DNA endonuclease, setting up its later use as a tool.", "url": "https://doi.org/10.1073/pnas.1208507109", "workTitle": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "authors": "Giedrius Gasiūnas et al.", "link": "in-sample", "evidence": [{"id": "E34", "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.", "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "year": 2012, "url": "https://doi.org/10.1073/pnas.1208507109", "authors": "Giedrius Gasiūnas et al.", "fromTitle": false}]}, {"year": 2013, "kind": "applied", "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "why": "It moved the CRISPR/Cas system into mammalian genome engineering and became the most-cited paper in the evidence.", "url": "https://doi.org/10.1126/science.1231143", "workTitle": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "authors": "Le Cong et al.", "link": "in-sample", "evidence": [{"id": "E35", "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.", "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "year": 2013, "url": "https://doi.org/10.1126/science.1231143", "authors": "Le Cong et al.", "fromTitle": false}, {"id": "E36", "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.", "title": "RNA-Guided Human Genome Engineering via Cas9", "year": 2013, "url": "https://doi.org/10.1126/science.1232033", "authors": "Prashant Mali et al.", "fromTitle": false}, {"id": "E38", "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.", "title": "RNA-programmed genome editing in human cells", "year": 2013, "url": "https://doi.org/10.7554/elife.00471", "authors": "Martin Jínek et al.", "fromTitle": false}]}, {"year": 2013, "kind": "applied", "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "why": "It extended CRISPR beyond cutting DNA to regulating transcription.", "url": "https://doi.org/10.1016/j.cell.2013.02.022", "workTitle": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "authors": "Lei S. Qi et al.", "link": "in-sample", "evidence": [{"id": "E39", "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "year": 2013, "url": "https://doi.org/10.1016/j.cell.2013.02.022", "authors": "Lei S. Qi et al.", "fromTitle": true}, {"id": "E43", "text": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes", "title": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes", "year": 2013, "url": "https://doi.org/10.1016/j.cell.2013.06.044", "authors": "Luke A. Gilbert et al.", "fromTitle": true}, {"id": "E44", "text": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors", "title": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors", "year": 2013, "url": "https://doi.org/10.1038/nmeth.2600", "authors": "Pablo Pérez‐Piñera et al.", "fromTitle": true}]}, {"year": 2013, "kind": "applied", "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "why": "It established genome-wide CRISPR screens as a way to study gene function.", "url": "https://doi.org/10.1126/science.1247005", "workTitle": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "authors": "Ophir Shalem et al.", "link": "in-sample", "evidence": [{"id": "E53", "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.", "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "year": 2013, "url": "https://doi.org/10.1126/science.1247005", "authors": "Ophir Shalem et al.", "fromTitle": false}, {"id": "E54", "text": "The bacterial clustered regularly interspaced short palindromic repeats (CRISPR)-Cas9 system for genome editing has greatly expanded the toolbox for mammalian genetics, enabling the rapid generation of isogenic cell lines and mice with modified alleles.", "title": "Genetic Screens in Human Cells Using the CRISPR-Cas9 System", "year": 2013, "url": "https://doi.org/10.1126/science.1246981", "authors": "Wang Tim et al.", "fromTitle": false}, {"id": "E61", "text": "Improved vectors and genome-wide libraries for CRISPR screening", "title": "Improved vectors and genome-wide libraries for CRISPR screening", "year": 2014, "url": "https://doi.org/10.1038/nmeth.3047", "authors": "Neville E. Sanjana et al.", "fromTitle": true}]}, {"year": 2014, "kind": "popularized", "title": "The new frontier of genome engineering with CRISPR-Cas9", "why": "This highly cited review framed CRISPR-Cas9 as transforming biology.", "url": "https://doi.org/10.1126/science.1258096", "workTitle": "The new frontier of genome engineering with CRISPR-Cas9", "authors": "Jennifer A. Doudna et al.", "link": "in-sample", "evidence": [{"id": "E64", "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.", "title": "The new frontier of genome engineering with CRISPR-Cas9", "year": 2014, "url": "https://doi.org/10.1126/science.1258096", "authors": "Jennifer A. Doudna et al.", "fromTitle": false}, {"id": "E60", "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "year": 2014, "url": "https://doi.org/10.1016/j.cell.2014.05.010", "authors": "Patrick D. Hsu et al.", "fromTitle": true}]}, {"year": 2017, "kind": "applied", "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "why": "It used the collateral cleavage activity of a CRISPR enzyme for diagnostics, opening the CRISPR-Dx field.", "url": "https://doi.org/10.1126/science.aam9321", "workTitle": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "authors": "Jonathan S. Gootenberg et al.", "link": "in-sample", "evidence": [{"id": "E84", "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.", "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "year": 2017, "url": "https://doi.org/10.1126/science.aam9321", "authors": "Jonathan S. Gootenberg et al.", "fromTitle": false}, {"id": "E92", "text": "Recently, a very promising CRISPR-based diagnostic (CRISPR-Dx) (namely SHERLOCK) was established, which was based on the collateral effect of an RNA-guided and RNA-targeting CRISPR effector, Cas13a 4 .", "title": "CRISPR-Cas12a-assisted nucleic acid detection", "year": 2018, "url": "https://doi.org/10.1038/s41421-018-0028-z", "authors": "Shiyuan Li et al.", "fromTitle": false}, {"id": "E109", "text": "CRISPR–Cas12-based detection of SARS-CoV-2", "title": "CRISPR–Cas12-based detection of SARS-CoV-2", "year": 2020, "url": "https://doi.org/10.1038/s41587-020-0513-4", "authors": "James P. Broughton et al.", "fromTitle": true}, {"id": "E113", "text": "CRISPR-based diagnostics", "title": "CRISPR-based diagnostics", "year": 2021, "url": "https://doi.org/10.1038/s41551-021-00760-7", "authors": "Michael M. Kaminski et al.", "fromTitle": true}]}, {"year": 2018, "kind": "critique", "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "why": "It raised safety concerns about unintended genomic damage, alongside earlier work on off-target effects and p53 responses.", "url": "https://doi.org/10.1038/nbt.4192", "workTitle": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "authors": "Michael Kosicki et al.", "link": "in-sample", "evidence": [{"id": "E97", "text": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "year": 2018, "url": "https://doi.org/10.1038/nbt.4192", "authors": "Michael Kosicki et al.", "fromTitle": true}, {"id": "E96", "text": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response", "title": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response", "year": 2018, "url": "https://doi.org/10.1038/s41591-018-0049-z", "authors": "Emma Maria Haapaniemi et al.", "fromTitle": true}, {"id": "E76", "text": "CRISPR/Cas9 is a versatile genome-editing technology that is widely used for studying the functionality of genetic elements, creating genetically modified organisms as well as preclinical research of genetic disorders.", "title": "Off-target Effects in CRISPR/Cas9-mediated Genome Engineering", "year": 2015, "url": "https://doi.org/10.1038/mtna.2015.37", "authors": "Xiaohui Zhang et al.", "fromTitle": false}]}, {"year": 2021, "kind": "applied", "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "why": "It marked the translation of CRISPR editing into human in vivo therapy.", "url": "https://doi.org/10.1056/nejmoa2107454", "workTitle": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "authors": "Julian David Gillmore et al.", "link": "in-sample", "evidence": [{"id": "E112", "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "year": 2021, "url": "https://doi.org/10.1056/nejmoa2107454", "authors": "Julian David Gillmore et al.", "fromTitle": true}, {"id": "E120", "text": "Applications span vaccines, protein replacement, siRNA/ASO delivery, and CRISPR platforms, with clinical examples like patisiran, COVID-19 and RSV mRNA vaccines, in-human transthyretin (TTR) editing, and individualized melanoma vaccination.", "title": "Programmable lipid nanoparticles for RNA therapeutics: Design principles and clinical translation", "year": 2026, "url": "https://doi.org/10.1016/j.mtbio.2026.102774", "authors": "Mahdi Navid Talemi et al.", "fromTitle": false}]}]}</script>
+<script>// idealine timeline renderer. renderTimeline(D, root) draws the interactive
+// timeline for one term into the elements under `root` marked with data-part:
+// chart, legend, detail, eras. Used by the static term pages and the web app.
+// All text from data is inserted with textContent or escaped; links must be http(s).
+(function (global) {
+  'use strict';
+  const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue('--' + n).trim();
+  const el = (tag, attrs = {}, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeUrl = u => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null);
+  const reEsc = w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Interface text; pass a partial object as the third argument to translate it.
+  const LABELS_EN = {
+    kinds: {},
+    papers: n => `${n} papers`,
+    yearPapers: (y, n) => `${y}: ${n} papers`,
+    timelineOf: term => `Timeline of ${term}`,
+    inSample: 'Linked paper uses the term itself.',
+    resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+    unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+    titleOf: 'Title of ',
+    legendDashed: 'dashed = no link found',
+    legendBars: 'bars = papers per year',
+  };
+
+  function renderTimeline(D, root, labels) {
+    root = root || document;
+    const L = Object.assign({}, LABELS_EN, labels || {});
+    const kindName = k => (L.kinds && L.kinds[k]) || k;
+    const part = name => root.querySelector(`[data-part="${name}"]`);
+    const chart = part('chart'), detail = part('detail');
+    chart.textContent = '';
+    const KIND_OK = k => (KINDS.includes(k) ? k : 'origin');
+    const phrases = [D.term, ...(D.aliases || [])].filter(p => p && p.trim());
+    const termRe = new RegExp('(' + phrases.map(p => p.split(/[\s-]+/).filter(Boolean).map(reEsc).join('[\\s-]+')).join('|') + ')', 'igu');
+    // Split the raw text first, then escape each piece, so entities are never cut.
+    const mark = s => String(s ?? '').split(termRe).map((p, i) => (i % 2 ? `<mark>${esc(p)}</mark>` : esc(p))).join('');
+    let msLaid = [];
+
+    function build() {
+      const counts = new Map(D.counts);
+      const years = [...counts.keys(), ...D.milestones.map(m => m.year), ...D.eras.flatMap(e => [e.start, e.end])].filter(Boolean);
+      if (!years.length) return;
+      const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
+      const left = 40, labelRoom = 230;
+      const avail = Math.max(600, chart.parentElement.clientWidth || 900);
+      // Each year gets width by how much happens in it: milestone years and busy years
+      // are wide, quiet years are thin. A century of rare use stays a short strip.
+      const peakC = Math.max(1, ...counts.values()), msYears = new Set(D.milestones.map(m => m.year));
+      const raw = y => (msYears.has(y) ? 30 : 0) + 34 * Math.sqrt((counts.get(y) || 0) / peakC) + ((counts.get(y) || 0) / peakC > 0.002 ? 6 : 2);
+      let total = 0;
+      for (let y = minYear; y <= nowYear; y++) total += raw(y);
+      const scale = Math.max(1, Math.min(2.2, (avail - left - labelRoom) / total));
+      const WY = y => raw(y) * scale, pos = new Map();
+      let acc = left;
+      for (let y = minYear; y <= nowYear; y++) { pos.set(y, acc + WY(y) / 2); acc += WY(y); }
+      const X = y => pos.get(Math.max(minYear, Math.min(nowYear, y)));
+
+      // Lay out milestone labels in lanes so they do not overlap.
+      const lanes = [], laneH = 36, axisPad = 26;
+      msLaid = D.milestones.map((m, i) => {
+        const label = m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
+        const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(m.year);
+        let lane = 0;
+        while ((lanes[lane] ?? -1e9) > x - 6) lane++;
+        lanes[lane] = x + w;
+        return { ...m, kind: KIND_OK(m.kind), i, label, x, lane };
+      });
+      const nLanes = Math.max(1, lanes.length);
+      const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
+      const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
+      const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
+      const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': L.timelineOf(D.term) });
+
+      // Era bands; labels alternate between two rows and are cut to fit.
+      D.eras.forEach((e, k) => {
+        const xa = X(e.start) - WY(e.start) / 2, xb = X(e.end) + WY(e.end) / 2, row = k % 2;
+        el('rect', { x: xa, y: row * 16, width: Math.max(4, xb - xa), height: axisY - row * 16, fill: css(k % 2 ? 'era2' : 'era1'), rx: 6 }, svg);
+        const next = D.eras[k + 2], room = (next ? X(next.start) - WY(next.start) / 2 : W) - xa - 12;
+        const maxChars = Math.max(8, Math.floor(room / 6.6));
+        const label = e.label.length > maxChars ? e.label.slice(0, maxChars - 1) + '…' : e.label;
+        const t = el('text', { x: xa + 8, y: 15 + row * 16, 'font-weight': 600, 'font-size': 11 }, svg);
+        t.textContent = label;
+        el('title', {}, t).textContent = `${e.start}–${e.end}: ${e.label}`;
+      });
+
+      const maxC = Math.max(1, ...counts.values());
+      for (const [y, c] of counts) {
+        const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
+        const r = el('rect', { x: X(y) - WY(y) * 0.34, y: axisY + 6, width: Math.max(1.5, WY(y) * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
+        el('title', {}, r).textContent = L.yearPapers(y, c);
+      }
+      el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
+      const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
+      // Year labels: never closer than 36px; the newest year always gets one.
+      let last = 1e9;
+      [...tickYears].sort((a, b) => b - a).forEach(y => {
+        if (last - X(y) < 36) return;
+        const t = el('text', { x: X(y), y: axisY + barH + 26, 'text-anchor': 'middle', class: 'muted' }, svg);
+        t.textContent = y;
+        last = X(y);
+      });
+      const peak = [...counts].sort((a, b) => b[1] - a[1])[0];
+      if (peak) {
+        const t = el('text', { x: X(peak[0]) + WY(peak[0]) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
+        t.textContent = L.papers(peak[1]);
+      }
+
+      msLaid.forEach(m => {
+        const y = axisY - axisPad - m.lane * laneH;
+        const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
+        el('rect', { x: m.x - 10, y: y - 12, width: m.label.length * 6.3 + 70, height: 24, fill: 'transparent' }, g);
+        el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
+        el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
+        const t = el('text', { x: m.x + 11, y: y + 4 }, g);
+        t.textContent = `${m.year} · ${m.label}`;
+        g.addEventListener('click', () => select(m.i));
+        g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i); } });
+        m.g = g;
+      });
+      chart.appendChild(svg);
+    }
+
+    function select(i) {
+      const m = D.milestones[i];
+      if (!m || !detail) return;
+      const kind = KIND_OK(m.kind);
+      msLaid.forEach(x => x.g && x.g.classList.toggle('sel', x.i === i));
+      const url = safeUrl(m.url);
+      const title = url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title)}</a>` : esc(m.title);
+      const status = {
+        'in-sample': esc(L.inSample),
+        'resolved': esc(L.resolved(m.workTitle || '')),
+        'unresolved': esc(L.unresolved),
+      }[m.link] || '';
+      const quotes = (m.evidence || []).map(e => {
+        const eu = safeUrl(e.url);
+        const src = eu ? `<a href="${esc(eu)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title);
+        return `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? esc(L.titleOf) : ''}${src} · ${esc(e.authors)}, ${esc(e.year)}</cite></blockquote>`;
+      }).join('');
+      detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kindName(kind))}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
+    }
+
+    build();
+    const legend = part('legend');
+    if (legend) {
+      legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
+        `<span>${esc(L.legendDashed)}</span><span>${esc(L.legendBars)}</span>`;
+    }
+    const eras = part('eras');
+    if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
+    if (detail) detail.textContent = '';
+    select(0);
+    // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
+    const sc = chart.closest('.scroller');
+    if (sc) {
+      const lastX = Math.max(0, ...msLaid.map(m => m.x));
+      sc.scrollLeft = lastX ? Math.min(sc.scrollWidth - sc.clientWidth, lastX - 24) : sc.scrollWidth;
+    }
+  }
+
+  global.renderTimeline = renderTimeline;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+renderTimeline(JSON.parse(document.getElementById('data').textContent));
+</script>
+</body></html>

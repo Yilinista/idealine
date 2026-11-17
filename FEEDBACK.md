@@ -4,6 +4,7 @@ Every piece of user feedback, and what it changed. Newest first.
 
 | Date | Who (handle or "classmate") | Where | What they said | What changed | Commit / issue |
 |---|---|---|---|---|---|
+| 2026-11-17 | Yilin (author, using the site in Chrome) | chat | Searched "full-duplex agent": nothing seemed to happen (the OpenAlex error was a small line far up the page, and the example timeline for another term stayed in place). | Runs now take over the result area (term, steps, error, suggestions) and scroll there; the example chips and gallery terms open ready-made timelines with no API calls; rare terms get a "very new or rare" note; How it works explains milestone types, limits, and key handling. | (next commit) |
 | 2026-11-17 | Yilin (author, using the live site) | chat | After pressing Trace the page looks stuck; show some intermediate steps. | Added a step list with a running clock; with a model key, the free view (usage curve + key papers) appears as soon as OpenAlex answers, then is replaced by the model's timeline; if the model fails, the free view stays. | (next commit) |
 
 ## Pre-launch findings (my own testing)

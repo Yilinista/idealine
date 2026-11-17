@@ -19,7 +19,7 @@ WEB_FILES = ("i18n.js", "core.js", "providers.js", "timeline.js", "app.js")
 # The page talks only to OpenAlex and the model provider the visitor picks.
 CSP = (
     "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
-    "connect-src https://api.openalex.org https://api.anthropic.com https://api.openai.com "
+    "connect-src 'self' https://api.openalex.org https://api.anthropic.com https://api.openai.com "
     "https://generativelanguage.googleapis.com https://openrouter.ai; base-uri 'none'; form-action 'none'"
 )
 
@@ -111,7 +111,16 @@ nav a:hover{color:var(--fg)}
 .tag.pulse{animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.45}}
 @media (prefers-reduced-motion:reduce){.progress li.active::before,.tag.pulse{animation:none}}
-#status{min-height:1.5em;margin:14px auto 0;max-width:640px;font-size:.9rem;color:var(--muted)}
+#formmsg{min-height:1.5em;margin:12px auto 0;max-width:640px;font-size:.9rem;color:var(--muted)}
+#formmsg.error{color:var(--critique)}
+#status{margin:10px 0 0;font-size:.95rem;color:var(--muted)}
+#status:empty{display:none}
+#result .progress{margin:16px 0 0}
+#result.pending .summary,#result.pending .meta,#result.pending .card,#result.pending .eras,#result.pending #r-actions{display:none}
+.suggest{margin-top:14px}
+.suggest p{margin:0 0 8px;color:var(--muted);font-size:.9rem}
+.suggest .chip{margin:0 6px 6px 0}
+.how{row-gap:22px}
 #status.error{color:var(--critique)}
 #result{margin-top:44px;scroll-margin-top:16px}
 .result-h{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
@@ -188,13 +197,15 @@ TRACE_FORM = """
     </div>
   </details>
 </form>
-<ol id="progress" class="progress" hidden></ol>
-<div id="status" role="status" aria-live="polite"></div>
+<div id="formmsg" role="status" aria-live="polite"></div>
 """
 
 RESULT = """
 <section id="result" aria-live="polite">
   <div class="result-h"><h2 id="r-term"></h2><span class="tag" id="r-tag" data-i18n="exampleTag">Example timeline</span></div>
+  <ol id="progress" class="progress" hidden></ol>
+  <div id="status" role="status" aria-live="polite"></div>
+  <div id="r-suggest" class="suggest" hidden></div>
   <p class="summary" id="r-summary"></p>
   <p class="meta" id="r-meta"></p>
   <div class="card">
@@ -207,6 +218,7 @@ RESULT = """
   <div class="actions" id="r-actions" hidden>
     <button class="btn ghost" id="dl-html" type="button" data-i18n="dlHtml">Download page (.html)</button>
     <button class="btn ghost" id="dl-json" type="button" data-i18n="dlJson">Download data (.json)</button>
+    <button class="btn ghost" id="r-live" type="button" data-i18n="traceLive" hidden>Trace again with live data</button>
   </div>
 </section>
 """
@@ -231,6 +243,15 @@ def main() -> None:
     chips = "".join(f'<button type="button" class="chip">{html.escape(c)}</button>' for c in CHIPS)
     scripts = "".join(f'<script src="assets/{n}"></script>' for n in WEB_FILES)
     example_json = json.dumps(examples, ensure_ascii=False).replace("<", "\\u003c")
+    # Ready-made timelines: typed term or alias (lowercase) -> data files, so they open without API calls.
+    ready: dict[str, dict] = {}
+    for stem, d, _ in terms:
+        entry = {"term": d["term"], "en": f"terms/{stem}.json"}
+        if (zh_dir / f"{stem}.json").exists():
+            entry["zh"] = f"terms/zh/{stem}.json"
+        for name in [d["term"], *d.get("aliases", [])]:
+            ready.setdefault(name.lower(), entry)
+    ready_json = json.dumps(ready, ensure_ascii=False).replace("<", "\\u003c")
     page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="{CSP}">
@@ -255,6 +276,9 @@ def main() -> None:
   <div><b data-i18n="how1h">1 · Count</b><p data-i18n="how1">Papers per year in OpenAlex that use the exact phrase in a title or abstract.</p></div>
   <div><b data-i18n="how2h">2 · Quote</b><p data-i18n="how2">The sentences that use it, from the earliest, most-cited, and newest papers.</p></div>
   <div><b data-i18n="how3h">3 · Explain</b><p data-i18n="how3">A model groups them into eras and milestones, and may cite only those quotes.</p></div>
+  <div><b data-i18n="howKindsH">Milestone types</b><p data-i18n="howKinds"></p></div>
+  <div><b data-i18n="howLimitsH">Limits</b><p data-i18n="howLimits"></p></div>
+  <div><b data-i18n="howKeyH">Your key</b><p data-i18n="howKey"></p></div>
 </section>
 <section class="cli">
   <h2 data-i18n="cliH">Prefer the command line?</h2>
@@ -265,6 +289,7 @@ def main() -> None:
 </main>
 <script type="application/json" id="spec">{spec_json()}</script>
 <script type="application/json" id="example">{example_json}</script>
+<script type="application/json" id="ready">{ready_json}</script>
 {scripts}
 </body></html>
 """

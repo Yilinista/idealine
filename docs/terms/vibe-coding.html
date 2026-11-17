@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vibe coding · idealine</title>
+<meta name="description" content="Where the term vibe coding came from and how its meaning changed, with quotes from the papers.">
+<style>
+:root{--bg:#fbfaf7;--panel:#ffffff;--fg:#1c1b19;--muted:#6d6a63;--ink-soft:#4a4844;--line:#e4e0d6;--accent:#3b5bdb;--on-accent:#ffffff;
+--ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
+--bar:#cfc8b8;--era1:rgba(59,91,219,.07);--era2:rgba(183,121,31,.08);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1014;--panel:#161920;--fg:#ecebe6;--muted:#9a978f;--ink-soft:#c9c6be;--line:#2a2e37;--accent:#f0b85a;--on-accent:#1a1408;
+--ancestor:#b6a6ff;--origin:#5fd3c4;--coined:#7ea2ff;--popularized:#7bd88f;--redefined:#f0b85a;--applied:#a99cf5;--critique:#ff8a65;
+--bar:#3a4050;--era1:rgba(240,184,90,.07);--era2:rgba(110,180,255,.07);--glow:rgba(240,184,90,.12);--shadow:0 12px 40px rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -120px,var(--glow) 0%,transparent 70%) no-repeat,var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.brand{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand a{color:inherit}
+h1{font-family:ui-serif,Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
+.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px;color:var(--ink-soft)}
+.meta{color:var(--muted);font-size:.86rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:22px;box-shadow:var(--shadow);overflow:hidden}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg text{fill:var(--fg);font-size:11.5px}
+svg .muted{fill:var(--muted)}
+.ms{cursor:pointer;outline:none}
+.ms circle{stroke:var(--panel);stroke-width:2.5}
+.ms:hover circle,.ms:focus circle,.ms.sel circle{stroke:var(--fg)}
+.ms.sel text{font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.hint{font-size:.8rem;color:var(--muted);padding:10px 16px 0}
+.detail{padding:18px 20px}
+.kind{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.detail h2{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
+.detail h2 a{color:inherit}
+.why{margin:0 0 10px}
+.status{font-size:.78rem;color:var(--muted)}
+blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line);color:var(--fg)}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
+blockquote cite a{color:inherit}
+mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
+.era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
+.era h3{margin:2px 0 6px;font-size:1rem}
+.era p{margin:0;font-size:.92rem}
+details{margin-top:28px;color:var(--muted);font-size:.88rem}
+details summary{cursor:pointer}
+footer{margin-top:36px;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+</style></head>
+<body><main>
+<div class="brand"><a href="https://github.com/Yilinista/idealine">idealine</a> · where did this idea come from?</div>
+<h1>vibe coding</h1>
+<p class="summary">According to the evidence, &#x27;vibe coding&#x27; was coined by Andrej Karpathy in February 2025 for building software by talking to large language models in natural language instead of writing code directly. Papers dated 2019 and 2020 refer to AI-era practices and are likely misdated. Today the term mostly means delegating implementation to AI coding agents and judging the result by whether it runs, often with little code review; it is now studied for its security, maintainability and educational effects and contrasted with more rigorous &#x27;agentic&#x27; or specification-driven engineering.</p>
+<p class="meta">906 papers in OpenAlex use this term (2019–2026). Proposed by <code>claude-opus-5-5</code> from 158 quoted sentences only; every milestone shows its quotes so you can check it.</p>
+<div class="card">
+  <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
+  <div class="scroller"><div data-part="chart"></div></div>
+  <div class="legend" data-part="legend"></div>
+  <div class="detail" data-part="detail" aria-live="polite"></div>
+</div>
+<div class="eras" data-part="eras"></div>
+<details><summary>How this was made and what it can miss</summary>
+<p>Counts and papers come from <a href="https://openalex.org">OpenAlex</a>, searching titles and abstracts for the exact phrase. Sentences come from abstracts, so works without an abstract (often older books and essays) only appear if the newer papers name them. Labels are generated and can be wrong; the quotes are the evidence. Generated 2026-11-17.</p>
+</details>
+<footer>Made with <a href="https://github.com/Yilinista/idealine">idealine</a>. Want another term? <a href="https://yilinista.github.io/idealine/">Trace it yourself</a>.</footer>
+</main>
+<script type="application/json" id="data">{"term": "vibe coding", "aliases": [], "summary": "According to the evidence, 'vibe coding' was coined by Andrej Karpathy in February 2025 for building software by talking to large language models in natural language instead of writing code directly. Papers dated 2019 and 2020 refer to AI-era practices and are likely misdated. Today the term mostly means delegating implementation to AI coding agents and judging the result by whether it runs, often with little code review; it is now studied for its security, maintainability and educational effects and contrasted with more rigorous 'agentic' or specification-driven engineering.", "counts": [[2019, 1], [2020, 1], [2025, 127], [2026, 777]], "total": 906, "model": "claude-opus-5-5", "generated": "2026-11-17", "lang": "en", "evidenceCount": 158, "eras": [{"start": 2025, "end": 2025, "label": "Conversational AI programming paradigm", "meaning": "A newly named paradigm in which users, including non-programmers, state high-level intent in natural language and an LLM writes the code. It was quickly taken up for prototyping and for education in fields such as medicine.", "evidence": [{"id": "E42", "text": "Vibe coding, a term coined by Andrej Karpathy in February 2025, has quickly become a compelling and controversial natural language programming paradigm in AI-assisted software development.", "title": "Good Vibrations? A Qualitative Study of Co-Creation, Communication, Flow, and Trust in Vibe Coding", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2509.12491", "authors": "Veronica Pimenova et al.", "fromTitle": false}, {"id": "E31", "text": "We examine \"vibe coding\": an emerging programming paradigm where developers primarily write code by interacting with code-generating large language models rather than writing code directly.", "title": "Vibe coding: programming through conversation with artificial intelligence", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2506.23253", "authors": "Advait Sarkar et al.", "fromTitle": false}, {"id": "E36", "text": "The invention of Generative AI and Large Language Models has recently given rise to \"vibe coding\" as a new paradigm of software development in which developers use natural language to state their high-level intent rather than writing or even being aware of the computer code.", "title": "What is Vibe coding and when should you use it (or not)?", "year": 2025, "url": "https://doi.org/10.36227/techrxiv.175459780.03758839/v1", "authors": "Marko Horvat", "fromTitle": false}, {"id": "E26", "text": "Vibe coding-where high-level natural-language directives orchestrate end-to-end software creation-has emerged as a transformative paradigm in modern development.", "title": "A Review on Vibe Coding: Fundamentals, State-of-the-art, Challenges and Future Directions", "year": 2025, "url": "https://doi.org/10.36227/techrxiv.174681482.27435614/v1", "authors": "Partha Pratim Ray", "fromTitle": false}, {"id": "E30", "text": "Vibe coding is a recent Generative AI innovation where a human operator provides conversational natural language description of a problem and an AI assistant writes the code to develop a solution.", "title": "Generative AI Vibe Coding for Prototyping Industrial Systems", "year": 2025, "url": "https://doi.org/10.1109/isie62713.2025.11124737", "authors": "Daswin De Silva et al.", "fromTitle": false}, {"id": "E24", "text": "To address these challenges, we introduce vibe coding, a novel AI-assisted, no-code development approach that enables educators to create interactive, customisable learning simulations without programming expertise.", "title": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning", "year": 2025, "url": "https://doi.org/10.1080/0142159x.2025.2488353", "authors": "Minyang Chow et al.", "fromTitle": false}, {"id": "E41", "text": "This innovative practice article reports on the piloting of vibe coding (using natural language to create software applications with AI) for English as a Foreign Language (EFL) education.", "title": "A vibe coding learning design to enhance EFL students' talking to, through, and about AI", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2509.08854", "authors": "David James Woo et al.", "fromTitle": false}, {"id": "E52", "text": "We explore vibe coding as a rapid prototyping approach powered by generative AI.", "title": "Vibe Coding and the New Prototyping Playbook", "year": 2025, "url": "https://doi.org/10.1109/ms.2025.3597032", "authors": "Markus Borg et al.", "fromTitle": false}, {"id": "E3", "text": "Software development is undergoing a fundamental transformation as vibe coding becomes widespread, with large portions of contemporary codebases now being generated by Artificial Intelligence (AI).", "title": "Vibe Coding as a Reconfiguration of Intent Mediation in Software Development: Definition, Implications, and Research Agenda", "year": 2025, "url": "https://doi.org/10.1109/access.2025.3645466", "authors": "Christian Meske et al.", "fromTitle": false}]}, {"start": 2026, "end": 2026, "label": "Agent delegation and guardrails", "meaning": "Vibe coding came to mean handing whole tasks to autonomous coding agents with minimal review. It was increasingly framed as a risky baseline to be secured, verified, or superseded by agentic and specification-driven engineering.", "evidence": [{"id": "E81", "text": "We present GLM-5, a next-generation foundation model designed to transition the paradigm of vibe coding to agentic engineering.", "title": "GLM-5: from Vibe Coding to Agentic Engineering", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2602.15763", "authors": "5 Team et al.", "fromTitle": false}, {"id": "E116", "text": "We find that coding patterns are bimodal: in 41% of sessions, agents author virtually all committed code (\"vibe coding\"), while in 25%, humans write all code themselves.", "title": "SWE-chat: Coding Agent Interactions From Real Users in the Wild", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2604.20779", "authors": "Joachim Baumann et al.", "fromTitle": false}, {"id": "E126", "text": "“Vibe coding”—where users describe applications in natural language and AI agents autonomously handle all implementation—has rapidly emerged as a mainstream development paradigm.", "title": "ViBench: A Benchmark on Vibe Coding", "year": 2026, "url": "https://doi.org/10.1145/3786335.3813162", "authors": "Peter Yong Zhong et al.", "fromTitle": false}, {"id": "E128", "text": "The adoption of Generative AI (GenAI) in software development is currently dominated by the discussion of “vibe coding,” in which developers describe the desired functionality in natural language and let large language models generate the corresponding code with minimal review.", "title": "Extending AI-Assisted Software Development Beyond Vibe Coding", "year": 2026, "url": "https://doi.org/10.1007/978-3-032-27096-2_11", "authors": "Siniša Nešković et al.", "fromTitle": false}, {"id": "E138", "text": "Vibe coding -- accepting LLM-generated source from natural-language intent with minimal review -- is fast and may be adequate for low-criticality consumer software.", "title": "Formal-Method-Guided Vibe Coding: Closing the Verification Loop on AI-Generated Safety-Critical Software Through Model-Driven Engineering", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2606.22413", "authors": "Ran Wei et al.", "fromTitle": false}, {"id": "E148", "text": "Two paradigms have emerged: vibe coding, an intuition-driven approach accepting AI artifacts via observed behavior, and Specification-Driven Development (SDD), which uses structured specifications as the authoritative source of truth.", "title": "Specification-Driven Development as the Foundation of AI-Native Enterprise Software Engineering", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2607.16680", "authors": "Mamdouh Alenezi", "fromTitle": false}, {"id": "E153", "text": "Context: Software engineering is moving from AI-assisted practices like vibe coding, in which assistants accelerate individual developers, towards Agentic Software Engineering (ASE), in which autonomous agents are delegated goal-level tasks.", "title": "Spec-Driven Development for Agentic Software Engineering: Harnessing Human-Agent Teamwork", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2609.00252", "authors": "Jessica Diaz et al.", "fromTitle": false}, {"id": "E71", "text": "In vibe coding, an AI agent builds software by selecting and assembling open-source software (OSS), often without users directly reading documentation, reporting bugs, or otherwise engaging with maintainers.", "title": "Vibe Coding Kills Open Source", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2601.15494", "authors": "Miklós Koren et al.", "fromTitle": false}, {"id": "E63", "text": "SecureVibeBench: Benchmarking Secure Vibe Coding of AI Agents via Reconstructing Vulnerability-Introducing Scenarios", "title": "SecureVibeBench: Benchmarking Secure Vibe Coding of AI Agents via Reconstructing Vulnerability-Introducing Scenarios", "year": 2026, "url": "https://doi.org/10.18653/v1/2026.acl-long.1107", "authors": "Junkai Chen et al.", "fromTitle": true}]}], "milestones": [{"year": 2025, "kind": "coined", "title": "Andrej Karpathy's coinage of 'vibe coding' (February 2025)", "why": "Later papers credit Karpathy with naming the term in February 2025, after which it spread rapidly.", "url": null, "workTitle": null, "authors": null, "link": "unresolved", "evidence": [{"id": "E42", "text": "Vibe coding, a term coined by Andrej Karpathy in February 2025, has quickly become a compelling and controversial natural language programming paradigm in AI-assisted software development.", "title": "Good Vibrations? A Qualitative Study of Co-Creation, Communication, Flow, and Trust in Vibe Coding", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2509.12491", "authors": "Veronica Pimenova et al.", "fromTitle": false}, {"id": "E142", "text": "In February 2025, as we were delivering an upper-level undergraduate course on Software Engineering in our university, the term vibe coding emerged and quickly became popularized, referring to a practice in which developers describe a project or task in a prompt to an AI model that then generates code artifacts automatically.", "title": "From Specifications to Implementation in the Gen-AI Era: Lessons from a Project-Based Software Engineering Course", "year": 2026, "url": "https://doi.org/10.1145/3797092", "authors": "Yingying Wang et al.", "fromTitle": false}]}, {"year": 2025, "kind": "popularized", "title": "Coding tools such as Cursor and Claude Code", "why": "AI coding tools are credited with popularizing intent-steered development under the vibe coding label.", "url": null, "workTitle": null, "authors": null, "link": "unresolved", "evidence": [{"id": "E23", "text": "Tools such as Cursor and Claude Code have popularized \"vibe coding\" (where developers steer development through high-level intent), commonly relying on context engineering and Retrieval-Augmented Generation (RAG) to ground generation in a codebase.", "title": "Code Digital Twin: A Knowledge Infrastructure for AI-Assisted Complex Software Development", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2503.07967", "authors": "Xin Peng et al.", "fromTitle": false}]}, {"year": 2025, "kind": "popularized", "title": "Vibe coding: programming through conversation with artificial intelligence", "why": "A highly cited early paper defined vibe coding as programming chiefly by interacting with code-generating LLMs.", "url": "https://doi.org/10.48550/arxiv.2506.23253", "workTitle": "Vibe coding: programming through conversation with artificial intelligence", "authors": "Advait Sarkar et al.", "link": "in-sample", "evidence": [{"id": "E31", "text": "We examine \"vibe coding\": an emerging programming paradigm where developers primarily write code by interacting with code-generating large language models rather than writing code directly.", "title": "Vibe coding: programming through conversation with artificial intelligence", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2506.23253", "authors": "Advait Sarkar et al.", "fromTitle": false}]}, {"year": 2025, "kind": "popularized", "title": "Vibe Coding vs. Agentic Coding: Fundamentals and Practical Implications of Agentic AI", "why": "The most cited 2025 review framed vibe coding as one of two emerging AI-assisted development paradigms.", "url": "https://doi.org/10.48550/arxiv.2505.19443", "workTitle": "Vibe Coding vs. Agentic Coding: Fundamentals and Practical Implications of Agentic AI", "authors": "Ranjan Sapkota et al.", "link": "in-sample", "evidence": [{"id": "E29", "text": "This review presents a comprehensive analysis of two emerging paradigms in AI-assisted software development: vibe coding and agentic coding.", "title": "Vibe Coding vs. Agentic Coding: Fundamentals and Practical Implications of Agentic AI", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2505.19443", "authors": "Ranjan Sapkota et al.", "fromTitle": false}]}, {"year": 2025, "kind": "applied", "title": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning", "why": "This paper carried the term into clinical education as a no-code way for educators to build simulations.", "url": "https://doi.org/10.1080/0142159x.2025.2488353", "workTitle": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning", "authors": "Minyang Chow et al.", "link": "in-sample", "evidence": [{"id": "E24", "text": "To address these challenges, we introduce vibe coding, a novel AI-assisted, no-code development approach that enables educators to create interactive, customisable learning simulations without programming expertise.", "title": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning", "year": 2025, "url": "https://doi.org/10.1080/0142159x.2025.2488353", "authors": "Minyang Chow et al.", "fromTitle": false}, {"id": "E54", "text": "Vibe Coding is a clinician-led design framework that embeds expert reasoning and the cognitive ‘feel’ of clinical decision-making into interactive educational tools.", "title": "Vibe Coding in nephrology education: clinician-led, AI-assisted development of open-source interactive learning tools", "year": 2025, "url": "https://doi.org/10.1080/0886022x.2025.2581933", "authors": "Francesco Pesce et al.", "fromTitle": false}, {"id": "E57", "text": "Vibe Coding offers an accessible entry point to create interactive digital applications through human-in-the-loop conversational prompts and AI-assisted workflows.", "title": "Empowering Health Professions Educators: Developing Educational Tools with AI-Assisted Vibe Coding", "year": 2025, "url": "https://doi.org/10.1007/s40670-025-02596-1", "authors": "Olivia Ng et al.", "fromTitle": false}]}, {"year": 2025, "kind": "redefined", "title": "A Survey of Vibe Coding with Large Language Models", "why": "It defined vibe coding by validating AI output through observed outcomes rather than line-by-line comprehension, tying the term to autonomous agents.", "url": "https://doi.org/10.48550/arxiv.2510.12399", "workTitle": "A Survey of Vibe Coding with Large Language Models", "authors": "Ge, Yuyao et al.", "link": "in-sample", "evidence": [{"id": "E51", "text": "The advancement of large language models (LLMs) has catalyzed a paradigm shift from code generation assistance to autonomous coding agents, enabling a novel development methodology termed \"Vibe Coding\" where developers validate AI-generated implementations through outcome observation rather than line-by-line code comprehension.", "title": "A Survey of Vibe Coding with Large Language Models", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2510.12399", "authors": "Ge, Yuyao et al.", "fromTitle": false}]}, {"year": 2025, "kind": "critique", "title": "Is Vibe Coding Safe? Benchmarking Vulnerability of Agent-Generated Code in Real-World Tasks", "why": "It benchmarked the security weaknesses of lightly supervised, agent-generated code.", "url": "https://doi.org/10.48550/arxiv.2512.03262", "workTitle": "Is Vibe Coding Safe? Benchmarking Vulnerability of Agent-Generated Code in Real-World Tasks", "authors": "Songwen Zhao et al.", "link": "in-sample", "evidence": [{"id": "E58", "text": "Vibe coding is a new software development paradigm in which human engineers prompt a large language model (LLM) agent to complete complex coding tasks with little supervision.", "title": "Is Vibe Coding Safe? Benchmarking Vulnerability of Agent-Generated Code in Real-World Tasks", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2512.03262", "authors": "Songwen Zhao et al.", "fromTitle": false}, {"id": "E4", "text": "Code generation with large language models (LLMs), often termed vibe coding, is increasingly adopted in production but fails to ensure code quality, particularly in security (e.g., SQL injection vulnerabilities) and maintainability (e.g., missing type annotations).", "title": "Training Language Models to Generate Quality Code with Program Analysis Feedback", "year": 2025, "url": "https://doi.org/10.52202/085713-4540", "authors": "Feng Yao et al.", "fromTitle": false}, {"id": "E25", "text": "This papers reviews AI coding, and in particular the exploding interest in vibe coding, both in terms of main existing framework, advantages and challenges.", "title": "The Gotchas of AI Coding and Vibe Coding. It’s All About Support And Maintenance", "year": 2025, "url": "https://doi.org/10.31219/osf.io/kjz9t_v1", "authors": "Stephane Herman Maes", "fromTitle": false}]}, {"year": 2025, "kind": "applied", "title": "CAI Fluency: A Framework for Cybersecurity AI Fluency", "why": "It extended the vibe pattern to other domains, coining 'vibe-hacking' as the cybersecurity analogue.", "url": "https://doi.org/10.48550/arxiv.2508.13588", "workTitle": "CAI Fluency: A Framework for Cybersecurity AI Fluency", "authors": "Víctor Mayoral-Vilches et al.", "link": "in-sample", "evidence": [{"id": "E37", "text": "The main objective of the CAI framework is to accelerate the widespread adoption and effective use of artificial intelligence-based cybersecurity solutions, pathing the way to vibe-hacking, the cybersecurity analogon to vibe-coding.", "title": "CAI Fluency: A Framework for Cybersecurity AI Fluency", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2508.13588", "authors": "Víctor Mayoral-Vilches et al.", "fromTitle": false}, {"id": "E39", "text": "This mirrors \"Vibe Coding,\" where AI generates syntactically correct but functionally flawed code, except scientific stakes are immeasurably higher.", "title": "The Rise of \"Vibe Science\": How AI Threatens Scientific Rigor", "year": 2025, "url": "https://doi.org/10.36227/techrxiv.175606229.90717623/v1", "authors": "Isabelle Rose et al.", "fromTitle": false}]}, {"year": 2026, "kind": "redefined", "title": "GLM-5: from Vibe Coding to Agentic Engineering", "why": "This very highly cited model report cast vibe coding as a stage to be surpassed by agentic engineering.", "url": "https://doi.org/10.48550/arxiv.2602.15763", "workTitle": "GLM-5: from Vibe Coding to Agentic Engineering", "authors": "5 Team et al.", "link": "in-sample", "evidence": [{"id": "E81", "text": "We present GLM-5, a next-generation foundation model designed to transition the paradigm of vibe coding to agentic engineering.", "title": "GLM-5: from Vibe Coding to Agentic Engineering", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2602.15763", "authors": "5 Team et al.", "fromTitle": false}, {"id": "E153", "text": "Context: Software engineering is moving from AI-assisted practices like vibe coding, in which assistants accelerate individual developers, towards Agentic Software Engineering (ASE), in which autonomous agents are delegated goal-level tasks.", "title": "Spec-Driven Development for Agentic Software Engineering: Harnessing Human-Agent Teamwork", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2609.00252", "authors": "Jessica Diaz et al.", "fromTitle": false}]}, {"year": 2026, "kind": "critique", "title": "Vibe Coding Kills Open Source", "why": "It argued that agents assembling open-source software without users engaging maintainers harms the open-source ecosystem.", "url": "https://doi.org/10.48550/arxiv.2601.15494", "workTitle": "Vibe Coding Kills Open Source", "authors": "Miklós Koren et al.", "link": "in-sample", "evidence": [{"id": "E71", "text": "In vibe coding, an AI agent builds software by selecting and assembling open-source software (OSS), often without users directly reading documentation, reporting bugs, or otherwise engaging with maintainers.", "title": "Vibe Coding Kills Open Source", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2601.15494", "authors": "Miklós Koren et al.", "fromTitle": false}]}, {"year": 2026, "kind": "applied", "title": "Qwen3.5-Omni Technical Report", "why": "It extended the term to coding from audio-visual instructions ('Audio-Visual Vibe Coding').", "url": "https://doi.org/10.48550/arxiv.2604.15804", "workTitle": "Qwen3.5-Omni Technical Report", "authors": "Qwen Team", "link": "in-sample", "evidence": [{"id": "E112", "text": "Remarkably, we observed the emergence of a new capability in omnimodal models: directly performing coding based on audio-visual instructions, which we call Audio-Visual Vibe Coding.", "title": "Qwen3.5-Omni Technical Report", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2604.15804", "authors": "Qwen Team", "fromTitle": false}]}]}</script>
+<script>// idealine timeline renderer. renderTimeline(D, root) draws the interactive
+// timeline for one term into the elements under `root` marked with data-part:
+// chart, legend, detail, eras. Used by the static term pages and the web app.
+// All text from data is inserted with textContent or escaped; links must be http(s).
+(function (global) {
+  'use strict';
+  const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue('--' + n).trim();
+  const el = (tag, attrs = {}, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeUrl = u => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null);
+  const reEsc = w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Interface text; pass a partial object as the third argument to translate it.
+  const LABELS_EN = {
+    kinds: {},
+    papers: n => `${n} papers`,
+    yearPapers: (y, n) => `${y}: ${n} papers`,
+    timelineOf: term => `Timeline of ${term}`,
+    inSample: 'Linked paper uses the term itself.',
+    resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+    unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+    titleOf: 'Title of ',
+    legendDashed: 'dashed = no link found',
+    legendBars: 'bars = papers per year',
+  };
+
+  function renderTimeline(D, root, labels) {
+    root = root || document;
+    const L = Object.assign({}, LABELS_EN, labels || {});
+    const kindName = k => (L.kinds && L.kinds[k]) || k;
+    const part = name => root.querySelector(`[data-part="${name}"]`);
+    const chart = part('chart'), detail = part('detail');
+    chart.textContent = '';
+    const KIND_OK = k => (KINDS.includes(k) ? k : 'origin');
+    const phrases = [D.term, ...(D.aliases || [])].filter(p => p && p.trim());
+    const termRe = new RegExp('(' + phrases.map(p => p.split(/[\s-]+/).filter(Boolean).map(reEsc).join('[\\s-]+')).join('|') + ')', 'igu');
+    // Split the raw text first, then escape each piece, so entities are never cut.
+    const mark = s => String(s ?? '').split(termRe).map((p, i) => (i % 2 ? `<mark>${esc(p)}</mark>` : esc(p))).join('');
+    let msLaid = [];
+
+    function build() {
+      const counts = new Map(D.counts);
+      const years = [...counts.keys(), ...D.milestones.map(m => m.year), ...D.eras.flatMap(e => [e.start, e.end])].filter(Boolean);
+      if (!years.length) return;
+      const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
+      const left = 40, labelRoom = 230;
+      const avail = Math.max(600, chart.parentElement.clientWidth || 900);
+      // Each year gets width by how much happens in it: milestone years and busy years
+      // are wide, quiet years are thin. A century of rare use stays a short strip.
+      const peakC = Math.max(1, ...counts.values()), msYears = new Set(D.milestones.map(m => m.year));
+      const raw = y => (msYears.has(y) ? 30 : 0) + 34 * Math.sqrt((counts.get(y) || 0) / peakC) + ((counts.get(y) || 0) / peakC > 0.002 ? 6 : 2);
+      let total = 0;
+      for (let y = minYear; y <= nowYear; y++) total += raw(y);
+      const scale = Math.max(1, Math.min(2.2, (avail - left - labelRoom) / total));
+      const WY = y => raw(y) * scale, pos = new Map();
+      let acc = left;
+      for (let y = minYear; y <= nowYear; y++) { pos.set(y, acc + WY(y) / 2); acc += WY(y); }
+      const X = y => pos.get(Math.max(minYear, Math.min(nowYear, y)));
+
+      // Lay out milestone labels in lanes so they do not overlap.
+      const lanes = [], laneH = 36, axisPad = 26;
+      msLaid = D.milestones.map((m, i) => {
+        const label = m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
+        const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(m.year);
+        let lane = 0;
+        while ((lanes[lane] ?? -1e9) > x - 6) lane++;
+        lanes[lane] = x + w;
+        return { ...m, kind: KIND_OK(m.kind), i, label, x, lane };
+      });
+      const nLanes = Math.max(1, lanes.length);
+      const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
+      const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
+      const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
+      const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': L.timelineOf(D.term) });
+
+      // Era bands; labels alternate between two rows and are cut to fit.
+      D.eras.forEach((e, k) => {
+        const xa = X(e.start) - WY(e.start) / 2, xb = X(e.end) + WY(e.end) / 2, row = k % 2;
+        el('rect', { x: xa, y: row * 16, width: Math.max(4, xb - xa), height: axisY - row * 16, fill: css(k % 2 ? 'era2' : 'era1'), rx: 6 }, svg);
+        const next = D.eras[k + 2], room = (next ? X(next.start) - WY(next.start) / 2 : W) - xa - 12;
+        const maxChars = Math.max(8, Math.floor(room / 6.6));
+        const label = e.label.length > maxChars ? e.label.slice(0, maxChars - 1) + '…' : e.label;
+        const t = el('text', { x: xa + 8, y: 15 + row * 16, 'font-weight': 600, 'font-size': 11 }, svg);
+        t.textContent = label;
+        el('title', {}, t).textContent = `${e.start}–${e.end}: ${e.label}`;
+      });
+
+      const maxC = Math.max(1, ...counts.values());
+      for (const [y, c] of counts) {
+        const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
+        const r = el('rect', { x: X(y) - WY(y) * 0.34, y: axisY + 6, width: Math.max(1.5, WY(y) * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
+        el('title', {}, r).textContent = L.yearPapers(y, c);
+      }
+      el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
+      const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
+      // Year labels: never closer than 36px; the newest year always gets one.
+      let last = 1e9;
+      [...tickYears].sort((a, b) => b - a).forEach(y => {
+        if (last - X(y) < 36) return;
+        const t = el('text', { x: X(y), y: axisY + barH + 26, 'text-anchor': 'middle', class: 'muted' }, svg);
+        t.textContent = y;
+        last = X(y);
+      });
+      const peak = [...counts].sort((a, b) => b[1] - a[1])[0];
+      if (peak) {
+        const t = el('text', { x: X(peak[0]) + WY(peak[0]) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
+        t.textContent = L.papers(peak[1]);
+      }
+
+      msLaid.forEach(m => {
+        const y = axisY - axisPad - m.lane * laneH;
+        const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
+        el('rect', { x: m.x - 10, y: y - 12, width: m.label.length * 6.3 + 70, height: 24, fill: 'transparent' }, g);
+        el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
+        el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
+        const t = el('text', { x: m.x + 11, y: y + 4 }, g);
+        t.textContent = `${m.year} · ${m.label}`;
+        g.addEventListener('click', () => select(m.i));
+        g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i); } });
+        m.g = g;
+      });
+      chart.appendChild(svg);
+    }
+
+    function select(i) {
+      const m = D.milestones[i];
+      if (!m || !detail) return;
+      const kind = KIND_OK(m.kind);
+      msLaid.forEach(x => x.g && x.g.classList.toggle('sel', x.i === i));
+      const url = safeUrl(m.url);
+      const title = url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title)}</a>` : esc(m.title);
+      const status = {
+        'in-sample': esc(L.inSample),
+        'resolved': esc(L.resolved(m.workTitle || '')),
+        'unresolved': esc(L.unresolved),
+      }[m.link] || '';
+      const quotes = (m.evidence || []).map(e => {
+        const eu = safeUrl(e.url);
+        const src = eu ? `<a href="${esc(eu)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title);
+        return `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? esc(L.titleOf) : ''}${src} · ${esc(e.authors)}, ${esc(e.year)}</cite></blockquote>`;
+      }).join('');
+      detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kindName(kind))}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
+    }
+
+    build();
+    const legend = part('legend');
+    if (legend) {
+      legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
+        `<span>${esc(L.legendDashed)}</span><span>${esc(L.legendBars)}</span>`;
+    }
+    const eras = part('eras');
+    if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
+    if (detail) detail.textContent = '';
+    select(0);
+    // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
+    const sc = chart.closest('.scroller');
+    if (sc) {
+      const lastX = Math.max(0, ...msLaid.map(m => m.x));
+      sc.scrollLeft = lastX ? Math.min(sc.scrollWidth - sc.clientWidth, lastX - 24) : sc.scrollWidth;
+    }
+  }
+
+  global.renderTimeline = renderTimeline;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+renderTimeline(JSON.parse(document.getElementById('data').textContent));
+</script>
+</body></html>

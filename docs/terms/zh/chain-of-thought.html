@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>chain-of-thought · idealine</title>
+<meta name="description" content="Where the term chain-of-thought came from and how its meaning changed, with quotes from the papers.">
+<style>
+:root{--bg:#fbfaf7;--panel:#ffffff;--fg:#1c1b19;--muted:#6d6a63;--ink-soft:#4a4844;--line:#e4e0d6;--accent:#3b5bdb;--on-accent:#ffffff;
+--ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
+--bar:#cfc8b8;--era1:rgba(59,91,219,.07);--era2:rgba(183,121,31,.08);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1014;--panel:#161920;--fg:#ecebe6;--muted:#9a978f;--ink-soft:#c9c6be;--line:#2a2e37;--accent:#f0b85a;--on-accent:#1a1408;
+--ancestor:#b6a6ff;--origin:#5fd3c4;--coined:#7ea2ff;--popularized:#7bd88f;--redefined:#f0b85a;--applied:#a99cf5;--critique:#ff8a65;
+--bar:#3a4050;--era1:rgba(240,184,90,.07);--era2:rgba(110,180,255,.07);--glow:rgba(240,184,90,.12);--shadow:0 12px 40px rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -120px,var(--glow) 0%,transparent 70%) no-repeat,var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.brand{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand a{color:inherit}
+h1{font-family:ui-serif,Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
+.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px;color:var(--ink-soft)}
+.meta{color:var(--muted);font-size:.86rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:22px;box-shadow:var(--shadow);overflow:hidden}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg text{fill:var(--fg);font-size:11.5px}
+svg .muted{fill:var(--muted)}
+.ms{cursor:pointer;outline:none}
+.ms circle{stroke:var(--panel);stroke-width:2.5}
+.ms:hover circle,.ms:focus circle,.ms.sel circle{stroke:var(--fg)}
+.ms.sel text{font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.hint{font-size:.8rem;color:var(--muted);padding:10px 16px 0}
+.detail{padding:18px 20px}
+.kind{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.detail h2{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
+.detail h2 a{color:inherit}
+.why{margin:0 0 10px}
+.status{font-size:.78rem;color:var(--muted)}
+blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line);color:var(--fg)}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
+blockquote cite a{color:inherit}
+mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
+.era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
+.era h3{margin:2px 0 6px;font-size:1rem}
+.era p{margin:0;font-size:.92rem}
+details{margin-top:28px;color:var(--muted);font-size:.88rem}
+details summary{cursor:pointer}
+footer{margin-top:36px;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+</style></head>
+<body><main>
+<div class="brand"><a href="https://github.com/Yilinista/idealine">idealine</a> · 这个概念从哪里来？</div>
+<h1>chain-of-thought</h1>
+<p class="summary">“chain of thought”原本是英语中的日常说法，指人一连串相互衔接的思路或推理过程，长期出现在文学、法律、科学等各类文献中；2022年的论文《Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models》把它定义为“一系列中间推理步骤”，并将其用作提示大语言模型的技术。如今该词主要指让大模型在给出答案前生成逐步推理过程，并已扩展为通过强化学习训练的“长思维链”推理、多模态推理以及AI安全监控的对象。</p>
+<p class="meta">OpenAlex 中有 12,091 篇论文使用这个词（1914–2026）。时期和里程碑由 <code>claude-opus-5-5</code> 仅根据 160 条原句生成；每个里程碑都附有原句，方便核对。</p>
+<div class="card">
+  <div class="hint">点击圆点查看背后的原文句子。左右滑动可以看更早的年份。</div>
+  <div class="scroller"><div data-part="chart"></div></div>
+  <div class="legend" data-part="legend"></div>
+  <div class="detail" data-part="detail" aria-live="polite"></div>
+</div>
+<div class="eras" data-part="eras"></div>
+<details><summary>这页是怎么做的，可能漏掉什么</summary>
+<p>数量和论文来自 <a href="https://openalex.org">OpenAlex</a>，在标题和摘要里搜索完全一致的词组。句子取自摘要，所以没有摘要的作品（常见于较早的书和文章）只有在后来的论文提到时才会出现。标签由模型生成，可能有误，请以原句为准。生成于 2026-11-17。</p>
+</details>
+<footer>由 <a href="https://github.com/Yilinista/idealine">idealine</a> 生成。想查别的词？<a href="https://yilinista.github.io/idealine/">自己追溯一个</a>。</footer>
+</main>
+<script type="application/json" id="data">{"term": "chain-of-thought", "aliases": ["chain of thought prompting"], "summary": "“chain of thought”原本是英语中的日常说法，指人一连串相互衔接的思路或推理过程，长期出现在文学、法律、科学等各类文献中；2022年的论文《Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models》把它定义为“一系列中间推理步骤”，并将其用作提示大语言模型的技术。如今该词主要指让大模型在给出答案前生成逐步推理过程，并已扩展为通过强化学习训练的“长思维链”推理、多模态推理以及AI安全监控的对象。", "counts": [[1914, 1], [1952, 1], [1953, 1], [1956, 1], [1962, 1], [1967, 1], [1975, 1], [1976, 1], [1985, 1], [1988, 4], [1990, 1], [2000, 1], [2003, 3], [2004, 2], [2005, 1], [2006, 2], [2007, 3], [2008, 3], [2009, 5], [2010, 1], [2012, 2], [2013, 4], [2014, 4], [2015, 3], [2016, 2], [2017, 8], [2018, 5], [2019, 1], [2020, 2], [2021, 3], [2022, 30], [2023, 369], [2024, 1253], [2025, 4023], [2026, 6347]], "total": 12091, "model": "claude-opus-5-5", "generated": "2026-11-17", "lang": "zh", "evidenceCount": 160, "eras": [{"start": 1914, "end": 2021, "label": "日常用语：思路链条", "meaning": "泛指人的一连串思绪、论证脉络或思想传承，并非技术术语。", "evidence": [{"id": "E3", "text": "What has started our chain of thought is the following: I have often observed that a small group or clique can run an organization once it gets into office.", "title": "THE SECRETARY'S OFFICE", "year": 1953, "url": "https://doi.org/10.1021/cen-v031n039.p4028", "authors": "ALDEN H. EMERY", "fromTitle": false}, {"id": "E4", "text": "The latter are said to be the product of free will, which is omnipotent enough to create the first link in a chain of thought or conduct.", "title": "SOME OBSERVATIONS ON THE RELATIONSHIP BETWEEN PSYCHIATRY AND THE LAW", "year": 1956, "url": "https://doi.org/10.1001/archneurpsyc.1956.02330210077008", "authors": "THOMAS S. SZASZ", "fromTitle": false}, {"id": "E7", "text": "Most people would agree that moralising interruptions disrupt the reader's chain of thought and weaken his hold on the world which the narrator is creating.", "title": "Judgement and Atmosphere in Epic", "year": 1976, "url": "https://doi.org/10.1017/s0048671x00004276", "authors": "David M. Gaunt", "fromTitle": false}, {"id": "E8", "text": "But just knowing that an alternative set of beliefs exists and is held, let us say, by infidels may start a chain of thought like this: here are two sets of beliefs that contradict one another; they cannot both be true, so one of them must be false; but if one is false the other may be false also, so there may be no true belief.", "title": "Critical Innocence and Straight Reading", "year": 1985, "url": "https://doi.org/10.2307/468986", "authors": "Peter Caws", "fromTitle": false}, {"id": "E9", "text": "This article presents this chain of thought and explains the essential role of special and general relativity in the GPS.", "title": "Relativistic effects in the global positioning system", "year": 1988, "url": "https://openalex.org/W293809360", "authors": "Neil Ashby", "fromTitle": false}, {"id": "E12", "text": "Thus shifts in argument. were found to be more difficult to comprehend than a continuous chain of thought.", "title": "Redundancy and the cohesion doze", "year": 1990, "url": "https://doi.org/10.1111/j.1467-9817.1990.tb00320.x", "authors": "Marsha Bensoussan", "fromTitle": false}, {"id": "E13", "text": "The achievements of today are the cumulative results of unknown numbers of workers providing an unbroken chain of thought through time.", "title": "Geographers: Biobibliographical Studies, 1977-2000", "year": 2000, "url": "https://doi.org/10.1111/j.1931-0846.2000.tb00335.x", "authors": "Patrick Hamilton Armstrong et al.", "fromTitle": false}, {"id": "E19", "text": "One of the most prominent stylistic means applied by Woolf is her ‘train of thought’, linking one reflection to another like wagons in a railway convoy or like loops in a chain (therefore also sometimes referred to as ‘chain of thought’ in dictionaries).", "title": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own", "year": 2006, "url": "https://openalex.org/W582236113", "authors": "Ellen Johansson", "fromTitle": false}, {"id": "E21", "text": "An important link in that chain of thought is the work of Jean-Baptiste Say. 1 Austrians have recognized Say’s contributions to economics in general and his link to the Austrian School of thought in particular, 2 particularly his work in the areas of methodology, entrepreneurship, monetary theory, and the theory of value. 3 Say is particularly famous for his Law of Markets, arguing that the problem that limits wealth is not underconsumption (com…", "title": "Jean-Baptiste Say, The Father of Austrian Public Finance: Views on Taxation", "year": 2007, "url": "https://doi.org/10.1007/s12113-007-9004-4", "authors": "Mark Brandly", "fromTitle": false}]}, {"start": 2022, "end": 2023, "label": "大模型提示技术", "meaning": "指在提示中给出带中间推理步骤的示例（或零样本引导），让大语言模型逐步推理以提升复杂推理能力的方法。", "evidence": [{"id": "E22", "text": "We explore how generating a chain of thought -- a series of intermediate reasoning steps -- significantly improves the ability of large language models to perform complex reasoning.", "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models", "year": 2022, "url": "https://doi.org/10.52202/068431-1800", "authors": "Jason Wei et al.", "fromTitle": false}, {"id": "E23", "text": "Notably, chain of thought (CoT) prompting, a recent technique for eliciting complex multi-step reasoning through step-by-step answer examples, achieved the state-of-the-art performances in arithmetics and symbolic reasoning, difficult system-2 tasks that do not follow the standard scaling laws for LLMs.", "title": "Large Language Models Are Zero-Shot Reasoners", "year": 2022, "url": "https://doi.org/10.52202/068431-1613", "authors": "Takeshi Kojima et al.", "fromTitle": false}, {"id": "E25", "text": "Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks.", "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2203.11171", "authors": "Xuezhi Wang et al.", "fromTitle": false}, {"id": "E27", "text": "Chain-of-thought prompting has demonstrated remarkable performance on various natural language reasoning tasks.", "title": "Least-to-Most Prompting Enables Complex Reasoning in Large Language Models", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2205.10625", "authors": "Denny Zhou et al.", "fromTitle": false}, {"id": "E31", "text": "Providing these steps for prompting demonstrations is called chain-of-thought (CoT) prompting.", "title": "Automatic Chain of Thought Prompting in Large Language Models", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2210.03493", "authors": "Zhuosheng Zhang et al.", "fromTitle": false}, {"id": "E32", "text": "We find that applying chain-of-thought (CoT) prompting to BBH tasks enables PaLM to surpass the average human-rater performance on 10 of the 23 tasks, and Codex (code-davinci-002) to surpass the average human-rater performance on 17 of the 23 tasks.", "title": "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2210.09261", "authors": "Mirac Süzgün et al.", "fromTitle": false}, {"id": "E36", "text": "To surmount these challenges, we introduce a new framework for language model inference, Tree of Thoughts (ToT), which generalizes over the popular Chain of Thought approach to prompting language models, and enables exploration over coherent units of text (thoughts) that serve as intermediate steps toward problem solving.", "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models", "year": 2023, "url": "https://doi.org/10.52202/075280-0517", "authors": "Shunyu Yao et al.", "fromTitle": false}, {"id": "E39", "text": "Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models", "title": "Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models", "year": 2023, "url": "https://doi.org/10.18653/v1/2023.acl-long.147", "authors": "Lei Wang et al.", "fromTitle": true}]}, {"start": 2023, "end": 2024, "label": "推理范式扩展与审视", "meaning": "思维链成为通用推理范式，被用于微调数据、多模态与机器人等领域，同时其忠实性受到质疑。", "evidence": [{"id": "E33", "text": "In this paper we explore instruction finetuning with a particular focus on (1) scaling the number of tasks, (2) scaling the model size, and (3) finetuning on chain-of-thought data.", "title": "Scaling Instruction-Finetuned Language Models", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2210.11416", "authors": "Hyung Won Chung et al.", "fromTitle": false}, {"id": "E37", "text": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT).", "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting", "year": 2023, "url": "https://doi.org/10.52202/075280-3275", "authors": "Miles Turpin et al.", "fromTitle": false}, {"id": "E59", "text": "Large language models (LLMs) have shown impressive performance on complex reasoning by leveraging chain-of-thought (CoT) prompting to generate intermediate reasoning chains as the rationale to infer the answer.", "title": "Multimodal Chain-of-Thought Reasoning in Language Models", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2302.00923", "authors": "Zhuosheng Zhang et al.", "fromTitle": false}, {"id": "E64", "text": "Large language models (LLMs) perform better when they produce step-by-step, \"Chain-of-Thought\" (CoT) reasoning before answering a question, but it is unclear if the stated reasoning is a faithful explanation of the model's actual reasoning (i.e., its process for answering the question).", "title": "Measuring Faithfulness in Chain-of-Thought Reasoning", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2307.13702", "authors": "Tamera Lanham et al.", "fromTitle": false}, {"id": "E65", "text": "We further show that incorporating chain of thought reasoning allows RT-2 to perform multi-stage semantic reasoning, for example figuring out which object to pick up for use as an improvised hammer (a rock), or which type of drink is best suited for someone who is tired (an energy drink).", "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2307.15818", "authors": "Anthony Brohan et al.", "fromTitle": false}, {"id": "E72", "text": "Visual CoT: Advancing Multi-Modal Language Models with a Comprehensive Dataset and Benchmark for Chain-of-Thought Reasoning", "title": "Visual CoT: Advancing Multi-Modal Language Models with a Comprehensive Dataset and Benchmark for Chain-of-Thought Reasoning", "year": 2024, "url": "https://doi.org/10.52202/079017-0275", "authors": "Hao Shao et al.", "fromTitle": true}, {"id": "E89", "text": "Instructing the model to generate a sequence of intermediate steps, a.k.a., a chain of thought (CoT), is a highly effective method to improve the accuracy of large language models (LLMs) on arithmetics and symbolic reasoning tasks.", "title": "Chain of Thought Empowers Transformers to Solve Inherently Serial Problems", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2402.12875", "authors": "Zhiyuan Li et al.", "fromTitle": false}, {"id": "E106", "text": "Chain-of-thought (CoT) via prompting is the de facto method for eliciting reasoning capabilities from large language models (LLMs).", "title": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2409.12183", "authors": "Zayne Sprague et al.", "fromTitle": false}]}, {"start": 2024, "end": 2026, "label": "长思维链推理模型", "meaning": "指通过强化学习训练、在推理时生成很长中间推理序列的模型内部推理过程，涉及长度压缩、效率与安全监控等问题。", "evidence": [{"id": "E111", "text": "The o1 model series is trained with large-scale reinforcement learning to reason using chain of thought.", "title": "OpenAI o1 System Card", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2412.16720", "authors": "OpenAI et al.", "fromTitle": false}, {"id": "E112", "text": "These models employ extended chain-of-thought (CoT) processes, exploring multiple strategies to enhance problem-solving capabilities.", "title": "Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2412.21187", "authors": "Xingyu Chen et al.", "fromTitle": false}, {"id": "E115", "text": "Chain-of-Thought (CoT) has been proven effective in enhancing the reasoning capabilities of large language models (LLMs).Recent advancements, such as OpenAI's o1 and DeepSeek-R1, suggest that scaling up the length of CoT sequences during inference could further boost LLM reasoning performance.However, due to the autoregressive nature of LLM decoding, longer CoT outputs lead to a linear increase in inference latency, adversely affecting user expe…", "title": "TokenSkip: Controllable Chain-of-Thought Compression in LLMs", "year": 2025, "url": "https://doi.org/10.18653/v1/2025.emnlp-main.165", "authors": "Heming Xia et al.", "fromTitle": false}, {"id": "E127", "text": "Demystifying Long Chain-of-Thought Reasoning in LLMs", "title": "Demystifying Long Chain-of-Thought Reasoning in LLMs", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2502.03373", "authors": "Edward Yeo et al.", "fromTitle": true}, {"id": "E135", "text": "Recent Large Reasoning Models (LRMs), such as DeepSeek-R1 and OpenAI o1, have demonstrated strong performance gains by scaling up the length of Chain-of-Thought (CoT) reasoning during inference.", "title": "A Survey of Efficient Reasoning for Large Reasoning Models: Language, Multimodality, and Beyond", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2503.21614", "authors": "Xiaoye Qu et al.", "fromTitle": false}, {"id": "E144", "text": "Chain-of-thought (CoT) offers a potential boon for AI safety as it allows monitoring a model's CoT to try to understand its intentions and reasoning processes.", "title": "Reasoning Models Don't Always Say What They Think", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2505.05410", "authors": "Yanda Chen et al.", "fromTitle": false}, {"id": "E154", "text": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety", "title": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2507.11473", "authors": "Tomek Korbak et al.", "fromTitle": true}, {"id": "E155", "text": "Recent breakthroughs, exemplified by large language models (LLMs) 1,2 and chain-of-thought (CoT) prompting 3 , have achieved considerable success on foundational reasoning tasks.", "title": "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning", "year": 2025, "url": "https://doi.org/10.1038/s41586-025-09422-z", "authors": "Daya Guo et al.", "fromTitle": false}, {"id": "E160", "text": "A central factor in their success lies in the application of long chain-of-thought (Long CoT) characteristics, which enhance reasoning abilities and enable the solution of intricate problems.", "title": "Towards reasoning era: a survey of long chain-of-thought for reasoning large language models", "year": 2026, "url": "https://doi.org/10.1007/s11432-025-4665-8", "authors": "Qiguang Chen et al.", "fromTitle": false}]}], "milestones": [{"year": 1953, "kind": "origin", "title": "THE SECRETARY'S OFFICE", "why": "证据中较早的日常用法，“chain of thought”指引发思考的一连串念头。", "url": "https://doi.org/10.1021/cen-v031n039.p4028", "workTitle": "THE SECRETARY'S OFFICE", "authors": "ALDEN H. EMERY", "link": "in-sample", "evidence": [{"id": "E3", "text": "What has started our chain of thought is the following: I have often observed that a small group or clique can run an organization once it gets into office.", "title": "THE SECRETARY'S OFFICE", "year": 1953, "url": "https://doi.org/10.1021/cen-v031n039.p4028", "authors": "ALDEN H. EMERY", "fromTitle": false}]}, {"year": 2006, "kind": "ancestor", "title": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own", "why": "说明该词在词典中与“train of thought”同义，即一个念头接一个念头的链式思维，这是后来技术含义的语义来源。", "url": "https://openalex.org/W582236113", "workTitle": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own", "authors": "Ellen Johansson", "link": "in-sample", "evidence": [{"id": "E19", "text": "One of the most prominent stylistic means applied by Woolf is her ‘train of thought’, linking one reflection to another like wagons in a railway convoy or like loops in a chain (therefore also sometimes referred to as ‘chain of thought’ in dictionaries).", "title": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own", "year": 2006, "url": "https://openalex.org/W582236113", "authors": "Ellen Johansson", "fromTitle": false}]}, {"year": 2022, "kind": "coined", "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models", "why": "将chain of thought定义为“一系列中间推理步骤”，并证明它能显著提升大模型的复杂推理能力，确立了该术语的技术含义。", "url": "https://doi.org/10.52202/068431-1800", "workTitle": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models", "authors": "Jason Wei et al.", "link": "in-sample", "evidence": [{"id": "E22", "text": "We explore how generating a chain of thought -- a series of intermediate reasoning steps -- significantly improves the ability of large language models to perform complex reasoning.", "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models", "year": 2022, "url": "https://doi.org/10.52202/068431-1800", "authors": "Jason Wei et al.", "fromTitle": false}, {"id": "E155", "text": "Recent breakthroughs, exemplified by large language models (LLMs) 1,2 and chain-of-thought (CoT) prompting 3 , have achieved considerable success on foundational reasoning tasks.", "title": "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning", "year": 2025, "url": "https://doi.org/10.1038/s41586-025-09422-z", "authors": "Daya Guo et al.", "fromTitle": false}]}, {"year": 2022, "kind": "popularized", "title": "Large Language Models Are Zero-Shot Reasoners", "why": "把CoT提示作为突破性技术加以讨论，并推广到零样本场景，使该术语迅速普及。", "url": "https://doi.org/10.52202/068431-1613", "workTitle": "Large Language Models Are Zero-Shot Reasoners", "authors": "Takeshi Kojima et al.", "link": "in-sample", "evidence": [{"id": "E23", "text": "Notably, chain of thought (CoT) prompting, a recent technique for eliciting complex multi-step reasoning through step-by-step answer examples, achieved the state-of-the-art performances in arithmetics and symbolic reasoning, difficult system-2 tasks that do not follow the standard scaling laws for LLMs.", "title": "Large Language Models Are Zero-Shot Reasoners", "year": 2022, "url": "https://doi.org/10.52202/068431-1613", "authors": "Takeshi Kojima et al.", "fromTitle": false}, {"id": "E78", "text": "In enhancing the reasoning capabilities of large language models (LLMs), prior research primarily focuses on specific prompting techniques such as few-shot or zero-shot chain-of-thought (CoT) prompting.", "title": "Chain-of-Thought Reasoning Without Prompting", "year": 2024, "url": "https://doi.org/10.52202/079017-2123", "authors": "Xuezhi Wang et al.", "fromTitle": false}]}, {"year": 2022, "kind": "popularized", "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models", "why": "在思维链基础上采样多条推理路径，成为后续工作广泛引用的核心扩展方法。", "url": "https://doi.org/10.48550/arxiv.2203.11171", "workTitle": "Self-Consistency Improves Chain of Thought Reasoning in Language Models", "authors": "Xuezhi Wang et al.", "link": "in-sample", "evidence": [{"id": "E25", "text": "Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks.", "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2203.11171", "authors": "Xuezhi Wang et al.", "fromTitle": false}, {"id": "E62", "text": "The performance of Large Language Models (LLMs) in reasoning tasks depends heavily on prompt design, with Chain-of-Thought (CoT) and self-consistency being critical methods that enhance this ability.", "title": "Progressive-Hint Prompting Improves Reasoning in Large Language Models", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2304.09797", "authors": "Chuanyang Zheng et al.", "fromTitle": false}, {"id": "E69", "text": "Self-consistency with chain-of-thought prompting (CoT) has demonstrated remarkable performance gains on various challenging tasks, by utilizing multiple reasoning paths sampled from large language models (LLMs).", "title": "Universal Self-Consistency for Large Language Model Generation", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2311.17311", "authors": "Xinyun Chen et al.", "fromTitle": false}]}, {"year": 2022, "kind": "applied", "title": "Scaling Instruction-Finetuned Language Models", "why": "把思维链从提示技巧转为训练数据，用于指令微调。", "url": "https://doi.org/10.48550/arxiv.2210.11416", "workTitle": "Scaling Instruction-Finetuned Language Models", "authors": "Hyung Won Chung et al.", "link": "in-sample", "evidence": [{"id": "E33", "text": "In this paper we explore instruction finetuning with a particular focus on (1) scaling the number of tasks, (2) scaling the model size, and (3) finetuning on chain-of-thought data.", "title": "Scaling Instruction-Finetuned Language Models", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2210.11416", "authors": "Hyung Won Chung et al.", "fromTitle": false}, {"id": "E58", "text": "We find task balancing and enrichment techniques are overlooked but critical to effective instruction tuning, and in particular, training with mixed prompt settings (zero-shot, few-shot, and chain-of-thought) actually yields stronger (2%+) performance in all settings.", "title": "The Flan Collection: Designing Data and Methods for Effective Instruction Tuning", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2301.13688", "authors": "Shayne Longpre et al.", "fromTitle": false}]}, {"year": 2023, "kind": "redefined", "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models", "why": "将线性思维链推广为可搜索的树结构，催生了“X-of-Thought”系列框架。", "url": "https://doi.org/10.52202/075280-0517", "workTitle": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models", "authors": "Shunyu Yao et al.", "link": "in-sample", "evidence": [{"id": "E36", "text": "To surmount these challenges, we introduce a new framework for language model inference, Tree of Thoughts (ToT), which generalizes over the popular Chain of Thought approach to prompting language models, and enables exploration over coherent units of text (thoughts) that serve as intermediate steps toward problem solving.", "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models", "year": 2023, "url": "https://doi.org/10.52202/075280-0517", "authors": "Shunyu Yao et al.", "fromTitle": false}, {"id": "E94", "text": "We introduce Graph of Thoughts (GoT): a framework that advances prompting capabilities in large language models (LLMs) beyond those offered by paradigms such as Chain-of-Thought or Tree of Thoughts (ToT).", "title": "Graph of Thoughts: Solving Elaborate Problems with Large Language Models", "year": 2024, "url": "https://doi.org/10.1609/aaai.v38i16.29720", "authors": "Maciej Besta et al.", "fromTitle": false}]}, {"year": 2023, "kind": "critique", "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting", "why": "指出模型给出的思维链未必忠实反映其真实推理过程。", "url": "https://doi.org/10.52202/075280-3275", "workTitle": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting", "authors": "Miles Turpin et al.", "link": "in-sample", "evidence": [{"id": "E37", "text": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT).", "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting", "year": 2023, "url": "https://doi.org/10.52202/075280-3275", "authors": "Miles Turpin et al.", "fromTitle": false}, {"id": "E64", "text": "Large language models (LLMs) perform better when they produce step-by-step, \"Chain-of-Thought\" (CoT) reasoning before answering a question, but it is unclear if the stated reasoning is a faithful explanation of the model's actual reasoning (i.e., its process for answering the question).", "title": "Measuring Faithfulness in Chain-of-Thought Reasoning", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2307.13702", "authors": "Tamera Lanham et al.", "fromTitle": false}, {"id": "E133", "text": "Recent studies indicate that when faced with explicit biases in prompts, models often omit mentioning these biases in their Chain-of-Thought (CoT) output, revealing that verbalized reasoning can give an incorrect picture of how models arrive at conclusions (unfaithfulness).", "title": "Chain-of-Thought Reasoning In The Wild Is Not Always Faithful", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2503.08679", "authors": "Iván Arcuschin et al.", "fromTitle": false}]}, {"year": 2023, "kind": "applied", "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control", "why": "将思维链推理引入视觉-语言-动作模型与机器人控制，标志其进入多模态与具身领域。", "url": "https://doi.org/10.48550/arxiv.2307.15818", "workTitle": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control", "authors": "Anthony Brohan et al.", "link": "in-sample", "evidence": [{"id": "E65", "text": "We further show that incorporating chain of thought reasoning allows RT-2 to perform multi-stage semantic reasoning, for example figuring out which object to pick up for use as an improvised hammer (a rock), or which type of drink is best suited for someone who is tired (an energy drink).", "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2307.15818", "authors": "Anthony Brohan et al.", "fromTitle": false}, {"id": "E102", "text": "Naive use of \"chain-of-thought\" (CoT) style prompting is significantly less effective with standard VLAs because of the relatively simple training examples that are available to them.", "title": "Robotic Control via Embodied Chain-of-Thought Reasoning", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2407.08693", "authors": "Michał Zawalski et al.", "fromTitle": false}, {"id": "E149", "text": "In this paper, we introduce a method that incorporates explicit visual chain-of-thought (CoT) reasoning into vision-language-action models (VLAs) by predicting future image frames autoregressively as visual goals before generating a short action sequence to achieve these goals.", "title": "CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models", "year": 2025, "url": "https://doi.org/10.1109/cvpr52734.2025.00166", "authors": "Qingqing Zhao et al.", "fromTitle": false}]}, {"year": 2024, "kind": "redefined", "title": "OpenAI o1 System Card", "why": "思维链不再只是提示方法，而是通过大规模强化学习训练的模型内部推理过程，开启“长思维链”推理模型时代。", "url": "https://doi.org/10.48550/arxiv.2412.16720", "workTitle": "OpenAI o1 System Card", "authors": "OpenAI et al.", "link": "in-sample", "evidence": [{"id": "E111", "text": "The o1 model series is trained with large-scale reinforcement learning to reason using chain of thought.", "title": "OpenAI o1 System Card", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2412.16720", "authors": "OpenAI et al.", "fromTitle": false}, {"id": "E112", "text": "These models employ extended chain-of-thought (CoT) processes, exploring multiple strategies to enhance problem-solving capabilities.", "title": "Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2412.21187", "authors": "Xingyu Chen et al.", "fromTitle": false}, {"id": "E115", "text": "Chain-of-Thought (CoT) has been proven effective in enhancing the reasoning capabilities of large language models (LLMs).Recent advancements, such as OpenAI's o1 and DeepSeek-R1, suggest that scaling up the length of CoT sequences during inference could further boost LLM reasoning performance.However, due to the autoregressive nature of LLM decoding, longer CoT outputs lead to a linear increase in inference latency, adversely affecting user expe…", "title": "TokenSkip: Controllable Chain-of-Thought Compression in LLMs", "year": 2025, "url": "https://doi.org/10.18653/v1/2025.emnlp-main.165", "authors": "Heming Xia et al.", "fromTitle": false}, {"id": "E135", "text": "Recent Large Reasoning Models (LRMs), such as DeepSeek-R1 and OpenAI o1, have demonstrated strong performance gains by scaling up the length of Chain-of-Thought (CoT) reasoning during inference.", "title": "A Survey of Efficient Reasoning for Large Reasoning Models: Language, Multimodality, and Beyond", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2503.21614", "authors": "Xiaoye Qu et al.", "fromTitle": false}]}, {"year": 2024, "kind": "critique", "title": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning", "why": "指出思维链的收益主要集中在数学与符号推理任务，限定了其适用范围。", "url": "https://doi.org/10.48550/arxiv.2409.12183", "workTitle": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning", "authors": "Zayne Sprague et al.", "link": "in-sample", "evidence": [{"id": "E106", "text": "Chain-of-thought (CoT) via prompting is the de facto method for eliciting reasoning capabilities from large language models (LLMs).", "title": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2409.12183", "authors": "Zayne Sprague et al.", "fromTitle": false}, {"id": "E83", "text": "In addition, code-pretraining greatly benefits strategic reasoning, while advanced reasoning methods such as Chain-of-Thought (CoT) and Tree-of-Thought (ToT) do not always help.", "title": "GTBench: Uncovering the Strategic Reasoning Capabilities of LLMs via Game-Theoretic Evaluations", "year": 2024, "url": "https://doi.org/10.52202/079017-0885", "authors": "Jinhao Duan et al.", "fromTitle": false}, {"id": "E148", "text": "Notably, prevailing linguistic reasoning techniques (e.g., chain-of-thought, self-consistency, tree-of-thoughts) fail to improve performance, whereas explicitly generating cognitive maps during question-answering enhances MLLMs’ spatial distance ability.", "title": "Thinking in Space: How Multimodal Large Language Models See, Remember, and Recall Spaces", "year": 2025, "url": "https://doi.org/10.1109/cvpr52734.2025.00994", "authors": "Jihan Yang et al.", "fromTitle": false}]}, {"year": 2025, "kind": "applied", "title": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety", "why": "把思维链视为监控模型意图的AI安全工具，同时强调这种可监控性很脆弱。", "url": "https://doi.org/10.48550/arxiv.2507.11473", "workTitle": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety", "authors": "Tomek Korbak et al.", "link": "in-sample", "evidence": [{"id": "E154", "text": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety", "title": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2507.11473", "authors": "Tomek Korbak et al.", "fromTitle": true}, {"id": "E144", "text": "Chain-of-thought (CoT) offers a potential boon for AI safety as it allows monitoring a model's CoT to try to understand its intentions and reasoning processes.", "title": "Reasoning Models Don't Always Say What They Think", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2505.05410", "authors": "Yanda Chen et al.", "fromTitle": false}, {"id": "E142", "text": "Our framework mitigates risks such as prompt injection, agent misalignment, and insecure code risks through three powerful guardrails: PromptGuard 2, a universal jailbreak detector that demonstrates clear state of the art performance; Agent Alignment Checks, a chain-of-thought auditor that inspects agent reasoning for prompt injection and goal misalignment, which, while still experimental, shows stronger efficacy at preventing indirect injection…", "title": "LlamaFirewall: An open source guardrail system for building secure AI agents", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2505.03574", "authors": "Sahana Chennabasappa et al.", "fromTitle": false}]}]}</script>
+<script>// idealine interface text in English and Simplified Chinese.
+// Static text: elements with data-i18n (text), data-i18n-ph (placeholder), data-i18n-title.
+// Runtime messages from core.js / providers.js are English; trMessage() translates
+// the known ones and leaves anything else as is. Paper titles and quotes are never translated.
+(function (global) {
+  'use strict';
+
+  const KINDS = {
+    en: { ancestor: 'ancestor', origin: 'origin', coined: 'coined', popularized: 'popularized', redefined: 'redefined', applied: 'applied', critique: 'critique' },
+    zh: { ancestor: '前身', origin: '起源', coined: '命名', popularized: '流行', redefined: '含义转变', applied: '跨界应用', critique: '批评' },
+  };
+
+  const T = {
+    en: {
+      langToggle: '中文', langToggleTitle: 'Switch to Chinese',
+      heroTitle: 'Where did this idea come from?',
+      heroSub: 'Type any term. See when it first appeared, who shaped it, and how its meaning shifted, with the sentence behind every step.',
+      termPh: 'Try “world model” or “in-context learning”', termLabel: 'Term', go: 'Trace',
+      freeLine: 'Free: usage curve + key papers. For eras and milestones,', addKey: 'add your own model key',
+      optsSummary: 'Options and model key',
+      aliasesLabel: 'Other spellings (optional, comma-separated)', aliasesPh: 'e.g. mixture-of-experts, MoE layer',
+      providerLabel: 'Model', providerNone: 'No model (free: usage curve + key papers)',
+      keyLabel: 'API key', modelLabel: 'Model ID', remember: 'Remember my keys on this device (not on a shared computer)',
+      getKey: p => `Get a ${p} key`,
+      privacyFree: 'Free mode: no model, no key. You get the usage curve plus the earliest and most-cited papers.',
+      privacyKey: (host, short) => `Your key goes straight from your browser to ${host}. This site has no server and never sees it. One request per term, about 15–25k input tokens, billed to your ${short} account.`,
+      oakeyLabel: 'OpenAlex key (optional, free; use it if OpenAlex says the daily budget is used up)',
+      forget: 'Forget saved keys', forgotten: 'Saved keys removed from this browser.',
+      exampleTag: 'Example timeline', resultTag: 'Your timeline', interimTag: 'First look · the model is still reading',
+      step_count: 'Counting papers per year in OpenAlex', step_early: 'Reading the earliest papers', step_cited: 'Reading the most-cited papers',
+      step_recent: 'Reading recent papers', step_model: 'The model reads the quotes and builds eras and milestones', step_links: 'Linking milestones to papers',
+      stepModelN: (short, n) => `${short} reads ${n} quoted sentences and builds eras and milestones (often 30–90 s)`,
+      seconds: n => ` · ${n} s`,
+      keptFree: 'Showing the free view (usage curve + key papers) instead.',
+      tracingTag: 'Tracing…', failedTag: 'No timeline yet', readyTag: 'Ready-made timeline',
+      readyNote: date => `Made in advance (${date}), so it opens instantly.`,
+      traceLive: 'Trace again with live data',
+      thin: n => `Only ${n} papers use this term, so it is very new or rare; the timeline will be thin.`,
+      suggest: 'Meanwhile, these ready-made timelines open instantly:',
+      howKindsH: 'Milestone types',
+      howKinds: 'origin: first use · coined: someone names it · popularized: it spreads · redefined: the meaning shifts · applied: used in a new field · critique: pushback · ancestor: an older idea it builds on',
+      howLimitsH: 'Limits',
+      howLimits: 'Only titles and abstracts, mostly English, so use the English term. Very new terms have few papers. OpenAlex limits free use per network; a free OpenAlex key lifts that.',
+      howKeyH: 'Your key',
+      howKey: 'The site has no server. Your model key goes from your browser straight to the provider you picked, and is saved only if you tick “Remember”.',
+      hint: 'Click a dot to see the quotes behind it. Scroll sideways for earlier years.',
+      dlHtml: 'Download page (.html)', dlJson: 'Download data (.json)',
+      moreH: 'More timelines',
+      how1h: '1 · Count', how1: 'Papers per year in OpenAlex that use the exact phrase in a title or abstract.',
+      how2h: '2 · Quote', how2: 'The sentences that use it, from the earliest, most-cited, and newest papers.',
+      how3h: '3 · Explain', how3: 'A model groups them into eras and milestones, and may cite only those quotes.',
+      cliH: 'Prefer the command line?',
+      feedback: 'Something wrong or missing? Open an issue on GitHub.',
+      footer: 'Eras and milestones come from a language model that may cite only the quoted sentences, and can be wrong; the quotes are the evidence.',
+      navHow: 'How it works',
+      meta: (total, span, model, n) => `${total.toLocaleString('en-US')} papers in OpenAlex use this term (${span}). ` + (model ? `Proposed by ${model} from ${n} quoted sentences only; check the quotes.` : 'No model: milestones are the earliest and most-cited papers that use the term.'),
+      cardMeta: (total, n) => `${total.toLocaleString('en-US')} papers · ${n} milestones`,
+      needTerm: 'Type a term first.',
+      needKey: short => `Paste your ${short} key, or pick “No model” for the free view.`,
+      asking: (short, model, n) => `Asking ${short} (${model}) to read ${n} sentences. This can take a minute…`,
+      noPapers: term => `No paper titles or abstracts in OpenAlex use “${term}”. Try another spelling or add one under “Other spellings”.`,
+      noPapersCjk: term => `No paper titles or abstracts in OpenAlex use “${term}”. Most papers there are in English, so try the English term (for example “vibe coding”).`,
+      noMilestones: 'The model returned no milestones backed by the quoted sentences. Try again, or try another model.',
+      acronym: 'Tip: acronyms often match other fields; the spelled-out term usually gives a cleaner timeline.',
+      pressTrace: 'Press Trace to run it with your key.',
+      wentWrong: m => 'Something went wrong: ' + m,
+      // timeline
+      legendDashed: 'dashed = no link found', legendBars: 'bars = papers per year',
+      papers: n => `${n} papers`, yearPapers: (y, n) => `${y}: ${n} papers`, timelineOf: term => `Timeline of ${term}`,
+      inSample: 'Linked paper uses the term itself.',
+      resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+      unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+      titleOf: 'Title of ',
+    },
+    zh: {
+      langToggle: 'EN', langToggleTitle: '切换到英文',
+      heroTitle: '这个概念从哪里来？',
+      heroSub: '输入任意术语，看它何时出现、谁推动了它、含义如何变化。每一步都附上论文原句作证据。',
+      termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '追溯',
+      freeLine: '免费：使用曲线 + 关键论文。想看时期划分和里程碑，', addKey: '填入你自己的模型 key',
+      optsSummary: '选项与模型 key',
+      aliasesLabel: '其他写法（可选，用逗号分隔）', aliasesPh: '例如 mixture-of-experts, MoE layer',
+      providerLabel: '模型', providerNone: '不用模型（免费：使用曲线 + 关键论文）',
+      keyLabel: 'API key', modelLabel: '模型 ID', remember: '在这台设备上记住我的 key（公共电脑请勿勾选）',
+      getKey: p => `获取 ${p} key`,
+      privacyFree: '免费模式：不用模型、不用 key。你会看到使用曲线，以及最早和被引最多的论文。',
+      privacyKey: (host, short) => `你的 key 只会从你的浏览器直接发给 ${host}。本站没有服务器，看不到你的 key。每个术语一次请求，约 1.5–2.5 万输入 token，费用记在你的 ${short} 账户。`,
+      oakeyLabel: 'OpenAlex key（可选，免费；如果提示 OpenAlex 今日额度用完，就填这个）',
+      forget: '清除已保存的 key', forgotten: '已从这个浏览器清除保存的 key。',
+      exampleTag: '示例时间线', resultTag: '你的时间线', interimTag: '初步结果 · 模型还在阅读',
+      step_count: '统计 OpenAlex 每年的论文数', step_early: '读取最早的论文', step_cited: '读取被引最多的论文',
+      step_recent: '读取最新的论文', step_model: '模型阅读原句，划分时期和里程碑', step_links: '把里程碑链接到论文',
+      stepModelN: (short, n) => `${short} 正在阅读 ${n} 条原句，划分时期和里程碑（通常 30–90 秒）`,
+      seconds: n => ` · ${n} 秒`,
+      keptFree: '先为你显示免费版结果（使用曲线 + 关键论文）。',
+      tracingTag: '追溯中……', failedTag: '暂时没有结果', readyTag: '现成时间线',
+      readyNote: date => `这是预先生成的完整版（${date}），所以能直接打开。`,
+      traceLive: '用实时数据重新追溯',
+      thin: n => `只有 ${n} 篇论文用到这个词，说明它很新或很少见，时间线会比较单薄。`,
+      suggest: '可以先看看这些现成的时间线，点开即看：',
+      howKindsH: '里程碑类型',
+      howKinds: '起源：最早使用 · 命名：有人给它起了名 · 流行：开始被广泛使用 · 含义转变：意思变了 · 跨界应用：用到新领域 · 批评：反对或质疑 · 前身：它所继承的更早的想法',
+      howLimitsH: '局限',
+      howLimits: '只看标题和摘要，而且大多是英文，所以请输入英文术语。很新的词论文很少。OpenAlex 对每个网络的免费用量有限，填一个免费的 OpenAlex key 就不受限。',
+      howKeyH: '你的 key',
+      howKey: '本站没有服务器。你的模型 key 只从你的浏览器直接发给你选的模型提供方；只有勾选“记住”才会保存在本机。',
+      hint: '点击圆点查看背后的原文句子。左右滑动可以看更早的年份。',
+      dlHtml: '下载网页（.html）', dlJson: '下载数据（.json）',
+      moreH: '更多时间线',
+      how1h: '1 · 计数', how1: '统计 OpenAlex 中每年在标题或摘要里使用这个词的论文数。',
+      how2h: '2 · 摘句', how2: '从最早、被引最多和最新的论文中，摘出用到这个词的句子。',
+      how3h: '3 · 解释', how3: '模型把这些句子归纳成时期和里程碑，而且只能引用这些原句。',
+      cliH: '想用命令行？',
+      feedback: '发现问题或缺了什么？欢迎在 GitHub 上提 issue。',
+      footer: '时期和里程碑由语言模型根据引用的原句生成，可能有误，请以原句为准。数据与源码：',
+      navHow: '原理',
+      meta: (total, span, model, n) => `OpenAlex 中有 ${total.toLocaleString('zh-CN')} 篇论文使用这个词（${span}）。` + (model ? `时期和里程碑由 ${model} 仅根据 ${n} 条原句生成，请核对原句。` : '未使用模型：里程碑是使用这个词的最早和被引最多的论文。'),
+      cardMeta: (total, n) => `${total.toLocaleString('zh-CN')} 篇论文 · ${n} 个里程碑`,
+      needTerm: '请先输入一个术语。',
+      needKey: short => `请粘贴你的 ${short} key，或者选“不用模型”使用免费模式。`,
+      asking: (short, model, n) => `正在请 ${short}（${model}）阅读 ${n} 条句子，可能需要一分钟……`,
+      noPapers: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。换个写法，或在“其他写法”里补充。`,
+      noPapersCjk: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。那里的论文大多是英文，请输入英文术语（例如 “vibe coding”）。`,
+      noMilestones: '模型没有给出有原句支撑的里程碑。请重试，或换一个模型。',
+      acronym: '提示：缩写常会匹配到其他领域，写全称通常更准确。',
+      pressTrace: '点“追溯”用你的 key 运行。',
+      wentWrong: m => '出错了：' + m,
+      legendDashed: '虚线 = 没找到链接', legendBars: '柱子 = 每年论文数',
+      papers: n => `${n} 篇`, yearPapers: (y, n) => `${y} 年：${n} 篇`, timelineOf: term => `${term} 的时间线`,
+      inSample: '链接的论文本身就用到了这个词。',
+      resolved: title => `原句提到了这项工作，已在 OpenAlex 匹配到《${title}》，请核对是否匹配正确。`,
+      unresolved: '原句提到了这项工作，但在 OpenAlex 里没找到，所以没有链接。',
+      titleOf: '标题：',
+    },
+  };
+
+  // Known English runtime messages -> Chinese. Anything unmatched stays English.
+  const MSG_ZH = [
+    [/^Counting papers per year…$/, () => '正在统计每年的论文数……'],
+    [/^Reading the earliest papers…$/, () => '正在读取最早的论文……'],
+    [/^Reading the most-cited papers…$/, () => '正在读取被引最多的论文……'],
+    [/^Reading recent papers…$/, () => '正在读取最新的论文……'],
+    [/^Looking up “(.*)”…$/, m => `正在查找“${m[1]}”……`],
+    [/^OpenAlex is busy; retrying in (\d+) s…$/, m => `OpenAlex 繁忙，${m[1]} 秒后重试……`],
+    [/^OpenAlex returned (\d+); retrying…$/, m => `OpenAlex 返回 ${m[1]}，正在重试……`],
+    [/^OpenAlex's free daily budget for your network is used up \(resets in about (.+?), at midnight UTC\)\./, m => `你所在网络的 OpenAlex 免费额度今天已用完（大约 ${m[1].replace(' min', ' 分钟').replace(' h', ' 小时')}后重置，即 UTC 午夜）。可以在“选项与模型 key”里填一个免费的 OpenAlex key，或稍后再试。`],
+    [/^OpenAlex is rate-limiting requests right now/, () => 'OpenAlex 正在限流，请等一分钟再试。'],
+    [/^Could not reach OpenAlex/, () => '连不上 OpenAlex，请检查网络后重试。'],
+    [/^OpenAlex error (\d+)\.$/, m => `OpenAlex 出错（${m[1]}）。`],
+    [/^OpenAlex kept failing/, () => 'OpenAlex 一直失败，请过一分钟再试。'],
+    [/^(.+?) rejected the key \((\d+)\)\. Check that you pasted the whole key and that it is active\.(.*)$/s, m => `${m[1]} 拒绝了这个 key（${m[2]}）。请确认 key 完整且有效。${detail(m[3])}`],
+    [/^(.+?) does not know that model \(404\)\. Check the model ID\.(.*)$/s, m => `${m[1]} 不认识这个模型（404），请检查模型 ID。${detail(m[2])}`],
+    [/^(.+?) says you hit a rate or spending limit \(429\)\. Wait a bit or check your account's billing\.(.*)$/s, m => `${m[1]} 提示你触发了速率或额度上限（429）。请稍后再试，或检查账户余额。${detail(m[2])}`],
+    [/^(.+?) refused the request \(400\)\.(.*?)(?: ?Some models do not support[^]*)?$/s, m => `${m[1]} 拒绝了这次请求（400）。${detail(m[2])} 部分模型不支持结构化 JSON 输出或这些设置，可以试试默认模型。`],
+    [/^(.+?) error (\d+)\.(.*)$/s, m => `${m[1]} 出错（${m[2]}）。${detail(m[3])}`],
+    [/^Google stopped the answer \((.+)\)\.$/, m => `Google 中止了回答（${m[1]}）。`],
+    [/^Unknown provider\.$/, () => '未知的模型提供方。'],
+    [/^Paste your API key first\.$/, () => '请先粘贴你的 API key。'],
+    [/^Type a model ID\.$/, () => '请填写模型 ID。'],
+    [/^Could not reach (.+?)\. /, m => `连不上 ${m[1]}，请检查网络（或广告拦截插件）后重试。`],
+    [/^(.+?) returned an empty answer/, m => `${m[1]} 返回了空答案，请重试。`],
+    [/^(.+?) returned text that is not valid JSON/, m => `${m[1]} 返回的内容不是有效的 JSON，请重试或换个模型。`],
+    [/^The model declined this request\.$/, () => '模型拒绝了这个请求。'],
+    [/^The answer was cut off/, () => '回答被截断了（超出最大 token），请重试。'],
+    [/^(.+?)'s content filter blocked the answer\.$/, m => `${m[1]} 的内容过滤拦截了回答。`],
+    [/^(.+?) reported an error(.*)$/s, m => { const d = m[2].replace(/^[:.]\s*/, '').trim(); return `${m[1]} 报错${d ? '：' + d : '。'}`; }],
+    [/^(.+?) returned no answer(?: \(blocked: (.+?)\))?\.$/, m => `${m[1]} 没有返回答案${m[2] ? `（被拦截：${m[2]}）` : ''}。`],
+    [/^That Gemini model ID has characters/, () => '这个 Gemini 模型 ID 含有不该有的字符。'],
+  ];
+
+  // Provider's own error text (kept in its original language), appended after the translation.
+  function detail(s) {
+    const d = String(s || '').trim();
+    return d ? ' ' + d : '';
+  }
+
+  function detectLang(stored, navLang) {
+    if (stored === 'en' || stored === 'zh') return stored;
+    return /^zh\b/i.test(navLang || '') ? 'zh' : 'en';
+  }
+
+  function trMessage(lang, msg) {
+    if (lang !== 'zh' || typeof msg !== 'string') return msg;
+    for (const [re, fn] of MSG_ZH) {
+      const m = msg.match(re);
+      if (m) return fn(m);
+    }
+    return msg;
+  }
+
+  const api = { T, KINDS, detectLang, trMessage };
+  global.IdealineI18n = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+// idealine timeline renderer. renderTimeline(D, root) draws the interactive
+// timeline for one term into the elements under `root` marked with data-part:
+// chart, legend, detail, eras. Used by the static term pages and the web app.
+// All text from data is inserted with textContent or escaped; links must be http(s).
+(function (global) {
+  'use strict';
+  const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue('--' + n).trim();
+  const el = (tag, attrs = {}, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeUrl = u => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null);
+  const reEsc = w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Interface text; pass a partial object as the third argument to translate it.
+  const LABELS_EN = {
+    kinds: {},
+    papers: n => `${n} papers`,
+    yearPapers: (y, n) => `${y}: ${n} papers`,
+    timelineOf: term => `Timeline of ${term}`,
+    inSample: 'Linked paper uses the term itself.',
+    resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+    unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+    titleOf: 'Title of ',
+    legendDashed: 'dashed = no link found',
+    legendBars: 'bars = papers per year',
+  };
+
+  function renderTimeline(D, root, labels) {
+    root = root || document;
+    const L = Object.assign({}, LABELS_EN, labels || {});
+    const kindName = k => (L.kinds && L.kinds[k]) || k;
+    const part = name => root.querySelector(`[data-part="${name}"]`);
+    const chart = part('chart'), detail = part('detail');
+    chart.textContent = '';
+    const KIND_OK = k => (KINDS.includes(k) ? k : 'origin');
+    const phrases = [D.term, ...(D.aliases || [])].filter(p => p && p.trim());
+    const termRe = new RegExp('(' + phrases.map(p => p.split(/[\s-]+/).filter(Boolean).map(reEsc).join('[\\s-]+')).join('|') + ')', 'igu');
+    // Split the raw text first, then escape each piece, so entities are never cut.
+    const mark = s => String(s ?? '').split(termRe).map((p, i) => (i % 2 ? `<mark>${esc(p)}</mark>` : esc(p))).join('');
+    let msLaid = [];
+
+    function build() {
+      const counts = new Map(D.counts);
+      const years = [...counts.keys(), ...D.milestones.map(m => m.year), ...D.eras.flatMap(e => [e.start, e.end])].filter(Boolean);
+      if (!years.length) return;
+      const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
+      const left = 40, labelRoom = 230;
+      const avail = Math.max(600, chart.parentElement.clientWidth || 900);
+      // Each year gets width by how much happens in it: milestone years and busy years
+      // are wide, quiet years are thin. A century of rare use stays a short strip.
+      const peakC = Math.max(1, ...counts.values()), msYears = new Set(D.milestones.map(m => m.year));
+      const raw = y => (msYears.has(y) ? 30 : 0) + 34 * Math.sqrt((counts.get(y) || 0) / peakC) + ((counts.get(y) || 0) / peakC > 0.002 ? 6 : 2);
+      let total = 0;
+      for (let y = minYear; y <= nowYear; y++) total += raw(y);
+      const scale = Math.max(1, Math.min(2.2, (avail - left - labelRoom) / total));
+      const WY = y => raw(y) * scale, pos = new Map();
+      let acc = left;
+      for (let y = minYear; y <= nowYear; y++) { pos.set(y, acc + WY(y) / 2); acc += WY(y); }
+      const X = y => pos.get(Math.max(minYear, Math.min(nowYear, y)));
+
+      // Lay out milestone labels in lanes so they do not overlap.
+      const lanes = [], laneH = 36, axisPad = 26;
+      msLaid = D.milestones.map((m, i) => {
+        const label = m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
+        const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(m.year);
+        let lane = 0;
+        while ((lanes[lane] ?? -1e9) > x - 6) lane++;
+        lanes[lane] = x + w;
+        return { ...m, kind: KIND_OK(m.kind), i, label, x, lane };
+      });
+      const nLanes = Math.max(1, lanes.length);
+      const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
+      const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
+      const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
+      const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': L.timelineOf(D.term) });
+
+      // Era bands; labels alternate between two rows and are cut to fit.
+      D.eras.forEach((e, k) => {
+        const xa = X(e.start) - WY(e.start) / 2, xb = X(e.end) + WY(e.end) / 2, row = k % 2;
+        el('rect', { x: xa, y: row * 16, width: Math.max(4, xb - xa), height: axisY - row * 16, fill: css(k % 2 ? 'era2' : 'era1'), rx: 6 }, svg);
+        const next = D.eras[k + 2], room = (next ? X(next.start) - WY(next.start) / 2 : W) - xa - 12;
+        const maxChars = Math.max(8, Math.floor(room / 6.6));
+        const label = e.label.length > maxChars ? e.label.slice(0, maxChars - 1) + '…' : e.label;
+        const t = el('text', { x: xa + 8, y: 15 + row * 16, 'font-weight': 600, 'font-size': 11 }, svg);
+        t.textContent = label;
+        el('title', {}, t).textContent = `${e.start}–${e.end}: ${e.label}`;
+      });
+
+      const maxC = Math.max(1, ...counts.values());
+      for (const [y, c] of counts) {
+        const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
+        const r = el('rect', { x: X(y) - WY(y) * 0.34, y: axisY + 6, width: Math.max(1.5, WY(y) * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
+        el('title', {}, r).textContent = L.yearPapers(y, c);
+      }
+      el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
+      const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
+      // Year labels: never closer than 36px; the newest year always gets one.
+      let last = 1e9;
+      [...tickYears].sort((a, b) => b - a).forEach(y => {
+        if (last - X(y) < 36) return;
+        const t = el('text', { x: X(y), y: axisY + barH + 26, 'text-anchor': 'middle', class: 'muted' }, svg);
+        t.textContent = y;
+        last = X(y);
+      });
+      const peak = [...counts].sort((a, b) => b[1] - a[1])[0];
+      if (peak) {
+        const t = el('text', { x: X(peak[0]) + WY(peak[0]) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
+        t.textContent = L.papers(peak[1]);
+      }
+
+      msLaid.forEach(m => {
+        const y = axisY - axisPad - m.lane * laneH;
+        const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
+        el('rect', { x: m.x - 10, y: y - 12, width: m.label.length * 6.3 + 70, height: 24, fill: 'transparent' }, g);
+        el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
+        el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
+        const t = el('text', { x: m.x + 11, y: y + 4 }, g);
+        t.textContent = `${m.year} · ${m.label}`;
+        g.addEventListener('click', () => select(m.i));
+        g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i); } });
+        m.g = g;
+      });
+      chart.appendChild(svg);
+    }
+
+    function select(i) {
+      const m = D.milestones[i];
+      if (!m || !detail) return;
+      const kind = KIND_OK(m.kind);
+      msLaid.forEach(x => x.g && x.g.classList.toggle('sel', x.i === i));
+      const url = safeUrl(m.url);
+      const title = url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title)}</a>` : esc(m.title);
+      const status = {
+        'in-sample': esc(L.inSample),
+        'resolved': esc(L.resolved(m.workTitle || '')),
+        'unresolved': esc(L.unresolved),
+      }[m.link] || '';
+      const quotes = (m.evidence || []).map(e => {
+        const eu = safeUrl(e.url);
+        const src = eu ? `<a href="${esc(eu)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title);
+        return `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? esc(L.titleOf) : ''}${src} · ${esc(e.authors)}, ${esc(e.year)}</cite></blockquote>`;
+      }).join('');
+      detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kindName(kind))}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
+    }
+
+    build();
+    const legend = part('legend');
+    if (legend) {
+      legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
+        `<span>${esc(L.legendDashed)}</span><span>${esc(L.legendBars)}</span>`;
+    }
+    const eras = part('eras');
+    if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
+    if (detail) detail.textContent = '';
+    select(0);
+    // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
+    const sc = chart.closest('.scroller');
+    if (sc) {
+      const lastX = Math.max(0, ...msLaid.map(m => m.x));
+      sc.scrollLeft = lastX ? Math.min(sc.scrollWidth - sc.clientWidth, lastX - 24) : sc.scrollWidth;
+    }
+  }
+
+  global.renderTimeline = renderTimeline;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+renderTimeline(JSON.parse(document.getElementById('data').textContent), document, Object.assign({kinds: IdealineI18n.KINDS.zh}, IdealineI18n.T.zh));
+</script>
+</body></html>

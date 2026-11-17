@@ -1,0 +1,1117 @@
+{
+ "term": "world model",
+ "aliases": [],
+ "summary": "在现有证据中，“world model”最早见于20世纪30至60年代的相对论宇宙学，指描述整个宇宙结构与膨胀的“世界模型”。80年代起它进入人工智能与机器人领域，表示智能体对环境的内部表示；如今它主要指能根据动作预测未来状态、可用于在“想象”中规划和训练的学习型（常为生成式视频）模型。",
+ "counts": [
+  [
+   1899,
+   1
+  ],
+  [
+   1934,
+   1
+  ],
+  [
+   1935,
+   2
+  ],
+  [
+   1940,
+   1
+  ],
+  [
+   1944,
+   1
+  ],
+  [
+   1949,
+   1
+  ],
+  [
+   1950,
+   1
+  ],
+  [
+   1951,
+   2
+  ],
+  [
+   1952,
+   1
+  ],
+  [
+   1954,
+   2
+  ],
+  [
+   1955,
+   1
+  ],
+  [
+   1956,
+   1
+  ],
+  [
+   1957,
+   1
+  ],
+  [
+   1961,
+   1
+  ],
+  [
+   1962,
+   9
+  ],
+  [
+   1963,
+   5
+  ],
+  [
+   1964,
+   5
+  ],
+  [
+   1965,
+   4
+  ],
+  [
+   1966,
+   6
+  ],
+  [
+   1967,
+   6
+  ],
+  [
+   1968,
+   9
+  ],
+  [
+   1969,
+   8
+  ],
+  [
+   1970,
+   13
+  ],
+  [
+   1971,
+   9
+  ],
+  [
+   1972,
+   14
+  ],
+  [
+   1973,
+   26
+  ],
+  [
+   1974,
+   19
+  ],
+  [
+   1975,
+   22
+  ],
+  [
+   1976,
+   19
+  ],
+  [
+   1977,
+   34
+  ],
+  [
+   1978,
+   20
+  ],
+  [
+   1979,
+   37
+  ],
+  [
+   1980,
+   26
+  ],
+  [
+   1981,
+   25
+  ],
+  [
+   1982,
+   18
+  ],
+  [
+   1983,
+   35
+  ],
+  [
+   1984,
+   32
+  ],
+  [
+   1985,
+   24
+  ],
+  [
+   1986,
+   31
+  ],
+  [
+   1987,
+   48
+  ],
+  [
+   1988,
+   50
+  ],
+  [
+   1989,
+   56
+  ],
+  [
+   1990,
+   57
+  ],
+  [
+   1991,
+   71
+  ],
+  [
+   1992,
+   72
+  ],
+  [
+   1993,
+   67
+  ],
+  [
+   1994,
+   53
+  ],
+  [
+   1995,
+   59
+  ],
+  [
+   1996,
+   64
+  ],
+  [
+   1997,
+   60
+  ],
+  [
+   1998,
+   59
+  ],
+  [
+   1999,
+   87
+  ],
+  [
+   2000,
+   72
+  ],
+  [
+   2001,
+   124
+  ],
+  [
+   2002,
+   243
+  ],
+  [
+   2003,
+   160
+  ],
+  [
+   2004,
+   154
+  ],
+  [
+   2005,
+   176
+  ],
+  [
+   2006,
+   178
+  ],
+  [
+   2007,
+   172
+  ],
+  [
+   2008,
+   168
+  ],
+  [
+   2009,
+   182
+  ],
+  [
+   2010,
+   193
+  ],
+  [
+   2011,
+   207
+  ],
+  [
+   2012,
+   199
+  ],
+  [
+   2013,
+   188
+  ],
+  [
+   2014,
+   201
+  ],
+  [
+   2015,
+   213
+  ],
+  [
+   2016,
+   183
+  ],
+  [
+   2017,
+   201
+  ],
+  [
+   2018,
+   205
+  ],
+  [
+   2019,
+   245
+  ],
+  [
+   2020,
+   268
+  ],
+  [
+   2021,
+   259
+  ],
+  [
+   2022,
+   265
+  ],
+  [
+   2023,
+   381
+  ],
+  [
+   2024,
+   581
+  ],
+  [
+   2025,
+   1248
+  ],
+  [
+   2026,
+   5012
+  ]
+ ],
+ "total": 12954,
+ "model": "claude-opus-5-5",
+ "generated": "2026-11-17",
+ "lang": "zh",
+ "evidenceCount": 160,
+ "eras": [
+  {
+   "start": 1934,
+   "end": 1982,
+   "label": "宇宙学中的世界模型",
+   "meaning": "指相对论宇宙学中对整个宇宙（如膨胀、稳态模型）的数学模型，用于与红移、源计数等观测比较。",
+   "evidence": [
+    {
+     "id": "E2",
+     "text": "World-models and the world-picture",
+     "title": "World-models and the world-picture",
+     "year": 1934,
+     "url": "https://openalex.org/W3041098624",
+     "authors": "E. A. Milne",
+     "fromTitle": true
+    },
+    {
+     "id": "E3",
+     "text": "Relativistic Mechanics: I. The world-model, and the description of physical objects",
+     "title": "Relativistic Mechanics: I. The world-model, and the description of physical objects",
+     "year": 1940,
+     "url": "https://doi.org/10.1112/plms/s2-46.1.113",
+     "authors": "A. G. Walker",
+     "fromTitle": true
+    },
+    {
+     "id": "E8",
+     "text": "A class of homogeneous expanding world-models, which includes Milne's uniformly expanding model as a particular case, is analysed by the methods of kinematic relativity, red-shifts being attributed in each case to the Doppler effect associated with mutual recession.",
+     "title": "Expanding World-models Characterized by a Dimensionless Invariant",
+     "year": 1951,
+     "url": "https://doi.org/10.1093/mnras/111.5.455",
+     "authors": "Gerald J. Whitrow et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E12",
+     "text": "Visual Horizons in World Models",
+     "title": "Visual Horizons in World Models",
+     "year": 1956,
+     "url": "https://doi.org/10.1093/mnras/116.6.662",
+     "authors": "Wolfgang Rindler",
+     "fromTitle": true
+    },
+    {
+     "id": "E13",
+     "text": "In this paper the formula is derived by studying small perturbations of the density and velocity in an expanding Newtonian world-model.",
+     "title": "Jeans' Formula for Gravitational Instability",
+     "year": 1957,
+     "url": "https://doi.org/10.1093/mnras/117.1.104",
+     "authors": "W. B. Bonnor",
+     "fromTitle": false
+    },
+    {
+     "id": "E14",
+     "text": "The present paper reviews several tests which can be performed to decide between world models.",
+     "title": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models.",
+     "year": 1961,
+     "url": "https://doi.org/10.1086/147041",
+     "authors": "Allan Sandage",
+     "fromTitle": false
+    },
+    {
+     "id": "E15",
+     "text": "The observed slope of the log N /log S relation for radio sources has been interpreted as positive evidence against the steady-state world-model.",
+     "title": "Clustering, Cosmology and Source Counts",
+     "year": 1962,
+     "url": "https://doi.org/10.1093/mnras/124.1.35",
+     "authors": "R. H. Brown",
+     "fromTitle": false
+    },
+    {
+     "id": "E18",
+     "text": "The theory and numerical results of the deceleration are presented for four selected world models.",
+     "title": "The Change of Redshift and Apparent Luminosity of Galaxies due to the Deceleration of Selected Expanding Universes.",
+     "year": 1962,
+     "url": "https://doi.org/10.1086/147385",
+     "authors": "Allan Sandage",
+     "fromTitle": false
+    },
+    {
+     "id": "E21",
+     "text": "A number of theorems and definitions which are useful in the global analysis of relativistic world models are presented.",
+     "title": "Topology in General Relativity",
+     "year": 1967,
+     "url": "https://doi.org/10.1063/1.1705276",
+     "authors": "Robert Geroch",
+     "fromTitle": false
+    },
+    {
+     "id": "E22",
+     "text": "The consequences of choosing L to be a function ϕ of R alone are tentatively examined under specialized circumstances, with particular attention to an open world-model oscillating between non-singular states.",
+     "title": "Non-Linear Lagrangians and Cosmological Theory",
+     "year": 1970,
+     "url": "https://doi.org/10.1093/mnras/150.1.1",
+     "authors": "H. A. Buchdahl",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "start": 1983,
+   "end": 2017,
+   "label": "智能体的环境内部表示",
+   "meaning": "在规划、机器人和自然语言系统中，世界模型指系统对环境的（常为符号或栅格的）内部表示，并逐渐出现由学习得到的预测模型；宇宙学用法（如膜世界模型）同时延续。",
+   "evidence": [
+    {
+     "id": "E24",
+     "text": "Current problem solving systems are constrained in their applicability by inadequate world models.",
+     "title": "Planning using a temporal world model",
+     "year": 1983,
+     "url": "https://openalex.org/W166266902",
+     "authors": "James F. Allen et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E26",
+     "text": "We will show how new constraint information, usually obtained by measurement, can be used to update the world model of relationships consistently, and in some situations, optimally.",
+     "title": "A stochastic map for uncertain spatial relationships",
+     "year": 1988,
+     "url": "https://openalex.org/W1606157100",
+     "authors": "Randall K. Smith et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E28",
+     "text": "The omnidirectional mobile robot uses stereo vision, odometry, and contact bumpers to instantiate a symbolic world model.",
+     "title": "Stereo vision and navigation in buildings for mobile robots",
+     "year": 1989,
+     "url": "https://doi.org/10.1109/70.88100",
+     "authors": "David Juris Kriegman et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E32",
+     "text": "Carberry then outlines computational strategies for interpreting two kinds of problematic utterances: utterances that violate the pragmatic rules of the system's world model and intersentential elliptical fragments.",
+     "title": "Plan Recognition in Natural Language Dialogue",
+     "year": 1990,
+     "url": "https://openalex.org/W2145855082",
+     "authors": "Sandra Carberry",
+     "fromTitle": false
+    },
+    {
+     "id": "E34",
+     "text": "This paper introduces a framework for `curious neural controllers' which employ an adaptive world model for goal directed on-line learning.",
+     "title": "A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers",
+     "year": 1991,
+     "url": "https://doi.org/10.7551/mitpress/3115.003.0030",
+     "authors": "Jürgen Schmidhuber",
+     "fromTitle": false
+    },
+    {
+     "id": "E35",
+     "text": "The VFH method uses a two-dimensional Cartesian histogram grid as a world model.",
+     "title": "The vector field histogram-fast obstacle avoidance for mobile robots",
+     "year": 1991,
+     "url": "https://doi.org/10.1109/70.88137",
+     "authors": "J. Borenstein et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E36",
+     "text": "Planning is incremental and can use the probabilistic and ofttimes incorrect world models generated by learning processes.",
+     "title": "Dyna, an integrated architecture for learning, planning, and reacting",
+     "year": 1991,
+     "url": "https://doi.org/10.1145/122344.122377",
+     "authors": "Richard S. Sutton",
+     "fromTitle": false
+    },
+    {
+     "id": "E38",
+     "text": "The central result of this work is to show that completely unmodified classical AI programming methodologies using centralized world models can be usefully incorporated into real-world embedded reactive systems.",
+     "title": "Integrating planning and reacting in a heterogeneous asynchronous architecture for controlling real-world mobile robots",
+     "year": 1992,
+     "url": "https://openalex.org/W184814775",
+     "authors": "Erann Gat",
+     "fromTitle": false
+    },
+    {
+     "id": "E46",
+     "text": "The job of the sensing system is to translate raw sensor input (usually sonar or vision data) into a world model.",
+     "title": "On Three-Layer Architectures",
+     "year": 1998,
+     "url": "https://openalex.org/W211918120",
+     "authors": "Erann Gat",
+     "fromTitle": false
+    },
+    {
+     "id": "E51",
+     "text": "Given this prior uncertainty over possible environments, the optimal-learning agent must collect and use information in an intelligent way, balancing greedy exploitation of certainty-equivalent world models with exploratory actions aimed at discerning the true state of nature.",
+     "title": "Optimal learning: computational procedures for bayes-adaptive markov decision processes",
+     "year": 2002,
+     "url": "https://openalex.org/W1497039698",
+     "authors": "Michael O. Duff et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E62",
+     "text": "Using some sort of adaptive predictive world model, they improve their ability to answer questions such as what happens if I do this or that?",
+     "title": "Developmental robotics, optimal artificial curiosity, creativity, music, and the fine arts",
+     "year": 2006,
+     "url": "https://doi.org/10.1080/09540090600768658",
+     "authors": "Jürgen Schmidhuber",
+     "fromTitle": false
+    },
+    {
+     "id": "E55",
+     "text": "We begin our review with the simplest consistent brane world model: a single brane embedded in a five-dimensional anti-de Sitter spacetime.",
+     "title": "Cosmology and brane worlds: a review",
+     "year": 2003,
+     "url": "https://doi.org/10.1088/0264-9381/20/9/202",
+     "authors": "Philippe Brax et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "start": 2018,
+   "end": 2022,
+   "label": "深度强化学习中的学习型世界模型",
+   "meaning": "指用神经网络从经验中无监督学习的环境压缩时空表示，智能体可在其“想象”中规划和学习行为。",
+   "evidence": [
+    {
+     "id": "E79",
+     "text": "Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.",
+     "title": "World Models",
+     "year": 2018,
+     "url": "https://doi.org/10.5281/zenodo.1207631",
+     "authors": "David Ha et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E82",
+     "text": "Learned world models summarize an agent's experience to facilitate learning complex behaviors.",
+     "title": "Dream to Control: Learning Behaviors by Latent Imagination",
+     "year": 2019,
+     "url": "https://doi.org/10.48550/arxiv.1912.01603",
+     "authors": "Danijar Hafner et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E83",
+     "text": "Planning to Explore via Self-Supervised World Models",
+     "title": "Planning to Explore via Self-Supervised World Models",
+     "year": 2020,
+     "url": "https://doi.org/10.48550/arxiv.2005.05960",
+     "authors": "R. Sekar et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E84",
+     "text": "World models facilitate such generalization and allow learning behaviors from imagined outcomes to increase sample-efficiency.",
+     "title": "Mastering Atari with Discrete World Models",
+     "year": 2020,
+     "url": "https://doi.org/10.48550/arxiv.2010.02193",
+     "authors": "Danijar Hafner et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E86",
+     "text": "Deep learning, reinforcement learning, and world models",
+     "title": "Deep learning, reinforcement learning, and world models",
+     "year": 2022,
+     "url": "https://doi.org/10.1016/j.neunet.2022.03.037",
+     "authors": "Yutaka Matsuo et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E88",
+     "text": "The Dreamer algorithm has recently shown great promise for learning from small amounts of interaction by planning within a learned world model, outperforming pure reinforcement learning in video games.",
+     "title": "DayDreamer: World Models for Physical Robot Learning",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2206.14176",
+     "authors": "Philipp Wu et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "start": 2023,
+   "end": 2026,
+   "label": "生成式基础世界模型",
+   "meaning": "指大规模生成式（视频、多模态、语言）模型，能根据动作预测未来观测，用于自动驾驶、机器人和大语言模型推理规划，并被视为通向通用智能的路径。",
+   "evidence": [
+    {
+     "id": "E90",
+     "text": "Large language models (LLMs) have shown remarkable reasoning capabilities, particularly with chain-of-thought (CoT) prompting.However, LLMs sometimes still struggle with problems that are easy for humans, such as generating action plans to achieve given goals in an environment, or performing complex math or logical reasoning.The deficiency stems from the key fact that LLMs lack an internal world model to predict the world state (e.g., environmen…",
+     "title": "Reasoning with Language Model is Planning with World Model",
+     "year": 2023,
+     "url": "https://doi.org/10.18653/v1/2023.emnlp-main.507",
+     "authors": "Shibo Hao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E94",
+     "text": "To address this challenge, we introduce GAIA-1 ('Generative AI for Autonomy'), a generative world model that leverages video, text, and action inputs to generate realistic driving scenarios while offering fine-grained control over ego-vehicle behavior and scene features.",
+     "title": "GAIA-1: A Generative World Model for Autonomous Driving",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2309.17080",
+     "authors": "Anthony Hu et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E99",
+     "text": "At 11B parameters, Genie can be considered a foundation world model.",
+     "title": "Genie: Generative Interactive Environments",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2402.15391",
+     "authors": "Jake Bruce et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E109",
+     "text": "Video generation models have rapidly progressed, positioning themselves as video world models capable of supporting decision-making applications like robotics and autonomous driving.",
+     "title": "WorldModelBench: Judging Video Generation Models As World Models",
+     "year": 2025,
+     "url": "https://doi.org/10.52202/085713-1834",
+     "authors": "Dacheng Li et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E112",
+     "text": "It needs a digital twin of itself, the policy model, and a digital twin of the world, the world model.",
+     "title": "Cosmos World Foundation Model Platform for Physical AI",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2501.03575",
+     "authors": "NVIDIA et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E117",
+     "text": "World models have demonstrated superiority in autonomous driving, particularly in the generation of multi-view driving videos.",
+     "title": "DriveDreamer-2: LLM-Enhanced World Models for Diverse Driving Video Generation",
+     "year": 2025,
+     "url": "https://doi.org/10.1609/aaai.v39i10.33130",
+     "authors": "Guosheng Zhao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E123",
+     "text": "We introduce a Navigation World Model (NWM), a controllable video generation model that predicts future visual observations based on past observations and navigation actions.",
+     "title": "Navigation World Models",
+     "year": 2025,
+     "url": "https://doi.org/10.1109/cvpr52734.2025.01472",
+     "authors": "Amir Bar et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E127",
+     "text": "Finally, we show how self-supervised learning can be applied to robotic planning tasks by post-training a latent action-conditioned world model, V-JEPA 2-AC, using less than 62 hours of unlabeled robot videos from the Droid dataset.",
+     "title": "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2506.09985",
+     "authors": "Assran, Mido et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E129",
+     "text": "The concept of world models has garnered significant attention due to advancements in multimodal large language models such as GPT-4 and video generation models such as Sora, which are central to the pursuit of artificial general intelligence.",
+     "title": "Understanding World or Predicting Future? A Comprehensive Survey of World Models",
+     "year": 2025,
+     "url": "https://doi.org/10.1145/3746449",
+     "authors": "Jingtao Ding et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E152",
+     "text": "As an endeavor towards this end, we introduce DreamDojo, a foundation world model that learns diverse interactions and dexterous controls from 44k hours of egocentric human videos.",
+     "title": "DreamDojo: A Generalist Robot World Model from Large-Scale Human Videos",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2602.06949",
+     "authors": "Shenyuan Gao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E159",
+     "text": "We introduce Cosmos 3, a family of omnimodal world models designed to jointly process and generate language, image, video, audio, and action sequences within a unified mixture-of-transformers architecture.",
+     "title": "Cosmos 3: Omnimodal World Models for Physical AI",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2606.02800",
+     "authors": "NVIDIA et al.",
+     "fromTitle": false
+    }
+   ]
+  }
+ ],
+ "milestones": [
+  {
+   "year": 1934,
+   "kind": "origin",
+   "title": "World-models and the world-picture",
+   "why": "证据中最早可信的用法，在宇宙学与世界图景讨论中使用“world-models”一词（1899年条目内容属后世AI问题求解，年份应有误）。",
+   "url": "https://openalex.org/W3041098624",
+   "workTitle": "World-models and the world-picture",
+   "authors": "E. A. Milne",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E2",
+     "text": "World-models and the world-picture",
+     "title": "World-models and the world-picture",
+     "year": 1934,
+     "url": "https://openalex.org/W3041098624",
+     "authors": "E. A. Milne",
+     "fromTitle": true
+    }
+   ]
+  },
+  {
+   "year": 1961,
+   "kind": "popularized",
+   "title": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models.",
+   "why": "该文提出用观测检验区分不同宇宙世界模型，被多篇后续论文引用，使该术语在宇宙学中广泛流行。",
+   "url": "https://doi.org/10.1086/147041",
+   "workTitle": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models.",
+   "authors": "Allan Sandage",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E14",
+     "text": "The present paper reviews several tests which can be performed to decide between world models.",
+     "title": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models.",
+     "year": 1961,
+     "url": "https://doi.org/10.1086/147041",
+     "authors": "Allan Sandage",
+     "fromTitle": false
+    },
+    {
+     "id": "E19",
+     "text": "Sandage, The ability of the 200-inch telescope to discriminate between selected world models, Astrophys.",
+     "title": "Gravitational Multipole Radiation",
+     "year": 1962,
+     "url": "https://doi.org/10.1137/0110059",
+     "authors": "Jon Mathews",
+     "fromTitle": false
+    },
+    {
+     "id": "E20",
+     "text": "Sandage, The ability of the 200-inch telescope to discriminate between selected world models, Astrophys.",
+     "title": "General Relativity: Theory and Experiment",
+     "year": 1962,
+     "url": "https://doi.org/10.1137/0110061",
+     "authors": "Leonard I. Schiff",
+     "fromTitle": false
+    },
+    {
+     "id": "E18",
+     "text": "The theory and numerical results of the deceleration are presented for four selected world models.",
+     "title": "The Change of Redshift and Apparent Luminosity of Galaxies due to the Deceleration of Selected Expanding Universes.",
+     "year": 1962,
+     "url": "https://doi.org/10.1086/147385",
+     "authors": "Allan Sandage",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 1983,
+   "kind": "applied",
+   "title": "Planning using a temporal world model",
+   "why": "将世界模型引入人工智能规划，指问题求解系统对世界的内部表示。",
+   "url": "https://openalex.org/W166266902",
+   "workTitle": "Planning using a temporal world model",
+   "authors": "James F. Allen et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E24",
+     "text": "Current problem solving systems are constrained in their applicability by inadequate world models.",
+     "title": "Planning using a temporal world model",
+     "year": 1983,
+     "url": "https://openalex.org/W166266902",
+     "authors": "James F. Allen et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 1988,
+   "kind": "applied",
+   "title": "A stochastic map for uncertain spatial relationships",
+   "why": "在机器人领域把世界模型作为可随测量一致更新的空间关系表示，随后机器人导航广泛采用。",
+   "url": "https://openalex.org/W1606157100",
+   "workTitle": "A stochastic map for uncertain spatial relationships",
+   "authors": "Randall K. Smith et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E26",
+     "text": "We will show how new constraint information, usually obtained by measurement, can be used to update the world model of relationships consistently, and in some situations, optimally.",
+     "title": "A stochastic map for uncertain spatial relationships",
+     "year": 1988,
+     "url": "https://openalex.org/W1606157100",
+     "authors": "Randall K. Smith et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E28",
+     "text": "The omnidirectional mobile robot uses stereo vision, odometry, and contact bumpers to instantiate a symbolic world model.",
+     "title": "Stereo vision and navigation in buildings for mobile robots",
+     "year": 1989,
+     "url": "https://doi.org/10.1109/70.88100",
+     "authors": "David Juris Kriegman et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E35",
+     "text": "The VFH method uses a two-dimensional Cartesian histogram grid as a world model.",
+     "title": "The vector field histogram-fast obstacle avoidance for mobile robots",
+     "year": 1991,
+     "url": "https://doi.org/10.1109/70.88137",
+     "authors": "J. Borenstein et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 1991,
+   "kind": "redefined",
+   "title": "Dyna, an integrated architecture for learning, planning, and reacting",
+   "why": "世界模型开始指由学习过程生成、可能不准确但可用于规划的预测模型，而非手工构建的表示。",
+   "url": "https://doi.org/10.1145/122344.122377",
+   "workTitle": "Dyna, an integrated architecture for learning, planning, and reacting",
+   "authors": "Richard S. Sutton",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E36",
+     "text": "Planning is incremental and can use the probabilistic and ofttimes incorrect world models generated by learning processes.",
+     "title": "Dyna, an integrated architecture for learning, planning, and reacting",
+     "year": 1991,
+     "url": "https://doi.org/10.1145/122344.122377",
+     "authors": "Richard S. Sutton",
+     "fromTitle": false
+    },
+    {
+     "id": "E34",
+     "text": "This paper introduces a framework for `curious neural controllers' which employ an adaptive world model for goal directed on-line learning.",
+     "title": "A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers",
+     "year": 1991,
+     "url": "https://doi.org/10.7551/mitpress/3115.003.0030",
+     "authors": "Jürgen Schmidhuber",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2018,
+   "kind": "popularized",
+   "title": "World Models",
+   "why": "提出可无监督快速训练、学习环境压缩时空表示的神经世界模型，使该术语在深度学习中流行。",
+   "url": "https://doi.org/10.5281/zenodo.1207631",
+   "workTitle": "World Models",
+   "authors": "David Ha et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E79",
+     "text": "Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.",
+     "title": "World Models",
+     "year": 2018,
+     "url": "https://doi.org/10.5281/zenodo.1207631",
+     "authors": "David Ha et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2019,
+   "kind": "popularized",
+   "title": "Dream to Control: Learning Behaviors by Latent Imagination",
+   "why": "确立在学习型世界模型的潜在想象中学习行为的范式（Dreamer），后续延伸到Atari与真实机器人。",
+   "url": "https://doi.org/10.48550/arxiv.1912.01603",
+   "workTitle": "Dream to Control: Learning Behaviors by Latent Imagination",
+   "authors": "Danijar Hafner et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E82",
+     "text": "Learned world models summarize an agent's experience to facilitate learning complex behaviors.",
+     "title": "Dream to Control: Learning Behaviors by Latent Imagination",
+     "year": 2019,
+     "url": "https://doi.org/10.48550/arxiv.1912.01603",
+     "authors": "Danijar Hafner et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E84",
+     "text": "World models facilitate such generalization and allow learning behaviors from imagined outcomes to increase sample-efficiency.",
+     "title": "Mastering Atari with Discrete World Models",
+     "year": 2020,
+     "url": "https://doi.org/10.48550/arxiv.2010.02193",
+     "authors": "Danijar Hafner et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E88",
+     "text": "The Dreamer algorithm has recently shown great promise for learning from small amounts of interaction by planning within a learned world model, outperforming pure reinforcement learning in video games.",
+     "title": "DayDreamer: World Models for Physical Robot Learning",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2206.14176",
+     "authors": "Philipp Wu et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E116",
+     "text": "Mastering diverse control tasks through world models",
+     "title": "Mastering diverse control tasks through world models",
+     "year": 2025,
+     "url": "https://doi.org/10.1038/s41586-025-08744-2",
+     "authors": "Danijar Hafner et al.",
+     "fromTitle": true
+    }
+   ]
+  },
+  {
+   "year": 2023,
+   "kind": "applied",
+   "title": "Reasoning with Language Model is Planning with World Model",
+   "why": "把世界模型概念引入大语言模型推理，认为LLM缺乏预测世界状态的内部世界模型。",
+   "url": "https://doi.org/10.18653/v1/2023.emnlp-main.507",
+   "workTitle": "Reasoning with Language Model is Planning with World Model",
+   "authors": "Shibo Hao et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E90",
+     "text": "Large language models (LLMs) have shown remarkable reasoning capabilities, particularly with chain-of-thought (CoT) prompting.However, LLMs sometimes still struggle with problems that are easy for humans, such as generating action plans to achieve given goals in an environment, or performing complex math or logical reasoning.The deficiency stems from the key fact that LLMs lack an internal world model to predict the world state (e.g., environmen…",
+     "title": "Reasoning with Language Model is Planning with World Model",
+     "year": 2023,
+     "url": "https://doi.org/10.18653/v1/2023.emnlp-main.507",
+     "authors": "Shibo Hao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E91",
+     "text": "The world model and the policy can be combined in a search algorithm, such as Monte Carlo Tree Search (MCTS), to scale up task planning.",
+     "title": "Large Language Models as Commonsense Knowledge for Large-Scale Task Planning",
+     "year": 2023,
+     "url": "https://doi.org/10.52202/075280-1387",
+     "authors": "Zirui Zhao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E93",
+     "text": "Leveraging Pre-trained Large Language Models to Construct and Utilize World Models for Model-based Task Planning",
+     "title": "Leveraging Pre-trained Large Language Models to Construct and Utilize World Models for Model-based Task Planning",
+     "year": 2023,
+     "url": "https://doi.org/10.52202/075280-3459",
+     "authors": "Lin Guan et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E95",
+     "text": "While further investigation is needed, our results suggest modern LLMs learn rich spatiotemporal representations of the real world and possess basic ingredients of a world model.",
+     "title": "Language Models Represent Space and Time",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2310.02207",
+     "authors": "Wes Gurnee et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2023,
+   "kind": "redefined",
+   "title": "GAIA-1: A Generative World Model for Autonomous Driving",
+   "why": "世界模型转向基于视频、文本和动作生成逼真场景的生成式模型，开启自动驾驶世界模型热潮。",
+   "url": "https://doi.org/10.48550/arxiv.2309.17080",
+   "workTitle": "GAIA-1: A Generative World Model for Autonomous Driving",
+   "authors": "Anthony Hu et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E94",
+     "text": "To address this challenge, we introduce GAIA-1 ('Generative AI for Autonomy'), a generative world model that leverages video, text, and action inputs to generate realistic driving scenarios while offering fine-grained control over ego-vehicle behavior and scene features.",
+     "title": "GAIA-1: A Generative World Model for Autonomous Driving",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2309.17080",
+     "authors": "Anthony Hu et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E103",
+     "text": "To this end, we propose Drive-Wm, the first driving world model compatible with existing end-to-end planning models.",
+     "title": "Driving Into the Future: Multiview Visual Forecasting and Planning with World Model for Autonomous Driving",
+     "year": 2024,
+     "url": "https://doi.org/10.1109/cvpr52733.2024.01397",
+     "authors": "Yuqi Wang et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E107",
+     "text": "DriveDreamer: Towards Real-World-Drive World Models for Autonomous Driving",
+     "title": "DriveDreamer: Towards Real-World-Drive World Models for Autonomous Driving",
+     "year": 2024,
+     "url": "https://doi.org/10.1007/978-3-031-73195-2_4",
+     "authors": "Xiaofeng Wang et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E117",
+     "text": "World models have demonstrated superiority in autonomous driving, particularly in the generation of multi-view driving videos.",
+     "title": "DriveDreamer-2: LLM-Enhanced World Models for Diverse Driving Video Generation",
+     "year": 2025,
+     "url": "https://doi.org/10.1609/aaai.v39i10.33130",
+     "authors": "Guosheng Zhao et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2024,
+   "kind": "redefined",
+   "title": "Genie: Generative Interactive Environments",
+   "why": "提出“基础世界模型”的说法，世界模型成为大规模可交互的生成式环境。",
+   "url": "https://doi.org/10.48550/arxiv.2402.15391",
+   "workTitle": "Genie: Generative Interactive Environments",
+   "authors": "Jake Bruce et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E99",
+     "text": "At 11B parameters, Genie can be considered a foundation world model.",
+     "title": "Genie: Generative Interactive Environments",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2402.15391",
+     "authors": "Jake Bruce et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E112",
+     "text": "It needs a digital twin of itself, the policy model, and a digital twin of the world, the world model.",
+     "title": "Cosmos World Foundation Model Platform for Physical AI",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2501.03575",
+     "authors": "NVIDIA et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E152",
+     "text": "As an endeavor towards this end, we introduce DreamDojo, a foundation world model that learns diverse interactions and dexterous controls from 44k hours of egocentric human videos.",
+     "title": "DreamDojo: A Generalist Robot World Model from Large-Scale Human Videos",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2602.06949",
+     "authors": "Shenyuan Gao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E159",
+     "text": "We introduce Cosmos 3, a family of omnimodal world models designed to jointly process and generate language, image, video, audio, and action sequences within a unified mixture-of-transformers architecture.",
+     "title": "Cosmos 3: Omnimodal World Models for Physical AI",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2606.02800",
+     "authors": "NVIDIA et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2026,
+   "kind": "critique",
+   "title": "Do generative video models understand physical principles?",
+   "why": "质疑视频模型是否真正学到发现物理规律的世界模型，还是仅为追求视觉逼真的像素预测器。",
+   "url": "https://doi.org/10.1109/wacv61042.2026.00099",
+   "workTitle": "Do generative video models understand physical principles?",
+   "authors": "Saman Motamed et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E153",
+     "text": "These advances have led to a passionate scientific debate: Do video models learn \"world models\" that discover laws of physics—or, alternatively, are they merely sophisticated pixel predictors that achieve visual realism without understanding the physical principles of reality?",
+     "title": "Do generative video models understand physical principles?",
+     "year": 2026,
+     "url": "https://doi.org/10.1109/wacv61042.2026.00099",
+     "authors": "Saman Motamed et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E115",
+     "text": "To achieve real \"world models\" through video generation, the next frontier lies in intrinsic faithfulness to ensure that generated videos adhere to physical laws, commonsense reasoning, anatomical correctness, and compositional integrity.",
+     "title": "VBench-2.0: Advancing Video Generation Benchmark Suite for Intrinsic Faithfulness",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2503.21755",
+     "authors": "Dian Zheng et al.",
+     "fromTitle": false
+    }
+   ]
+  }
+ ]
+}

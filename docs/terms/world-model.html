@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>world model · idealine</title>
+<meta name="description" content="Where the term world model came from and how its meaning changed, with quotes from the papers.">
+<style>
+:root{--bg:#fbfaf7;--panel:#ffffff;--fg:#1c1b19;--muted:#6d6a63;--ink-soft:#4a4844;--line:#e4e0d6;--accent:#3b5bdb;--on-accent:#ffffff;
+--ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
+--bar:#cfc8b8;--era1:rgba(59,91,219,.07);--era2:rgba(183,121,31,.08);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1014;--panel:#161920;--fg:#ecebe6;--muted:#9a978f;--ink-soft:#c9c6be;--line:#2a2e37;--accent:#f0b85a;--on-accent:#1a1408;
+--ancestor:#b6a6ff;--origin:#5fd3c4;--coined:#7ea2ff;--popularized:#7bd88f;--redefined:#f0b85a;--applied:#a99cf5;--critique:#ff8a65;
+--bar:#3a4050;--era1:rgba(240,184,90,.07);--era2:rgba(110,180,255,.07);--glow:rgba(240,184,90,.12);--shadow:0 12px 40px rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -120px,var(--glow) 0%,transparent 70%) no-repeat,var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.brand{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand a{color:inherit}
+h1{font-family:ui-serif,Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
+.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px;color:var(--ink-soft)}
+.meta{color:var(--muted);font-size:.86rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:22px;box-shadow:var(--shadow);overflow:hidden}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg text{fill:var(--fg);font-size:11.5px}
+svg .muted{fill:var(--muted)}
+.ms{cursor:pointer;outline:none}
+.ms circle{stroke:var(--panel);stroke-width:2.5}
+.ms:hover circle,.ms:focus circle,.ms.sel circle{stroke:var(--fg)}
+.ms.sel text{font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.hint{font-size:.8rem;color:var(--muted);padding:10px 16px 0}
+.detail{padding:18px 20px}
+.kind{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.detail h2{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
+.detail h2 a{color:inherit}
+.why{margin:0 0 10px}
+.status{font-size:.78rem;color:var(--muted)}
+blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line);color:var(--fg)}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
+blockquote cite a{color:inherit}
+mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
+.era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
+.era h3{margin:2px 0 6px;font-size:1rem}
+.era p{margin:0;font-size:.92rem}
+details{margin-top:28px;color:var(--muted);font-size:.88rem}
+details summary{cursor:pointer}
+footer{margin-top:36px;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+</style></head>
+<body><main>
+<div class="brand"><a href="https://github.com/Yilinista/idealine">idealine</a> · where did this idea come from?</div>
+<h1>world model</h1>
+<p class="summary">&quot;World model&quot; first appears in this evidence in 1930s–1970s relativistic cosmology, where it meant a mathematical model of the whole universe (expanding, steady-state, Friedmann). From the 1980s it was taken up in AI and robotics for an agent&#x27;s internal representation of its environment, and today it mostly means a learned, often generative neural model that predicts how an environment evolves in response to actions, used for planning in robotics, autonomous driving, video generation and language-model agents.</p>
+<p class="meta">12,954 papers in OpenAlex use this term (1899–2026). Proposed by <code>claude-opus-5-5</code> from 160 quoted sentences only; every milestone shows its quotes so you can check it.</p>
+<div class="card">
+  <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
+  <div class="scroller"><div data-part="chart"></div></div>
+  <div class="legend" data-part="legend"></div>
+  <div class="detail" data-part="detail" aria-live="polite"></div>
+</div>
+<div class="eras" data-part="eras"></div>
+<details><summary>How this was made and what it can miss</summary>
+<p>Counts and papers come from <a href="https://openalex.org">OpenAlex</a>, searching titles and abstracts for the exact phrase. Sentences come from abstracts, so works without an abstract (often older books and essays) only appear if the newer papers name them. Labels are generated and can be wrong; the quotes are the evidence. Generated 2026-11-17.</p>
+</details>
+<footer>Made with <a href="https://github.com/Yilinista/idealine">idealine</a>. Want another term? <a href="https://yilinista.github.io/idealine/">Trace it yourself</a>.</footer>
+</main>
+<script type="application/json" id="data">{"term": "world model", "aliases": [], "summary": "\"World model\" first appears in this evidence in 1930s–1970s relativistic cosmology, where it meant a mathematical model of the whole universe (expanding, steady-state, Friedmann). From the 1980s it was taken up in AI and robotics for an agent's internal representation of its environment, and today it mostly means a learned, often generative neural model that predicts how an environment evolves in response to actions, used for planning in robotics, autonomous driving, video generation and language-model agents.", "counts": [[1899, 1], [1934, 1], [1935, 2], [1940, 1], [1944, 1], [1949, 1], [1950, 1], [1951, 2], [1952, 1], [1954, 2], [1955, 1], [1956, 1], [1957, 1], [1961, 1], [1962, 9], [1963, 5], [1964, 5], [1965, 4], [1966, 6], [1967, 6], [1968, 9], [1969, 8], [1970, 13], [1971, 9], [1972, 14], [1973, 26], [1974, 19], [1975, 22], [1976, 19], [1977, 34], [1978, 20], [1979, 37], [1980, 26], [1981, 25], [1982, 18], [1983, 35], [1984, 32], [1985, 24], [1986, 31], [1987, 48], [1988, 50], [1989, 56], [1990, 57], [1991, 71], [1992, 72], [1993, 67], [1994, 53], [1995, 59], [1996, 64], [1997, 60], [1998, 59], [1999, 87], [2000, 72], [2001, 124], [2002, 243], [2003, 160], [2004, 154], [2005, 176], [2006, 178], [2007, 172], [2008, 168], [2009, 182], [2010, 193], [2011, 207], [2012, 199], [2013, 188], [2014, 201], [2015, 213], [2016, 183], [2017, 201], [2018, 205], [2019, 245], [2020, 268], [2021, 259], [2022, 265], [2023, 381], [2024, 581], [2025, 1248], [2026, 5012]], "total": 12954, "model": "claude-opus-5-5", "generated": "2026-11-17", "lang": "en", "evidenceCount": 160, "eras": [{"start": 1934, "end": 1982, "label": "Cosmological models of universe", "meaning": "A world-model was a relativistic or Newtonian model of the universe as a whole, such as expanding, steady-state or oscillating cosmologies to be tested against observation.", "evidence": [{"id": "E2", "text": "World-models and the world-picture", "title": "World-models and the world-picture", "year": 1934, "url": "https://openalex.org/W3041098624", "authors": "E. A. Milne", "fromTitle": true}, {"id": "E3", "text": "Relativistic Mechanics: I. The world-model, and the description of physical objects", "title": "Relativistic Mechanics: I. The world-model, and the description of physical objects", "year": 1940, "url": "https://doi.org/10.1112/plms/s2-46.1.113", "authors": "A. G. Walker", "fromTitle": true}, {"id": "E8", "text": "A class of homogeneous expanding world-models, which includes Milne's uniformly expanding model as a particular case, is analysed by the methods of kinematic relativity, red-shifts being attributed in each case to the Doppler effect associated with mutual recession.", "title": "Expanding World-models Characterized by a Dimensionless Invariant", "year": 1951, "url": "https://doi.org/10.1093/mnras/111.5.455", "authors": "Gerald J. Whitrow et al.", "fromTitle": false}, {"id": "E12", "text": "Visual Horizons in World Models", "title": "Visual Horizons in World Models", "year": 1956, "url": "https://doi.org/10.1093/mnras/116.6.662", "authors": "Wolfgang Rindler", "fromTitle": true}, {"id": "E13", "text": "In this paper the formula is derived by studying small perturbations of the density and velocity in an expanding Newtonian world-model.", "title": "Jeans' Formula for Gravitational Instability", "year": 1957, "url": "https://doi.org/10.1093/mnras/117.1.104", "authors": "W. B. Bonnor", "fromTitle": false}, {"id": "E14", "text": "The present paper reviews several tests which can be performed to decide between world models.", "title": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models.", "year": 1961, "url": "https://doi.org/10.1086/147041", "authors": "Allan Sandage", "fromTitle": false}, {"id": "E15", "text": "The observed slope of the log N /log S relation for radio sources has been interpreted as positive evidence against the steady-state world-model.", "title": "Clustering, Cosmology and Source Counts", "year": 1962, "url": "https://doi.org/10.1093/mnras/124.1.35", "authors": "R. H. Brown", "fromTitle": false}, {"id": "E18", "text": "The theory and numerical results of the deceleration are presented for four selected world models.", "title": "The Change of Redshift and Apparent Luminosity of Galaxies due to the Deceleration of Selected Expanding Universes.", "year": 1962, "url": "https://doi.org/10.1086/147385", "authors": "Allan Sandage", "fromTitle": false}, {"id": "E21", "text": "A number of theorems and definitions which are useful in the global analysis of relativistic world models are presented.", "title": "Topology in General Relativity", "year": 1967, "url": "https://doi.org/10.1063/1.1705276", "authors": "Robert Geroch", "fromTitle": false}, {"id": "E22", "text": "The consequences of choosing L to be a function ϕ of R alone are tentatively examined under specialized circumstances, with particular attention to an open world-model oscillating between non-singular states.", "title": "Non-Linear Lagrangians and Cosmological Theory", "year": 1970, "url": "https://doi.org/10.1093/mnras/150.1.1", "authors": "H. A. Buchdahl", "fromTitle": false}]}, {"start": 1983, "end": 2000, "label": "Robot and AI environment representations", "meaning": "In AI planning, robotics and sensor fusion, a world model was an internal, often symbolic or grid-based representation of the environment that a system builds and updates from sensing.", "evidence": [{"id": "E24", "text": "Current problem solving systems are constrained in their applicability by inadequate world models.", "title": "Planning using a temporal world model", "year": 1983, "url": "https://openalex.org/W166266902", "authors": "James F. Allen et al.", "fromTitle": false}, {"id": "E25", "text": "Contour correlation and high order world models are the basic elements of the method, realised in a special multi-microprocessor (on board) computer system.", "title": "A Curvature-based Scheme for Improving Road Vehicle Guidance by Computer Vision", "year": 1987, "url": "https://doi.org/10.1117/12.937795", "authors": "Ernst D. Dickmanns et al.", "fromTitle": false}, {"id": "E26", "text": "We will show how new constraint information, usually obtained by measurement, can be used to update the world model of relationships consistently, and in some situations, optimally.", "title": "A stochastic map for uncertain spatial relationships", "year": 1988, "url": "https://openalex.org/W1606157100", "authors": "Randall K. Smith et al.", "fromTitle": false}, {"id": "E27", "text": "General multisensor fusion methods, sensor selection strategies, and world models are examined, along with approaches to the integration and fusion of information from combinations of different types of sensors.", "title": "Multisensor integration and fusion in intelligent systems", "year": 1989, "url": "https://doi.org/10.1109/21.44007", "authors": "Ren C. Luo et al.", "fromTitle": false}, {"id": "E28", "text": "The omnidirectional mobile robot uses stereo vision, odometry, and contact bumpers to instantiate a symbolic world model.", "title": "Stereo vision and navigation in buildings for mobile robots", "year": 1989, "url": "https://doi.org/10.1109/70.88100", "authors": "David Juris Kriegman et al.", "fromTitle": false}, {"id": "E35", "text": "The VFH method uses a two-dimensional Cartesian histogram grid as a world model.", "title": "The vector field histogram-fast obstacle avoidance for mobile robots", "year": 1991, "url": "https://doi.org/10.1109/70.88137", "authors": "J. Borenstein et al.", "fromTitle": false}, {"id": "E38", "text": "The central result of this work is to show that completely unmodified classical AI programming methodologies using centralized world models can be usefully incorporated into real-world embedded reactive systems.", "title": "Integrating planning and reacting in a heterogeneous asynchronous architecture for controlling real-world mobile robots", "year": 1992, "url": "https://openalex.org/W184814775", "authors": "Erann Gat", "fromTitle": false}, {"id": "E40", "text": "The reason is that knowledge resources (lexicons, grammar rules, world models) must be painstakingly handcrafted from scratch.", "title": "Building a Large-Scale Knowledge Base for Machine Translation", "year": 1994, "url": "https://doi.org/10.48550/arxiv.cmp-lg/9407029", "authors": "Kevin K. Knight et al.", "fromTitle": false}, {"id": "E46", "text": "The job of the sensing system is to translate raw sensor input (usually sonar or vision data) into a world model.", "title": "On Three-Layer Architectures", "year": 1998, "url": "https://openalex.org/W211918120", "authors": "Erann Gat", "fromTitle": false}]}, {"start": 1991, "end": 2017, "label": "Learned models in reinforcement learning", "meaning": "In learning agents, a world model was an adaptive predictive model of environment dynamics, learned from experience and used for planning or exploration, while cosmology continued using the term for universe models and brane worlds.", "evidence": [{"id": "E34", "text": "This paper introduces a framework for `curious neural controllers' which employ an adaptive world model for goal directed on-line learning.", "title": "A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers", "year": 1991, "url": "https://doi.org/10.7551/mitpress/3115.003.0030", "authors": "Jürgen Schmidhuber", "fromTitle": false}, {"id": "E36", "text": "Planning is incremental and can use the probabilistic and ofttimes incorrect world models generated by learning processes.", "title": "Dyna, an integrated architecture for learning, planning, and reacting", "year": 1991, "url": "https://doi.org/10.1145/122344.122377", "authors": "Richard S. Sutton", "fromTitle": false}, {"id": "E51", "text": "Given this prior uncertainty over possible environments, the optimal-learning agent must collect and use information in an intelligent way, balancing greedy exploitation of certainty-equivalent world models with exploratory actions aimed at discerning the true state of nature.", "title": "Optimal learning: computational procedures for bayes-adaptive markov decision processes", "year": 2002, "url": "https://openalex.org/W1497039698", "authors": "Michael O. Duff et al.", "fromTitle": false}, {"id": "E59", "text": "We also present a SARSA based extension of GPTD, termed GPSARSA, that allows the selection of actions and the gradual improvement of policies without requiring a world-model.", "title": "Reinforcement learning with Gaussian processes", "year": 2005, "url": "https://doi.org/10.1145/1102351.1102377", "authors": "Yaakov Engel et al.", "fromTitle": false}, {"id": "E62", "text": "Using some sort of adaptive predictive world model, they improve their ability to answer questions such as what happens if I do this or that?", "title": "Developmental robotics, optimal artificial curiosity, creativity, music, and the fine arts", "year": 2006, "url": "https://doi.org/10.1080/09540090600768658", "authors": "Jürgen Schmidhuber", "fromTitle": false}, {"id": "E76", "text": "A seemingly distinct challenge is that, cognitively, theories of RL have largely involved procedural and semantic memory, the way in which knowledge about action values or world models extracted gradually from many experiences can drive choice.", "title": "Reinforcement Learning and Episodic Memory in Humans and Animals: An Integrative Framework", "year": 2016, "url": "https://doi.org/10.1146/annurev-psych-122414-033625", "authors": "Samuel Joseph Gershman et al.", "fromTitle": false}, {"id": "E52", "text": "We use gigaparticle N -body simulations to study galaxy cluster populations in Hubble volumes of ΛCDM (Ω m = 0.3, Ω Λ = 0.7) and τCDM (Ω m = 1) world models.", "title": "Galaxy Clusters in Hubble Volume Simulations: Cosmological Constraints from Sky Survey Populations", "year": 2002, "url": "https://doi.org/10.1086/340551", "authors": "AUGUST E. EVRARD et al.", "fromTitle": false}, {"id": "E55", "text": "We begin our review with the simplest consistent brane world model: a single brane embedded in a five-dimensional anti-de Sitter spacetime.", "title": "Cosmology and brane worlds: a review", "year": 2003, "url": "https://doi.org/10.1088/0264-9381/20/9/202", "authors": "Philippe Brax et al.", "fromTitle": false}]}, {"start": 2018, "end": 2026, "label": "Deep generative world models", "meaning": "A world model became a neural network, often a large video or multimodal foundation model, that learns compressed representations of the environment and simulates future states for training agents, robot manipulation, driving and LLM reasoning.", "evidence": [{"id": "E79", "text": "Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.", "title": "World Models", "year": 2018, "url": "https://doi.org/10.5281/zenodo.1207631", "authors": "David Ha et al.", "fromTitle": false}, {"id": "E82", "text": "Learned world models summarize an agent's experience to facilitate learning complex behaviors.", "title": "Dream to Control: Learning Behaviors by Latent Imagination", "year": 2019, "url": "https://doi.org/10.48550/arxiv.1912.01603", "authors": "Danijar Hafner et al.", "fromTitle": false}, {"id": "E84", "text": "World models facilitate such generalization and allow learning behaviors from imagined outcomes to increase sample-efficiency.", "title": "Mastering Atari with Discrete World Models", "year": 2020, "url": "https://doi.org/10.48550/arxiv.2010.02193", "authors": "Danijar Hafner et al.", "fromTitle": false}, {"id": "E90", "text": "Large language models (LLMs) have shown remarkable reasoning capabilities, particularly with chain-of-thought (CoT) prompting.However, LLMs sometimes still struggle with problems that are easy for humans, such as generating action plans to achieve given goals in an environment, or performing complex math or logical reasoning.The deficiency stems from the key fact that LLMs lack an internal world model to predict the world state (e.g., environmen…", "title": "Reasoning with Language Model is Planning with World Model", "year": 2023, "url": "https://doi.org/10.18653/v1/2023.emnlp-main.507", "authors": "Shibo Hao et al.", "fromTitle": false}, {"id": "E94", "text": "To address this challenge, we introduce GAIA-1 ('Generative AI for Autonomy'), a generative world model that leverages video, text, and action inputs to generate realistic driving scenarios while offering fine-grained control over ego-vehicle behavior and scene features.", "title": "GAIA-1: A Generative World Model for Autonomous Driving", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2309.17080", "authors": "Anthony Hu et al.", "fromTitle": false}, {"id": "E99", "text": "At 11B parameters, Genie can be considered a foundation world model.", "title": "Genie: Generative Interactive Environments", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2402.15391", "authors": "Jake Bruce et al.", "fromTitle": false}, {"id": "E112", "text": "It needs a digital twin of itself, the policy model, and a digital twin of the world, the world model.", "title": "Cosmos World Foundation Model Platform for Physical AI", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2501.03575", "authors": "NVIDIA et al.", "fromTitle": false}, {"id": "E127", "text": "Finally, we show how self-supervised learning can be applied to robotic planning tasks by post-training a latent action-conditioned world model, V-JEPA 2-AC, using less than 62 hours of unlabeled robot videos from the Droid dataset.", "title": "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2506.09985", "authors": "Assran, Mido et al.", "fromTitle": false}, {"id": "E136", "text": "World models learn general knowledge from videos and simulate experience for training behaviors in imagination, offering a path towards intelligent agents.", "title": "Training Agents Inside of Scalable World Models", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2509.24527", "authors": "Danijar Hafner et al.", "fromTitle": false}, {"id": "E151", "text": "Positioned as a top-tier world model, LingBot-World offers the following features.", "title": "Advancing Open-source World Models", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2601.20540", "authors": "Robbyant Team et al.", "fromTitle": false}]}], "milestones": [{"year": 1934, "kind": "origin", "title": "World-models and the world-picture", "why": "Earliest reliable use in the evidence, framing world-models in cosmological and philosophical terms.", "url": "https://openalex.org/W3041098624", "workTitle": "World-models and the world-picture", "authors": "E. A. Milne", "link": "in-sample", "evidence": [{"id": "E2", "text": "World-models and the world-picture", "title": "World-models and the world-picture", "year": 1934, "url": "https://openalex.org/W3041098624", "authors": "E. A. Milne", "fromTitle": true}]}, {"year": 1956, "kind": "popularized", "title": "Visual Horizons in World Models", "why": "A highly cited cosmology paper that established 'world models' as standard vocabulary for models of the universe.", "url": "https://doi.org/10.1093/mnras/116.6.662", "workTitle": "Visual Horizons in World Models", "authors": "Wolfgang Rindler", "link": "in-sample", "evidence": [{"id": "E12", "text": "Visual Horizons in World Models", "title": "Visual Horizons in World Models", "year": 1956, "url": "https://doi.org/10.1093/mnras/116.6.662", "authors": "Wolfgang Rindler", "fromTitle": true}]}, {"year": 1961, "kind": "popularized", "title": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models", "why": "Sandage's paper, widely cited, framed observational tests to choose between world models.", "url": "https://doi.org/10.1086/147041", "workTitle": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models.", "authors": "Allan Sandage", "link": "in-sample", "evidence": [{"id": "E14", "text": "The present paper reviews several tests which can be performed to decide between world models.", "title": "The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models.", "year": 1961, "url": "https://doi.org/10.1086/147041", "authors": "Allan Sandage", "fromTitle": false}, {"id": "E19", "text": "Sandage, The ability of the 200-inch telescope to discriminate between selected world models, Astrophys.", "title": "Gravitational Multipole Radiation", "year": 1962, "url": "https://doi.org/10.1137/0110059", "authors": "Jon Mathews", "fromTitle": false}, {"id": "E20", "text": "Sandage, The ability of the 200-inch telescope to discriminate between selected world models, Astrophys.", "title": "General Relativity: Theory and Experiment", "year": 1962, "url": "https://doi.org/10.1137/0110061", "authors": "Leonard I. Schiff", "fromTitle": false}]}, {"year": 1983, "kind": "applied", "title": "Planning using a temporal world model", "why": "Moved the term into AI problem solving, where a world model is a planner's representation of its domain.", "url": "https://openalex.org/W166266902", "workTitle": "Planning using a temporal world model", "authors": "James F. Allen et al.", "link": "in-sample", "evidence": [{"id": "E24", "text": "Current problem solving systems are constrained in their applicability by inadequate world models.", "title": "Planning using a temporal world model", "year": 1983, "url": "https://openalex.org/W166266902", "authors": "James F. Allen et al.", "fromTitle": false}]}, {"year": 1991, "kind": "redefined", "title": "A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers", "why": "Recast the world model as an adaptive neural predictor learned online by a curious controller.", "url": "https://doi.org/10.7551/mitpress/3115.003.0030", "workTitle": "A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers", "authors": "Jürgen Schmidhuber", "link": "in-sample", "evidence": [{"id": "E34", "text": "This paper introduces a framework for `curious neural controllers' which employ an adaptive world model for goal directed on-line learning.", "title": "A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers", "year": 1991, "url": "https://doi.org/10.7551/mitpress/3115.003.0030", "authors": "Jürgen Schmidhuber", "fromTitle": false}, {"id": "E62", "text": "Using some sort of adaptive predictive world model, they improve their ability to answer questions such as what happens if I do this or that?", "title": "Developmental robotics, optimal artificial curiosity, creativity, music, and the fine arts", "year": 2006, "url": "https://doi.org/10.1080/09540090600768658", "authors": "Jürgen Schmidhuber", "fromTitle": false}]}, {"year": 1991, "kind": "applied", "title": "Dyna, an integrated architecture for learning, planning, and reacting", "why": "Used learned, imperfect world models for incremental planning in reinforcement learning, later extended in Deep Dyna-Q.", "url": "https://doi.org/10.1145/122344.122377", "workTitle": "Dyna, an integrated architecture for learning, planning, and reacting", "authors": "Richard S. Sutton", "link": "in-sample", "evidence": [{"id": "E36", "text": "Planning is incremental and can use the probabilistic and ofttimes incorrect world models generated by learning processes.", "title": "Dyna, an integrated architecture for learning, planning, and reacting", "year": 1991, "url": "https://doi.org/10.1145/122344.122377", "authors": "Richard S. Sutton", "fromTitle": false}, {"id": "E78", "text": "Training a task-completion dialogue agent via reinforcement learning (RL) is costly because it requires many interactions with real users.One common alternative is to use a user simulator.However, a user simulator usually lacks the language complexity of human interlocutors and the biases in its design may tend to degrade the agent.To address these issues, we present Deep Dyna-Q, which to our knowledge is the first deep RL framework that integra…", "title": "Deep Dyna-Q: Integrating Planning for Task-Completion Dialogue Policy Learning", "year": 2018, "url": "https://doi.org/10.18653/v1/p18-1203", "authors": "Baolin Peng et al.", "fromTitle": false}]}, {"year": 1992, "kind": "critique", "title": "Integrating planning and reacting in a heterogeneous asynchronous architecture for controlling real-world mobile robots", "why": "Responded to debates over centralized world models by arguing classical AI methods using them could still serve embedded reactive robots.", "url": "https://openalex.org/W184814775", "workTitle": "Integrating planning and reacting in a heterogeneous asynchronous architecture for controlling real-world mobile robots", "authors": "Erann Gat", "link": "in-sample", "evidence": [{"id": "E38", "text": "The central result of this work is to show that completely unmodified classical AI programming methodologies using centralized world models can be usefully incorporated into real-world embedded reactive systems.", "title": "Integrating planning and reacting in a heterogeneous asynchronous architecture for controlling real-world mobile robots", "year": 1992, "url": "https://openalex.org/W184814775", "authors": "Erann Gat", "fromTitle": false}]}, {"year": 2018, "kind": "popularized", "title": "World Models", "why": "Showed an unsupervised learned compressed spatial-temporal world model, giving the term its modern deep-learning identity.", "url": "https://doi.org/10.5281/zenodo.1207631", "workTitle": "World Models", "authors": "David Ha et al.", "link": "in-sample", "evidence": [{"id": "E79", "text": "Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.", "title": "World Models", "year": 2018, "url": "https://doi.org/10.5281/zenodo.1207631", "authors": "David Ha et al.", "fromTitle": false}]}, {"year": 2019, "kind": "popularized", "title": "Dream to Control: Learning Behaviors by Latent Imagination", "why": "The Dreamer line made learning behaviors inside learned world models a mainstream RL approach, later carried to physical robots.", "url": "https://doi.org/10.48550/arxiv.1912.01603", "workTitle": "Dream to Control: Learning Behaviors by Latent Imagination", "authors": "Danijar Hafner et al.", "link": "in-sample", "evidence": [{"id": "E82", "text": "Learned world models summarize an agent's experience to facilitate learning complex behaviors.", "title": "Dream to Control: Learning Behaviors by Latent Imagination", "year": 2019, "url": "https://doi.org/10.48550/arxiv.1912.01603", "authors": "Danijar Hafner et al.", "fromTitle": false}, {"id": "E84", "text": "World models facilitate such generalization and allow learning behaviors from imagined outcomes to increase sample-efficiency.", "title": "Mastering Atari with Discrete World Models", "year": 2020, "url": "https://doi.org/10.48550/arxiv.2010.02193", "authors": "Danijar Hafner et al.", "fromTitle": false}, {"id": "E88", "text": "The Dreamer algorithm has recently shown great promise for learning from small amounts of interaction by planning within a learned world model, outperforming pure reinforcement learning in video games.", "title": "DayDreamer: World Models for Physical Robot Learning", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2206.14176", "authors": "Philipp Wu et al.", "fromTitle": false}, {"id": "E116", "text": "Mastering diverse control tasks through world models", "title": "Mastering diverse control tasks through world models", "year": 2025, "url": "https://doi.org/10.1038/s41586-025-08744-2", "authors": "Danijar Hafner et al.", "fromTitle": true}]}, {"year": 2023, "kind": "applied", "title": "Reasoning with Language Model is Planning with World Model", "why": "Extended the concept to large language models, treating LLM reasoning as planning with an internal world model.", "url": "https://doi.org/10.18653/v1/2023.emnlp-main.507", "workTitle": "Reasoning with Language Model is Planning with World Model", "authors": "Shibo Hao et al.", "link": "in-sample", "evidence": [{"id": "E90", "text": "Large language models (LLMs) have shown remarkable reasoning capabilities, particularly with chain-of-thought (CoT) prompting.However, LLMs sometimes still struggle with problems that are easy for humans, such as generating action plans to achieve given goals in an environment, or performing complex math or logical reasoning.The deficiency stems from the key fact that LLMs lack an internal world model to predict the world state (e.g., environmen…", "title": "Reasoning with Language Model is Planning with World Model", "year": 2023, "url": "https://doi.org/10.18653/v1/2023.emnlp-main.507", "authors": "Shibo Hao et al.", "fromTitle": false}, {"id": "E93", "text": "Leveraging Pre-trained Large Language Models to Construct and Utilize World Models for Model-based Task Planning", "title": "Leveraging Pre-trained Large Language Models to Construct and Utilize World Models for Model-based Task Planning", "year": 2023, "url": "https://doi.org/10.52202/075280-3459", "authors": "Lin Guan et al.", "fromTitle": true}, {"id": "E95", "text": "While further investigation is needed, our results suggest modern LLMs learn rich spatiotemporal representations of the real world and possess basic ingredients of a world model.", "title": "Language Models Represent Space and Time", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2310.02207", "authors": "Wes Gurnee et al.", "fromTitle": false}]}, {"year": 2023, "kind": "redefined", "title": "GAIA-1: A Generative World Model for Autonomous Driving", "why": "Recast world models as large generative video models simulating driving scenarios, launching a wave of driving and video world models.", "url": "https://doi.org/10.48550/arxiv.2309.17080", "workTitle": "GAIA-1: A Generative World Model for Autonomous Driving", "authors": "Anthony Hu et al.", "link": "in-sample", "evidence": [{"id": "E94", "text": "To address this challenge, we introduce GAIA-1 ('Generative AI for Autonomy'), a generative world model that leverages video, text, and action inputs to generate realistic driving scenarios while offering fine-grained control over ego-vehicle behavior and scene features.", "title": "GAIA-1: A Generative World Model for Autonomous Driving", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2309.17080", "authors": "Anthony Hu et al.", "fromTitle": false}, {"id": "E99", "text": "At 11B parameters, Genie can be considered a foundation world model.", "title": "Genie: Generative Interactive Environments", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2402.15391", "authors": "Jake Bruce et al.", "fromTitle": false}, {"id": "E112", "text": "It needs a digital twin of itself, the policy model, and a digital twin of the world, the world model.", "title": "Cosmos World Foundation Model Platform for Physical AI", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2501.03575", "authors": "NVIDIA et al.", "fromTitle": false}, {"id": "E117", "text": "World models have demonstrated superiority in autonomous driving, particularly in the generation of multi-view driving videos.", "title": "DriveDreamer-2: LLM-Enhanced World Models for Diverse Driving Video Generation", "year": 2025, "url": "https://doi.org/10.1609/aaai.v39i10.33130", "authors": "Guosheng Zhao et al.", "fromTitle": false}]}, {"year": 2026, "kind": "critique", "title": "Do generative video models understand physical principles?", "why": "Questions whether video models truly learn world models of physics or are merely pixel predictors.", "url": "https://doi.org/10.1109/wacv61042.2026.00099", "workTitle": "Do generative video models understand physical principles?", "authors": "Saman Motamed et al.", "link": "in-sample", "evidence": [{"id": "E153", "text": "These advances have led to a passionate scientific debate: Do video models learn \"world models\" that discover laws of physics—or, alternatively, are they merely sophisticated pixel predictors that achieve visual realism without understanding the physical principles of reality?", "title": "Do generative video models understand physical principles?", "year": 2026, "url": "https://doi.org/10.1109/wacv61042.2026.00099", "authors": "Saman Motamed et al.", "fromTitle": false}, {"id": "E115", "text": "To achieve real \"world models\" through video generation, the next frontier lies in intrinsic faithfulness to ensure that generated videos adhere to physical laws, commonsense reasoning, anatomical correctness, and compositional integrity.", "title": "VBench-2.0: Advancing Video Generation Benchmark Suite for Intrinsic Faithfulness", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2503.21755", "authors": "Dian Zheng et al.", "fromTitle": false}]}]}</script>
+<script>// idealine timeline renderer. renderTimeline(D, root) draws the interactive
+// timeline for one term into the elements under `root` marked with data-part:
+// chart, legend, detail, eras. Used by the static term pages and the web app.
+// All text from data is inserted with textContent or escaped; links must be http(s).
+(function (global) {
+  'use strict';
+  const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue('--' + n).trim();
+  const el = (tag, attrs = {}, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeUrl = u => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null);
+  const reEsc = w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Interface text; pass a partial object as the third argument to translate it.
+  const LABELS_EN = {
+    kinds: {},
+    papers: n => `${n} papers`,
+    yearPapers: (y, n) => `${y}: ${n} papers`,
+    timelineOf: term => `Timeline of ${term}`,
+    inSample: 'Linked paper uses the term itself.',
+    resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+    unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+    titleOf: 'Title of ',
+    legendDashed: 'dashed = no link found',
+    legendBars: 'bars = papers per year',
+  };
+
+  function renderTimeline(D, root, labels) {
+    root = root || document;
+    const L = Object.assign({}, LABELS_EN, labels || {});
+    const kindName = k => (L.kinds && L.kinds[k]) || k;
+    const part = name => root.querySelector(`[data-part="${name}"]`);
+    const chart = part('chart'), detail = part('detail');
+    chart.textContent = '';
+    const KIND_OK = k => (KINDS.includes(k) ? k : 'origin');
+    const phrases = [D.term, ...(D.aliases || [])].filter(p => p && p.trim());
+    const termRe = new RegExp('(' + phrases.map(p => p.split(/[\s-]+/).filter(Boolean).map(reEsc).join('[\\s-]+')).join('|') + ')', 'igu');
+    // Split the raw text first, then escape each piece, so entities are never cut.
+    const mark = s => String(s ?? '').split(termRe).map((p, i) => (i % 2 ? `<mark>${esc(p)}</mark>` : esc(p))).join('');
+    let msLaid = [];
+
+    function build() {
+      const counts = new Map(D.counts);
+      const years = [...counts.keys(), ...D.milestones.map(m => m.year), ...D.eras.flatMap(e => [e.start, e.end])].filter(Boolean);
+      if (!years.length) return;
+      const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
+      const left = 40, labelRoom = 230;
+      const avail = Math.max(600, chart.parentElement.clientWidth || 900);
+      // Each year gets width by how much happens in it: milestone years and busy years
+      // are wide, quiet years are thin. A century of rare use stays a short strip.
+      const peakC = Math.max(1, ...counts.values()), msYears = new Set(D.milestones.map(m => m.year));
+      const raw = y => (msYears.has(y) ? 30 : 0) + 34 * Math.sqrt((counts.get(y) || 0) / peakC) + ((counts.get(y) || 0) / peakC > 0.002 ? 6 : 2);
+      let total = 0;
+      for (let y = minYear; y <= nowYear; y++) total += raw(y);
+      const scale = Math.max(1, Math.min(2.2, (avail - left - labelRoom) / total));
+      const WY = y => raw(y) * scale, pos = new Map();
+      let acc = left;
+      for (let y = minYear; y <= nowYear; y++) { pos.set(y, acc + WY(y) / 2); acc += WY(y); }
+      const X = y => pos.get(Math.max(minYear, Math.min(nowYear, y)));
+
+      // Lay out milestone labels in lanes so they do not overlap.
+      const lanes = [], laneH = 36, axisPad = 26;
+      msLaid = D.milestones.map((m, i) => {
+        const label = m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
+        const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(m.year);
+        let lane = 0;
+        while ((lanes[lane] ?? -1e9) > x - 6) lane++;
+        lanes[lane] = x + w;
+        return { ...m, kind: KIND_OK(m.kind), i, label, x, lane };
+      });
+      const nLanes = Math.max(1, lanes.length);
+      const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
+      const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
+      const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
+      const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': L.timelineOf(D.term) });
+
+      // Era bands; labels alternate between two rows and are cut to fit.
+      D.eras.forEach((e, k) => {
+        const xa = X(e.start) - WY(e.start) / 2, xb = X(e.end) + WY(e.end) / 2, row = k % 2;
+        el('rect', { x: xa, y: row * 16, width: Math.max(4, xb - xa), height: axisY - row * 16, fill: css(k % 2 ? 'era2' : 'era1'), rx: 6 }, svg);
+        const next = D.eras[k + 2], room = (next ? X(next.start) - WY(next.start) / 2 : W) - xa - 12;
+        const maxChars = Math.max(8, Math.floor(room / 6.6));
+        const label = e.label.length > maxChars ? e.label.slice(0, maxChars - 1) + '…' : e.label;
+        const t = el('text', { x: xa + 8, y: 15 + row * 16, 'font-weight': 600, 'font-size': 11 }, svg);
+        t.textContent = label;
+        el('title', {}, t).textContent = `${e.start}–${e.end}: ${e.label}`;
+      });
+
+      const maxC = Math.max(1, ...counts.values());
+      for (const [y, c] of counts) {
+        const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
+        const r = el('rect', { x: X(y) - WY(y) * 0.34, y: axisY + 6, width: Math.max(1.5, WY(y) * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
+        el('title', {}, r).textContent = L.yearPapers(y, c);
+      }
+      el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
+      const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
+      // Year labels: never closer than 36px; the newest year always gets one.
+      let last = 1e9;
+      [...tickYears].sort((a, b) => b - a).forEach(y => {
+        if (last - X(y) < 36) return;
+        const t = el('text', { x: X(y), y: axisY + barH + 26, 'text-anchor': 'middle', class: 'muted' }, svg);
+        t.textContent = y;
+        last = X(y);
+      });
+      const peak = [...counts].sort((a, b) => b[1] - a[1])[0];
+      if (peak) {
+        const t = el('text', { x: X(peak[0]) + WY(peak[0]) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
+        t.textContent = L.papers(peak[1]);
+      }
+
+      msLaid.forEach(m => {
+        const y = axisY - axisPad - m.lane * laneH;
+        const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
+        el('rect', { x: m.x - 10, y: y - 12, width: m.label.length * 6.3 + 70, height: 24, fill: 'transparent' }, g);
+        el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
+        el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
+        const t = el('text', { x: m.x + 11, y: y + 4 }, g);
+        t.textContent = `${m.year} · ${m.label}`;
+        g.addEventListener('click', () => select(m.i));
+        g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i); } });
+        m.g = g;
+      });
+      chart.appendChild(svg);
+    }
+
+    function select(i) {
+      const m = D.milestones[i];
+      if (!m || !detail) return;
+      const kind = KIND_OK(m.kind);
+      msLaid.forEach(x => x.g && x.g.classList.toggle('sel', x.i === i));
+      const url = safeUrl(m.url);
+      const title = url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title)}</a>` : esc(m.title);
+      const status = {
+        'in-sample': esc(L.inSample),
+        'resolved': esc(L.resolved(m.workTitle || '')),
+        'unresolved': esc(L.unresolved),
+      }[m.link] || '';
+      const quotes = (m.evidence || []).map(e => {
+        const eu = safeUrl(e.url);
+        const src = eu ? `<a href="${esc(eu)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title);
+        return `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? esc(L.titleOf) : ''}${src} · ${esc(e.authors)}, ${esc(e.year)}</cite></blockquote>`;
+      }).join('');
+      detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kindName(kind))}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
+    }
+
+    build();
+    const legend = part('legend');
+    if (legend) {
+      legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
+        `<span>${esc(L.legendDashed)}</span><span>${esc(L.legendBars)}</span>`;
+    }
+    const eras = part('eras');
+    if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
+    if (detail) detail.textContent = '';
+    select(0);
+    // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
+    const sc = chart.closest('.scroller');
+    if (sc) {
+      const lastX = Math.max(0, ...msLaid.map(m => m.x));
+      sc.scrollLeft = lastX ? Math.min(sc.scrollWidth - sc.clientWidth, lastX - 24) : sc.scrollWidth;
+    }
+  }
+
+  global.renderTimeline = renderTimeline;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+renderTimeline(JSON.parse(document.getElementById('data').textContent));
+</script>
+</body></html>

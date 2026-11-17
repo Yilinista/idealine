@@ -37,7 +37,13 @@
     lb.title = T.langToggleTitle;
     syncProvider();
     progress.relabel();
-    if (shown) show(shownKind === 'example' ? exampleFor(lang) : shown, false, shownKind);
+    if (lastForm) formMsg(lastForm.fn, lastForm.isError);
+    if (shownKind === 'pending' || shownKind === 'failed') pending(pendingTerm, shownKind === 'failed');
+    else if (shownKind === 'ready' && shown) {
+      const keep = shown;
+      loadReady(keep.term, lang).then(d => { if (shown === keep && d) { lastData = d; show(d, false, 'ready'); } });
+      show(keep, false, 'ready');
+    } else if (shown) show(shownKind === 'example' ? exampleFor(lang) : shown, false, shownKind);
     if (lastStatus) status(lastStatus.key ? lastStatus.key() : lastStatus.msg, lastStatus.isError);
   }
   $('lang').addEventListener('click', () => {
@@ -85,7 +91,7 @@
     keyIn.value = '';
     $('oakey').value = '';
     remember.checked = false;
-    status(() => tx().forgotten);
+    formMsg(() => tx().forgotten);
   });
   $('oakey').value = store.get('idealine.openalexKey') || '';
   if ($('oakey').value) remember.checked = true;
@@ -129,6 +135,61 @@
 
   // --- run --------------------------------------------------------------------
   // msg: a string (translated if known) or a function returning text in the current language.
+  // Short messages next to the search box (before a run starts).
+  let lastForm = null;
+  function formMsg(fn, isError) {
+    lastForm = fn ? { fn, isError } : null;
+    const s = $('formmsg');
+    s.textContent = fn ? fn() : '';
+    s.classList.toggle('error', !!isError);
+  }
+
+  // Ready-made timelines shipped with the site: no OpenAlex calls, no key.
+  const READY = (() => { try { return JSON.parse($('ready').textContent) || {}; } catch (e) { return {}; } })();
+  async function loadReady(term, l) {
+    const r = READY[term.toLowerCase()];
+    if (!r) return null;
+    try {
+      const resp = await fetch((l === 'zh' && r.zh) || r.en);
+      return resp.ok ? await resp.json() : null;
+    } catch (e) { return null; }
+  }
+  let forceLive = false;
+
+  // Result area while a run is going or after it failed: the term, steps and messages.
+  function pending(term, failed) {
+    const r = $('result');
+    r.hidden = false;
+    r.classList.add('pending');
+    shownKind = failed ? 'failed' : 'pending';
+    pendingTerm = term;
+    $('r-term').textContent = term;
+    $('r-tag').textContent = failed ? tx().failedTag : tx().tracingTag;
+    $('r-tag').classList.toggle('pulse', !failed);
+    $('r-live').hidden = true;
+    renderSuggest(failed);
+  }
+  let pendingTerm = '';
+  function renderSuggest(on) {
+    const box = $('r-suggest');
+    box.textContent = '';
+    box.hidden = !on;
+    if (!on) return;
+    const seen = new Set(), terms = [];
+    for (const [k, v] of Object.entries(READY)) if (!seen.has(v.en)) { seen.add(v.en); terms.push(v.term || k); }
+    const p = document.createElement('p');
+    p.textContent = tx().suggest;
+    box.appendChild(p);
+    terms.slice(0, 8).forEach(t => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.textContent = t;
+      b.addEventListener('click', () => { $('term').value = t; $('aliases').value = ''; $('trace-form').requestSubmit(); });
+      box.appendChild(b);
+    });
+  }
+
   function status(msg, isError) {
     lastStatus = msg ? (typeof msg === 'function' ? { key: msg, isError } : { msg, isError }) : null;
     const s = $('status');
@@ -158,8 +219,25 @@
     const term = $('term').value.replace(/\s+/g, ' ').trim();
     const aliases = parseAliases($('aliases').value).filter(a => a.toLowerCase() !== term.toLowerCase());
     const providerId = providerSel.value, key = keyIn.value.trim(), model = modelIn.value.trim();
-    if (term.length < 2) return status(() => tx().needTerm, true);
-    if (providerId !== 'none' && !key) { $('opts').open = true; return status(() => tx().needKey(P.PROVIDERS[providerId].short), true); }
+    if (term.length < 2) return formMsg(() => tx().needTerm, true);
+    formMsg(null);
+    const live = forceLive;
+    forceLive = false;
+    if (!live && !aliases.length && READY[term.toLowerCase()]) {
+      busy = true;
+      pending(term);
+      status('');
+      $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const d = await loadReady(term, lang);
+      busy = false;
+      if (d) {
+        lastData = d;
+        show(d, true, 'ready');
+        setUrl(term, aliases);
+        return;
+      }
+    }
+    if (providerId !== 'none' && !key) { $('opts').open = true; return formMsg(() => tx().needKey(P.PROVIDERS[providerId].short), true); }
     if (providerId !== 'none') {
       if (remember.checked) store.set(KEY_PREFIX + providerId, key); else store.del(KEY_PREFIX + providerId);
       store.set('idealine.model.' + providerId, model);
@@ -173,7 +251,10 @@
     const acronymHint = /^[A-Z0-9]{2,5}$/.test(term) && !aliases.length;
     const runLang = lang;
     let interim = null;
+    pending(term);
+    status('');
     progress.start(providerId === 'none' ? STEPS_FREE : STEPS_MODEL);
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
     // Known steps go to the step list; anything else (retries, waits) to the status line.
     const step = m => { if (progress.from(m)) status(''); else status(m); };
     try {
@@ -209,19 +290,16 @@
       }
       lastData = C.toData(t);
       progress.finish();
-      show(lastData, true, 'result');
+      show(lastData, false, 'result');
       status(acronymHint ? () => tx().acronym : '');
-      const u = new URL(location.href);
-      u.searchParams.set('term', term);
-      if (aliases.length) u.searchParams.set('alias', aliases.join(', ')); else u.searchParams.delete('alias');
-      history.replaceState(null, '', u);
+      setUrl(term, aliases);
     } catch (e) {
       const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
       if (known && /OpenAlex key/.test(e.message)) $('opts').open = true;
       const m = e && e.message ? e.message : String(e);
       progress.finish();
       // If the model step failed, keep the free view as the result.
-      if (interim) { lastData = interim; show(interim, false, 'result'); }
+      if (interim) { lastData = interim; show(interim, false, 'result'); } else pending(term, true);
       const kept = interim ? () => ' ' + tx().keptFree : () => '';
       if (e && e.local) status(() => e.local() + kept(), true);
       else if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones + kept(), true);
@@ -230,24 +308,42 @@
     } finally {
       busy = false;
       $('go').disabled = false;
+      // Not smooth, and once more a moment later: the browser may still be applying a
+      // #fragment jump from the link that opened the page.
+      const toResult = () => $('result').scrollIntoView({ block: 'start' });
+      toResult();
+      setTimeout(toResult, 300);
     }
   });
 
   // kind: 'example' (ready-made), 'interim' (free view while the model reads), 'result'.
   let shownKind = 'example';
+  function setUrl(term, aliases) {
+    const u = new URL(location.href);
+    u.searchParams.set('term', term);
+    if (aliases.length) u.searchParams.set('alias', aliases.join(', ')); else u.searchParams.delete('alias');
+    u.hash = '';
+    history.replaceState(null, '', u);
+  }
+
   function show(d, scroll, kind) {
     shown = d;
     shownKind = kind || 'example';
     $('result').hidden = false;
+    $('result').classList.remove('pending');
+    renderSuggest(false);
     const T = tx();
-    $('r-tag').textContent = { example: T.exampleTag, interim: T.interimTag, result: T.resultTag }[shownKind];
+    $('r-tag').textContent = { example: T.exampleTag, interim: T.interimTag, result: T.resultTag, ready: T.readyTag }[shownKind];
     $('r-tag').classList.toggle('pulse', shownKind === 'interim');
-    $('r-actions').hidden = shownKind !== 'result';
+    $('r-actions').hidden = shownKind !== 'result' && shownKind !== 'ready';
+    $('r-live').hidden = shownKind !== 'ready';
     $('r-term').textContent = d.term;
     $('r-summary').textContent = d.summary || '';
     const years = d.counts.map(c => c[0]);
     const span = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : 'n/a';
-    $('r-meta').textContent = T.meta(d.total, span, d.model, d.evidenceCount);
+    $('r-meta').textContent = T.meta(d.total, span, d.model, d.evidenceCount) +
+      (shownKind !== 'example' && d.total < 20 ? ' ' + T.thin(d.total) : '') +
+      (shownKind === 'ready' ? ' ' + T.readyNote(d.generated) : '');
     window.renderTimeline(d, $('result'), labels());
     if (scroll) $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -305,6 +401,12 @@ ${call}</script>
 `;
     download(slug(d.term) + '.html', page, 'text/html');
   });
+  $('r-live').addEventListener('click', () => {
+    if (busy || !shown) return;
+    $('term').value = shown.term;
+    forceLive = true;
+    $('trace-form').requestSubmit();
+  });
   $('dl-json').addEventListener('click', () => {
     if (lastData) download(slug(lastData.term) + '.json', JSON.stringify(lastData, null, 2), 'application/json');
   });
@@ -314,10 +416,15 @@ ${call}</script>
   if (exampleFor(lang)) show(exampleFor(lang), false); else $('result').hidden = true;
   const params = new URLSearchParams(location.search);
   if (params.get('term')) {
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
     if ($('aliases').value) $('opts').open = true;
-    if (providerSel.value === 'none') $('trace-form').requestSubmit();
-    else status(() => tx().pressTrace);
+    // Start after load, so the browser's own jump to a #fragment cannot pull the page away.
+    const go = () => setTimeout(() => {
+      if (providerSel.value === 'none' || READY[$('term').value.toLowerCase()]) $('trace-form').requestSubmit();
+      else formMsg(() => tx().pressTrace);
+    }, 0);
+    if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });
   }
 })();

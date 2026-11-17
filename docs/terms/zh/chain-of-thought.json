@@ -1,0 +1,901 @@
+{
+ "term": "chain-of-thought",
+ "aliases": [
+  "chain of thought prompting"
+ ],
+ "summary": "“chain of thought”原本是英语中的日常说法，指人一连串相互衔接的思路或推理过程，长期出现在文学、法律、科学等各类文献中；2022年的论文《Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models》把它定义为“一系列中间推理步骤”，并将其用作提示大语言模型的技术。如今该词主要指让大模型在给出答案前生成逐步推理过程，并已扩展为通过强化学习训练的“长思维链”推理、多模态推理以及AI安全监控的对象。",
+ "counts": [
+  [
+   1914,
+   1
+  ],
+  [
+   1952,
+   1
+  ],
+  [
+   1953,
+   1
+  ],
+  [
+   1956,
+   1
+  ],
+  [
+   1962,
+   1
+  ],
+  [
+   1967,
+   1
+  ],
+  [
+   1975,
+   1
+  ],
+  [
+   1976,
+   1
+  ],
+  [
+   1985,
+   1
+  ],
+  [
+   1988,
+   4
+  ],
+  [
+   1990,
+   1
+  ],
+  [
+   2000,
+   1
+  ],
+  [
+   2003,
+   3
+  ],
+  [
+   2004,
+   2
+  ],
+  [
+   2005,
+   1
+  ],
+  [
+   2006,
+   2
+  ],
+  [
+   2007,
+   3
+  ],
+  [
+   2008,
+   3
+  ],
+  [
+   2009,
+   5
+  ],
+  [
+   2010,
+   1
+  ],
+  [
+   2012,
+   2
+  ],
+  [
+   2013,
+   4
+  ],
+  [
+   2014,
+   4
+  ],
+  [
+   2015,
+   3
+  ],
+  [
+   2016,
+   2
+  ],
+  [
+   2017,
+   8
+  ],
+  [
+   2018,
+   5
+  ],
+  [
+   2019,
+   1
+  ],
+  [
+   2020,
+   2
+  ],
+  [
+   2021,
+   3
+  ],
+  [
+   2022,
+   30
+  ],
+  [
+   2023,
+   369
+  ],
+  [
+   2024,
+   1253
+  ],
+  [
+   2025,
+   4023
+  ],
+  [
+   2026,
+   6347
+  ]
+ ],
+ "total": 12091,
+ "model": "claude-opus-5-5",
+ "generated": "2026-11-17",
+ "lang": "zh",
+ "evidenceCount": 160,
+ "eras": [
+  {
+   "start": 1914,
+   "end": 2021,
+   "label": "日常用语：思路链条",
+   "meaning": "泛指人的一连串思绪、论证脉络或思想传承，并非技术术语。",
+   "evidence": [
+    {
+     "id": "E3",
+     "text": "What has started our chain of thought is the following: I have often observed that a small group or clique can run an organization once it gets into office.",
+     "title": "THE SECRETARY'S OFFICE",
+     "year": 1953,
+     "url": "https://doi.org/10.1021/cen-v031n039.p4028",
+     "authors": "ALDEN H. EMERY",
+     "fromTitle": false
+    },
+    {
+     "id": "E4",
+     "text": "The latter are said to be the product of free will, which is omnipotent enough to create the first link in a chain of thought or conduct.",
+     "title": "SOME OBSERVATIONS ON THE RELATIONSHIP BETWEEN PSYCHIATRY AND THE LAW",
+     "year": 1956,
+     "url": "https://doi.org/10.1001/archneurpsyc.1956.02330210077008",
+     "authors": "THOMAS S. SZASZ",
+     "fromTitle": false
+    },
+    {
+     "id": "E7",
+     "text": "Most people would agree that moralising interruptions disrupt the reader's chain of thought and weaken his hold on the world which the narrator is creating.",
+     "title": "Judgement and Atmosphere in Epic",
+     "year": 1976,
+     "url": "https://doi.org/10.1017/s0048671x00004276",
+     "authors": "David M. Gaunt",
+     "fromTitle": false
+    },
+    {
+     "id": "E8",
+     "text": "But just knowing that an alternative set of beliefs exists and is held, let us say, by infidels may start a chain of thought like this: here are two sets of beliefs that contradict one another; they cannot both be true, so one of them must be false; but if one is false the other may be false also, so there may be no true belief.",
+     "title": "Critical Innocence and Straight Reading",
+     "year": 1985,
+     "url": "https://doi.org/10.2307/468986",
+     "authors": "Peter Caws",
+     "fromTitle": false
+    },
+    {
+     "id": "E9",
+     "text": "This article presents this chain of thought and explains the essential role of special and general relativity in the GPS.",
+     "title": "Relativistic effects in the global positioning system",
+     "year": 1988,
+     "url": "https://openalex.org/W293809360",
+     "authors": "Neil Ashby",
+     "fromTitle": false
+    },
+    {
+     "id": "E12",
+     "text": "Thus shifts in argument. were found to be more difficult to comprehend than a continuous chain of thought.",
+     "title": "Redundancy and the cohesion doze",
+     "year": 1990,
+     "url": "https://doi.org/10.1111/j.1467-9817.1990.tb00320.x",
+     "authors": "Marsha Bensoussan",
+     "fromTitle": false
+    },
+    {
+     "id": "E13",
+     "text": "The achievements of today are the cumulative results of unknown numbers of workers providing an unbroken chain of thought through time.",
+     "title": "Geographers: Biobibliographical Studies, 1977-2000",
+     "year": 2000,
+     "url": "https://doi.org/10.1111/j.1931-0846.2000.tb00335.x",
+     "authors": "Patrick Hamilton Armstrong et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E19",
+     "text": "One of the most prominent stylistic means applied by Woolf is her ‘train of thought’, linking one reflection to another like wagons in a railway convoy or like loops in a chain (therefore also sometimes referred to as ‘chain of thought’ in dictionaries).",
+     "title": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own",
+     "year": 2006,
+     "url": "https://openalex.org/W582236113",
+     "authors": "Ellen Johansson",
+     "fromTitle": false
+    },
+    {
+     "id": "E21",
+     "text": "An important link in that chain of thought is the work of Jean-Baptiste Say. 1 Austrians have recognized Say’s contributions to economics in general and his link to the Austrian School of thought in particular, 2 particularly his work in the areas of methodology, entrepreneurship, monetary theory, and the theory of value. 3 Say is particularly famous for his Law of Markets, arguing that the problem that limits wealth is not underconsumption (com…",
+     "title": "Jean-Baptiste Say, The Father of Austrian Public Finance: Views on Taxation",
+     "year": 2007,
+     "url": "https://doi.org/10.1007/s12113-007-9004-4",
+     "authors": "Mark Brandly",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "start": 2022,
+   "end": 2023,
+   "label": "大模型提示技术",
+   "meaning": "指在提示中给出带中间推理步骤的示例（或零样本引导），让大语言模型逐步推理以提升复杂推理能力的方法。",
+   "evidence": [
+    {
+     "id": "E22",
+     "text": "We explore how generating a chain of thought -- a series of intermediate reasoning steps -- significantly improves the ability of large language models to perform complex reasoning.",
+     "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.52202/068431-1800",
+     "authors": "Jason Wei et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E23",
+     "text": "Notably, chain of thought (CoT) prompting, a recent technique for eliciting complex multi-step reasoning through step-by-step answer examples, achieved the state-of-the-art performances in arithmetics and symbolic reasoning, difficult system-2 tasks that do not follow the standard scaling laws for LLMs.",
+     "title": "Large Language Models Are Zero-Shot Reasoners",
+     "year": 2022,
+     "url": "https://doi.org/10.52202/068431-1613",
+     "authors": "Takeshi Kojima et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E25",
+     "text": "Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks.",
+     "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2203.11171",
+     "authors": "Xuezhi Wang et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E27",
+     "text": "Chain-of-thought prompting has demonstrated remarkable performance on various natural language reasoning tasks.",
+     "title": "Least-to-Most Prompting Enables Complex Reasoning in Large Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2205.10625",
+     "authors": "Denny Zhou et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E31",
+     "text": "Providing these steps for prompting demonstrations is called chain-of-thought (CoT) prompting.",
+     "title": "Automatic Chain of Thought Prompting in Large Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2210.03493",
+     "authors": "Zhuosheng Zhang et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E32",
+     "text": "We find that applying chain-of-thought (CoT) prompting to BBH tasks enables PaLM to surpass the average human-rater performance on 10 of the 23 tasks, and Codex (code-davinci-002) to surpass the average human-rater performance on 17 of the 23 tasks.",
+     "title": "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2210.09261",
+     "authors": "Mirac Süzgün et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E36",
+     "text": "To surmount these challenges, we introduce a new framework for language model inference, Tree of Thoughts (ToT), which generalizes over the popular Chain of Thought approach to prompting language models, and enables exploration over coherent units of text (thoughts) that serve as intermediate steps toward problem solving.",
+     "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+     "year": 2023,
+     "url": "https://doi.org/10.52202/075280-0517",
+     "authors": "Shunyu Yao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E39",
+     "text": "Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models",
+     "title": "Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models",
+     "year": 2023,
+     "url": "https://doi.org/10.18653/v1/2023.acl-long.147",
+     "authors": "Lei Wang et al.",
+     "fromTitle": true
+    }
+   ]
+  },
+  {
+   "start": 2023,
+   "end": 2024,
+   "label": "推理范式扩展与审视",
+   "meaning": "思维链成为通用推理范式，被用于微调数据、多模态与机器人等领域，同时其忠实性受到质疑。",
+   "evidence": [
+    {
+     "id": "E33",
+     "text": "In this paper we explore instruction finetuning with a particular focus on (1) scaling the number of tasks, (2) scaling the model size, and (3) finetuning on chain-of-thought data.",
+     "title": "Scaling Instruction-Finetuned Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2210.11416",
+     "authors": "Hyung Won Chung et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E37",
+     "text": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT).",
+     "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+     "year": 2023,
+     "url": "https://doi.org/10.52202/075280-3275",
+     "authors": "Miles Turpin et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E59",
+     "text": "Large language models (LLMs) have shown impressive performance on complex reasoning by leveraging chain-of-thought (CoT) prompting to generate intermediate reasoning chains as the rationale to infer the answer.",
+     "title": "Multimodal Chain-of-Thought Reasoning in Language Models",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2302.00923",
+     "authors": "Zhuosheng Zhang et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E64",
+     "text": "Large language models (LLMs) perform better when they produce step-by-step, \"Chain-of-Thought\" (CoT) reasoning before answering a question, but it is unclear if the stated reasoning is a faithful explanation of the model's actual reasoning (i.e., its process for answering the question).",
+     "title": "Measuring Faithfulness in Chain-of-Thought Reasoning",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2307.13702",
+     "authors": "Tamera Lanham et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E65",
+     "text": "We further show that incorporating chain of thought reasoning allows RT-2 to perform multi-stage semantic reasoning, for example figuring out which object to pick up for use as an improvised hammer (a rock), or which type of drink is best suited for someone who is tired (an energy drink).",
+     "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2307.15818",
+     "authors": "Anthony Brohan et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E72",
+     "text": "Visual CoT: Advancing Multi-Modal Language Models with a Comprehensive Dataset and Benchmark for Chain-of-Thought Reasoning",
+     "title": "Visual CoT: Advancing Multi-Modal Language Models with a Comprehensive Dataset and Benchmark for Chain-of-Thought Reasoning",
+     "year": 2024,
+     "url": "https://doi.org/10.52202/079017-0275",
+     "authors": "Hao Shao et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E89",
+     "text": "Instructing the model to generate a sequence of intermediate steps, a.k.a., a chain of thought (CoT), is a highly effective method to improve the accuracy of large language models (LLMs) on arithmetics and symbolic reasoning tasks.",
+     "title": "Chain of Thought Empowers Transformers to Solve Inherently Serial Problems",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2402.12875",
+     "authors": "Zhiyuan Li et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E106",
+     "text": "Chain-of-thought (CoT) via prompting is the de facto method for eliciting reasoning capabilities from large language models (LLMs).",
+     "title": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2409.12183",
+     "authors": "Zayne Sprague et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "start": 2024,
+   "end": 2026,
+   "label": "长思维链推理模型",
+   "meaning": "指通过强化学习训练、在推理时生成很长中间推理序列的模型内部推理过程，涉及长度压缩、效率与安全监控等问题。",
+   "evidence": [
+    {
+     "id": "E111",
+     "text": "The o1 model series is trained with large-scale reinforcement learning to reason using chain of thought.",
+     "title": "OpenAI o1 System Card",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2412.16720",
+     "authors": "OpenAI et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E112",
+     "text": "These models employ extended chain-of-thought (CoT) processes, exploring multiple strategies to enhance problem-solving capabilities.",
+     "title": "Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2412.21187",
+     "authors": "Xingyu Chen et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E115",
+     "text": "Chain-of-Thought (CoT) has been proven effective in enhancing the reasoning capabilities of large language models (LLMs).Recent advancements, such as OpenAI's o1 and DeepSeek-R1, suggest that scaling up the length of CoT sequences during inference could further boost LLM reasoning performance.However, due to the autoregressive nature of LLM decoding, longer CoT outputs lead to a linear increase in inference latency, adversely affecting user expe…",
+     "title": "TokenSkip: Controllable Chain-of-Thought Compression in LLMs",
+     "year": 2025,
+     "url": "https://doi.org/10.18653/v1/2025.emnlp-main.165",
+     "authors": "Heming Xia et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E127",
+     "text": "Demystifying Long Chain-of-Thought Reasoning in LLMs",
+     "title": "Demystifying Long Chain-of-Thought Reasoning in LLMs",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2502.03373",
+     "authors": "Edward Yeo et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E135",
+     "text": "Recent Large Reasoning Models (LRMs), such as DeepSeek-R1 and OpenAI o1, have demonstrated strong performance gains by scaling up the length of Chain-of-Thought (CoT) reasoning during inference.",
+     "title": "A Survey of Efficient Reasoning for Large Reasoning Models: Language, Multimodality, and Beyond",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2503.21614",
+     "authors": "Xiaoye Qu et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E144",
+     "text": "Chain-of-thought (CoT) offers a potential boon for AI safety as it allows monitoring a model's CoT to try to understand its intentions and reasoning processes.",
+     "title": "Reasoning Models Don't Always Say What They Think",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2505.05410",
+     "authors": "Yanda Chen et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E154",
+     "text": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety",
+     "title": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2507.11473",
+     "authors": "Tomek Korbak et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E155",
+     "text": "Recent breakthroughs, exemplified by large language models (LLMs) 1,2 and chain-of-thought (CoT) prompting 3 , have achieved considerable success on foundational reasoning tasks.",
+     "title": "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning",
+     "year": 2025,
+     "url": "https://doi.org/10.1038/s41586-025-09422-z",
+     "authors": "Daya Guo et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E160",
+     "text": "A central factor in their success lies in the application of long chain-of-thought (Long CoT) characteristics, which enhance reasoning abilities and enable the solution of intricate problems.",
+     "title": "Towards reasoning era: a survey of long chain-of-thought for reasoning large language models",
+     "year": 2026,
+     "url": "https://doi.org/10.1007/s11432-025-4665-8",
+     "authors": "Qiguang Chen et al.",
+     "fromTitle": false
+    }
+   ]
+  }
+ ],
+ "milestones": [
+  {
+   "year": 1953,
+   "kind": "origin",
+   "title": "THE SECRETARY'S OFFICE",
+   "why": "证据中较早的日常用法，“chain of thought”指引发思考的一连串念头。",
+   "url": "https://doi.org/10.1021/cen-v031n039.p4028",
+   "workTitle": "THE SECRETARY'S OFFICE",
+   "authors": "ALDEN H. EMERY",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E3",
+     "text": "What has started our chain of thought is the following: I have often observed that a small group or clique can run an organization once it gets into office.",
+     "title": "THE SECRETARY'S OFFICE",
+     "year": 1953,
+     "url": "https://doi.org/10.1021/cen-v031n039.p4028",
+     "authors": "ALDEN H. EMERY",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2006,
+   "kind": "ancestor",
+   "title": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own",
+   "why": "说明该词在词典中与“train of thought”同义，即一个念头接一个念头的链式思维，这是后来技术含义的语义来源。",
+   "url": "https://openalex.org/W582236113",
+   "workTitle": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own",
+   "authors": "Ellen Johansson",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E19",
+     "text": "One of the most prominent stylistic means applied by Woolf is her ‘train of thought’, linking one reflection to another like wagons in a railway convoy or like loops in a chain (therefore also sometimes referred to as ‘chain of thought’ in dictionaries).",
+     "title": "Chained Thoughts Broken by Chains of Thought : An Analysis of the Narrative Style Used in Virginia Woolf's A Room of One's Own",
+     "year": 2006,
+     "url": "https://openalex.org/W582236113",
+     "authors": "Ellen Johansson",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2022,
+   "kind": "coined",
+   "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+   "why": "将chain of thought定义为“一系列中间推理步骤”，并证明它能显著提升大模型的复杂推理能力，确立了该术语的技术含义。",
+   "url": "https://doi.org/10.52202/068431-1800",
+   "workTitle": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+   "authors": "Jason Wei et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E22",
+     "text": "We explore how generating a chain of thought -- a series of intermediate reasoning steps -- significantly improves the ability of large language models to perform complex reasoning.",
+     "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.52202/068431-1800",
+     "authors": "Jason Wei et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E155",
+     "text": "Recent breakthroughs, exemplified by large language models (LLMs) 1,2 and chain-of-thought (CoT) prompting 3 , have achieved considerable success on foundational reasoning tasks.",
+     "title": "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning",
+     "year": 2025,
+     "url": "https://doi.org/10.1038/s41586-025-09422-z",
+     "authors": "Daya Guo et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2022,
+   "kind": "popularized",
+   "title": "Large Language Models Are Zero-Shot Reasoners",
+   "why": "把CoT提示作为突破性技术加以讨论，并推广到零样本场景，使该术语迅速普及。",
+   "url": "https://doi.org/10.52202/068431-1613",
+   "workTitle": "Large Language Models Are Zero-Shot Reasoners",
+   "authors": "Takeshi Kojima et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E23",
+     "text": "Notably, chain of thought (CoT) prompting, a recent technique for eliciting complex multi-step reasoning through step-by-step answer examples, achieved the state-of-the-art performances in arithmetics and symbolic reasoning, difficult system-2 tasks that do not follow the standard scaling laws for LLMs.",
+     "title": "Large Language Models Are Zero-Shot Reasoners",
+     "year": 2022,
+     "url": "https://doi.org/10.52202/068431-1613",
+     "authors": "Takeshi Kojima et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E78",
+     "text": "In enhancing the reasoning capabilities of large language models (LLMs), prior research primarily focuses on specific prompting techniques such as few-shot or zero-shot chain-of-thought (CoT) prompting.",
+     "title": "Chain-of-Thought Reasoning Without Prompting",
+     "year": 2024,
+     "url": "https://doi.org/10.52202/079017-2123",
+     "authors": "Xuezhi Wang et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2022,
+   "kind": "popularized",
+   "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+   "why": "在思维链基础上采样多条推理路径，成为后续工作广泛引用的核心扩展方法。",
+   "url": "https://doi.org/10.48550/arxiv.2203.11171",
+   "workTitle": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+   "authors": "Xuezhi Wang et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E25",
+     "text": "Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks.",
+     "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2203.11171",
+     "authors": "Xuezhi Wang et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E62",
+     "text": "The performance of Large Language Models (LLMs) in reasoning tasks depends heavily on prompt design, with Chain-of-Thought (CoT) and self-consistency being critical methods that enhance this ability.",
+     "title": "Progressive-Hint Prompting Improves Reasoning in Large Language Models",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2304.09797",
+     "authors": "Chuanyang Zheng et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E69",
+     "text": "Self-consistency with chain-of-thought prompting (CoT) has demonstrated remarkable performance gains on various challenging tasks, by utilizing multiple reasoning paths sampled from large language models (LLMs).",
+     "title": "Universal Self-Consistency for Large Language Model Generation",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2311.17311",
+     "authors": "Xinyun Chen et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2022,
+   "kind": "applied",
+   "title": "Scaling Instruction-Finetuned Language Models",
+   "why": "把思维链从提示技巧转为训练数据，用于指令微调。",
+   "url": "https://doi.org/10.48550/arxiv.2210.11416",
+   "workTitle": "Scaling Instruction-Finetuned Language Models",
+   "authors": "Hyung Won Chung et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E33",
+     "text": "In this paper we explore instruction finetuning with a particular focus on (1) scaling the number of tasks, (2) scaling the model size, and (3) finetuning on chain-of-thought data.",
+     "title": "Scaling Instruction-Finetuned Language Models",
+     "year": 2022,
+     "url": "https://doi.org/10.48550/arxiv.2210.11416",
+     "authors": "Hyung Won Chung et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E58",
+     "text": "We find task balancing and enrichment techniques are overlooked but critical to effective instruction tuning, and in particular, training with mixed prompt settings (zero-shot, few-shot, and chain-of-thought) actually yields stronger (2%+) performance in all settings.",
+     "title": "The Flan Collection: Designing Data and Methods for Effective Instruction Tuning",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2301.13688",
+     "authors": "Shayne Longpre et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2023,
+   "kind": "redefined",
+   "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+   "why": "将线性思维链推广为可搜索的树结构，催生了“X-of-Thought”系列框架。",
+   "url": "https://doi.org/10.52202/075280-0517",
+   "workTitle": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+   "authors": "Shunyu Yao et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E36",
+     "text": "To surmount these challenges, we introduce a new framework for language model inference, Tree of Thoughts (ToT), which generalizes over the popular Chain of Thought approach to prompting language models, and enables exploration over coherent units of text (thoughts) that serve as intermediate steps toward problem solving.",
+     "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+     "year": 2023,
+     "url": "https://doi.org/10.52202/075280-0517",
+     "authors": "Shunyu Yao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E94",
+     "text": "We introduce Graph of Thoughts (GoT): a framework that advances prompting capabilities in large language models (LLMs) beyond those offered by paradigms such as Chain-of-Thought or Tree of Thoughts (ToT).",
+     "title": "Graph of Thoughts: Solving Elaborate Problems with Large Language Models",
+     "year": 2024,
+     "url": "https://doi.org/10.1609/aaai.v38i16.29720",
+     "authors": "Maciej Besta et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2023,
+   "kind": "critique",
+   "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+   "why": "指出模型给出的思维链未必忠实反映其真实推理过程。",
+   "url": "https://doi.org/10.52202/075280-3275",
+   "workTitle": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+   "authors": "Miles Turpin et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E37",
+     "text": "Large Language Models (LLMs) can achieve strong performance on many tasks by producing step-by-step reasoning before giving a final output, often referred to as chain-of-thought reasoning (CoT).",
+     "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+     "year": 2023,
+     "url": "https://doi.org/10.52202/075280-3275",
+     "authors": "Miles Turpin et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E64",
+     "text": "Large language models (LLMs) perform better when they produce step-by-step, \"Chain-of-Thought\" (CoT) reasoning before answering a question, but it is unclear if the stated reasoning is a faithful explanation of the model's actual reasoning (i.e., its process for answering the question).",
+     "title": "Measuring Faithfulness in Chain-of-Thought Reasoning",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2307.13702",
+     "authors": "Tamera Lanham et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E133",
+     "text": "Recent studies indicate that when faced with explicit biases in prompts, models often omit mentioning these biases in their Chain-of-Thought (CoT) output, revealing that verbalized reasoning can give an incorrect picture of how models arrive at conclusions (unfaithfulness).",
+     "title": "Chain-of-Thought Reasoning In The Wild Is Not Always Faithful",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2503.08679",
+     "authors": "Iván Arcuschin et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2023,
+   "kind": "applied",
+   "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+   "why": "将思维链推理引入视觉-语言-动作模型与机器人控制，标志其进入多模态与具身领域。",
+   "url": "https://doi.org/10.48550/arxiv.2307.15818",
+   "workTitle": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+   "authors": "Anthony Brohan et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E65",
+     "text": "We further show that incorporating chain of thought reasoning allows RT-2 to perform multi-stage semantic reasoning, for example figuring out which object to pick up for use as an improvised hammer (a rock), or which type of drink is best suited for someone who is tired (an energy drink).",
+     "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+     "year": 2023,
+     "url": "https://doi.org/10.48550/arxiv.2307.15818",
+     "authors": "Anthony Brohan et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E102",
+     "text": "Naive use of \"chain-of-thought\" (CoT) style prompting is significantly less effective with standard VLAs because of the relatively simple training examples that are available to them.",
+     "title": "Robotic Control via Embodied Chain-of-Thought Reasoning",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2407.08693",
+     "authors": "Michał Zawalski et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E149",
+     "text": "In this paper, we introduce a method that incorporates explicit visual chain-of-thought (CoT) reasoning into vision-language-action models (VLAs) by predicting future image frames autoregressively as visual goals before generating a short action sequence to achieve these goals.",
+     "title": "CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models",
+     "year": 2025,
+     "url": "https://doi.org/10.1109/cvpr52734.2025.00166",
+     "authors": "Qingqing Zhao et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2024,
+   "kind": "redefined",
+   "title": "OpenAI o1 System Card",
+   "why": "思维链不再只是提示方法，而是通过大规模强化学习训练的模型内部推理过程，开启“长思维链”推理模型时代。",
+   "url": "https://doi.org/10.48550/arxiv.2412.16720",
+   "workTitle": "OpenAI o1 System Card",
+   "authors": "OpenAI et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E111",
+     "text": "The o1 model series is trained with large-scale reinforcement learning to reason using chain of thought.",
+     "title": "OpenAI o1 System Card",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2412.16720",
+     "authors": "OpenAI et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E112",
+     "text": "These models employ extended chain-of-thought (CoT) processes, exploring multiple strategies to enhance problem-solving capabilities.",
+     "title": "Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2412.21187",
+     "authors": "Xingyu Chen et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E115",
+     "text": "Chain-of-Thought (CoT) has been proven effective in enhancing the reasoning capabilities of large language models (LLMs).Recent advancements, such as OpenAI's o1 and DeepSeek-R1, suggest that scaling up the length of CoT sequences during inference could further boost LLM reasoning performance.However, due to the autoregressive nature of LLM decoding, longer CoT outputs lead to a linear increase in inference latency, adversely affecting user expe…",
+     "title": "TokenSkip: Controllable Chain-of-Thought Compression in LLMs",
+     "year": 2025,
+     "url": "https://doi.org/10.18653/v1/2025.emnlp-main.165",
+     "authors": "Heming Xia et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E135",
+     "text": "Recent Large Reasoning Models (LRMs), such as DeepSeek-R1 and OpenAI o1, have demonstrated strong performance gains by scaling up the length of Chain-of-Thought (CoT) reasoning during inference.",
+     "title": "A Survey of Efficient Reasoning for Large Reasoning Models: Language, Multimodality, and Beyond",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2503.21614",
+     "authors": "Xiaoye Qu et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2024,
+   "kind": "critique",
+   "title": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning",
+   "why": "指出思维链的收益主要集中在数学与符号推理任务，限定了其适用范围。",
+   "url": "https://doi.org/10.48550/arxiv.2409.12183",
+   "workTitle": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning",
+   "authors": "Zayne Sprague et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E106",
+     "text": "Chain-of-thought (CoT) via prompting is the de facto method for eliciting reasoning capabilities from large language models (LLMs).",
+     "title": "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning",
+     "year": 2024,
+     "url": "https://doi.org/10.48550/arxiv.2409.12183",
+     "authors": "Zayne Sprague et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E83",
+     "text": "In addition, code-pretraining greatly benefits strategic reasoning, while advanced reasoning methods such as Chain-of-Thought (CoT) and Tree-of-Thought (ToT) do not always help.",
+     "title": "GTBench: Uncovering the Strategic Reasoning Capabilities of LLMs via Game-Theoretic Evaluations",
+     "year": 2024,
+     "url": "https://doi.org/10.52202/079017-0885",
+     "authors": "Jinhao Duan et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E148",
+     "text": "Notably, prevailing linguistic reasoning techniques (e.g., chain-of-thought, self-consistency, tree-of-thoughts) fail to improve performance, whereas explicitly generating cognitive maps during question-answering enhances MLLMs’ spatial distance ability.",
+     "title": "Thinking in Space: How Multimodal Large Language Models See, Remember, and Recall Spaces",
+     "year": 2025,
+     "url": "https://doi.org/10.1109/cvpr52734.2025.00994",
+     "authors": "Jihan Yang et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2025,
+   "kind": "applied",
+   "title": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety",
+   "why": "把思维链视为监控模型意图的AI安全工具，同时强调这种可监控性很脆弱。",
+   "url": "https://doi.org/10.48550/arxiv.2507.11473",
+   "workTitle": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety",
+   "authors": "Tomek Korbak et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E154",
+     "text": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety",
+     "title": "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2507.11473",
+     "authors": "Tomek Korbak et al.",
+     "fromTitle": true
+    },
+    {
+     "id": "E144",
+     "text": "Chain-of-thought (CoT) offers a potential boon for AI safety as it allows monitoring a model's CoT to try to understand its intentions and reasoning processes.",
+     "title": "Reasoning Models Don't Always Say What They Think",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2505.05410",
+     "authors": "Yanda Chen et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E142",
+     "text": "Our framework mitigates risks such as prompt injection, agent misalignment, and insecure code risks through three powerful guardrails: PromptGuard 2, a universal jailbreak detector that demonstrates clear state of the art performance; Agent Alignment Checks, a chain-of-thought auditor that inspects agent reasoning for prompt injection and goal misalignment, which, while still experimental, shows stronger efficacy at preventing indirect injection…",
+     "title": "LlamaFirewall: An open source guardrail system for building secure AI agents",
+     "year": 2025,
+     "url": "https://doi.org/10.48550/arxiv.2505.03574",
+     "authors": "Sahana Chennabasappa et al.",
+     "fromTitle": false
+    }
+   ]
+  }
+ ]
+}

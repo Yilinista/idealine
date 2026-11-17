@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>in-context learning · idealine</title>
+<meta name="description" content="Where the term in-context learning came from and how its meaning changed, with quotes from the papers.">
+<style>
+:root{--bg:#fbfaf7;--panel:#ffffff;--fg:#1c1b19;--muted:#6d6a63;--ink-soft:#4a4844;--line:#e4e0d6;--accent:#3b5bdb;--on-accent:#ffffff;
+--ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
+--bar:#cfc8b8;--era1:rgba(59,91,219,.07);--era2:rgba(183,121,31,.08);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1014;--panel:#161920;--fg:#ecebe6;--muted:#9a978f;--ink-soft:#c9c6be;--line:#2a2e37;--accent:#f0b85a;--on-accent:#1a1408;
+--ancestor:#b6a6ff;--origin:#5fd3c4;--coined:#7ea2ff;--popularized:#7bd88f;--redefined:#f0b85a;--applied:#a99cf5;--critique:#ff8a65;
+--bar:#3a4050;--era1:rgba(240,184,90,.07);--era2:rgba(110,180,255,.07);--glow:rgba(240,184,90,.12);--shadow:0 12px 40px rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -120px,var(--glow) 0%,transparent 70%) no-repeat,var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.brand{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand a{color:inherit}
+h1{font-family:ui-serif,Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
+.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px;color:var(--ink-soft)}
+.meta{color:var(--muted);font-size:.86rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:22px;box-shadow:var(--shadow);overflow:hidden}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg text{fill:var(--fg);font-size:11.5px}
+svg .muted{fill:var(--muted)}
+.ms{cursor:pointer;outline:none}
+.ms circle{stroke:var(--panel);stroke-width:2.5}
+.ms:hover circle,.ms:focus circle,.ms.sel circle{stroke:var(--fg)}
+.ms.sel text{font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.hint{font-size:.8rem;color:var(--muted);padding:10px 16px 0}
+.detail{padding:18px 20px}
+.kind{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.detail h2{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
+.detail h2 a{color:inherit}
+.why{margin:0 0 10px}
+.status{font-size:.78rem;color:var(--muted)}
+blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line);color:var(--fg)}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
+blockquote cite a{color:inherit}
+mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
+.era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
+.era h3{margin:2px 0 6px;font-size:1rem}
+.era p{margin:0;font-size:.92rem}
+details{margin-top:28px;color:var(--muted);font-size:.88rem}
+details summary{cursor:pointer}
+footer{margin-top:36px;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+</style></head>
+<body><main>
+<div class="brand"><a href="https://github.com/Yilinista/idealine">idealine</a> · 这个概念从哪里来？</div>
+<h1>in-context learning</h1>
+<p class="summary">“in-context learning”一词早期出现在教育学、二语词汇习得和心理学中，指在真实语境中学习（如借助上下文学习词汇、嵌入课程情境的学习支持）；2021年前后随GPT-3等大语言模型被借用为机器学习术语。如今它主要指大型模型仅凭提示中的少量示例在推理时完成新任务、无需更新参数的能力，并已扩展到多模态、语音、表格数据等领域，同时成为机制研究的热点。</p>
+<p class="meta">OpenAlex 中有 6,281 篇论文使用这个词（1982–2026）。时期和里程碑由 <code>claude-opus-5-5</code> 仅根据 160 条原句生成；每个里程碑都附有原句，方便核对。</p>
+<div class="card">
+  <div class="hint">点击圆点查看背后的原文句子。左右滑动可以看更早的年份。</div>
+  <div class="scroller"><div data-part="chart"></div></div>
+  <div class="legend" data-part="legend"></div>
+  <div class="detail" data-part="detail" aria-live="polite"></div>
+</div>
+<div class="eras" data-part="eras"></div>
+<details><summary>这页是怎么做的，可能漏掉什么</summary>
+<p>数量和论文来自 <a href="https://openalex.org">OpenAlex</a>，在标题和摘要里搜索完全一致的词组。句子取自摘要，所以没有摘要的作品（常见于较早的书和文章）只有在后来的论文提到时才会出现。标签由模型生成，可能有误，请以原句为准。生成于 2026-11-17。</p>
+</details>
+<footer>由 <a href="https://github.com/Yilinista/idealine">idealine</a> 生成。想查别的词？<a href="https://yilinista.github.io/idealine/">自己追溯一个</a>。</footer>
+</main>
+<script type="application/json" id="data">{"term": "in-context learning", "aliases": ["in context learning"], "summary": "“in-context learning”一词早期出现在教育学、二语词汇习得和心理学中，指在真实语境中学习（如借助上下文学习词汇、嵌入课程情境的学习支持）；2021年前后随GPT-3等大语言模型被借用为机器学习术语。如今它主要指大型模型仅凭提示中的少量示例在推理时完成新任务、无需更新参数的能力，并已扩展到多模态、语音、表格数据等领域，同时成为机制研究的热点。", "counts": [[1982, 2], [1990, 1], [1992, 1], [1994, 1], [1996, 2], [1998, 1], [1999, 3], [2002, 1], [2003, 1], [2004, 1], [2005, 4], [2006, 2], [2007, 1], [2008, 3], [2010, 2], [2011, 1], [2012, 1], [2013, 2], [2014, 1], [2015, 3], [2016, 1], [2017, 4], [2018, 2], [2019, 3], [2020, 7], [2021, 9], [2022, 67], [2023, 529], [2024, 1360], [2025, 2011], [2026, 2254]], "total": 6281, "model": "claude-opus-5-5", "generated": "2026-11-17", "lang": "zh", "evidenceCount": 160, "eras": [{"start": 1990, "end": 2008, "label": "教育与心理语境学习", "meaning": "指学习者在真实语境或情境中学习，如通过上下文习得二语词汇、嵌入课程的学习支持、或动物/大脑对环境语境的学习。", "evidence": [{"id": "E1", "text": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning", "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning", "year": 1990, "url": "https://doi.org/10.5070/b5.36657", "authors": "Raymond Devenney", "fromTitle": true}, {"id": "E2", "text": "Such faith in context learning has not always received experimental support, however, nor is it commonly shared by L2 learners.", "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency", "year": 1996, "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x", "authors": "Peter Prince", "fromTitle": false}, {"id": "E3", "text": "The study documented the design, implementation and evaluation - from both the students' and teacher's perspectives - of an in-context learning support program for first year students, using both quantitative and qualitative methodologies.The program was based on a theoretical framework which integrated cognitive, behavioural and social learning perspectives and focussed on increasing students' repertoire of learning strategies, promoting their …", "title": "Design, implementation and evaluation of an in-context learning support program for first year education students and its impact on educational outcomes.", "year": 1998, "url": "https://openalex.org/W2295722042", "authors": "de la Harpe et al.", "fromTitle": false}, {"id": "E4", "text": "The two effects also differ in their dependence on the hippocampus, a brain structure that has long been implicated in context learning.", "title": "DISSOCIATIONS OF TWO EFFECTS OF CONTEXT", "year": 1999, "url": "https://openalex.org/W2188718251", "authors": "Mark E. Bouton et al.", "fromTitle": false}, {"id": "E5", "text": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students", "title": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students", "year": 1999, "url": "https://doi.org/10.14221/ajte.1999v24n2.3", "authors": "Barbara de la Harpe et al.", "fromTitle": true}, {"id": "E6", "text": "The first concentrates on the instructional design approach which focuses on the definition of specific outcome objectives, design of materials and procedures that are targeted on these objectives, and assessments that determine if learners have attained the desired objectives – adopted by the main stream of adaptive educational hypermedia systems, and the constructivist approach which focuses on in-context learning organized around authentic ta…", "title": "Learning activities and aids in adaptive learning environments", "year": 2005, "url": "https://openalex.org/W2109391286", "authors": "Kyparisia A. Papanikolaou et al.", "fromTitle": false}]}, {"start": 2021, "end": 2022, "label": "大语言模型提示学习", "meaning": "指GPT-3等预训练语言模型通过在提示中给出少量输入-输出示例即可执行新任务、无需梯度更新的能力。", "evidence": [{"id": "E7", "text": "We introduce MetaICL (Meta-training for In-Context Learning), a new meta-training framework for few-shot learning where a pretrained language model is tuned to do in-context learning on a large set of training tasks.", "title": "MetaICL: Learning to Learn In Context", "year": 2021, "url": "https://doi.org/10.48550/arxiv.2110.15943", "authors": "Sewon Min et al.", "fromTitle": false}, {"id": "E8", "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.", "title": "An Explanation of In-context Learning as Implicit Bayesian Inference", "year": 2021, "url": "https://doi.org/10.48550/arxiv.2111.02080", "authors": "Sang Michael Xie et al.", "fromTitle": false}, {"id": "E9", "text": "For example, thanks to scaling, GPT-3 was able to achieve strong results on in-context learning tasks.", "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts", "year": 2021, "url": "https://doi.org/10.48550/arxiv.2112.06905", "authors": "Nan Du et al.", "fromTitle": false}, {"id": "E10", "text": "Large language models (LMs) are able to incontext learn-perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs.However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance.In this paper, we show that ground truth demonstrations are in fact not required-randomly replacing labels in th…", "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?", "year": 2022, "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759", "authors": "Sewon Min et al.", "fromTitle": false}, {"id": "E11", "text": "Few-shot in-context learning (ICL) enables pre-trained language models to perform a previously-unseen task without any gradient-based training by feeding a small number of training examples as part of the input.", "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning", "year": 2022, "url": "https://doi.org/10.52202/068431-0142", "authors": "Haokun Liu et al.", "fromTitle": false}, {"id": "E12", "text": "In-context learning is a recent paradigm in natural language understanding, where a large pretrained language model (LM) observes a test instance and a few training examples as its input, and directly decodes the output without any update to its parameters.However, performance has been shown to strongly depend on the selected training examples (termed prompts).In this work, we propose an efficient method for retrieving prompts for in-context lea…", "title": "Learning To Retrieve Prompts for In-Context Learning", "year": 2022, "url": "https://doi.org/10.18653/v1/2022.naacl-main.191", "authors": "Ohad Rubin et al.", "fromTitle": false}, {"id": "E21", "text": "Large language models can perform in-context learning, where they learn a new task from a few task demonstrations, without any parameter updates.", "title": "Selective Annotation Makes Language Models Better Few-Shot Learners", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2209.01975", "authors": "Hongjin Su et al.", "fromTitle": false}, {"id": "E28", "text": "With the increasing capabilities of large language models (LLMs), in-context learning (ICL) has emerged as a new paradigm for natural language processing (NLP), where LLMs make predictions based on contexts augmented with a few examples.", "title": "A Survey on In-context Learning", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2301.00234", "authors": "Qingxiu Dong et al.", "fromTitle": false}]}, {"start": 2022, "end": 2023, "label": "机制与理论探究", "meaning": "该术语成为研究对象，学者用贝叶斯推断、归纳头、隐式梯度下降、任务向量等解释Transformer为何能在上下文中学习。", "evidence": [{"id": "E8", "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.", "title": "An Explanation of In-context Learning as Implicit Bayesian Inference", "year": 2021, "url": "https://doi.org/10.48550/arxiv.2111.02080", "authors": "Sang Michael Xie et al.", "fromTitle": false}, {"id": "E13", "text": "In-context learning refers to the ability of a model to condition on a prompt sequence consisting of in-context examples (input-output pairs corresponding to some task) along with a new query input, and generate the corresponding output.", "title": "What Can Transformers Learn In-Context? a Case Study of Simple Function Classes", "year": 2022, "url": "https://doi.org/10.52202/068431-2217", "authors": "Shivam Garg et al.", "fromTitle": false}, {"id": "E22", "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).", "title": "In-context Learning and Induction Heads", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2209.11895", "authors": "Catherine Olsson et al.", "fromTitle": false}, {"id": "E25", "text": "Neural sequence models, especially transformers, exhibit a remarkable capacity for in-context learning.", "title": "What learning algorithm is in-context learning? Investigations with linear models", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2211.15661", "authors": "Ekin Akyürek et al.", "fromTitle": false}, {"id": "E26", "text": "At present, the mechanisms of in-context learning in Transformers are not well understood and remain mostly an intuition.", "title": "Transformers learn in-context by gradient descent", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2212.07677", "authors": "Johannes von Oswald et al.", "fromTitle": false}, {"id": "E38", "text": "In-context learning (ICL) in Large Language Models (LLMs) has emerged as a powerful new learning paradigm.However, its underlying mechanism is still not well understood.In particular, it is challenging to map it to the \"standard\" machine learning framework, where one uses a training set S to find a best-fitting function f (x) in some hypothesis class.Here we make progress on this problem by showing that the functions learned by ICL often have a …", "title": "In-Context Learning Creates Task Vectors", "year": 2023, "url": "https://doi.org/10.18653/v1/2023.findings-emnlp.624", "authors": "Roee Hendel et al.", "fromTitle": false}, {"id": "E40", "text": "Large pretrained language models have shown surprising in-context learning (ICL) ability.With a few demonstration input-label pairs, they can predict the label for an unseen input without parameter updates.Despite the great success in performance, its working mechanism still remains an open question.In this paper, we explain language models as metaoptimizers and understand in-context learning as implicit finetuning.Theoretically, we figure out t…", "title": "Why Can GPT Learn In-Context? Language Models Secretly Perform Gradient Descent as Meta-Optimizers", "year": 2023, "url": "https://doi.org/10.18653/v1/2023.findings-acl.247", "authors": "Damai Dai et al.", "fromTitle": false}, {"id": "E42", "text": "Transformers learn to implement preconditioned gradient descent for in-context learning", "title": "Transformers learn to implement preconditioned gradient descent for in-context learning", "year": 2023, "url": "https://doi.org/10.52202/075280-1977", "authors": "Kwangjun Ahn et al.", "fromTitle": true}, {"id": "E43", "text": "Neural sequence models based on the transformer architecture have demonstrated remarkable \\emph{in-context learning} (ICL) abilities, where they can perform new tasks when prompted with training and test examples, without any parameter update to the model.", "title": "Transformers as Statisticians: Provable In-Context Learning with In-Context Algorithm Selection", "year": 2023, "url": "https://doi.org/10.52202/075280-2498", "authors": "Yu Bai et al.", "fromTitle": false}, {"id": "E80", "text": "Using causal mediation analysis on a diverse range of in-context-learning (ICL) tasks, we find that a small number attention heads transport a compact representation of the demonstrated task, which we call a function vector (FV).", "title": "Function Vectors in Large Language Models", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2310.15213", "authors": "Eric Todd et al.", "fromTitle": false}]}, {"start": 2023, "end": 2026, "label": "跨模态通用范式", "meaning": "上下文学习成为大模型的标准能力和提示工程手段，被广泛应用于视觉、语音、表格、基因组、机器人及医疗等领域。", "evidence": [{"id": "E52", "text": "In this paper, the main focus is on an emergent ability in large vision models, known as in-context learning, which allows inference on unseen tasks by conditioning on in-context examples (a.k.a.~prompt) without updating the model parameters.", "title": "What Makes Good Examples for Visual In-Context Learning?", "year": 2023, "url": "https://doi.org/10.52202/075280-0780", "authors": "Yuanhan Zhang et al.", "fromTitle": false}, {"id": "E56", "text": "Vall-E emerges in-context learning capabilities and can be used to synthesize high-quality personalized speech with only a 3-second enrolled recording of an unseen speaker as an acoustic prompt.", "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2301.02111", "authors": "Chengyi Wang et al.", "fromTitle": false}, {"id": "E66", "text": "In-context learning, as a new paradigm in NLP, allows the model to rapidly adapt to various tasks with only a handful of prompts and examples.", "title": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning", "year": 2023, "url": "https://doi.org/10.1109/cvpr52729.2023.00660", "authors": "Xinlong Wang et al.", "fromTitle": false}, {"id": "E70", "text": "We explore what longer context enables - including the first use of in-context learning in genomics.", "title": "HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2306.15794", "authors": "Nguyen, Eric et al.", "fromTitle": false}, {"id": "E105", "text": "In this work, we demonstrate that the task-agnostic in-context learning capabilities of large multimodal models can be significantly enhanced by effective scaling-up.", "title": "Generative Multimodal Models are In-Context Learners", "year": 2024, "url": "https://doi.org/10.1109/cvpr52733.2024.01365", "authors": "Quan Sun et al.", "fromTitle": false}, {"id": "E115", "text": "By employing progressive semantic decoding with two popular generative models, language models (LMs) and Flow Matching, CosyVoice demonstrated high prosody naturalness, content consistency, and speaker similarity in speech in-context learning.", "title": "CosyVoice 2: Scalable Streaming Speech Synthesis with Large Language Models", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2412.10117", "authors": "Zhihao Du et al.", "fromTitle": false}, {"id": "E122", "text": "Since the seminal work of TabPFN, research on tabular foundation models (TFMs) based on in-context learning (ICL) has challenged long-standing paradigms in machine learning.", "title": "Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models", "year": 2025, "url": "https://doi.org/10.52202/085713-0535", "authors": "Xiyuan Zhang et al.", "fromTitle": false}, {"id": "E141", "text": "The size expansion comes with a distinct capability called in-context learning (ICL), which represents a special form of prompting and allows the models to be utilized through the presentation of demonstration examples without modifications to the model parameters.", "title": "Privacy Preserving Prompt Engineering: A Survey", "year": 2025, "url": "https://doi.org/10.1145/3729219", "authors": "Kennedy Edemacu et al.", "fromTitle": false}, {"id": "E158", "text": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data.", "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2602.11139", "authors": "Jingang Qu et al.", "fromTitle": false}]}], "milestones": [{"year": 1990, "kind": "origin", "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning", "why": "证据中最早的用例，指二语学习者借助语境学习词汇。", "url": "https://doi.org/10.5070/b5.36657", "workTitle": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning", "authors": "Raymond Devenney", "link": "in-sample", "evidence": [{"id": "E1", "text": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning", "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning", "year": 1990, "url": "https://doi.org/10.5070/b5.36657", "authors": "Raymond Devenney", "fromTitle": true}]}, {"year": 1996, "kind": "ancestor", "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency", "why": "高被引的二语研究讨论“语境学习”的效果，代表该词在教育领域的早期含义。", "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x", "workTitle": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency", "authors": "Peter Prince", "link": "in-sample", "evidence": [{"id": "E2", "text": "Such faith in context learning has not always received experimental support, however, nor is it commonly shared by L2 learners.", "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency", "year": 1996, "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x", "authors": "Peter Prince", "fromTitle": false}]}, {"year": 2021, "kind": "redefined", "title": "An Explanation of In-context Learning as Implicit Bayesian Inference", "why": "将术语明确定义为GPT-3等语言模型仅凭提示中示例完成下游任务的能力，并提出贝叶斯解释。", "url": "https://doi.org/10.48550/arxiv.2111.02080", "workTitle": "An Explanation of In-context Learning as Implicit Bayesian Inference", "authors": "Sang Michael Xie et al.", "link": "in-sample", "evidence": [{"id": "E8", "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.", "title": "An Explanation of In-context Learning as Implicit Bayesian Inference", "year": 2021, "url": "https://doi.org/10.48550/arxiv.2111.02080", "authors": "Sang Michael Xie et al.", "fromTitle": false}, {"id": "E9", "text": "For example, thanks to scaling, GPT-3 was able to achieve strong results on in-context learning tasks.", "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts", "year": 2021, "url": "https://doi.org/10.48550/arxiv.2112.06905", "authors": "Nan Du et al.", "fromTitle": false}]}, {"year": 2021, "kind": "applied", "title": "MetaICL: Learning to Learn In Context", "why": "提出通过元训练专门提升模型的上下文学习能力，使其成为可优化的训练目标。", "url": "https://doi.org/10.48550/arxiv.2110.15943", "workTitle": "MetaICL: Learning to Learn In Context", "authors": "Sewon Min et al.", "link": "in-sample", "evidence": [{"id": "E7", "text": "We introduce MetaICL (Meta-training for In-Context Learning), a new meta-training framework for few-shot learning where a pretrained language model is tuned to do in-context learning on a large set of training tasks.", "title": "MetaICL: Learning to Learn In Context", "year": 2021, "url": "https://doi.org/10.48550/arxiv.2110.15943", "authors": "Sewon Min et al.", "fromTitle": false}, {"id": "E17", "text": "The goal of meta-learning is to learn to adapt to a new task with only a few labeled examples.Inspired by the recent progress in large language models, we propose in-context tuning (ICT), which recasts task adaptation and prediction as a simple sequence prediction problem: to form the input sequence, we concatenate the task instruction, labeled in-context examples, and the target input to predict; to metatrain the model to learn from in-context …", "title": "Meta-learning via Language Model In-context Tuning", "year": 2022, "url": "https://doi.org/10.18653/v1/2022.acl-long.53", "authors": "Yanda Chen et al.", "fromTitle": false}]}, {"year": 2022, "kind": "critique", "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?", "why": "发现示例中的真实标签并非必需，质疑模型是否真正从示例中“学习”。", "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759", "workTitle": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?", "authors": "Sewon Min et al.", "link": "in-sample", "evidence": [{"id": "E10", "text": "Large language models (LMs) are able to incontext learn-perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs.However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance.In this paper, we show that ground truth demonstrations are in fact not required-randomly replacing labels in th…", "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?", "year": 2022, "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759", "authors": "Sewon Min et al.", "fromTitle": false}]}, {"year": 2022, "kind": "critique", "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning", "why": "指出参数高效微调在效果和成本上优于上下文学习，引发两种范式的比较。", "url": "https://doi.org/10.52202/068431-0142", "workTitle": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning", "authors": "Haokun Liu et al.", "link": "in-sample", "evidence": [{"id": "E11", "text": "Few-shot in-context learning (ICL) enables pre-trained language models to perform a previously-unseen task without any gradient-based training by feeding a small number of training examples as part of the input.", "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning", "year": 2022, "url": "https://doi.org/10.52202/068431-0142", "authors": "Haokun Liu et al.", "fromTitle": false}, {"id": "E47", "text": "Few-shot fine-tuning and in-context learning are two alternative strategies for task adaptation of pre-trained language models.Recently, in-context learning has gained popularity over fine-tuning due to its simplicity and improved out-of-domain generalization, and because extensive evidence shows that fine-tuned models pick up on spurious correlations.Unfortunately, previous comparisons of the two approaches were done using models of different s…", "title": "Few-shot Fine-tuning vs. In-context Learning: A Fair Comparison and Evaluation", "year": 2023, "url": "https://doi.org/10.18653/v1/2023.findings-acl.779", "authors": "Marius Mosbach et al.", "fromTitle": false}]}, {"year": 2022, "kind": "redefined", "title": "In-context Learning and Induction Heads", "why": "从机制可解释性角度将上下文学习界定为随token位置增加而损失下降，并归因于归纳头。", "url": "https://doi.org/10.48550/arxiv.2209.11895", "workTitle": "In-context Learning and Induction Heads", "authors": "Catherine Olsson et al.", "link": "in-sample", "evidence": [{"id": "E22", "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).", "title": "In-context Learning and Induction Heads", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2209.11895", "authors": "Catherine Olsson et al.", "fromTitle": false}]}, {"year": 2022, "kind": "applied", "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second", "why": "将上下文学习用于表格分类，开创了基于ICL的表格基础模型方向。", "url": "https://doi.org/10.48550/arxiv.2207.01848", "workTitle": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second", "authors": "Noah Hollmann et al.", "link": "in-sample", "evidence": [{"id": "E20", "text": "TabPFN performs in-context learning (ICL), it learns to make predictions using sequences of labeled examples (x, f(x)) given in the input, without requiring further parameter updates.", "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2207.01848", "authors": "Noah Hollmann et al.", "fromTitle": false}, {"id": "E122", "text": "Since the seminal work of TabPFN, research on tabular foundation models (TFMs) based on in-context learning (ICL) has challenged long-standing paradigms in machine learning.", "title": "Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models", "year": 2025, "url": "https://doi.org/10.52202/085713-0535", "authors": "Xiyuan Zhang et al.", "fromTitle": false}, {"id": "E158", "text": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data.", "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model", "year": 2026, "url": "https://doi.org/10.48550/arxiv.2602.11139", "authors": "Jingang Qu et al.", "fromTitle": false}]}, {"year": 2022, "kind": "popularized", "title": "A Survey on In-context Learning", "why": "系统综述将ICL确立为NLP新范式，被大量引用并推动术语普及。", "url": "https://doi.org/10.48550/arxiv.2301.00234", "workTitle": "A Survey on In-context Learning", "authors": "Qingxiu Dong et al.", "link": "in-sample", "evidence": [{"id": "E28", "text": "With the increasing capabilities of large language models (LLMs), in-context learning (ICL) has emerged as a new paradigm for natural language processing (NLP), where LLMs make predictions based on contexts augmented with a few examples.", "title": "A Survey on In-context Learning", "year": 2022, "url": "https://doi.org/10.48550/arxiv.2301.00234", "authors": "Qingxiu Dong et al.", "fromTitle": false}, {"id": "E85", "text": "A Survey on In-context Learning", "title": "A Survey on In-context Learning", "year": 2024, "url": "https://doi.org/10.18653/v1/2024.emnlp-main.64", "authors": "Qingxiu Dong et al.", "fromTitle": true}]}, {"year": 2023, "kind": "applied", "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers", "why": "将上下文学习能力引入语音合成，仅凭3秒录音即可模仿未见说话人。", "url": "https://doi.org/10.48550/arxiv.2301.02111", "workTitle": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers", "authors": "Chengyi Wang et al.", "link": "in-sample", "evidence": [{"id": "E56", "text": "Vall-E emerges in-context learning capabilities and can be used to synthesize high-quality personalized speech with only a 3-second enrolled recording of an unseen speaker as an acoustic prompt.", "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2301.02111", "authors": "Chengyi Wang et al.", "fromTitle": false}, {"id": "E60", "text": "VALL-E X inherits strong in-context learning capabilities and can be applied for zero-shot cross-lingual text-to-speech synthesis and zero-shot speech-to-speech translation tasks.", "title": "Speak Foreign Languages with Your Own Voice: Cross-Lingual Neural Codec Language Modeling", "year": 2023, "url": "https://doi.org/10.48550/arxiv.2303.03926", "authors": "Ziqiang Zhang et al.", "fromTitle": false}, {"id": "E103", "text": "Seed-TTS serves as a foundation model for speech generation and excels in speech in-context learning, achieving performance in speaker similarity and naturalness that matches ground truth human speech in both objective and subjective evaluations.", "title": "Seed-TTS: A Family of High-Quality Versatile Speech Generation Models", "year": 2024, "url": "https://doi.org/10.48550/arxiv.2406.02430", "authors": "Philip Anastassiou et al.", "fromTitle": false}]}, {"year": 2023, "kind": "applied", "title": "What Makes Good Examples for Visual In-Context Learning?", "why": "把上下文学习扩展到大型视觉模型，形成视觉上下文学习研究线。", "url": "https://doi.org/10.52202/075280-0780", "workTitle": "What Makes Good Examples for Visual In-Context Learning?", "authors": "Yuanhan Zhang et al.", "link": "in-sample", "evidence": [{"id": "E52", "text": "In this paper, the main focus is on an emergent ability in large vision models, known as in-context learning, which allows inference on unseen tasks by conditioning on in-context examples (a.k.a.~prompt) without updating the model parameters.", "title": "What Makes Good Examples for Visual In-Context Learning?", "year": 2023, "url": "https://doi.org/10.52202/075280-0780", "authors": "Yuanhan Zhang et al.", "fromTitle": false}, {"id": "E66", "text": "In-context learning, as a new paradigm in NLP, allows the model to rapidly adapt to various tasks with only a handful of prompts and examples.", "title": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning", "year": 2023, "url": "https://doi.org/10.1109/cvpr52729.2023.00660", "authors": "Xinlong Wang et al.", "fromTitle": false}, {"id": "E77", "text": "We unify various segmentation tasks into a generalist in-context learning framework that accommodates different kinds of segmentation data by transforming them into the same format of images.", "title": "SegGPT: Towards Segmenting Everything In Context", "year": 2023, "url": "https://doi.org/10.1109/iccv51070.2023.00110", "authors": "Xinlong Wang et al.", "fromTitle": false}]}, {"year": 2024, "kind": "critique", "title": "Are Emergent Abilities in Large Language Models just In-Context Learning?", "why": "质疑大模型的“涌现能力”可能只是上下文学习的表现。", "url": "https://doi.org/10.18653/v1/2024.acl-long.279", "workTitle": "Are Emergent Abilities in Large Language Models just In-Context Learning?", "authors": "Sheng Fu Lu et al.", "link": "in-sample", "evidence": [{"id": "E88", "text": "Are Emergent Abilities in Large Language Models just In-Context Learning?", "title": "Are Emergent Abilities in Large Language Models just In-Context Learning?", "year": 2024, "url": "https://doi.org/10.18653/v1/2024.acl-long.279", "authors": "Sheng Fu Lu et al.", "fromTitle": true}, {"id": "E134", "text": "These emergent abilities, ranging from advanced reasoning and in-context learning to coding and problem-solving, have sparked an intense scientific debate: Are they truly emergent, or do they simply depend on external factors, such as training dynamics, the type of problems, or the chosen metric?", "title": "Emergent Abilities in Large Language Models: A Survey", "year": 2025, "url": "https://doi.org/10.48550/arxiv.2503.05788", "authors": "Leonardo Berti et al.", "fromTitle": false}]}]}</script>
+<script>// idealine interface text in English and Simplified Chinese.
+// Static text: elements with data-i18n (text), data-i18n-ph (placeholder), data-i18n-title.
+// Runtime messages from core.js / providers.js are English; trMessage() translates
+// the known ones and leaves anything else as is. Paper titles and quotes are never translated.
+(function (global) {
+  'use strict';
+
+  const KINDS = {
+    en: { ancestor: 'ancestor', origin: 'origin', coined: 'coined', popularized: 'popularized', redefined: 'redefined', applied: 'applied', critique: 'critique' },
+    zh: { ancestor: '前身', origin: '起源', coined: '命名', popularized: '流行', redefined: '含义转变', applied: '跨界应用', critique: '批评' },
+  };
+
+  const T = {
+    en: {
+      langToggle: '中文', langToggleTitle: 'Switch to Chinese',
+      heroTitle: 'Where did this idea come from?',
+      heroSub: 'Type any term. See when it first appeared, who shaped it, and how its meaning shifted, with the sentence behind every step.',
+      termPh: 'Try “world model” or “in-context learning”', termLabel: 'Term', go: 'Trace',
+      freeLine: 'Free: usage curve + key papers. For eras and milestones,', addKey: 'add your own model key',
+      optsSummary: 'Options and model key',
+      aliasesLabel: 'Other spellings (optional, comma-separated)', aliasesPh: 'e.g. mixture-of-experts, MoE layer',
+      providerLabel: 'Model', providerNone: 'No model (free: usage curve + key papers)',
+      keyLabel: 'API key', modelLabel: 'Model ID', remember: 'Remember my keys on this device (not on a shared computer)',
+      getKey: p => `Get a ${p} key`,
+      privacyFree: 'Free mode: no model, no key. You get the usage curve plus the earliest and most-cited papers.',
+      privacyKey: (host, short) => `Your key goes straight from your browser to ${host}. This site has no server and never sees it. One request per term, about 15–25k input tokens, billed to your ${short} account.`,
+      oakeyLabel: 'OpenAlex key (optional, free; use it if OpenAlex says the daily budget is used up)',
+      forget: 'Forget saved keys', forgotten: 'Saved keys removed from this browser.',
+      exampleTag: 'Example timeline', resultTag: 'Your timeline', interimTag: 'First look · the model is still reading',
+      step_count: 'Counting papers per year in OpenAlex', step_early: 'Reading the earliest papers', step_cited: 'Reading the most-cited papers',
+      step_recent: 'Reading recent papers', step_model: 'The model reads the quotes and builds eras and milestones', step_links: 'Linking milestones to papers',
+      stepModelN: (short, n) => `${short} reads ${n} quoted sentences and builds eras and milestones (often 30–90 s)`,
+      seconds: n => ` · ${n} s`,
+      keptFree: 'Showing the free view (usage curve + key papers) instead.',
+      tracingTag: 'Tracing…', failedTag: 'No timeline yet', readyTag: 'Ready-made timeline',
+      readyNote: date => `Made in advance (${date}), so it opens instantly.`,
+      traceLive: 'Trace again with live data',
+      thin: n => `Only ${n} papers use this term, so it is very new or rare; the timeline will be thin.`,
+      suggest: 'Meanwhile, these ready-made timelines open instantly:',
+      howKindsH: 'Milestone types',
+      howKinds: 'origin: first use · coined: someone names it · popularized: it spreads · redefined: the meaning shifts · applied: used in a new field · critique: pushback · ancestor: an older idea it builds on',
+      howLimitsH: 'Limits',
+      howLimits: 'Only titles and abstracts, mostly English, so use the English term. Very new terms have few papers. OpenAlex limits free use per network; a free OpenAlex key lifts that.',
+      howKeyH: 'Your key',
+      howKey: 'The site has no server. Your model key goes from your browser straight to the provider you picked, and is saved only if you tick “Remember”.',
+      hint: 'Click a dot to see the quotes behind it. Scroll sideways for earlier years.',
+      dlHtml: 'Download page (.html)', dlJson: 'Download data (.json)',
+      moreH: 'More timelines',
+      how1h: '1 · Count', how1: 'Papers per year in OpenAlex that use the exact phrase in a title or abstract.',
+      how2h: '2 · Quote', how2: 'The sentences that use it, from the earliest, most-cited, and newest papers.',
+      how3h: '3 · Explain', how3: 'A model groups them into eras and milestones, and may cite only those quotes.',
+      cliH: 'Prefer the command line?',
+      feedback: 'Something wrong or missing? Open an issue on GitHub.',
+      footer: 'Eras and milestones come from a language model that may cite only the quoted sentences, and can be wrong; the quotes are the evidence.',
+      navHow: 'How it works',
+      meta: (total, span, model, n) => `${total.toLocaleString('en-US')} papers in OpenAlex use this term (${span}). ` + (model ? `Proposed by ${model} from ${n} quoted sentences only; check the quotes.` : 'No model: milestones are the earliest and most-cited papers that use the term.'),
+      cardMeta: (total, n) => `${total.toLocaleString('en-US')} papers · ${n} milestones`,
+      needTerm: 'Type a term first.',
+      needKey: short => `Paste your ${short} key, or pick “No model” for the free view.`,
+      asking: (short, model, n) => `Asking ${short} (${model}) to read ${n} sentences. This can take a minute…`,
+      noPapers: term => `No paper titles or abstracts in OpenAlex use “${term}”. Try another spelling or add one under “Other spellings”.`,
+      noPapersCjk: term => `No paper titles or abstracts in OpenAlex use “${term}”. Most papers there are in English, so try the English term (for example “vibe coding”).`,
+      noMilestones: 'The model returned no milestones backed by the quoted sentences. Try again, or try another model.',
+      acronym: 'Tip: acronyms often match other fields; the spelled-out term usually gives a cleaner timeline.',
+      pressTrace: 'Press Trace to run it with your key.',
+      wentWrong: m => 'Something went wrong: ' + m,
+      // timeline
+      legendDashed: 'dashed = no link found', legendBars: 'bars = papers per year',
+      papers: n => `${n} papers`, yearPapers: (y, n) => `${y}: ${n} papers`, timelineOf: term => `Timeline of ${term}`,
+      inSample: 'Linked paper uses the term itself.',
+      resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+      unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+      titleOf: 'Title of ',
+    },
+    zh: {
+      langToggle: 'EN', langToggleTitle: '切换到英文',
+      heroTitle: '这个概念从哪里来？',
+      heroSub: '输入任意术语，看它何时出现、谁推动了它、含义如何变化。每一步都附上论文原句作证据。',
+      termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '追溯',
+      freeLine: '免费：使用曲线 + 关键论文。想看时期划分和里程碑，', addKey: '填入你自己的模型 key',
+      optsSummary: '选项与模型 key',
+      aliasesLabel: '其他写法（可选，用逗号分隔）', aliasesPh: '例如 mixture-of-experts, MoE layer',
+      providerLabel: '模型', providerNone: '不用模型（免费：使用曲线 + 关键论文）',
+      keyLabel: 'API key', modelLabel: '模型 ID', remember: '在这台设备上记住我的 key（公共电脑请勿勾选）',
+      getKey: p => `获取 ${p} key`,
+      privacyFree: '免费模式：不用模型、不用 key。你会看到使用曲线，以及最早和被引最多的论文。',
+      privacyKey: (host, short) => `你的 key 只会从你的浏览器直接发给 ${host}。本站没有服务器，看不到你的 key。每个术语一次请求，约 1.5–2.5 万输入 token，费用记在你的 ${short} 账户。`,
+      oakeyLabel: 'OpenAlex key（可选，免费；如果提示 OpenAlex 今日额度用完，就填这个）',
+      forget: '清除已保存的 key', forgotten: '已从这个浏览器清除保存的 key。',
+      exampleTag: '示例时间线', resultTag: '你的时间线', interimTag: '初步结果 · 模型还在阅读',
+      step_count: '统计 OpenAlex 每年的论文数', step_early: '读取最早的论文', step_cited: '读取被引最多的论文',
+      step_recent: '读取最新的论文', step_model: '模型阅读原句，划分时期和里程碑', step_links: '把里程碑链接到论文',
+      stepModelN: (short, n) => `${short} 正在阅读 ${n} 条原句，划分时期和里程碑（通常 30–90 秒）`,
+      seconds: n => ` · ${n} 秒`,
+      keptFree: '先为你显示免费版结果（使用曲线 + 关键论文）。',
+      tracingTag: '追溯中……', failedTag: '暂时没有结果', readyTag: '现成时间线',
+      readyNote: date => `这是预先生成的完整版（${date}），所以能直接打开。`,
+      traceLive: '用实时数据重新追溯',
+      thin: n => `只有 ${n} 篇论文用到这个词，说明它很新或很少见，时间线会比较单薄。`,
+      suggest: '可以先看看这些现成的时间线，点开即看：',
+      howKindsH: '里程碑类型',
+      howKinds: '起源：最早使用 · 命名：有人给它起了名 · 流行：开始被广泛使用 · 含义转变：意思变了 · 跨界应用：用到新领域 · 批评：反对或质疑 · 前身：它所继承的更早的想法',
+      howLimitsH: '局限',
+      howLimits: '只看标题和摘要，而且大多是英文，所以请输入英文术语。很新的词论文很少。OpenAlex 对每个网络的免费用量有限，填一个免费的 OpenAlex key 就不受限。',
+      howKeyH: '你的 key',
+      howKey: '本站没有服务器。你的模型 key 只从你的浏览器直接发给你选的模型提供方；只有勾选“记住”才会保存在本机。',
+      hint: '点击圆点查看背后的原文句子。左右滑动可以看更早的年份。',
+      dlHtml: '下载网页（.html）', dlJson: '下载数据（.json）',
+      moreH: '更多时间线',
+      how1h: '1 · 计数', how1: '统计 OpenAlex 中每年在标题或摘要里使用这个词的论文数。',
+      how2h: '2 · 摘句', how2: '从最早、被引最多和最新的论文中，摘出用到这个词的句子。',
+      how3h: '3 · 解释', how3: '模型把这些句子归纳成时期和里程碑，而且只能引用这些原句。',
+      cliH: '想用命令行？',
+      feedback: '发现问题或缺了什么？欢迎在 GitHub 上提 issue。',
+      footer: '时期和里程碑由语言模型根据引用的原句生成，可能有误，请以原句为准。数据与源码：',
+      navHow: '原理',
+      meta: (total, span, model, n) => `OpenAlex 中有 ${total.toLocaleString('zh-CN')} 篇论文使用这个词（${span}）。` + (model ? `时期和里程碑由 ${model} 仅根据 ${n} 条原句生成，请核对原句。` : '未使用模型：里程碑是使用这个词的最早和被引最多的论文。'),
+      cardMeta: (total, n) => `${total.toLocaleString('zh-CN')} 篇论文 · ${n} 个里程碑`,
+      needTerm: '请先输入一个术语。',
+      needKey: short => `请粘贴你的 ${short} key，或者选“不用模型”使用免费模式。`,
+      asking: (short, model, n) => `正在请 ${short}（${model}）阅读 ${n} 条句子，可能需要一分钟……`,
+      noPapers: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。换个写法，或在“其他写法”里补充。`,
+      noPapersCjk: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。那里的论文大多是英文，请输入英文术语（例如 “vibe coding”）。`,
+      noMilestones: '模型没有给出有原句支撑的里程碑。请重试，或换一个模型。',
+      acronym: '提示：缩写常会匹配到其他领域，写全称通常更准确。',
+      pressTrace: '点“追溯”用你的 key 运行。',
+      wentWrong: m => '出错了：' + m,
+      legendDashed: '虚线 = 没找到链接', legendBars: '柱子 = 每年论文数',
+      papers: n => `${n} 篇`, yearPapers: (y, n) => `${y} 年：${n} 篇`, timelineOf: term => `${term} 的时间线`,
+      inSample: '链接的论文本身就用到了这个词。',
+      resolved: title => `原句提到了这项工作，已在 OpenAlex 匹配到《${title}》，请核对是否匹配正确。`,
+      unresolved: '原句提到了这项工作，但在 OpenAlex 里没找到，所以没有链接。',
+      titleOf: '标题：',
+    },
+  };
+
+  // Known English runtime messages -> Chinese. Anything unmatched stays English.
+  const MSG_ZH = [
+    [/^Counting papers per year…$/, () => '正在统计每年的论文数……'],
+    [/^Reading the earliest papers…$/, () => '正在读取最早的论文……'],
+    [/^Reading the most-cited papers…$/, () => '正在读取被引最多的论文……'],
+    [/^Reading recent papers…$/, () => '正在读取最新的论文……'],
+    [/^Looking up “(.*)”…$/, m => `正在查找“${m[1]}”……`],
+    [/^OpenAlex is busy; retrying in (\d+) s…$/, m => `OpenAlex 繁忙，${m[1]} 秒后重试……`],
+    [/^OpenAlex returned (\d+); retrying…$/, m => `OpenAlex 返回 ${m[1]}，正在重试……`],
+    [/^OpenAlex's free daily budget for your network is used up \(resets in about (.+?), at midnight UTC\)\./, m => `你所在网络的 OpenAlex 免费额度今天已用完（大约 ${m[1].replace(' min', ' 分钟').replace(' h', ' 小时')}后重置，即 UTC 午夜）。可以在“选项与模型 key”里填一个免费的 OpenAlex key，或稍后再试。`],
+    [/^OpenAlex is rate-limiting requests right now/, () => 'OpenAlex 正在限流，请等一分钟再试。'],
+    [/^Could not reach OpenAlex/, () => '连不上 OpenAlex，请检查网络后重试。'],
+    [/^OpenAlex error (\d+)\.$/, m => `OpenAlex 出错（${m[1]}）。`],
+    [/^OpenAlex kept failing/, () => 'OpenAlex 一直失败，请过一分钟再试。'],
+    [/^(.+?) rejected the key \((\d+)\)\. Check that you pasted the whole key and that it is active\.(.*)$/s, m => `${m[1]} 拒绝了这个 key（${m[2]}）。请确认 key 完整且有效。${detail(m[3])}`],
+    [/^(.+?) does not know that model \(404\)\. Check the model ID\.(.*)$/s, m => `${m[1]} 不认识这个模型（404），请检查模型 ID。${detail(m[2])}`],
+    [/^(.+?) says you hit a rate or spending limit \(429\)\. Wait a bit or check your account's billing\.(.*)$/s, m => `${m[1]} 提示你触发了速率或额度上限（429）。请稍后再试，或检查账户余额。${detail(m[2])}`],
+    [/^(.+?) refused the request \(400\)\.(.*?)(?: ?Some models do not support[^]*)?$/s, m => `${m[1]} 拒绝了这次请求（400）。${detail(m[2])} 部分模型不支持结构化 JSON 输出或这些设置，可以试试默认模型。`],
+    [/^(.+?) error (\d+)\.(.*)$/s, m => `${m[1]} 出错（${m[2]}）。${detail(m[3])}`],
+    [/^Google stopped the answer \((.+)\)\.$/, m => `Google 中止了回答（${m[1]}）。`],
+    [/^Unknown provider\.$/, () => '未知的模型提供方。'],
+    [/^Paste your API key first\.$/, () => '请先粘贴你的 API key。'],
+    [/^Type a model ID\.$/, () => '请填写模型 ID。'],
+    [/^Could not reach (.+?)\. /, m => `连不上 ${m[1]}，请检查网络（或广告拦截插件）后重试。`],
+    [/^(.+?) returned an empty answer/, m => `${m[1]} 返回了空答案，请重试。`],
+    [/^(.+?) returned text that is not valid JSON/, m => `${m[1]} 返回的内容不是有效的 JSON，请重试或换个模型。`],
+    [/^The model declined this request\.$/, () => '模型拒绝了这个请求。'],
+    [/^The answer was cut off/, () => '回答被截断了（超出最大 token），请重试。'],
+    [/^(.+?)'s content filter blocked the answer\.$/, m => `${m[1]} 的内容过滤拦截了回答。`],
+    [/^(.+?) reported an error(.*)$/s, m => { const d = m[2].replace(/^[:.]\s*/, '').trim(); return `${m[1]} 报错${d ? '：' + d : '。'}`; }],
+    [/^(.+?) returned no answer(?: \(blocked: (.+?)\))?\.$/, m => `${m[1]} 没有返回答案${m[2] ? `（被拦截：${m[2]}）` : ''}。`],
+    [/^That Gemini model ID has characters/, () => '这个 Gemini 模型 ID 含有不该有的字符。'],
+  ];
+
+  // Provider's own error text (kept in its original language), appended after the translation.
+  function detail(s) {
+    const d = String(s || '').trim();
+    return d ? ' ' + d : '';
+  }
+
+  function detectLang(stored, navLang) {
+    if (stored === 'en' || stored === 'zh') return stored;
+    return /^zh\b/i.test(navLang || '') ? 'zh' : 'en';
+  }
+
+  function trMessage(lang, msg) {
+    if (lang !== 'zh' || typeof msg !== 'string') return msg;
+    for (const [re, fn] of MSG_ZH) {
+      const m = msg.match(re);
+      if (m) return fn(m);
+    }
+    return msg;
+  }
+
+  const api = { T, KINDS, detectLang, trMessage };
+  global.IdealineI18n = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+// idealine timeline renderer. renderTimeline(D, root) draws the interactive
+// timeline for one term into the elements under `root` marked with data-part:
+// chart, legend, detail, eras. Used by the static term pages and the web app.
+// All text from data is inserted with textContent or escaped; links must be http(s).
+(function (global) {
+  'use strict';
+  const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue('--' + n).trim();
+  const el = (tag, attrs = {}, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeUrl = u => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null);
+  const reEsc = w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Interface text; pass a partial object as the third argument to translate it.
+  const LABELS_EN = {
+    kinds: {},
+    papers: n => `${n} papers`,
+    yearPapers: (y, n) => `${y}: ${n} papers`,
+    timelineOf: term => `Timeline of ${term}`,
+    inSample: 'Linked paper uses the term itself.',
+    resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+    unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+    titleOf: 'Title of ',
+    legendDashed: 'dashed = no link found',
+    legendBars: 'bars = papers per year',
+  };
+
+  function renderTimeline(D, root, labels) {
+    root = root || document;
+    const L = Object.assign({}, LABELS_EN, labels || {});
+    const kindName = k => (L.kinds && L.kinds[k]) || k;
+    const part = name => root.querySelector(`[data-part="${name}"]`);
+    const chart = part('chart'), detail = part('detail');
+    chart.textContent = '';
+    const KIND_OK = k => (KINDS.includes(k) ? k : 'origin');
+    const phrases = [D.term, ...(D.aliases || [])].filter(p => p && p.trim());
+    const termRe = new RegExp('(' + phrases.map(p => p.split(/[\s-]+/).filter(Boolean).map(reEsc).join('[\\s-]+')).join('|') + ')', 'igu');
+    // Split the raw text first, then escape each piece, so entities are never cut.
+    const mark = s => String(s ?? '').split(termRe).map((p, i) => (i % 2 ? `<mark>${esc(p)}</mark>` : esc(p))).join('');
+    let msLaid = [];
+
+    function build() {
+      const counts = new Map(D.counts);
+      const years = [...counts.keys(), ...D.milestones.map(m => m.year), ...D.eras.flatMap(e => [e.start, e.end])].filter(Boolean);
+      if (!years.length) return;
+      const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
+      const left = 40, labelRoom = 230;
+      const avail = Math.max(600, chart.parentElement.clientWidth || 900);
+      // Each year gets width by how much happens in it: milestone years and busy years
+      // are wide, quiet years are thin. A century of rare use stays a short strip.
+      const peakC = Math.max(1, ...counts.values()), msYears = new Set(D.milestones.map(m => m.year));
+      const raw = y => (msYears.has(y) ? 30 : 0) + 34 * Math.sqrt((counts.get(y) || 0) / peakC) + ((counts.get(y) || 0) / peakC > 0.002 ? 6 : 2);
+      let total = 0;
+      for (let y = minYear; y <= nowYear; y++) total += raw(y);
+      const scale = Math.max(1, Math.min(2.2, (avail - left - labelRoom) / total));
+      const WY = y => raw(y) * scale, pos = new Map();
+      let acc = left;
+      for (let y = minYear; y <= nowYear; y++) { pos.set(y, acc + WY(y) / 2); acc += WY(y); }
+      const X = y => pos.get(Math.max(minYear, Math.min(nowYear, y)));
+
+      // Lay out milestone labels in lanes so they do not overlap.
+      const lanes = [], laneH = 36, axisPad = 26;
+      msLaid = D.milestones.map((m, i) => {
+        const label = m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
+        const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(m.year);
+        let lane = 0;
+        while ((lanes[lane] ?? -1e9) > x - 6) lane++;
+        lanes[lane] = x + w;
+        return { ...m, kind: KIND_OK(m.kind), i, label, x, lane };
+      });
+      const nLanes = Math.max(1, lanes.length);
+      const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
+      const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
+      const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
+      const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': L.timelineOf(D.term) });
+
+      // Era bands; labels alternate between two rows and are cut to fit.
+      D.eras.forEach((e, k) => {
+        const xa = X(e.start) - WY(e.start) / 2, xb = X(e.end) + WY(e.end) / 2, row = k % 2;
+        el('rect', { x: xa, y: row * 16, width: Math.max(4, xb - xa), height: axisY - row * 16, fill: css(k % 2 ? 'era2' : 'era1'), rx: 6 }, svg);
+        const next = D.eras[k + 2], room = (next ? X(next.start) - WY(next.start) / 2 : W) - xa - 12;
+        const maxChars = Math.max(8, Math.floor(room / 6.6));
+        const label = e.label.length > maxChars ? e.label.slice(0, maxChars - 1) + '…' : e.label;
+        const t = el('text', { x: xa + 8, y: 15 + row * 16, 'font-weight': 600, 'font-size': 11 }, svg);
+        t.textContent = label;
+        el('title', {}, t).textContent = `${e.start}–${e.end}: ${e.label}`;
+      });
+
+      const maxC = Math.max(1, ...counts.values());
+      for (const [y, c] of counts) {
+        const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
+        const r = el('rect', { x: X(y) - WY(y) * 0.34, y: axisY + 6, width: Math.max(1.5, WY(y) * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
+        el('title', {}, r).textContent = L.yearPapers(y, c);
+      }
+      el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
+      const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
+      // Year labels: never closer than 36px; the newest year always gets one.
+      let last = 1e9;
+      [...tickYears].sort((a, b) => b - a).forEach(y => {
+        if (last - X(y) < 36) return;
+        const t = el('text', { x: X(y), y: axisY + barH + 26, 'text-anchor': 'middle', class: 'muted' }, svg);
+        t.textContent = y;
+        last = X(y);
+      });
+      const peak = [...counts].sort((a, b) => b[1] - a[1])[0];
+      if (peak) {
+        const t = el('text', { x: X(peak[0]) + WY(peak[0]) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
+        t.textContent = L.papers(peak[1]);
+      }
+
+      msLaid.forEach(m => {
+        const y = axisY - axisPad - m.lane * laneH;
+        const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
+        el('rect', { x: m.x - 10, y: y - 12, width: m.label.length * 6.3 + 70, height: 24, fill: 'transparent' }, g);
+        el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
+        el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
+        const t = el('text', { x: m.x + 11, y: y + 4 }, g);
+        t.textContent = `${m.year} · ${m.label}`;
+        g.addEventListener('click', () => select(m.i));
+        g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i); } });
+        m.g = g;
+      });
+      chart.appendChild(svg);
+    }
+
+    function select(i) {
+      const m = D.milestones[i];
+      if (!m || !detail) return;
+      const kind = KIND_OK(m.kind);
+      msLaid.forEach(x => x.g && x.g.classList.toggle('sel', x.i === i));
+      const url = safeUrl(m.url);
+      const title = url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title)}</a>` : esc(m.title);
+      const status = {
+        'in-sample': esc(L.inSample),
+        'resolved': esc(L.resolved(m.workTitle || '')),
+        'unresolved': esc(L.unresolved),
+      }[m.link] || '';
+      const quotes = (m.evidence || []).map(e => {
+        const eu = safeUrl(e.url);
+        const src = eu ? `<a href="${esc(eu)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title);
+        return `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? esc(L.titleOf) : ''}${src} · ${esc(e.authors)}, ${esc(e.year)}</cite></blockquote>`;
+      }).join('');
+      detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kindName(kind))}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
+    }
+
+    build();
+    const legend = part('legend');
+    if (legend) {
+      legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
+        `<span>${esc(L.legendDashed)}</span><span>${esc(L.legendBars)}</span>`;
+    }
+    const eras = part('eras');
+    if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
+    if (detail) detail.textContent = '';
+    select(0);
+    // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
+    const sc = chart.closest('.scroller');
+    if (sc) {
+      const lastX = Math.max(0, ...msLaid.map(m => m.x));
+      sc.scrollLeft = lastX ? Math.min(sc.scrollWidth - sc.clientWidth, lastX - 24) : sc.scrollWidth;
+    }
+  }
+
+  global.renderTimeline = renderTimeline;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+renderTimeline(JSON.parse(document.getElementById('data').textContent), document, Object.assign({kinds: IdealineI18n.KINDS.zh}, IdealineI18n.T.zh));
+</script>
+</body></html>
