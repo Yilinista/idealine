@@ -93,7 +93,8 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
    (space/hyphen-insensitive), at most 160, thinned evenly so recent years are not cut.
    OpenAlex has a small shared daily budget per IP; an optional `OPENALEX_API_KEY` avoids it.
 2. **Analyze (one Claude call, structured JSON):** summary, 2–5 eras, 4–12 milestones, each
-   with evidence IDs. Default model `claude-opus-5-5`, effort `medium`.
+   with evidence IDs. Default model `claude-opus-5-5`, effort `medium` on the command line; the
+   browser app uses effort `low` and streams the answer, so the page shows how far it has got.
 3. **Resolve:** milestones that are not themselves in the sample are matched in OpenAlex by
    title and year (±1, title overlap ≥ 0.4) or marked unresolved.
 4. **Render:** one self-contained HTML page (inline SVG + vanilla JS, light/dark, keyboard

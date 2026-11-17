@@ -359,7 +359,16 @@
         progress.go('model', () => tx().stepModelN(p.short, t.evidence.length));
         status('');
         const prompt = C.buildPrompt(t, (SPEC.outputLang || {})[runLang]);
-        const data = await P.callModel(providerId, { key, model, system: SPEC.system, prompt, schema: SPEC.schema });
+        // A streamed answer (Anthropic) reports how far it has got; relabel only on change.
+        let seen = '';
+        const onText = text => {
+          const g = C.answerProgress(text);
+          const sig = g ? g.stage + g.n : '';
+          if (!g || sig === seen) return;
+          seen = sig;
+          progress.go('model', () => tx().stepModelLive(p.short, g.stage, g.n, t.evidence.length));
+        };
+        const data = await P.callModel(providerId, { key, model, system: SPEC.system, prompt, schema: SPEC.schema, onText });
         t.model = model;
         t.lang = runLang;
         progress.go('links');

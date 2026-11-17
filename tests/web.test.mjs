@@ -250,6 +250,80 @@ test('anthropic retries once without effort when the model rejects it', async ()
   assert.ok(!('effort' in bodies[1].output_config));
 });
 
+// --- streamed Anthropic answers ------------------------------------------------
+
+function sseResp(chunks, { throwAt = -1 } = {}) {
+  const enc = new TextEncoder();
+  let i = 0;
+  return {
+    status: 200, ok: true, headers: { get: () => null },
+    body: { getReader: () => ({ read: async () => {
+      if (i === throwAt) throw new TypeError('network error');
+      return i < chunks.length ? { value: enc.encode(chunks[i++]), done: false } : { value: undefined, done: true };
+    } }) },
+  };
+}
+const ev = o => `event: ${o.type}\ndata: ${JSON.stringify(o)}\n\n`;
+function streamOf(text, stop = 'end_turn') {
+  const half = Math.floor(text.length / 2);
+  const all = [
+    ev({ type: 'message_start', message: { id: 'm' } }),
+    ev({ type: 'content_block_start', index: 0, content_block: { type: 'thinking', thinking: '' } }),
+    ev({ type: 'content_block_delta', index: 0, delta: { type: 'thinking_delta', thinking: '{"not":"this"}' } }),
+    ev({ type: 'content_block_start', index: 1, content_block: { type: 'text', text: '' } }),
+    ev({ type: 'content_block_delta', index: 1, delta: { type: 'text_delta', text: text.slice(0, half) } }),
+    ev({ type: 'ping' }),
+    ev({ type: 'content_block_delta', index: 1, delta: { type: 'text_delta', text: text.slice(half) } }),
+    ev({ type: 'message_delta', delta: { stop_reason: stop } }),
+    ev({ type: 'message_stop' }),
+  ].join('');
+  // Cut at odd places so events are split across chunks.
+  return [all.slice(0, 37), all.slice(37, 300), all.slice(300)];
+}
+
+test('anthropic: streams with low effort, joins text deltas, skips thinking', async () => {
+  const bodies = [], seen = [];
+  const fetchFn = async (url, init) => { bodies.push(JSON.parse(init.body)); return sseResp(streamOf(JSON.stringify(ANSWER))); };
+  const out = await P.callModel('anthropic', { key: 'k', model: 'm', system: '', prompt: '', schema: SCHEMA, fetchFn, onText: t => seen.push(t) });
+  assert.deepEqual(out, ANSWER);
+  assert.equal(bodies[0].stream, true);
+  assert.equal(bodies[0].output_config.effort, 'low');
+  assert.equal(seen.length, 2);
+  assert.equal(seen[1], JSON.stringify(ANSWER));
+});
+
+test('anthropic stream: refusal, mid-stream error, and a dropped connection are clear', async () => {
+  const call = fetchFn => P.callModel('anthropic', { key: 'k', model: 'm', system: '', prompt: '', schema: SCHEMA, fetchFn });
+  await assert.rejects(call(async () => sseResp(streamOf('', 'refusal'))), /declined/);
+  await assert.rejects(call(async () => sseResp([ev({ type: 'message_start', message: {} }), ev({ type: 'error', error: { type: 'overloaded_error', message: 'Overloaded' } })])), /overloaded/);
+  await assert.rejects(call(async () => sseResp(streamOf('{"summary":"ok"}'), { throwAt: 1 })), /connection dropped/);
+  await assert.rejects(call(async () => sseResp([ev({ type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text: '{"su' } })])), /connection dropped/);
+});
+
+test('streaming errors are translated in the Chinese interface', () => {
+  const I = require('../src/idealine/web/i18n.js');
+  for (const m of ['Anthropic is overloaded right now. Wait a minute and try again.', 'Anthropic stopped with an error: boom',
+    'The connection dropped while the answer was coming in. Try again.']) assert.match(I.trMessage('zh', m), /[\u4e00-\u9fff]/, m);
+});
+
+test('sse parser handles CRLF and events split across chunks', () => {
+  const p = P.sseParser();
+  assert.deepEqual(p.push('event: a\r\ndata: {"x"'), []);
+  assert.deepEqual(p.push(':1}\r\n\r\ndata: {"y":2}\n\n'), [{ x: 1 }, { y: 2 }]);
+  assert.deepEqual(p.push('data: {"z":3}'), []);
+  assert.deepEqual(p.end(), [{ z: 3 }]);
+});
+
+test('answerProgress follows the schema order and ignores keys inside strings', () => {
+  const full = JSON.stringify({ focus: 'f', summary: 'it says "eras": a lot', senses: [{ key: 'a', label: 'x', definition: 'd', related: true }],
+    quote_senses: [{ id: 'E1', sense: 'a' }, { id: 'E2', sense: 'a' }], eras: [{ start_year: 1, end_year: 2, label: 'l', meaning: 'm', evidence: [] }],
+    milestones: [{ year: 1, kind: 'coined', title: 't', why: 'w', evidence: [], work_ref: '', in_sense: true, coinage: false, shift: 'none' }] });
+  assert.equal(C.answerProgress(full.slice(0, full.indexOf('"senses"'))), null);
+  assert.deepEqual(C.answerProgress(full.slice(0, full.indexOf('"quote_senses"'))), { stage: 'senses', n: 1 });
+  assert.deepEqual(C.answerProgress(full.slice(0, full.indexOf('"eras"'))), { stage: 'tags', n: 2 });
+  assert.deepEqual(C.answerProgress(full), { stage: 'milestones', n: 1 });
+});
+
 // --- quality fixes from real-data testing (2026-11-17) -------------------------
 
 import { readFileSync } from 'node:fs';

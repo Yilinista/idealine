@@ -451,6 +451,20 @@
   }
 
   // Same JSON shape as the Python CLI's to_data, so pages and `idealine render` agree.
+  // How far a partly streamed answer has got, from its top-level keys (written in schema
+  // order). A key inside a JSON string has an escaped quote, so it does not match.
+  // Returns null before the meanings, else { stage, n } with stage senses|tags|eras|milestones.
+  function answerProgress(partial) {
+    const at = key => { const m = [...partial.matchAll(new RegExp(`(?:^|[^\\\\])"${key}"\\s*:`, 'g'))]; return m.length ? m[m.length - 1].index : -1; };
+    const count = (key, from) => [...partial.slice(from).matchAll(new RegExp(`(?:^|[^\\\\])"${key}"\\s*:`, 'g'))].length;
+    const stages = [['milestones', 'kind'], ['eras', 'start_year'], ['quote_senses', 'id'], ['senses', 'key']];
+    for (const [key, item] of stages) {
+      const i = at(key);
+      if (i >= 0) return { stage: { quote_senses: 'tags' }[key] || key, n: count(item, i) };
+    }
+    return null;
+  }
+
   function toData(t) {
     const byId = new Map(t.evidence.map(e => [e.eid, e]));
     const ev = ids => ids.map(i => byId.get(i)).filter(Boolean).map(e => ({
@@ -489,7 +503,7 @@
     };
   }
 
-  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData };
+  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData, answerProgress };
   global.IdealineCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

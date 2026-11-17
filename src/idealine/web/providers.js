@@ -66,30 +66,101 @@
     return resp.json();
   }
 
+  // Server-sent events: feed text chunks, get back the parsed `data:` objects.
+  // Events may be split across chunks; a chunk may hold several events.
+  function sseParser() {
+    let buf = '';
+    const parse = block => {
+      const data = block.split(/\r?\n/).filter(l => l.startsWith('data:')).map(l => l.slice(5).replace(/^ /, '')).join('\n');
+      if (!data) return null;
+      try { return JSON.parse(data); } catch (e) { return null; }
+    };
+    return {
+      push(text) {
+        buf += text;
+        const parts = buf.split(/\r?\n\r?\n/);
+        buf = parts.pop();
+        return parts.map(parse).filter(Boolean);
+      },
+      end() { const last = buf.trim() ? parse(buf) : null; buf = ''; return last ? [last] : []; },
+    };
+  }
+
+  // Read a streamed Messages answer. Returns { stop, text }; calls onText(allTextSoFar).
+  async function readAnthropicStream(resp, onText) {
+    const reader = resp.body.getReader(), dec = new TextDecoder(), sse = sseParser();
+    let text = '', stop = null, done = false;
+    const handle = ev => {
+      if (ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') {
+        text += ev.delta.text || '';
+        if (onText) onText(text);
+      } else if (ev.type === 'message_delta' && ev.delta && ev.delta.stop_reason) {
+        stop = ev.delta.stop_reason;
+      } else if (ev.type === 'message_stop') {
+        done = true;
+      } else if (ev.type === 'error') {
+        const err = ev.error || {};
+        if (err.type === 'overloaded_error') throw new ProviderError('Anthropic is overloaded right now. Wait a minute and try again.');
+        throw new ProviderError(`Anthropic stopped with an error: ${String(err.message || err.type || 'unknown').slice(0, 200)}`);
+      }
+    };
+    try {
+      for (;;) {
+        const { value, done: end } = await reader.read();
+        if (end) break;
+        sse.push(dec.decode(value, { stream: true })).forEach(handle);
+      }
+      sse.push(dec.decode()).forEach(handle);
+      sse.end().forEach(handle);
+    } catch (e) {
+      if (e instanceof ProviderError) throw e;
+      throw new ProviderError('The connection dropped while the answer was coming in. Try again.');
+    }
+    if (!done && !stop) throw new ProviderError('The connection dropped while the answer was coming in. Try again.');
+    return { stop, text };
+  }
+
   const adapters = {
-    async anthropic({ key, model, system, prompt, schema, fetchFn }) {
+    // Streamed, so the page can show how far the answer has got.
+    async anthropic({ key, model, system, prompt, schema, fetchFn, onText }) {
       const headers = {
         'x-api-key': key,
         'anthropic-version': '2026-10-21',
         'anthropic-dangerous-direct-browser-access': 'true',
       };
+      const url = 'https://api.anthropic.com/v1/messages';
       const body = effort => ({
-        model, max_tokens: MAX_OUTPUT, system,
+        model, max_tokens: MAX_OUTPUT, system, stream: true,
         messages: [{ role: 'user', content: prompt }],
-        output_config: { ...(effort ? { effort: 'medium' } : {}), format: { type: 'json_schema', schema } },
+        // Low effort: the task is reading and sorting given quotes, and visitors are waiting.
+        output_config: { ...(effort ? { effort: 'low' } : {}), format: { type: 'json_schema', schema } },
       });
-      let j;
+      const send = async b => {
+        let resp;
+        try {
+          resp = await fetchFn(url, { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: JSON.stringify(b) });
+        } catch (e) {
+          throw new ProviderError('Could not reach Anthropic. Check your connection (or an ad blocker) and try again.');
+        }
+        if (!resp.ok) throw httpError('Anthropic', resp.status, await readError(resp));
+        if (resp.body && typeof resp.body.getReader === 'function') return readAnthropicStream(resp, onText);
+        // No stream (an old browser or a proxy): read the whole answer at once.
+        let j;
+        try { j = await resp.json(); } catch (e) { throw new ProviderError('Anthropic returned text that is not valid JSON. Try again or pick another model.'); }
+        const block = (j.content || []).find(c => c.type === 'text');
+        return { stop: j.stop_reason, text: block && block.text };
+      };
+      let r;
       try {
-        j = await post(fetchFn, 'Anthropic', 'https://api.anthropic.com/v1/messages', headers, body(true));
+        r = await send(body(true));
       } catch (e) {
         // Older Claude models reject the effort setting; retry once without it.
         if (!(e instanceof ProviderError && /\(400\)/.test(e.message) && /effort/i.test(e.message))) throw e;
-        j = await post(fetchFn, 'Anthropic', 'https://api.anthropic.com/v1/messages', headers, body(false));
+        r = await send(body(false));
       }
-      if (j.stop_reason === 'refusal') throw new ProviderError('The model declined this request.');
-      if (j.stop_reason === 'max_tokens') throw new ProviderError('The answer was cut off (max tokens). Try again.');
-      const block = (j.content || []).find(b => b.type === 'text');
-      return parseJson('Anthropic', block && block.text);
+      if (r.stop === 'refusal') throw new ProviderError('The model declined this request.');
+      if (r.stop === 'max_tokens') throw new ProviderError('The answer was cut off (max tokens). Try again.');
+      return parseJson('Anthropic', r.text);
     },
 
     async openai({ key, model, system, prompt, schema, fetchFn }) {
@@ -174,7 +245,7 @@
     return adapter({ ...opts, fetchFn: opts.fetchFn || ((...a) => global.fetch(...a)) });
   }
 
-  const api = { PROVIDERS, ProviderError, callModel, checkKey, parseJson };
+  const api = { PROVIDERS, ProviderError, callModel, checkKey, parseJson, sseParser };
   global.IdealineProviders = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);
