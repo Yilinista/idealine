@@ -272,6 +272,38 @@ def test_inline_json_escapes_every_angle_bracket():
     assert "<" not in data
 
 
+def test_reading_pages_share_a_self_contained_reader_and_source_metadata():
+    from idealine.render_term import html_from_data
+
+    d = {"term": "term", "counts": [], "quotes": [], "total": 0, "model": None,
+         "generated": "2026-11-17", "evidenceCount": 0, "eras": [], "milestones": []}
+    page = html_from_data(d, "../")
+    assert 'data-part="reading"' in page
+    assert 'IdealineReading.mountPage' in page
+    assert 'data-reading-lang="zh"' in page
+    assert 'data-reading-back href="../"' in page
+    assert '<script src' not in page
+    assert page.count('</script>') == 2
+    assert '<p class="headline"' not in page
+
+
+def test_reviewed_guides_match_saved_quotes_in_both_languages():
+    from pathlib import Path
+    from idealine.render_term import with_reading_guide
+
+    terms = Path(__file__).resolve().parents[1] / "docs" / "terms"
+    for prefix in (terms, terms / "zh"):
+        for slug in ("world-model", "in-context-learning", "vibe-coding"):
+            d = json.loads((prefix / f"{slug}.json").read_text())
+            prepared = with_reading_guide(d)
+            assert len(prepared["readingGuide"]["entries"]) == 3
+            for entry in prepared["readingGuide"]["entries"]:
+                q = next(q for q in d["quotes"] if q["id"] == entry["id"])
+                assert q["text"] == entry["text"]
+                assert q["url"] == entry["url"]
+                assert entry["checkedUrl"].startswith("https://arxiv.org/abs/")
+
+
 def test_inflections_match_shared_table():
     import json
     from pathlib import Path
@@ -427,3 +459,10 @@ def test_rpys_finds_peak_years_and_their_top_work():
     assert r["peaks"][0]["year"] == 1995 and r["peaks"][0]["title"] == "Root paper"
     assert r["spectrum"][0] == [1990, 2] and len(r["spectrum"]) == 10
     assert rpys([]) == {"spectrum": [], "peaks": []}
+
+
+def test_reading_guide_is_removed_when_the_term_has_no_guide():
+    from idealine.render_term import with_reading_guide
+
+    d = {"term": "no such term in the guides", "quotes": [], "readingGuide": {"entries": [{"id": "E1"}]}}
+    assert "readingGuide" not in with_reading_guide(d)

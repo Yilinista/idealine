@@ -1,0 +1,170 @@
+{
+  "world model": {
+    "question": {
+      "en": "What changes when a world model represents an environment, supports behavior learning, or generates driving scenes?",
+      "zh": "当世界模型用于表示环境、学习行为或生成驾驶场景时，用法有什么不同？"
+    },
+    "entries": [
+      {
+        "id": "E79",
+        "text": "Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.",
+        "url": "https://doi.org/10.5281/zenodo.1207631",
+        "year": 2018,
+        "checkedUrl": "https://arxiv.org/abs/1803.10122",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "A learned environment",
+          "zh": "学习得到的环境表示"
+        },
+        "note": {
+          "en": "Start with a model that learns a compressed spatial and temporal representation.",
+          "zh": "从学习压缩的空间与时间表示开始。"
+        }
+      },
+      {
+        "id": "E82",
+        "text": "Learned world models summarize an agent's experience to facilitate learning complex behaviors.",
+        "url": "https://doi.org/10.48550/arxiv.1912.01603",
+        "year": 2019,
+        "checkedUrl": "https://arxiv.org/abs/1912.01603",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Learning behavior",
+          "zh": "学习行为"
+        },
+        "note": {
+          "en": "Compare how this passage connects world models to an agent’s experience and behavior.",
+          "zh": "比较这段原文如何把世界模型与智能体经验、行为学习联系起来。"
+        }
+      },
+      {
+        "id": "E94",
+        "text": "To address this challenge, we introduce GAIA-1 ('Generative AI for Autonomy'), a generative world model that leverages video, text, and action inputs to generate realistic driving scenarios while offering fine-grained control over ego-vehicle behavior and scene features.",
+        "url": "https://doi.org/10.48550/arxiv.2309.17080",
+        "year": 2023,
+        "checkedUrl": "https://arxiv.org/abs/2309.17080",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Generating driving scenes",
+          "zh": "生成驾驶场景"
+        },
+        "note": {
+          "en": "Here the model uses video, text, and actions to generate driving scenarios.",
+          "zh": "这里的模型用视频、文本和动作生成驾驶场景。"
+        }
+      }
+    ]
+  },
+  "in-context learning": {
+    "question": {
+      "en": "Does in-context learning refer to examples in a prompt, decreasing token loss, or learning from tabular inputs?",
+      "zh": "上下文学习指提示中的示例、随位置降低的损失，还是从表格输入中学习？"
+    },
+    "entries": [
+      {
+        "id": "E8",
+        "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
+        "url": "https://doi.org/10.48550/arxiv.2111.02080",
+        "year": 2021,
+        "checkedUrl": "https://arxiv.org/abs/2111.02080",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Examples in a prompt",
+          "zh": "提示中的示例"
+        },
+        "note": {
+          "en": "This passage describes learning a task by conditioning on input-output examples.",
+          "zh": "这段原文把任务学习描述为以输入输出示例为条件。"
+        }
+      },
+      {
+        "id": "E22",
+        "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).",
+        "url": "https://doi.org/10.48550/arxiv.2209.11895",
+        "year": 2022,
+        "checkedUrl": "https://arxiv.org/abs/2209.11895",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "A different operational meaning",
+          "zh": "不同的操作性定义"
+        },
+        "note": {
+          "en": "Notice the parenthetical definition: decreasing loss at increasing token indices. The mechanism is presented as a hypothesis.",
+          "zh": "注意括号中的定义：随着 token 位置增加而降低的损失。机制被表述为假设。"
+        }
+      },
+      {
+        "id": "E20",
+        "text": "TabPFN performs in-context learning (ICL), it learns to make predictions using sequences of labeled examples (x, f(x)) given in the input, without requiring further parameter updates.",
+        "url": "https://doi.org/10.48550/arxiv.2207.01848",
+        "year": 2022,
+        "checkedUrl": "https://arxiv.org/abs/2207.01848",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Beyond language tasks",
+          "zh": "超出语言任务"
+        },
+        "note": {
+          "en": "Compare the same term applied to tabular prediction without parameter updates.",
+          "zh": "比较同一术语用于无需参数更新的表格预测。"
+        }
+      }
+    ]
+  },
+  "vibe coding": {
+    "question": {
+      "en": "How much code review or supervision does each paper’s use of vibe coding imply?",
+      "zh": "各篇论文所说的 vibe coding 意味着多少代码审查或监督？"
+    },
+    "entries": [
+      {
+        "id": "E31",
+        "text": "We examine \"vibe coding\": an emerging programming paradigm where developers primarily write code by interacting with code-generating large language models rather than writing code directly.",
+        "url": "https://doi.org/10.48550/arxiv.2506.23253",
+        "year": 2025,
+        "checkedUrl": "https://arxiv.org/abs/2506.23253",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Programming through conversation",
+          "zh": "通过对话编程"
+        },
+        "note": {
+          "en": "This passage emphasizes interaction with a code-generating model.",
+          "zh": "这段原文强调与代码生成模型交互。"
+        }
+      },
+      {
+        "id": "E51",
+        "text": "The advancement of large language models (LLMs) has catalyzed a paradigm shift from code generation assistance to autonomous coding agents, enabling a novel development methodology termed \"Vibe Coding\" where developers validate AI-generated implementations through outcome observation rather than line-by-line code comprehension.",
+        "url": "https://doi.org/10.48550/arxiv.2510.12399",
+        "year": 2025,
+        "checkedUrl": "https://arxiv.org/abs/2510.12399",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Checking outcomes",
+          "zh": "观察结果"
+        },
+        "note": {
+          "en": "Compare its focus on outcome observation instead of line-by-line comprehension.",
+          "zh": "比较这里对观察结果而非逐行理解代码的强调。"
+        }
+      },
+      {
+        "id": "E58",
+        "text": "Vibe coding is a new software development paradigm in which human engineers prompt a large language model (LLM) agent to complete complex coding tasks with little supervision.",
+        "url": "https://doi.org/10.48550/arxiv.2512.03262",
+        "year": 2025,
+        "checkedUrl": "https://arxiv.org/abs/2512.03262",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Limited supervision",
+          "zh": "有限监督"
+        },
+        "note": {
+          "en": "Read how a security benchmark frames the practice in terms of little supervision.",
+          "zh": "阅读安全基准论文如何用少量监督描述这种实践。"
+        }
+      }
+    ]
+  }
+}

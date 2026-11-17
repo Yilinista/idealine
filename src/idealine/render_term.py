@@ -189,7 +189,19 @@ def _web(name: str) -> str:
 
 
 TIMELINE_JS = _web("timeline.js")
-JS = TIMELINE_JS + "\nrenderTimeline(JSON.parse(document.getElementById('data').textContent));\n"
+READING_JS = _web("reading.js")
+CSS += "\n" + _web("reading.css")
+PAGE_SHELL = """
+<a class="skip-link" href="#reading">Skip to sources</a>
+<main>
+<nav class="site-nav"><a class="wordmark" href="{home}">idealine<span aria-hidden="true"> ↗</span></a>
+<div class="reading-lang" role="group" aria-label="Language"><button type="button" data-reading-lang="en" aria-pressed="{en}">EN</button><button type="button" data-reading-lang="zh" aria-pressed="{zh}">中</button></div></nav>
+<header class="term-header"><a data-reading-back href="{home}">{back}</a><h1>{term}</h1></header>
+<div data-part="reading" id="reading"></div>
+<noscript>This reading brief needs JavaScript to display the saved source passages.</noscript>
+<footer>idealine · <a href="https://openalex.org">OpenAlex</a> · <a href="https://github.com/Yilinista/idealine">Source &amp; feedback</a></footer>
+</main>
+"""
 
 
 def to_html(t: TermTimeline) -> str:
@@ -235,7 +247,21 @@ def page_lang(d: dict) -> str:
     return "zh" if _HAN.search(d.get("summary") or "") else "en"
 
 
-def html_from_data(d: dict) -> str:
+def with_reading_guide(d: dict) -> dict:
+    """Attach reviewed passages only when their exact source records still match."""
+    # Always start from the data without a guide, so a withdrawn or edited guide is removed.
+    base = {k: v for k, v in d.items() if k != "readingGuide"}
+    guide = json.loads(_web("reading-guides.json")).get(d.get("term"))
+    if not guide:
+        return base
+    quotes = d.get("quotes", [])
+    entries = [entry for entry in guide["entries"] if any(
+        all(q.get(k) == entry[k] for k in ("id", "text", "url", "year")) for q in quotes
+    )]
+    return {**base, "readingGuide": {**guide, "entries": entries}} if entries else base
+
+
+def html_from_data(d: dict, home_href: str = SITE_URL) -> str:
     """Render from the saved JSON, so a page can be re-rendered without new API calls."""
     if not d.get("kindChecks"):  # how often a separate check agreed with each milestone type
         try:
@@ -246,43 +272,24 @@ def html_from_data(d: dict) -> str:
         from .term import load_totals, totals_asof
         tot, ys = load_totals(), [y for y, _ in d.get("counts", [])]
         d = {**d, "totals": [[y, tot[y]] for y in range(min(ys), max(ys) + 1) if y in tot] if ys else [], "totalsAsOf": totals_asof()}
+    d = with_reading_guide(d)
     data = json.dumps(d, ensure_ascii=False).replace("<", "\\u003c")
     e = html.escape
     lang = page_lang(d)
-    T = PAGE_TEXT[lang]
-    years = [y for y, _ in d["counts"]]
-    span = f"{min(years)}–{max(years)}" if years else "n/a"
-    how = T["how_model"].format(model=e(d["model"]), n=d["evidenceCount"]) if d.get("model") else T["how_none"]
-    js = JS if lang == "en" else (
-        _web("i18n.js") + TIMELINE_JS
-        + "\nrenderTimeline(JSON.parse(document.getElementById('data').textContent), document, "
-        "Object.assign({kinds: IdealineI18n.KINDS.zh}, IdealineI18n.T.zh));\n"
+    js = _web("i18n.js") + TIMELINE_JS + READING_JS + (
+        "\nIdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent), "
+        + json.dumps(lang) + ");\n"
     )
+    # The download helper contains HTML strings; do not terminate this inline script.
+    js = re.sub(r"</script", lambda _: "<\\/script", js, flags=re.IGNORECASE)
+    body = PAGE_SHELL.format(home=e(home_href), term=e(d["term"]), en=str(lang == "en").lower(),
+                             zh=str(lang == "zh").lower(), back="← 查找其他术语" if lang == "zh" else "← Find another term")
     return f"""<!doctype html>
 <html lang="{'zh-CN' if lang == 'zh' else 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(d['term'])} · idealine</title>
-<meta name="description" content="Where the term {e(d['term'])} came from and how its meaning changed, with quotes from the papers.">
+<meta name="description" content="Read how papers use {e(d['term'])}: quoted passages, source links, and a short reading route.">
 <style>{CSS}</style></head>
-<body><main>
-<div class="brand"><a href="{REPO_URL}">idealine</a> · {T["tagline"]}</div>
-<h1>{e(d['term'])}</h1>
-<p class="summary">{e(d.get('summary') or '')}</p>
-<p class="meta">{T["meta"].format(total=f"{d['total']:,}", span=span)}{how}{T["asof"].format(date=e(d.get("generated") or ""))}</p>
-<p class="headline" data-part="headline"></p>
-<div class="senses" data-part="senses"></div>
-<div class="card">
-  <div class="hint">{T["hint"]}</div>
-  <div class="scroller"><div data-part="chart"></div></div>
-  <div class="legend" data-part="legend"></div>
-  <div class="detail" data-part="detail" aria-live="polite"></div>
-</div>
-<div class="eras" data-part="eras"></div>
-<div class="roots" data-part="roots"></div>
-<details><summary>{T["details"]}</summary>
-<p>{T["details_body"].format(generated=e(d["generated"]))}</p>
-</details>
-<footer>{T["footer"].format(repo=REPO_URL, site=SITE_URL)}</footer>
-</main>
+<body>{body}
 <script type="application/json" id="data">{data}</script>
 <script>{js}</script>
 </body></html>

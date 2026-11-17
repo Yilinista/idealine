@@ -6,6 +6,92 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const C = require('../src/idealine/web/core.js');
 const P = require('../src/idealine/web/providers.js');
+const R = require('../src/idealine/web/reading.js');
+
+test('automatic reading route keeps the recent label on the newest source', () => {
+  const quotes = [2018,2019,2023].map(year=>({id:String(year),year,text:'A world model.',url:`https://example.org/${year}`}));
+  const model = R.readingModel({quotes});
+  assert.deepEqual(model.featured.map(q=>q.year),[2018,2019,2023]);
+});
+
+test('date warning flags only records cut off by a long gap, not early uses of a fast-growing term', () => {
+  const q = (id, year) => ({ id, year, text: `uses the term ${id}`, url: `https://example.org/${id}`, title: id, authors: 'A' });
+  // Like chain-of-thought: a stray 1914 record, steady use from 2012, then a surge.
+  const counts = [[1914, 1], ...Array.from({ length: 10 }, (_, i) => [2012 + i, 2]), [2022, 40], [2023, 900], [2024, 3000], [2025, 5000]];
+  const m = R.readingModel({ quotes: [q('E1', 1914), q('E2', 2022), q('E3', 2024)], counts, generated: '2026-11-17' });
+  const w = Object.fromEntries(m.quotes.map(x => [x.id, x.warning]));
+  assert.equal(w.E1, 'dateWarning');
+  assert.equal(w.E2, '');
+  assert.ok(m.featured.some(x => x.id === 'E2'));
+});
+
+test('reading brief uses the quote source, never a resolved milestone target', () => {
+  const quote = {id:'E1',text:'A world model represents an environment.',title:'Actual source',url:'https://example.org/source',year:2024};
+  const model = R.readingModel({counts:[[2024,10]],generated:'2026-11-17',milestones:[{url:'https://example.org/wrong-match',evidence:[quote]}]});
+  assert.equal(model.featured[0].url, quote.url);
+  assert.ok(!R.citationText(model.featured[0]).includes('wrong-match'));
+});
+
+test('starting points exclude unsafe, title-only, future and sparse early records', () => {
+  const quotes = [
+    {id:'bad',year:1900,url:'https://example.org/old'},
+    {id:'future',year:2030,url:'https://example.org/future'},
+    {id:'title',year:2025,url:'https://example.org/title',fromTitle:true},
+    {id:'script',year:2025,url:'javascript:alert(1)'},
+    {id:'valid',year:2025,url:'https://example.org/a'},
+    {id:'duplicate-paper',year:2025,url:'https://example.org/a'},
+  ].map(q=>({...q,text:'passage '+q.id,title:q.id}));
+  const m=R.readingModel({quotes,counts:[[1900,1],[2025,100]],generated:'2026-11-17'});
+  assert.deepEqual(m.featured.map(q=>q.id),['valid']);
+  assert.equal(m.quotes[0].warning,'dateWarning');
+  assert.equal(m.quotes[1].warning,'futureWarning');
+  assert.equal(m.quotes.length,6);
+});
+
+test('review metadata is invalidated when a passage or its source changes', () => {
+  const quote={id:'E1',year:2024,text:'An exact quotation.',title:'Source',url:'https://example.org/a'};
+  const entry={...quote,checkedUrl:'https://example.org/checked',checked:'2026-11-17'};
+  const data={quotes:[quote],counts:[[2024,3]],readingGuide:{entries:[entry]}};
+  assert.equal(R.readingModel(data).curated,true);
+  assert.equal(R.readingModel({...data,quotes:[{...quote,text:'An altered quotation.'}]}).curated,false);
+  assert.equal(R.readingModel({...data,quotes:[{...quote,url:'https://example.org/b'}]}).curated,false);
+});
+
+test('free mode supports missing dates, no labels, filtering and empty results', () => {
+  const quotes=[{id:'a',text:'A',year:null},{id:'b',text:'B',year:2025,sense:'s1'},{id:'c',text:'C',year:2024}];
+  const m=R.readingModel({quotes,counts:[]});
+  assert.equal(m.quotes.length,3);
+  assert.deepEqual(R.filterQuotes(m.quotes,{order:'oldest'}).map(q=>q.id),['c','b','a']);
+  assert.deepEqual(R.filterQuotes(m.quotes,{year:'unknown'}).map(q=>q.id),['a']);
+  assert.deepEqual(R.filterQuotes(m.quotes,{sense:'s1',year:'2024'}),[]);
+  assert.deepEqual(R.readingModel({}).featured,[]);
+});
+
+test('copied passages preserve the exact quotation and full source attribution', () => {
+  const q={text:'Quoted “text” & symbols.\nA second line.',title:'Original title',authors:'A. Author',year:2024,url:'https://example.org/paper',fromTitle:false,warning:'dateWarning'};
+  const copy=R.citationText(q);
+  for(const value of [q.text,q.title,q.authors,String(q.year),q.url,R.TEXT.en.dateWarning]) assert.ok(copy.includes(value));
+  assert.match(R.citationText({...q,fromTitle:true},'zh'),/^仅标题匹配/);
+});
+
+test('source cards escape paper text, labels and links without breaking highlights', () => {
+  const m=R.readingModel({quotes:[{id:'a',text:'<script>x</script> world model & <b>y</b>',title:'<img src=x>',url:'javascript:alert(1)',year:null}]});
+  const html=R.quoteCard(m.quotes[0],{terms:['world model'],label:'<img onerror=x>'});
+  assert.ok(!html.includes('<script>') && !html.includes('<img') && !html.includes('javascript:'));
+  assert.ok(html.includes('<mark>world model</mark>') && html.includes('&amp;'));
+  assert.equal(R.highlight('C++ (lang)', ['C++ (lang)']),'<mark>C++ (lang)</mark>');
+});
+
+test('downloaded pages contain the saved evidence safely and mount the same reader', () => {
+  const d={term:'<term>',quotes:[{text:'</script><script>bad()</script>'}]};
+  const spec={siteUrl:'https://example.org/',pageShell:'<h1>{term}</h1><div data-part="reading"></div>',css:'',i18nJs:'',timelineJs:'',readingJs:''};
+  const html=R.pageHtml(d,spec,'zh');
+  assert.ok(html.includes('<h1>&lt;term&gt;</h1>') && html.includes('lang="zh-CN"'));
+  assert.ok(!html.includes('<script>bad()'));
+  const embedded=html.split('id="data">')[1].split('</script>')[0];
+  assert.deepEqual(JSON.parse(embedded),d);
+  assert.ok(html.includes('IdealineReading.mountPage'));
+});
 
 const resp = (status, body, headers = {}) => ({
   status, ok: status >= 200 && status < 300,
