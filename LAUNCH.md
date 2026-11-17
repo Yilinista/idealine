@@ -59,10 +59,14 @@ without checking the underlying evidence. This implementation has not been pushe
 > them; acronyms collide across fields. Feedback welcome, especially terms where it gets
 > the story wrong.
 
-## Draft: X post
+## Draft: X post (approved 2026-11-17; Yilin's Grokbot posts it)
 
-> Where did "recursive self-improvement" come from?
-> 2010: formal limits of self-improving programs
-> 2014–21: the intelligence-explosion risk story
-> 2025–26: 600+ papers on agents that rewrite their own code
-> Built a tool that draws this for any term, with the quote behind every step: <link>
+Main post (264/280 characters, URLs count as 23):
+
+> made a small thing for my agentic engineering class: type a research term from any field and see when papers started using it and how its meaning shifted, with a quoted sentence behind every step. free, no signup. tell me what's confusing → https://yilinista.github.io/idealine/
+
+Reply (267/280):
+
+> it only reads titles + abstracts from OpenAlex, so it's a sample, not the full history. optional: paste your own model key (Claude/OpenAI/Gemini/OpenRouter) for eras + milestones. the key goes straight from your browser to that provider. code: https://github.com/Yilinista/idealine
+
+Attach a screenshot of one timeline (e.g. world model).
