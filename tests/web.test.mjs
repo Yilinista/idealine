@@ -645,3 +645,13 @@ test('free mode marks the most-cited paper of each of the last three years', () 
   assert.deepEqual(recent, ['i', 'j', 'k']);
   assert.equal(new Set(t.milestones.map(m => m.work.id)).size, t.milestones.length);
 });
+
+test('chart and headline share one takeoff year, ignoring stray early records', () => {
+  // A misdated 1979 record, then real use from 1994; whole-series and main-run takeoff differ.
+  const cs = [[1979, 1], [1994, 1], [1995, 1], [1998, 1], [2001, 1], [2004, 2], [2006, 2], [2009, 3], [2011, 4], [2014, 6], [2016, 10],
+    [2018, 14], [2020, 18], [2022, 30], [2023, 40], [2024, 95], [2025, 160], [2026, 182]];
+  const r = TL.mainRun(cs);
+  assert.equal(r.first, 1994);
+  assert.ok(r.ta === null || r.ta > r.first);
+  assert.equal(TL.mainRun([]).ta, null);
+});
