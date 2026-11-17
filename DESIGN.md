@@ -19,6 +19,12 @@ unsourced), read Wikipedia (missing or stale for new terms), or dig through pape
 Type a term. Get one interactive horizontal timeline:
 
 - **Usage curve:** papers per year that use the exact phrase in title or abstract.
+  For young terms (real use spans at most three calendar years) and when an OpenAlex key is
+  set, those years are also counted by quarter, about 5 small requests per year, because
+  OpenAlex cannot group by date. OpenAlex dates papers known only by year as 1 January, so
+  papers dated exactly 1 January are counted apart as "dated only by year" and kept out of Q1
+  (for "vibe coding", 27 of the 28 papers in 2025 Q1 were such dates). Milestones sit at their
+  paper's month; without one, at the start of their year.
 - **Eras:** periods when the term meant something recognizably different.
 - **Milestones:** origin, coined, popularized, redefined, applied, critique, ancestor.
 - **Evidence:** click any milestone to see the sentences it rests on, with links.

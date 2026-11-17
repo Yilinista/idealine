@@ -59,6 +59,8 @@ class TermTimeline:
     aliases: list[str]
     counts: dict[int, int]
     evidence: list[Evidence]
+    quarters: list[tuple[str, int]] = field(default_factory=list)  # ("2025-Q1", n) for young terms
+    undated: list[tuple[int, int]] = field(default_factory=list)  # (year, n) papers dated only by year
     eras: list[Era] = field(default_factory=list)
     milestones: list[Milestone] = field(default_factory=list)
     summary: str = ""
@@ -117,6 +119,16 @@ def with_inflections(term: str, aliases: list[str]) -> list[str]:
     return out
 
 
+def fine_years(counts: dict[int, int]) -> list[int]:
+    """Years to show by quarter: when real use spans at most three calendar years,
+    a yearly axis has only two or three bars. Otherwise none."""
+    onset = onset_year(counts)
+    if onset is None or not counts:
+        return []
+    last = max(counts)
+    return list(range(onset, last + 1)) if last - onset <= 2 else []
+
+
 def onset_year(counts: dict[int, int]) -> int | None:
     """First year by which the term has real use (3 papers, or 1% of all papers).
 
@@ -173,11 +185,17 @@ def harvest(
     top_cited: int = 150,
     recent: int = 60,
     max_evidence: int = 160,
+    fine: bool | None = None,
 ) -> TermTimeline:
     # Search with singular/plural variants too, but keep only the user's spellings as aliases.
     spellings = with_inflections(term, aliases)
     query = phrase_query(term, spellings)
     counts = client.year_counts(query)
+    # Young terms are also counted by quarter (extra requests): by default only with a key.
+    if fine is None:
+        fine = bool(getattr(client, "has_key", False))
+    years = fine_years(counts) if fine else []
+    quarters, undated = client.quarter_counts(query, years) if years else ([], [])
     pattern = term_pattern(term, spellings)
 
     # Four requests per term (OpenAlex bills per request): earliest uses,
@@ -213,7 +231,7 @@ def harvest(
     for w, sents, from_title in per_work:
         for s in sents:
             evidence.append(Evidence(f"E{len(evidence) + 1}", s, w, from_title=from_title))
-    return TermTimeline(term=term, aliases=aliases, counts=counts, evidence=evidence)
+    return TermTimeline(term=term, aliases=aliases, counts=counts, evidence=evidence, quarters=quarters, undated=undated)
 
 
 # --- analyze -------------------------------------------------------------------
@@ -306,6 +324,7 @@ def build_prompt(t: TermTimeline, lang: str = "en") -> str:
     lines = [
         f"Term: {t.term}" + (f" (also: {', '.join(t.aliases)})" if t.aliases else ""),
         f"Papers per year: {counts}",
+        *([f"Papers per quarter (papers dated only by year left out): {', '.join(f'{k}: {c}' for k, c in t.quarters)}"] if t.quarters else []),
         "",
         "Evidence:",
     ]

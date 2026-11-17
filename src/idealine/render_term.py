@@ -21,7 +21,7 @@ def to_data(t: TermTimeline) -> dict:
         for i in ids:
             e = by_id.get(i)
             if e:
-                out.append({"id": i, "text": e.text, "title": e.work.title, "year": e.work.year,
+                out.append({"id": i, "text": e.text, "title": e.work.title, "year": e.work.year, "date": e.work.date,
                             "url": e.work.url, "authors": e.work.short_authors, "fromTitle": e.from_title})
         return out
 
@@ -30,6 +30,8 @@ def to_data(t: TermTimeline) -> dict:
         "aliases": t.aliases,
         "summary": t.summary,
         "counts": [[y, c] for y, c in t.counts.items()],
+        "quarters": [[k, c] for k, c in t.quarters],
+        "undated": [[y, c] for y, c in t.undated],
         "total": t.total,
         "model": t.model,
         "generated": t.generated,
@@ -40,6 +42,7 @@ def to_data(t: TermTimeline) -> dict:
         "milestones": [{
             "year": m.year, "kind": m.kind, "title": m.title, "why": m.why,
             "url": m.work.url if m.work else None,
+            "date": m.work.date if m.work else None,
             "workTitle": m.work.title if m.work else None,
             "authors": m.work.short_authors if m.work else None,
             "link": m.link_status, "evidence": ev(m.evidence),

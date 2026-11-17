@@ -7,6 +7,7 @@ and retries do not refetch.
 from __future__ import annotations
 
 import hashlib
+from datetime import date, timedelta
 import json
 import os
 import re
@@ -91,6 +92,7 @@ class OpenAlexClient:
     ) -> None:
         headers = {"User-Agent": "idealine"}
         key = api_key if api_key is not None else os.environ.get("OPENALEX_API_KEY")
+        self.has_key = bool(key)
         if key:
             headers["Authorization"] = f"Bearer {key}"
         self._http = http or httpx.Client(base_url=BASE_URL, headers=headers, timeout=30.0)
@@ -153,6 +155,32 @@ class OpenAlexClient:
             except (KeyError, ValueError):
                 continue
         return dict(sorted(out.items()))
+
+    def quarter_counts(self, query: str, years: list[int], today: date | None = None
+                       ) -> tuple[list[tuple[str, int]], list[tuple[int, int]]]:
+        """Papers per quarter for the given years (one small request each; OpenAlex cannot
+        group by date). Quarters that have not started yet are skipped. OpenAlex dates
+        papers known only by year as 1 January, so those are returned apart as undated
+        and left out of Q1. Returns (quarters, undated)."""
+        today = today or date.today()
+
+        def count(start: date, end: date) -> int:
+            flt = f"{self._filter(query)},from_publication_date:{start.isoformat()},to_publication_date:{end.isoformat()}"
+            data = self._get("/works", {"filter": flt, "per_page": 1, "select": "id"})
+            return int((data.get("meta") or {}).get("count") or 0)
+
+        quarters, undated = [], []
+        for y in years:
+            if date(y, 1, 1) > today:
+                continue
+            undated.append((y, count(date(y, 1, 1), date(y, 1, 1))))
+            for q in range(1, 5):
+                start = date(y, 3 * (q - 1) + 1, 1)
+                if start > today:
+                    continue
+                end = date(y, 12, 31) if q == 4 else date(y, 3 * q + 1, 1) - timedelta(days=1)
+                quarters.append((f"{y}-Q{q}", count(date(y, 1, 2) if q == 1 else start, end)))
+        return quarters, undated
 
     def works(self, query: str, sort: str, per_page: int, year: int | None = None,
               since: int | None = None) -> list[Work]:

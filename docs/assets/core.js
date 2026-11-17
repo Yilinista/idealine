@@ -110,6 +110,29 @@
       return out.sort((a, b) => a[0] - b[0]);
     }
 
+    // Papers per quarter for the given years (one small request each; OpenAlex cannot
+    // group by date). Quarters that have not started yet are skipped. OpenAlex dates
+    // papers known only by year as 1 January, so those are counted apart as undated
+    // and left out of Q1.
+    async quarterCounts(query, years, today = new Date()) {
+      const quarters = [], undated = [];
+      const count = async (from, to) => {
+        const data = await this.get({ filter: `${oaFilter(query)},from_publication_date:${from},to_publication_date:${to}`, per_page: '1', select: 'id' });
+        return (data.meta && Number(data.meta.count)) || 0;
+      };
+      for (const y of years) {
+        if (new Date(`${y}-01-01T00:00:00Z`) > today) continue;
+        undated.push([y, await count(`${y}-01-01`, `${y}-01-01`)]);
+        for (let q = 1; q <= 4; q++) {
+          const m0 = 3 * (q - 1) + 1, from = `${y}-${String(m0).padStart(2, '0')}-${q === 1 ? '02' : '01'}`;
+          if (new Date(`${y}-${String(m0).padStart(2, '0')}-01T00:00:00Z`) > today) continue;
+          const last = new Date(Date.UTC(y, m0 + 2, 0)).toISOString().slice(0, 10);
+          quarters.push([`${y}-Q${q}`, await count(from, last)]);
+        }
+      }
+      return { quarters, undated };
+    }
+
     async works(query, sort, perPage, since) {
       const data = await this.get({ filter: oaFilter(query, since), sort, per_page: String(perPage), select: SELECT });
       return (data.results || []).map(workFromJson);
@@ -175,6 +198,18 @@
     return null;
   }
 
+  // Years to show by quarter: when the term's real use spans at most three calendar
+  // years, a yearly axis has only two or three bars. Otherwise none.
+  function fineYears(counts) {
+    const onset = onsetYear(counts);
+    if (onset == null || !counts.length) return [];
+    const last = Math.max(...counts.map(c => c[0]));
+    if (last - onset > 2) return [];
+    const out = [];
+    for (let y = onset; y <= last; y++) out.push(y);
+    return out;
+  }
+
   const clip = s => { const cps = [...s]; return cps.length <= MAX_SENTENCE_CHARS ? s : cps.slice(0, MAX_SENTENCE_CHARS - 1).join('') + '…'; };
 
   function sentencesWithTerm(text, pattern) {
@@ -189,12 +224,19 @@
   }
 
   async function harvest(oa, term, aliases, opts = {}) {
-    const { earliest = 25, topCited = 150, recent = 60, maxEvidence = 160, onStep = () => {} } = opts;
+    // fine: count young terms by quarter (extra requests), on by default only with an OpenAlex key.
+    const { earliest = 25, topCited = 150, recent = 60, maxEvidence = 160, onStep = () => {}, fine = !!oa.apiKey } = opts;
     // Search with singular/plural variants too, but keep only the user's spellings as aliases.
     const spellings = withInflections(term, aliases);
     const query = phraseQuery(term, spellings);
     onStep('Counting papers per year…');
     const counts = await oa.yearCounts(query);
+    let quarters = [], undated = [];
+    const fy = fine ? fineYears(counts) : [];
+    if (fy.length) {
+      onStep('Counting papers per quarter…');
+      ({ quarters, undated } = await oa.quarterCounts(query, fy));
+    }
     const pattern = termPattern(term, spellings);
     const works = new Map();
     const add = list => list.forEach(w => { if (!works.has(w.id)) works.set(w.id, w); });
@@ -223,7 +265,7 @@
     }
     const evidence = [];
     for (const [w, sents, fromTitle] of perWork) for (const s of sents) evidence.push({ eid: `E${evidence.length + 1}`, text: s, work: w, fromTitle });
-    return { term, aliases, counts, evidence, eras: [], milestones: [], summary: '', model: null, generated: new Date().toISOString().slice(0, 10) };
+    return { term, aliases, counts, quarters, undated, evidence, eras: [], milestones: [], summary: '', model: null, generated: new Date().toISOString().slice(0, 10) };
   }
 
   // --- analyze ------------------------------------------------------------------
@@ -233,6 +275,7 @@
     const lines = [
       `Term: ${t.term}` + (t.aliases.length ? ` (also: ${t.aliases.join(', ')})` : ''),
       `Papers per year: ${t.counts.map(([y, c]) => `${y}: ${c}`).join(', ')}`,
+      ...((t.quarters || []).length ? [`Papers per quarter (papers dated only by year left out): ${t.quarters.map(([k, c]) => `${k}: ${c}`).join(', ')}`] : []),
       '',
       'Evidence:',
     ];
@@ -321,13 +364,15 @@
   function toData(t) {
     const byId = new Map(t.evidence.map(e => [e.eid, e]));
     const ev = ids => ids.map(i => byId.get(i)).filter(Boolean).map(e => ({
-      id: e.eid, text: e.text, title: e.work.title, year: e.work.year, url: e.work.url, authors: e.work.shortAuthors, fromTitle: e.fromTitle,
+      id: e.eid, text: e.text, title: e.work.title, year: e.work.year, date: e.work.date || null, url: e.work.url, authors: e.work.shortAuthors, fromTitle: e.fromTitle,
     }));
     return {
       term: t.term,
       aliases: t.aliases,
       summary: t.summary,
       counts: t.counts,
+      quarters: t.quarters || [],
+      undated: t.undated || [],
       total: t.counts.reduce((n, [, c]) => n + c, 0),
       model: t.model,
       generated: t.generated,
@@ -336,13 +381,13 @@
       eras: t.eras.map(e => ({ start: e.start, end: e.end, label: e.label, meaning: e.meaning, evidence: ev(e.evidence) })),
       milestones: t.milestones.map(m => ({
         year: m.year, kind: m.kind, title: m.title, why: m.why,
-        url: m.work ? m.work.url : null, workTitle: m.work ? m.work.title : null, authors: m.work ? m.work.shortAuthors : null,
+        url: m.work ? m.work.url : null, date: m.work ? m.work.date || null : null, workTitle: m.work ? m.work.title : null, authors: m.work ? m.work.shortAuthors : null,
         link: m.link, evidence: ev(m.evidence),
       })),
     };
   }
 
-  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, buildPrompt, titleOverlap, applyAnalysis, baseline, toData };
+  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, fineYears, buildPrompt, titleOverlap, applyAnalysis, baseline, toData };
   global.IdealineCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

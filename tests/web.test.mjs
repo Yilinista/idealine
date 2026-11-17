@@ -313,3 +313,33 @@ test('buildPrompt appends the output-language instruction only when given', () =
   assert.ok(!C.buildPrompt(t).includes('Output language'));
   assert.ok(C.buildPrompt(t, 'Write in Simplified Chinese.').endsWith('Output language: Write in Simplified Chinese.'));
 });
+
+test('fineYears picks quarter years only for young terms', () => {
+  assert.deepEqual(C.fineYears([[1800, 1], [2025, 120], [2026, 700]]), [2025, 2026]);
+  assert.deepEqual(C.fineYears([[2019, 40], [2022, 300], [2026, 900]]), []);
+  assert.deepEqual(C.fineYears([]), []);
+});
+
+test('quarterCounts skips future quarters and keeps year-only dates out of Q1', async () => {
+  const seen = [];
+  const oa = new C.OpenAlex({ apiKey: 'k', sleep: async () => {}, fetchFn: async url => {
+    const f = new URL(url).searchParams.get('filter');
+    seen.push(f);
+    const [, a, b] = /from_publication_date:([\d-]+),to_publication_date:([\d-]+)/.exec(f);
+    return resp(200, { meta: { count: a === b ? 5 : 10 } });
+  } });
+  const r = await oa.quarterCounts('"x"', [2025, 2026], new Date('2026-05-03T00:00:00Z'));
+  assert.deepEqual(r.quarters.map(q => q[0]), ['2025-Q1', '2025-Q2', '2025-Q3', '2025-Q4', '2026-Q1', '2026-Q2']);
+  assert.deepEqual(r.undated, [[2025, 5], [2026, 5]]);
+  assert.ok(seen.some(f => f.endsWith('from_publication_date:2025-01-02,to_publication_date:2025-03-31')));
+  assert.ok(seen.some(f => f.endsWith('from_publication_date:2025-10-01,to_publication_date:2025-12-31')));
+  assert.equal(seen.length, 8);
+});
+
+test('harvest without an OpenAlex key makes no quarter requests', async () => {
+  const calls = [];
+  const oa = new C.OpenAlex({ fetchFn: fakeOpenAlex(calls), sleep: async () => {} });
+  const t = await C.harvest(oa, 'chain of thought', []);
+  assert.deepEqual(t.quarters, []);
+  assert.ok(calls.every(c => !/from_publication_date/.test(new URL(c.url).searchParams.get('filter') || '')));
+});

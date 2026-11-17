@@ -314,3 +314,32 @@ def test_build_prompt_output_language():
     assert "Output language" not in build_prompt(t)
     assert build_prompt(t, "zh").endswith("Output language: " + OUTPUT_LANG["zh"])
     assert "Output language" not in build_prompt(t, "fr")
+
+
+def test_fine_years_only_for_young_terms():
+    from idealine.term import fine_years
+
+    assert fine_years({1800: 1, 2025: 120, 2026: 700}) == [2025, 2026]
+    assert fine_years({2019: 40, 2022: 300, 2026: 900}) == []
+    assert fine_years({}) == []
+
+
+def test_quarter_counts_skip_future_and_split_year_only_dates():
+    from datetime import date
+
+    seen = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        flt = request.url.params["filter"]
+        seen.append(flt)
+        start, end = re.search(r"from_publication_date:([\d-]+),to_publication_date:([\d-]+)", flt).groups()
+        return httpx.Response(200, json={"meta": {"count": 5 if start == end else 10}})
+
+    client = OpenAlexClient(http=httpx.Client(base_url=BASE_URL, transport=httpx.MockTransport(handler)),
+                            sleep=lambda s: None, log=lambda m: None)
+    quarters, undated = client.quarter_counts('"x"', [2025, 2026], today=date(2026, 5, 3))
+    assert quarters == [("2025-Q1", 10), ("2025-Q2", 10), ("2025-Q3", 10), ("2025-Q4", 10), ("2026-Q1", 10), ("2026-Q2", 10)]
+    assert undated == [(2025, 5), (2026, 5)]
+    assert any("from_publication_date:2025-01-02,to_publication_date:2025-03-31" in f for f in seen)
+    assert any("from_publication_date:2025-10-01,to_publication_date:2025-12-31" in f for f in seen)
+    assert len(seen) == 8

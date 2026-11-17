@@ -1,7 +1,7 @@
 {
  "term": "vibe coding",
  "aliases": [],
- "summary": "“Vibe coding”一词在本证据中被归于 Andrej Karpathy 于 2025 年 2 月提出，用来描述用自然语言与大语言模型对话、让 AI 生成代码的编程方式。如今它主要指把实现几乎完全交给 AI 编程智能体、靠观察运行结果而非逐行阅读代码来验收的开发实践。这种做法在教育、医疗等非程序员群体中被广泛采用，同时也因安全性和可维护性问题受到批评。",
+ "summary": "“vibe coding”一词据证据所述由 Andrej Karpathy 于2025年2月提出，用来指开发者用自然语言向大语言模型描述意图、主要由AI生成代码的编程方式；标注为2019、2020年的两条记录提到了AI时代的语境，很可能是年份错误。如今它主要指以对话和意图驱动、常借助自主编码智能体、较少逐行审查代码的软件开发方式，并已扩展到教育、医疗等领域，同时在安全性、可维护性和验证方面受到大量批评。",
  "counts": [
   [
    2019,
@@ -20,6 +20,50 @@
    777
   ]
  ],
+ "quarters": [
+  [
+   "2025-Q1",
+   1
+  ],
+  [
+   "2025-Q2",
+   13
+  ],
+  [
+   "2025-Q3",
+   27
+  ],
+  [
+   "2025-Q4",
+   59
+  ],
+  [
+   "2026-Q1",
+   101
+  ],
+  [
+   "2026-Q2",
+   228
+  ],
+  [
+   "2026-Q3",
+   231
+  ],
+  [
+   "2026-Q4",
+   108
+  ]
+ ],
+ "undated": [
+  [
+   2025,
+   27
+  ],
+  [
+   2026,
+   109
+  ]
+ ],
  "total": 906,
  "model": "claude-opus-5-5",
  "generated": "2026-11-17",
@@ -29,14 +73,15 @@
   {
    "start": 2025,
    "end": 2025,
-   "label": "命名与对话式编程",
-   "meaning": "该词刚被提出，主要指开发者或非程序员通过自然语言与大语言模型对话、迭代生成代码的新编程范式，并迅速被用于教育和临床等领域的原型开发。",
+   "label": "命名与范式定义",
+   "meaning": "该词被提出后迅速流行，指通过与大语言模型自然语言对话来生成代码、让非程序员也能构建软件的新编程范式，并被大量引入教育和临床等应用领域。",
    "evidence": [
     {
      "id": "E42",
      "text": "Vibe coding, a term coined by Andrej Karpathy in February 2025, has quickly become a compelling and controversial natural language programming paradigm in AI-assisted software development.",
      "title": "Good Vibrations? A Qualitative Study of Co-Creation, Communication, Flow, and Trust in Vibe Coding",
      "year": 2025,
+     "date": "2025-09-15",
      "url": "https://doi.org/10.48550/arxiv.2509.12491",
      "authors": "Veronica Pimenova et al.",
      "fromTitle": false
@@ -46,17 +91,9 @@
      "text": "We examine \"vibe coding\": an emerging programming paradigm where developers primarily write code by interacting with code-generating large language models rather than writing code directly.",
      "title": "Vibe coding: programming through conversation with artificial intelligence",
      "year": 2025,
+     "date": "2025-06-29",
      "url": "https://doi.org/10.48550/arxiv.2506.23253",
      "authors": "Advait Sarkar et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E30",
-     "text": "Vibe coding is a recent Generative AI innovation where a human operator provides conversational natural language description of a problem and an AI assistant writes the code to develop a solution.",
-     "title": "Generative AI Vibe Coding for Prototyping Industrial Systems",
-     "year": 2025,
-     "url": "https://doi.org/10.1109/isie62713.2025.11124737",
-     "authors": "Daswin De Silva et al.",
      "fromTitle": false
     },
     {
@@ -64,8 +101,19 @@
      "text": "The invention of Generative AI and Large Language Models has recently given rise to \"vibe coding\" as a new paradigm of software development in which developers use natural language to state their high-level intent rather than writing or even being aware of the computer code.",
      "title": "What is Vibe coding and when should you use it (or not)?",
      "year": 2025,
+     "date": "2025-08-07",
      "url": "https://doi.org/10.36227/techrxiv.175459780.03758839/v1",
      "authors": "Marko Horvat",
+     "fromTitle": false
+    },
+    {
+     "id": "E30",
+     "text": "Vibe coding is a recent Generative AI innovation where a human operator provides conversational natural language description of a problem and an AI assistant writes the code to develop a solution.",
+     "title": "Generative AI Vibe Coding for Prototyping Industrial Systems",
+     "year": 2025,
+     "date": "2025-06-20",
+     "url": "https://doi.org/10.1109/isie62713.2025.11124737",
+     "authors": "Daswin De Silva et al.",
      "fromTitle": false
     },
     {
@@ -73,8 +121,19 @@
      "text": "Vibe coding-where high-level natural-language directives orchestrate end-to-end software creation-has emerged as a transformative paradigm in modern development.",
      "title": "A Review on Vibe Coding: Fundamentals, State-of-the-art, Challenges and Future Directions",
      "year": 2025,
+     "date": "2025-05-09",
      "url": "https://doi.org/10.36227/techrxiv.174681482.27435614/v1",
      "authors": "Partha Pratim Ray",
+     "fromTitle": false
+    },
+    {
+     "id": "E43",
+     "text": "The emergence of large language models has introduced new opportunities in software development, particularly through a revolutionary paradigm known as vibe coding or \"coding by vibes\", in which developers express their software ideas in natural language and where the LLM generates the code.This paper investigates the potential of vibe coding to support novice programmers.The first author, without coding experience, attempted to create a 3D driv…",
+     "title": "Vibe Coding in Practice: Building a Driving Simulator Without Expert Programming Skills",
+     "year": 2025,
+     "date": "2025-09-22",
+     "url": "https://doi.org/10.1145/3744335.3758482",
+     "authors": "Margarida Fortes-Ferreira et al.",
      "fromTitle": false
     },
     {
@@ -82,6 +141,7 @@
      "text": "To address these challenges, we introduce vibe coding, a novel AI-assisted, no-code development approach that enables educators to create interactive, customisable learning simulations without programming expertise.",
      "title": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning",
      "year": 2025,
+     "date": "2025-04-09",
      "url": "https://doi.org/10.1080/0142159x.2025.2488353",
      "authors": "Minyang Chow et al.",
      "fromTitle": false
@@ -91,17 +151,19 @@
      "text": "This innovative practice article reports on the piloting of vibe coding (using natural language to create software applications with AI) for English as a Foreign Language (EFL) education.",
      "title": "A vibe coding learning design to enhance EFL students' talking to, through, and about AI",
      "year": 2025,
+     "date": "2025-09-09",
      "url": "https://doi.org/10.48550/arxiv.2509.08854",
      "authors": "David James Woo et al.",
      "fromTitle": false
     },
     {
-     "id": "E52",
-     "text": "We explore vibe coding as a rapid prototyping approach powered by generative AI.",
-     "title": "Vibe Coding and the New Prototyping Playbook",
+     "id": "E57",
+     "text": "Vibe Coding offers an accessible entry point to create interactive digital applications through human-in-the-loop conversational prompts and AI-assisted workflows.",
+     "title": "Empowering Health Professions Educators: Developing Educational Tools with AI-Assisted Vibe Coding",
      "year": 2025,
-     "url": "https://doi.org/10.1109/ms.2025.3597032",
-     "authors": "Markus Borg et al.",
+     "date": "2025-11-28",
+     "url": "https://doi.org/10.1007/s40670-025-02596-1",
+     "authors": "Olivia Ng et al.",
      "fromTitle": false
     }
    ]
@@ -109,16 +171,17 @@
   {
    "start": 2026,
    "end": 2026,
-   "label": "智能体委托与反思",
-   "meaning": "该词更多指把实现整体委托给自主编程智能体、极少审查代码、凭运行结果验收的做法，被当作通向“智能体工程”和规范驱动开发的过渡阶段，并面临安全、质量和开源生态方面的批评。",
+   "label": "智能体化与质量治理",
+   "meaning": "该词越来越多地指把实现完全委托给AI编码智能体、主要凭运行结果而非阅读代码来验收的做法，常被作为安全、开源生态和可维护性批评的对象，并被拿来与规范驱动开发、智能体工程对比。",
    "evidence": [
     {
-     "id": "E97",
-     "text": "Vibe coding is the practice where coders rely on AI code generation tools through intuition and trial-and-error without necessarily understanding the underlying code.",
-     "title": "Vibe Coding in Practice: Motivations, Challenges, and a Future Outlook – a Grey Literature Review",
+     "id": "E126",
+     "text": "“Vibe coding”—where users describe applications in natural language and AI agents autonomously handle all implementation—has rapidly emerged as a mainstream development paradigm.",
+     "title": "ViBench: A Benchmark on Vibe Coding",
      "year": 2026,
-     "url": "https://doi.org/10.1145/3786583.3786866",
-     "authors": "Ahmed Fawzy et al.",
+     "date": "2026-05-22",
+     "url": "https://doi.org/10.1145/3786335.3813162",
+     "authors": "Peter Yong Zhong et al.",
      "fromTitle": false
     },
     {
@@ -126,17 +189,9 @@
      "text": "We find that coding patterns are bimodal: in 41% of sessions, agents author virtually all committed code (\"vibe coding\"), while in 25%, humans write all code themselves.",
      "title": "SWE-chat: Coding Agent Interactions From Real Users in the Wild",
      "year": 2026,
+     "date": "2026-04-22",
      "url": "https://doi.org/10.48550/arxiv.2604.20779",
      "authors": "Joachim Baumann et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E126",
-     "text": "“Vibe coding”—where users describe applications in natural language and AI agents autonomously handle all implementation—has rapidly emerged as a mainstream development paradigm.",
-     "title": "ViBench: A Benchmark on Vibe Coding",
-     "year": 2026,
-     "url": "https://doi.org/10.1145/3786335.3813162",
-     "authors": "Peter Yong Zhong et al.",
      "fromTitle": false
     },
     {
@@ -144,35 +199,19 @@
      "text": "Vibe coding -- accepting LLM-generated source from natural-language intent with minimal review -- is fast and may be adequate for low-criticality consumer software.",
      "title": "Formal-Method-Guided Vibe Coding: Closing the Verification Loop on AI-Generated Safety-Critical Software Through Model-Driven Engineering",
      "year": 2026,
+     "date": "2026-06-21",
      "url": "https://doi.org/10.48550/arxiv.2606.22413",
      "authors": "Ran Wei et al.",
      "fromTitle": false
     },
     {
-     "id": "E81",
-     "text": "We present GLM-5, a next-generation foundation model designed to transition the paradigm of vibe coding to agentic engineering.",
-     "title": "GLM-5: from Vibe Coding to Agentic Engineering",
+     "id": "E150",
+     "text": "Background: Vibe coding-generating software through natural-language prompts to large language models without reviewing the underlying code-has moved rapidly from consumer technology into peer-reviewed clinical applications.",
+     "title": "The VIBE-HI framework: a conceptual model for evaluating vibe coding appropriateness, quality, and safety in health informatics",
      "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2602.15763",
-     "authors": "5 Team et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E153",
-     "text": "Context: Software engineering is moving from AI-assisted practices like vibe coding, in which assistants accelerate individual developers, towards Agentic Software Engineering (ASE), in which autonomous agents are delegated goal-level tasks.",
-     "title": "Spec-Driven Development for Agentic Software Engineering: Harnessing Human-Agent Teamwork",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2609.00252",
-     "authors": "Jessica Diaz et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E148",
-     "text": "Two paradigms have emerged: vibe coding, an intuition-driven approach accepting AI artifacts via observed behavior, and Specification-Driven Development (SDD), which uses structured specifications as the authoritative source of truth.",
-     "title": "Specification-Driven Development as the Foundation of AI-Native Enterprise Software Engineering",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2607.16680",
-     "authors": "Mamdouh Alenezi",
+     "date": "2026-07-23",
+     "url": "https://doi.org/10.3389/frai.2026.1882814",
+     "authors": "Ahmed Alqheedan et al.",
      "fromTitle": false
     },
     {
@@ -180,18 +219,50 @@
      "text": "In vibe coding, an AI agent builds software by selecting and assembling open-source software (OSS), often without users directly reading documentation, reporting bugs, or otherwise engaging with maintainers.",
      "title": "Vibe Coding Kills Open Source",
      "year": 2026,
+     "date": "2026-01-21",
      "url": "https://doi.org/10.48550/arxiv.2601.15494",
      "authors": "Miklós Koren et al.",
      "fromTitle": false
     },
     {
-     "id": "E63",
-     "text": "SecureVibeBench: Benchmarking Secure Vibe Coding of AI Agents via Reconstructing Vulnerability-Introducing Scenarios",
-     "title": "SecureVibeBench: Benchmarking Secure Vibe Coding of AI Agents via Reconstructing Vulnerability-Introducing Scenarios",
+     "id": "E148",
+     "text": "Two paradigms have emerged: vibe coding, an intuition-driven approach accepting AI artifacts via observed behavior, and Specification-Driven Development (SDD), which uses structured specifications as the authoritative source of truth.",
+     "title": "Specification-Driven Development as the Foundation of AI-Native Enterprise Software Engineering",
      "year": 2026,
-     "url": "https://doi.org/10.18653/v1/2026.acl-long.1107",
-     "authors": "Junkai Chen et al.",
-     "fromTitle": true
+     "date": "2026-07-18",
+     "url": "https://doi.org/10.48550/arxiv.2607.16680",
+     "authors": "Mamdouh Alenezi",
+     "fromTitle": false
+    },
+    {
+     "id": "E153",
+     "text": "Context: Software engineering is moving from AI-assisted practices like vibe coding, in which assistants accelerate individual developers, towards Agentic Software Engineering (ASE), in which autonomous agents are delegated goal-level tasks.",
+     "title": "Spec-Driven Development for Agentic Software Engineering: Harnessing Human-Agent Teamwork",
+     "year": 2026,
+     "date": "2026-08-31",
+     "url": "https://doi.org/10.48550/arxiv.2609.00252",
+     "authors": "Jessica Diaz et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E81",
+     "text": "We present GLM-5, a next-generation foundation model designed to transition the paradigm of vibe coding to agentic engineering.",
+     "title": "GLM-5: from Vibe Coding to Agentic Engineering",
+     "year": 2026,
+     "date": "2026-02-17",
+     "url": "https://doi.org/10.48550/arxiv.2602.15763",
+     "authors": "5 Team et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E97",
+     "text": "Vibe coding is the practice where coders rely on AI code generation tools through intuition and trial-and-error without necessarily understanding the underlying code.",
+     "title": "Vibe Coding in Practice: Motivations, Challenges, and a Future Outlook – a Grey Literature Review",
+     "year": 2026,
+     "date": "2026-04-12",
+     "url": "https://doi.org/10.1145/3786583.3786866",
+     "authors": "Ahmed Fawzy et al.",
+     "fromTitle": false
     }
    ]
   }
@@ -200,9 +271,10 @@
   {
    "year": 2025,
    "kind": "coined",
-   "title": "Andrej Karpathy 于 2025 年 2 月提出 “vibe coding” 一词",
-   "why": "多篇文献把这一名称明确归于 Karpathy 在 2025 年 2 月的提法，此后该词迅速流行。",
+   "title": "Andrej Karpathy 于2025年2月提出“vibe coding”",
+   "why": "多篇论文将该术语的命名归于 Karpathy，并指出它于2025年2月出现后迅速流行。",
    "url": null,
+   "date": null,
    "workTitle": null,
    "authors": null,
    "link": "unresolved",
@@ -212,6 +284,7 @@
      "text": "Vibe coding, a term coined by Andrej Karpathy in February 2025, has quickly become a compelling and controversial natural language programming paradigm in AI-assisted software development.",
      "title": "Good Vibrations? A Qualitative Study of Co-Creation, Communication, Flow, and Trust in Vibe Coding",
      "year": 2025,
+     "date": "2025-09-15",
      "url": "https://doi.org/10.48550/arxiv.2509.12491",
      "authors": "Veronica Pimenova et al.",
      "fromTitle": false
@@ -221,8 +294,19 @@
      "text": "In February 2025, as we were delivering an upper-level undergraduate course on Software Engineering in our university, the term vibe coding emerged and quickly became popularized, referring to a practice in which developers describe a project or task in a prompt to an AI model that then generates code artifacts automatically.",
      "title": "From Specifications to Implementation in the Gen-AI Era: Lessons from a Project-Based Software Engineering Course",
      "year": 2026,
+     "date": "2026-06-30",
      "url": "https://doi.org/10.1145/3797092",
      "authors": "Yingying Wang et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E83",
+     "text": "This article examines the rise of “vibe coding” in 2025, highlighting its immediate impact on software creation, prototyping, and accessibility for nontechnical users.",
+     "title": "Is Vibe Coding the Future of Software?",
+     "year": 2026,
+     "date": "2026-02-20",
+     "url": "https://doi.org/10.1109/mc.2025.3634712",
+     "authors": "Nir Kshetri et al.",
      "fromTitle": false
     }
    ]
@@ -231,8 +315,9 @@
    "year": 2025,
    "kind": "popularized",
    "title": "Vibe coding: programming through conversation with artificial intelligence",
-   "why": "这篇被高频引用的论文把 vibe coding 界定为通过与代码生成大模型对话来编程的新范式。",
+   "why": "这篇高被引论文把 vibe coding 界定为开发者主要通过与代码生成大模型对话而非直接写代码的新兴编程范式。",
    "url": "https://doi.org/10.48550/arxiv.2506.23253",
+   "date": "2025-06-29",
    "workTitle": "Vibe coding: programming through conversation with artificial intelligence",
    "authors": "Advait Sarkar et al.",
    "link": "in-sample",
@@ -242,6 +327,7 @@
      "text": "We examine \"vibe coding\": an emerging programming paradigm where developers primarily write code by interacting with code-generating large language models rather than writing code directly.",
      "title": "Vibe coding: programming through conversation with artificial intelligence",
      "year": 2025,
+     "date": "2025-06-29",
      "url": "https://doi.org/10.48550/arxiv.2506.23253",
      "authors": "Advait Sarkar et al.",
      "fromTitle": false
@@ -252,8 +338,9 @@
    "year": 2025,
    "kind": "popularized",
    "title": "Vibe Coding vs. Agentic Coding: Fundamentals and Practical Implications of Agentic AI",
-   "why": "这篇被引最多的综述把 vibe coding 与智能体编程并列为 AI 辅助开发的两大新范式。",
+   "why": "这篇综述将 vibe coding 与 agentic coding 并列为AI辅助开发的两种范式，确立了后续讨论的基本框架。",
    "url": "https://doi.org/10.48550/arxiv.2505.19443",
+   "date": "2025-05-26",
    "workTitle": "Vibe Coding vs. Agentic Coding: Fundamentals and Practical Implications of Agentic AI",
    "authors": "Ranjan Sapkota et al.",
    "link": "in-sample",
@@ -263,8 +350,19 @@
      "text": "This review presents a comprehensive analysis of two emerging paradigms in AI-assisted software development: vibe coding and agentic coding.",
      "title": "Vibe Coding vs. Agentic Coding: Fundamentals and Practical Implications of Agentic AI",
      "year": 2025,
+     "date": "2025-05-26",
      "url": "https://doi.org/10.48550/arxiv.2505.19443",
      "authors": "Ranjan Sapkota et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E62",
+     "text": "Recent advances in large language models (LLMs) have introduced new paradigms in software development, including vibe coding, AI-assisted coding, and agentic coding, fundamentally reshaping how software is designed, implemented, and maintained.",
+     "title": "Coding With AI: From a Reflection on Industrial Practices to Future Computer Science and Software Engineering Education",
+     "year": 2025,
+     "date": "2025-12-30",
+     "url": "https://openalex.org/W7118051977",
+     "authors": "Hung-Fu Chang et al.",
      "fromTitle": false
     }
    ]
@@ -273,8 +371,9 @@
    "year": 2025,
    "kind": "applied",
    "title": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning",
-   "why": "该文把 vibe coding 引入临床教学，作为无需编程技能的无代码开发途径，开启了医疗教育领域的应用潮。",
+   "why": "该文将 vibe coding 作为无代码开发方式引入临床教学，使没有编程背景的教育者也能制作交互式学习工具。",
    "url": "https://doi.org/10.1080/0142159x.2025.2488353",
+   "date": "2025-04-09",
    "workTitle": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning",
    "authors": "Minyang Chow et al.",
    "link": "in-sample",
@@ -284,6 +383,7 @@
      "text": "To address these challenges, we introduce vibe coding, a novel AI-assisted, no-code development approach that enables educators to create interactive, customisable learning simulations without programming expertise.",
      "title": "From technology adopters to creators: Leveraging AI-assisted vibe coding to transform clinical teaching and learning",
      "year": 2025,
+     "date": "2025-04-09",
      "url": "https://doi.org/10.1080/0142159x.2025.2488353",
      "authors": "Minyang Chow et al.",
      "fromTitle": false
@@ -293,6 +393,7 @@
      "text": "Vibe Coding is a clinician-led design framework that embeds expert reasoning and the cognitive ‘feel’ of clinical decision-making into interactive educational tools.",
      "title": "Vibe Coding in nephrology education: clinician-led, AI-assisted development of open-source interactive learning tools",
      "year": 2025,
+     "date": "2025-11-06",
      "url": "https://doi.org/10.1080/0886022x.2025.2581933",
      "authors": "Francesco Pesce et al.",
      "fromTitle": false
@@ -302,9 +403,20 @@
      "text": "Vibe Coding offers an accessible entry point to create interactive digital applications through human-in-the-loop conversational prompts and AI-assisted workflows.",
      "title": "Empowering Health Professions Educators: Developing Educational Tools with AI-Assisted Vibe Coding",
      "year": 2025,
+     "date": "2025-11-28",
      "url": "https://doi.org/10.1007/s40670-025-02596-1",
      "authors": "Olivia Ng et al.",
      "fromTitle": false
+    },
+    {
+     "id": "E32",
+     "text": "Vibe coding: a new paradigm for biomedical software development",
+     "title": "Vibe coding: a new paradigm for biomedical software development",
+     "year": 2025,
+     "date": "2025-07-01",
+     "url": "https://doi.org/10.1186/s13040-025-00462-9",
+     "authors": "Jason H. Moore et al.",
+     "fromTitle": true
     }
    ]
   },
@@ -312,8 +424,9 @@
    "year": 2025,
    "kind": "redefined",
    "title": "A Survey of Vibe Coding with Large Language Models",
-   "why": "该综述把 vibe coding 重新界定为依托自主编程智能体、通过观察结果而非逐行理解代码来验收实现的方法。",
+   "why": "该综述将 vibe coding 重新界定为依托自主编码智能体、通过观察运行结果而非逐行理解代码来验收实现的方法。",
    "url": "https://doi.org/10.48550/arxiv.2510.12399",
+   "date": "2025-10-14",
    "workTitle": "A Survey of Vibe Coding with Large Language Models",
    "authors": "Ge, Yuyao et al.",
    "link": "in-sample",
@@ -323,6 +436,7 @@
      "text": "The advancement of large language models (LLMs) has catalyzed a paradigm shift from code generation assistance to autonomous coding agents, enabling a novel development methodology termed \"Vibe Coding\" where developers validate AI-generated implementations through outcome observation rather than line-by-line code comprehension.",
      "title": "A Survey of Vibe Coding with Large Language Models",
      "year": 2025,
+     "date": "2025-10-14",
      "url": "https://doi.org/10.48550/arxiv.2510.12399",
      "authors": "Ge, Yuyao et al.",
      "fromTitle": false
@@ -333,8 +447,9 @@
    "year": 2025,
    "kind": "critique",
    "title": "Is Vibe Coding Safe? Benchmarking Vulnerability of Agent-Generated Code in Real-World Tasks",
-   "why": "该文通过基准测试检验智能体生成代码的漏洞，代表了对 vibe coding 安全性的早期质疑。",
+   "why": "该文通过基准测试检验智能体生成代码中的漏洞，代表了针对 vibe coding 安全性的早期批评。",
    "url": "https://doi.org/10.48550/arxiv.2512.03262",
+   "date": "2025-12-02",
    "workTitle": "Is Vibe Coding Safe? Benchmarking Vulnerability of Agent-Generated Code in Real-World Tasks",
    "authors": "Songwen Zhao et al.",
    "link": "in-sample",
@@ -344,6 +459,7 @@
      "text": "Vibe coding is a new software development paradigm in which human engineers prompt a large language model (LLM) agent to complete complex coding tasks with little supervision.",
      "title": "Is Vibe Coding Safe? Benchmarking Vulnerability of Agent-Generated Code in Real-World Tasks",
      "year": 2025,
+     "date": "2025-12-02",
      "url": "https://doi.org/10.48550/arxiv.2512.03262",
      "authors": "Songwen Zhao et al.",
      "fromTitle": false
@@ -353,8 +469,19 @@
      "text": "Code generation with large language models (LLMs), often termed vibe coding, is increasingly adopted in production but fails to ensure code quality, particularly in security (e.g., SQL injection vulnerabilities) and maintainability (e.g., missing type annotations).",
      "title": "Training Language Models to Generate Quality Code with Program Analysis Feedback",
      "year": 2025,
+     "date": "2025-01-01",
      "url": "https://doi.org/10.52202/085713-4540",
      "authors": "Feng Yao et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E25",
+     "text": "This papers reviews AI coding, and in particular the exploding interest in vibe coding, both in terms of main existing framework, advantages and challenges.",
+     "title": "The Gotchas of AI Coding and Vibe Coding. It’s All About Support And Maintenance",
+     "year": 2025,
+     "date": "2025-05-07",
+     "url": "https://doi.org/10.31219/osf.io/kjz9t_v1",
+     "authors": "Stephane Herman Maes",
      "fromTitle": false
     }
    ]
@@ -362,18 +489,20 @@
   {
    "year": 2025,
    "kind": "applied",
-   "title": "CAI Fluency: A Framework for Cybersecurity AI Fluency",
-   "why": "该文提出“vibe-hacking”作为 vibe coding 在网络安全领域的类比，显示这一说法开始衍生出“vibe X”系列概念。",
-   "url": "https://doi.org/10.48550/arxiv.2508.13588",
-   "workTitle": "CAI Fluency: A Framework for Cybersecurity AI Fluency",
-   "authors": "Víctor Mayoral-Vilches et al.",
-   "link": "in-sample",
+   "title": "由 vibe coding 衍生出 vibe-hacking、vibe science 等说法",
+   "why": "该词被类比推广到网络安全、科学研究和内容生成等领域，形成一系列以“vibe”为前缀的新概念。",
+   "url": null,
+   "date": null,
+   "workTitle": null,
+   "authors": null,
+   "link": "unresolved",
    "evidence": [
     {
      "id": "E37",
      "text": "The main objective of the CAI framework is to accelerate the widespread adoption and effective use of artificial intelligence-based cybersecurity solutions, pathing the way to vibe-hacking, the cybersecurity analogon to vibe-coding.",
      "title": "CAI Fluency: A Framework for Cybersecurity AI Fluency",
      "year": 2025,
+     "date": "2025-08-19",
      "url": "https://doi.org/10.48550/arxiv.2508.13588",
      "authors": "Víctor Mayoral-Vilches et al.",
      "fromTitle": false
@@ -383,9 +512,40 @@
      "text": "This mirrors \"Vibe Coding,\" where AI generates syntactically correct but functionally flawed code, except scientific stakes are immeasurably higher.",
      "title": "The Rise of \"Vibe Science\": How AI Threatens Scientific Rigor",
      "year": 2025,
+     "date": "2025-08-24",
      "url": "https://doi.org/10.36227/techrxiv.175606229.90717623/v1",
      "authors": "Isabelle Rose et al.",
      "fromTitle": false
+    },
+    {
+     "id": "E94",
+     "text": "Inspired by the \"vibe coding\" movement in software engineering, it occupies a middle ground between traditional manual research and fully autonomous AI research systems.",
+     "title": "A Visionary Look at Vibe Researching",
+     "year": 2026,
+     "date": "2026-04-01",
+     "url": "https://doi.org/10.48550/arxiv.2604.00945",
+     "authors": "Yebo Feng et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E75",
+     "text": "In this paper, inspired by the Vibe Coding, we introduce the \\textbf{Vibe AIGC}, a new paradigm for content generation via agentic orchestration, which represents the autonomous synthesis of hierarchical multi-agent workflows.",
+     "title": "Vibe AIGC: A New Paradigm for Content Generation via Agentic Orchestration",
+     "year": 2026,
+     "date": "2026-02-04",
+     "url": "https://doi.org/10.48550/arxiv.2602.04575",
+     "authors": "Jiaheng Liu et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E46",
+     "text": "From vibe coding to vibe caring: what clinicians can learn",
+     "title": "From vibe coding to vibe caring: what clinicians can learn",
+     "year": 2025,
+     "date": "2025-10-01",
+     "url": "https://doi.org/10.1016/s0140-6736(25)01807-0",
+     "authors": "Gwćnolć Abgrall et al.",
+     "fromTitle": true
     }
    ]
   },
@@ -393,8 +553,9 @@
    "year": 2026,
    "kind": "critique",
    "title": "Vibe Coding Kills Open Source",
-   "why": "该文指出，由 AI 智能体组装开源软件的做法削弱了用户与开源维护者之间的互动。",
+   "why": "该文指出 AI 智能体自动拼装开源软件、用户不再与维护者互动，可能损害开源生态。",
    "url": "https://doi.org/10.48550/arxiv.2601.15494",
+   "date": "2026-01-21",
    "workTitle": "Vibe Coding Kills Open Source",
    "authors": "Miklós Koren et al.",
    "link": "in-sample",
@@ -404,9 +565,73 @@
      "text": "In vibe coding, an AI agent builds software by selecting and assembling open-source software (OSS), often without users directly reading documentation, reporting bugs, or otherwise engaging with maintainers.",
      "title": "Vibe Coding Kills Open Source",
      "year": 2026,
+     "date": "2026-01-21",
      "url": "https://doi.org/10.48550/arxiv.2601.15494",
      "authors": "Miklós Koren et al.",
      "fromTitle": false
+    },
+    {
+     "id": "E107",
+     "text": "Novice Developers Produce Larger Review Overhead for Project Maintainers while Vibe Coding",
+     "title": "Novice Developers Produce Larger Review Overhead for Project Maintainers while Vibe Coding",
+     "year": 2026,
+     "date": "2026-04-13",
+     "url": "https://doi.org/10.1145/3793302.3793597",
+     "authors": "Syed Ammar Asdaque et al.",
+     "fromTitle": true
+    }
+   ]
+  },
+  {
+   "year": 2026,
+   "kind": "critique",
+   "title": "Specification-Driven Development as the Foundation of AI-Native Enterprise Software Engineering",
+   "why": "该文把 vibe coding 定性为凭直觉、按观察到的行为接受AI产物的做法，并主张以规范驱动开发作为更严谨的替代方案。",
+   "url": "https://doi.org/10.48550/arxiv.2607.16680",
+   "date": "2026-07-18",
+   "workTitle": "Specification-Driven Development as the Foundation of AI-Native Enterprise Software Engineering",
+   "authors": "Mamdouh Alenezi",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E148",
+     "text": "Two paradigms have emerged: vibe coding, an intuition-driven approach accepting AI artifacts via observed behavior, and Specification-Driven Development (SDD), which uses structured specifications as the authoritative source of truth.",
+     "title": "Specification-Driven Development as the Foundation of AI-Native Enterprise Software Engineering",
+     "year": 2026,
+     "date": "2026-07-18",
+     "url": "https://doi.org/10.48550/arxiv.2607.16680",
+     "authors": "Mamdouh Alenezi",
+     "fromTitle": false
+    },
+    {
+     "id": "E138",
+     "text": "Vibe coding -- accepting LLM-generated source from natural-language intent with minimal review -- is fast and may be adequate for low-criticality consumer software.",
+     "title": "Formal-Method-Guided Vibe Coding: Closing the Verification Loop on AI-Generated Safety-Critical Software Through Model-Driven Engineering",
+     "year": 2026,
+     "date": "2026-06-21",
+     "url": "https://doi.org/10.48550/arxiv.2606.22413",
+     "authors": "Ran Wei et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E73",
+     "text": "The proliferation of AI-assisted \"vibe coding\" enables rapid software development but introduces significant security risks, as Large Language Models (LLMs) prioritize functional correctness over security.",
+     "title": "Constitutional Spec-Driven Development: Enforcing Security by Construction in AI-Assisted Code Generation",
+     "year": 2026,
+     "date": "2026-01-31",
+     "url": "https://doi.org/10.48550/arxiv.2602.02584",
+     "authors": "Srinivas Rao Marri",
+     "fromTitle": false
+    },
+    {
+     "id": "E22",
+     "text": "ИНЖЕНЕРНЫЙ ПОДХОД К ИИ: ИСПОЛЬЗОВАНИЕ SPEC DRIVEN DEVELOPMENT ДЛЯ ВАЛИДАЦИИ VIBE CODING",
+     "title": "ИНЖЕНЕРНЫЙ ПОДХОД К ИИ: ИСПОЛЬЗОВАНИЕ SPEC DRIVEN DEVELOPMENT ДЛЯ ВАЛИДАЦИИ VIBE CODING",
+     "year": 2025,
+     "date": "2025-01-01",
+     "url": "https://openalex.org/W7123372587",
+     "authors": "Елманов И. В.",
+     "fromTitle": true
     }
    ]
   },
@@ -414,8 +639,9 @@
    "year": 2026,
    "kind": "redefined",
    "title": "GLM-5: from Vibe Coding to Agentic Engineering",
-   "why": "这份高被引的模型报告把 vibe coding 定位为有待超越、迈向“智能体工程”的前一阶段。",
+   "why": "这篇极高被引的模型报告把 vibe coding 视为有待超越的阶段，主张转向“智能体工程”。",
    "url": "https://doi.org/10.48550/arxiv.2602.15763",
+   "date": "2026-02-17",
    "workTitle": "GLM-5: from Vibe Coding to Agentic Engineering",
    "authors": "5 Team et al.",
    "link": "in-sample",
@@ -425,17 +651,9 @@
      "text": "We present GLM-5, a next-generation foundation model designed to transition the paradigm of vibe coding to agentic engineering.",
      "title": "GLM-5: from Vibe Coding to Agentic Engineering",
      "year": 2026,
+     "date": "2026-02-17",
      "url": "https://doi.org/10.48550/arxiv.2602.15763",
      "authors": "5 Team et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E153",
-     "text": "Context: Software engineering is moving from AI-assisted practices like vibe coding, in which assistants accelerate individual developers, towards Agentic Software Engineering (ASE), in which autonomous agents are delegated goal-level tasks.",
-     "title": "Spec-Driven Development for Agentic Software Engineering: Harnessing Human-Agent Teamwork",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2609.00252",
-     "authors": "Jessica Diaz et al.",
      "fromTitle": false
     },
     {
@@ -443,9 +661,20 @@
      "text": "Agentic Agile-V: From Vibe Coding to Verified Engineering in Software and Hardware Development",
      "title": "Agentic Agile-V: From Vibe Coding to Verified Engineering in Software and Hardware Development",
      "year": 2026,
+     "date": "2026-05-19",
      "url": "https://doi.org/10.48550/arxiv.2605.20456",
      "authors": "Christopher Koch",
      "fromTitle": true
+    },
+    {
+     "id": "E153",
+     "text": "Context: Software engineering is moving from AI-assisted practices like vibe coding, in which assistants accelerate individual developers, towards Agentic Software Engineering (ASE), in which autonomous agents are delegated goal-level tasks.",
+     "title": "Spec-Driven Development for Agentic Software Engineering: Harnessing Human-Agent Teamwork",
+     "year": 2026,
+     "date": "2026-08-31",
+     "url": "https://doi.org/10.48550/arxiv.2609.00252",
+     "authors": "Jessica Diaz et al.",
+     "fromTitle": false
     }
    ]
   },
@@ -453,8 +682,9 @@
    "year": 2026,
    "kind": "applied",
    "title": "Qwen3.5-Omni Technical Report",
-   "why": "该报告把概念扩展为“音视频 vibe coding”，即全模态模型直接依据音视频指令编写代码。",
+   "why": "该报告把概念扩展到全模态模型，提出依据音视频指令直接编程的“Audio-Visual Vibe Coding”。",
    "url": "https://doi.org/10.48550/arxiv.2604.15804",
+   "date": "2026-04-17",
    "workTitle": "Qwen3.5-Omni Technical Report",
    "authors": "Qwen Team",
    "link": "in-sample",
@@ -464,6 +694,7 @@
      "text": "Remarkably, we observed the emergence of a new capability in omnimodal models: directly performing coding based on audio-visual instructions, which we call Audio-Visual Vibe Coding.",
      "title": "Qwen3.5-Omni Technical Report",
      "year": 2026,
+     "date": "2026-04-17",
      "url": "https://doi.org/10.48550/arxiv.2604.15804",
      "authors": "Qwen Team",
      "fromTitle": false

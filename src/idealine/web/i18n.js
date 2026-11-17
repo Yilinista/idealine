@@ -69,6 +69,9 @@
       wentWrong: m => 'Something went wrong: ' + m,
       // timeline
       legendDashed: 'dashed = no link found', legendBars: 'bars = papers per year',
+      legendBarsQ: 'bars = papers per year; recent years by quarter',
+      quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
+      undated: n => `${n} dated only by year, not in any quarter`,
       papers: n => `${n} papers`, yearPapers: (y, n) => `${y}: ${n} papers`, timelineOf: term => `Timeline of ${term}`,
       inSample: 'Linked paper uses the term itself.',
       resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
@@ -132,6 +135,8 @@
       pressTrace: '点“追溯”用你的 key 运行。',
       wentWrong: m => '出错了：' + m,
       legendDashed: '虚线 = 没找到链接', legendBars: '柱子 = 每年论文数',
+      legendBarsQ: '柱子 = 每年论文数，近几年按季度', quarterPapers: (y, q, n) => `${y} 年第 ${q} 季度：${n} 篇`,
+      undated: n => `其中 ${n} 篇只标了年份，没算进任何季度`,
       papers: n => `${n} 篇`, yearPapers: (y, n) => `${y} 年：${n} 篇`, timelineOf: term => `${term} 的时间线`,
       inSample: '链接的论文本身就用到了这个词。',
       resolved: title => `原句提到了这项工作，已在 OpenAlex 匹配到《${title}》，请核对是否匹配正确。`,
@@ -143,6 +148,7 @@
   // Known English runtime messages -> Chinese. Anything unmatched stays English.
   const MSG_ZH = [
     [/^Counting papers per year…$/, () => '正在统计每年的论文数……'],
+    [/^Counting papers per quarter…$/, () => '正在按季度统计论文数……'],
     [/^Reading the earliest papers…$/, () => '正在读取最早的论文……'],
     [/^Reading the most-cited papers…$/, () => '正在读取被引最多的论文……'],
     [/^Reading recent papers…$/, () => '正在读取最新的论文……'],

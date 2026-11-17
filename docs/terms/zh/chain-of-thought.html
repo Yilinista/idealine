@@ -80,7 +80,10 @@ footer a{color:inherit}
 
   const T = {
     en: {
-      langToggle: '中文', langToggleTitle: 'Switch to Chinese',
+      langGroup: 'Language',
+      saveKey: 'Save and check key', checking: 'Checking the key…',
+      keyOk: short => `${short} accepted the key. You're set: press Trace.`,
+      modelOn: (short, model) => `Using ${short} (${model}) for eras and milestones.`, modelOff: 'not checked yet', change: 'Change',
       heroTitle: 'Where did this idea come from?',
       heroSub: 'Type any term. See when it first appeared, who shaped it, and how its meaning shifted, with the sentence behind every step.',
       termPh: 'Try “world model” or “in-context learning”', termLabel: 'Term', go: 'Trace',
@@ -134,6 +137,9 @@ footer a{color:inherit}
       wentWrong: m => 'Something went wrong: ' + m,
       // timeline
       legendDashed: 'dashed = no link found', legendBars: 'bars = papers per year',
+      legendBarsQ: 'bars = papers per year; recent years by quarter',
+      quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
+      undated: n => `${n} dated only by year, not in any quarter`,
       papers: n => `${n} papers`, yearPapers: (y, n) => `${y}: ${n} papers`, timelineOf: term => `Timeline of ${term}`,
       inSample: 'Linked paper uses the term itself.',
       resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
@@ -141,7 +147,10 @@ footer a{color:inherit}
       titleOf: 'Title of ',
     },
     zh: {
-      langToggle: 'EN', langToggleTitle: '切换到英文',
+      langGroup: '语言',
+      saveKey: '保存并检查 key', checking: '正在检查 key……',
+      keyOk: short => `${short} 的 key 可用，已就绪：直接点“追溯”。`,
+      modelOn: (short, model) => `已启用模型：${short}（${model}），会生成时期和里程碑。`, modelOff: '尚未检查', change: '更改',
       heroTitle: '这个概念从哪里来？',
       heroSub: '输入任意术语，看它何时出现、谁推动了它、含义如何变化。每一步都附上论文原句作证据。',
       termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '追溯',
@@ -194,6 +203,8 @@ footer a{color:inherit}
       pressTrace: '点“追溯”用你的 key 运行。',
       wentWrong: m => '出错了：' + m,
       legendDashed: '虚线 = 没找到链接', legendBars: '柱子 = 每年论文数',
+      legendBarsQ: '柱子 = 每年论文数，近几年按季度', quarterPapers: (y, q, n) => `${y} 年第 ${q} 季度：${n} 篇`,
+      undated: n => `其中 ${n} 篇只标了年份，没算进任何季度`,
       papers: n => `${n} 篇`, yearPapers: (y, n) => `${y} 年：${n} 篇`, timelineOf: term => `${term} 的时间线`,
       inSample: '链接的论文本身就用到了这个词。',
       resolved: title => `原句提到了这项工作，已在 OpenAlex 匹配到《${title}》，请核对是否匹配正确。`,
@@ -205,6 +216,7 @@ footer a{color:inherit}
   // Known English runtime messages -> Chinese. Anything unmatched stays English.
   const MSG_ZH = [
     [/^Counting papers per year…$/, () => '正在统计每年的论文数……'],
+    [/^Counting papers per quarter…$/, () => '正在按季度统计论文数……'],
     [/^Reading the earliest papers…$/, () => '正在读取最早的论文……'],
     [/^Reading the most-cited papers…$/, () => '正在读取被引最多的论文……'],
     [/^Reading recent papers…$/, () => '正在读取最新的论文……'],
@@ -291,6 +303,9 @@ footer a{color:inherit}
     titleOf: 'Title of ',
     legendDashed: 'dashed = no link found',
     legendBars: 'bars = papers per year',
+    legendBarsQ: 'bars = papers per year; recent years by quarter',
+    quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
+    undated: n => `${n} dated only by year, not in any quarter`,
   };
 
   function renderTimeline(D, root, labels) {
@@ -314,23 +329,48 @@ footer a{color:inherit}
       const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
       const left = 40, labelRoom = 230;
       const avail = Math.max(600, chart.parentElement.clientWidth || 900);
-      // Each year gets width by how much happens in it: milestone years and busy years
-      // are wide, quiet years are thin. A century of rare use stays a short strip.
-      const peakC = Math.max(1, ...counts.values()), msYears = new Set(D.milestones.map(m => m.year));
-      const raw = y => (msYears.has(y) ? 30 : 0) + 34 * Math.sqrt((counts.get(y) || 0) / peakC) + ((counts.get(y) || 0) / peakC > 0.002 ? 6 : 2);
-      let total = 0;
-      for (let y = minYear; y <= nowYear; y++) total += raw(y);
+      // Slots along the axis: one per year, or one per quarter for the years that
+      // data.quarters covers (young terms). Time t is a fractional year.
+      const qByYear = new Map();
+      for (const [k, c] of D.quarters || []) {
+        const m = /^(\d{4})-Q([1-4])$/.exec(k);
+        if (m) (qByYear.get(+m[1]) || qByYear.set(+m[1], []).get(+m[1])).push([+m[2], c]);
+      }
+      // A milestone sits at its paper's month when the date agrees with its year;
+      // without a month it sits at the start of its year (the year is all we know).
+      const tOf = m => {
+        const d = /^(\d{4})-(\d{2})/.exec(m.date || '');
+        const yearOnly = /^\d{4}-01-01/.test(m.date || '');  // OpenAlex's stand-in for "year only"
+        return d && +d[1] === m.year && !yearOnly ? m.year + (+d[2] - 0.5) / 12 : m.year + 0.02;
+      };
+      const msT = D.milestones.map(tOf);
+      const slots = [];
+      for (let y = minYear; y <= nowYear; y++) {
+        const qs = qByYear.get(y);
+        if (qs) qs.sort((p, q) => p[0] - q[0]).forEach(([q, c]) => slots.push({ y, q, t0: y + (q - 1) / 4, t1: y + q / 4, c }));
+        else slots.push({ y, q: 0, t0: y, t1: y + 1, c: counts.get(y) || 0 });
+      }
+      // Each slot gets width by how much happens in it: milestone slots and busy slots
+      // are wide, quiet ones thin. A century of rare use stays a short strip.
+      const peakC = Math.max(1, ...slots.map(s => s.c));
+      const hasMs = s => msT.some(t => t >= s.t0 && t < s.t1);
+      const raw = s => (hasMs(s) ? 30 : 0) + 34 * Math.sqrt(s.c / peakC) + (s.q ? 12 : s.c / peakC > 0.002 ? 6 : 2);
+      const total = slots.reduce((a, s) => a + raw(s), 0);
       const scale = Math.max(1, Math.min(2.2, (avail - left - labelRoom) / total));
-      const WY = y => raw(y) * scale, pos = new Map();
       let acc = left;
-      for (let y = minYear; y <= nowYear; y++) { pos.set(y, acc + WY(y) / 2); acc += WY(y); }
-      const X = y => pos.get(Math.max(minYear, Math.min(nowYear, y)));
+      for (const s of slots) { s.x0 = acc; acc += raw(s) * scale; s.x1 = acc; s.xc = (s.x0 + s.x1) / 2; }
+      const X = t => {
+        const s = slots.find(s => t >= s.t0 && t < s.t1) || (t < slots[0].t0 ? slots[0] : slots[slots.length - 1]);
+        const f = Math.max(0, Math.min(1, (t - s.t0) / (s.t1 - s.t0)));
+        return s.x0 + f * (s.x1 - s.x0);
+      };
+      const fine = slots.some(s => s.q);
 
       // Lay out milestone labels in lanes so they do not overlap.
       const lanes = [], laneH = 36, axisPad = 26;
       msLaid = D.milestones.map((m, i) => {
         const label = m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
-        const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(m.year);
+        const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(msT[i]);
         let lane = 0;
         while ((lanes[lane] ?? -1e9) > x - 6) lane++;
         lanes[lane] = x + w;
@@ -339,14 +379,14 @@ footer a{color:inherit}
       const nLanes = Math.max(1, lanes.length);
       const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
       const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
-      const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
+      const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + (fine ? 50 : 34);
       const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': L.timelineOf(D.term) });
 
       // Era bands; labels alternate between two rows and are cut to fit.
       D.eras.forEach((e, k) => {
-        const xa = X(e.start) - WY(e.start) / 2, xb = X(e.end) + WY(e.end) / 2, row = k % 2;
+        const xa = X(e.start), xb = X(e.end + 1 - 1e-6), row = k % 2;
         el('rect', { x: xa, y: row * 16, width: Math.max(4, xb - xa), height: axisY - row * 16, fill: css(k % 2 ? 'era2' : 'era1'), rx: 6 }, svg);
-        const next = D.eras[k + 2], room = (next ? X(next.start) - WY(next.start) / 2 : W) - xa - 12;
+        const next = D.eras[k + 2], room = (next ? X(next.start) : W) - xa - 12;
         const maxChars = Math.max(8, Math.floor(room / 6.6));
         const label = e.label.length > maxChars ? e.label.slice(0, maxChars - 1) + '…' : e.label;
         const t = el('text', { x: xa + 8, y: 15 + row * 16, 'font-weight': 600, 'font-size': 11 }, svg);
@@ -354,26 +394,36 @@ footer a{color:inherit}
         el('title', {}, t).textContent = `${e.start}–${e.end}: ${e.label}`;
       });
 
-      const maxC = Math.max(1, ...counts.values());
-      for (const [y, c] of counts) {
-        const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
-        const r = el('rect', { x: X(y) - WY(y) * 0.34, y: axisY + 6, width: Math.max(1.5, WY(y) * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
-        el('title', {}, r).textContent = L.yearPapers(y, c);
+      for (const s of slots) {
+        if (!s.c) continue;
+        const wd = s.x1 - s.x0, h = Math.max(1.5, Math.sqrt(s.c / peakC) * barH);
+        const r = el('rect', { x: s.xc - wd * 0.34, y: axisY + 6, width: Math.max(1.5, wd * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
+        el('title', {}, r).textContent = s.q ? L.quarterPapers(s.y, s.q, s.c) : L.yearPapers(s.y, s.c);
       }
       el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
-      const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
+      const tickY = axisY + barH + 26;
+      // Quarter years: Q labels per slot, the year centred underneath.
+      for (const [y] of qByYear) {
+        const qs = slots.filter(s => s.y === y && s.q);
+        if (!qs.length) continue;
+        qs.forEach(s => { if (s.x1 - s.x0 >= 16) el('text', { x: s.xc, y: tickY, 'text-anchor': 'middle', class: 'muted', 'font-size': 10.5 }, svg).textContent = 'Q' + s.q; });
+        const yl = el('text', { x: (qs[0].x0 + qs[qs.length - 1].x1) / 2, y: tickY + 16, 'text-anchor': 'middle', class: 'muted', 'font-weight': 600 }, svg);
+        yl.textContent = y;
+        const und = new Map(D.undated || []).get(y);
+        el('title', {}, yl).textContent = L.yearPapers(y, counts.get(y) || 0) + (und ? ' · ' + L.undated(und) : '');
+      }
       // Year labels: never closer than 36px; the newest year always gets one.
-      let last = 1e9;
-      [...tickYears].sort((a, b) => b - a).forEach(y => {
-        if (last - X(y) < 36) return;
-        const t = el('text', { x: X(y), y: axisY + barH + 26, 'text-anchor': 'middle', class: 'muted' }, svg);
-        t.textContent = y;
-        last = X(y);
+      const yearSlots = slots.filter(s => !s.q && (s.c || D.milestones.some(m => m.year === s.y)));
+      let last = qByYear.size ? Math.min(...slots.filter(s => s.q).map(s => s.x0)) + 18 : 1e9;
+      yearSlots.sort((a, b) => b.y - a.y).forEach(s => {
+        if (last - s.xc < 36) return;
+        el('text', { x: s.xc, y: tickY, 'text-anchor': 'middle', class: 'muted' }, svg).textContent = s.y;
+        last = s.xc;
       });
-      const peak = [...counts].sort((a, b) => b[1] - a[1])[0];
+      const peak = slots.reduce((a, s) => (s.c > (a ? a.c : 0) ? s : a), null);
       if (peak) {
-        const t = el('text', { x: X(peak[0]) + WY(peak[0]) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
-        t.textContent = L.papers(peak[1]);
+        const t = el('text', { x: peak.xc + (peak.x1 - peak.x0) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
+        t.textContent = L.papers(peak.c);
       }
 
       msLaid.forEach(m => {
@@ -415,7 +465,7 @@ footer a{color:inherit}
     const legend = part('legend');
     if (legend) {
       legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
-        `<span>${esc(L.legendDashed)}</span><span>${esc(L.legendBars)}</span>`;
+        `<span>${esc(L.legendDashed)}</span><span>${esc((D.quarters || []).length ? L.legendBarsQ : L.legendBars)}</span>`;
     }
     const eras = part('eras');
     if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
