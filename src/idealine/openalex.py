@@ -135,9 +135,9 @@ class OpenAlexClient:
 
     @staticmethod
     def _filter(query: str, year: int | None = None, since: int | None = None) -> str:
-        # Title and abstract only: the plain `search` also matches full text,
-        # which counts papers whose abstract never uses the term.
-        flt = f"title_and_abstract.search:{query.replace(',', ' ')}"
+        # Title and abstract only (plain `search` also matches full text), and `.exact`
+        # so OpenAlex does not stem: plain search counts "agent" papers for "agentic".
+        flt = f"title_and_abstract.search.exact:{query.replace(',', ' ')}"
         if year is not None:
             flt += f",publication_year:{year}"
         if since is not None:

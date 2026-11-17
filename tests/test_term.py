@@ -270,3 +270,40 @@ def test_inline_json_escapes_every_angle_bracket():
     page = html_from_data(d)
     data = page.split('id="data">', 1)[1].split("</script>", 1)[0]
     assert "<" not in data
+
+
+def test_inflections_match_shared_table():
+    import json
+    from pathlib import Path
+
+    from idealine.term import inflections, with_inflections
+
+    cases = json.loads((Path(__file__).parent / "inflection_cases.json").read_text(encoding="utf-8"))
+    for phrase, want in cases.items():
+        assert inflections(phrase) == want, phrase
+    assert with_inflections("scaling laws", ["scaling law"]) == ["scaling law"]
+
+
+def test_filter_uses_exact_search():
+    assert OpenAlexClient._filter('"agentic"') == 'title_and_abstract.search.exact:"agentic"'
+
+
+def test_onset_and_flagged_early_record():
+    from idealine.openalex import Work
+    from idealine.term import Evidence, TermTimeline, baseline, onset_year
+
+    assert onset_year({1800: 1, 2024: 50, 2025: 900}) == 2024
+    ev = [Evidence(f"E{i}", "x", Work(w, "T" + w, y, None, "https://x", c))
+          for i, (w, y, c) in enumerate([("a", 1800, 1), ("b", 2024, 5), ("c", 2024, 9), ("d", 2025, 99)], 1)]
+    t = baseline(TermTimeline("x", [], {1800: 1, 2024: 50, 2025: 900}, ev))
+    origins = [m for m in t.milestones if m.kind == "origin"]
+    assert [m.year for m in origins] == [1800, 2024, 2024]
+    assert "sometimes wrong" in origins[0].why
+    assert origins[1].why == "One of the earliest uses found."
+
+
+def test_chinese_sentences_split():
+    from idealine.term import sentences_with_term, term_pattern
+
+    out = sentences_with_term("第一句没有。基于注意力机制的模型很好！最后一句。", term_pattern("注意力机制", []))
+    assert out == ["基于注意力机制的模型很好！"]

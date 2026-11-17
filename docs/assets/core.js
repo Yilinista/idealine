@@ -45,8 +45,9 @@
   }
 
   function oaFilter(query, since) {
-    // Title and abstract only: plain `search` also matches full text.
-    let f = `title_and_abstract.search:${query.replace(/,/g, ' ')}`;
+    // Title and abstract only (plain `search` also matches full text), and `.exact`
+    // so OpenAlex does not stem: plain search counts "agent" papers for "agentic".
+    let f = `title_and_abstract.search.exact:${query.replace(/,/g, ' ')}`;
     if (since != null) f += `,publication_year:>${since - 1}`;
     return f;
   }
@@ -142,9 +143,43 @@
     return new RegExp('(?:' + parts.join('|') + ')', 'iu');
   }
 
+  // Singular/plural of the last word, since exact search does not stem. Same rule as term.py.
+  function inflections(phrase) {
+    const words = phrase.trim().split(' ');
+    const last = words[words.length - 1];
+    if (!/^[a-z]{3,}$/.test(last) || /(ing|ics|ism|ness|is)$/.test(last)) return [];
+    let alt;
+    if (last.endsWith('ies')) alt = last.slice(0, -3) + 'y';
+    else if (/(sses|xes|ches|shes)$/.test(last)) alt = last.slice(0, -2);
+    else if (last.endsWith('s') && !/(ss|us|is)$/.test(last)) alt = last.slice(0, -1);
+    else if (last.endsWith('y') && !'aeiou'.includes(last[last.length - 2])) alt = last.slice(0, -1) + 'ies';
+    else if (/(s|x|z|ch|sh)$/.test(last)) alt = last + 'es';
+    else alt = last + 's';
+    return [[...words.slice(0, -1), alt].join(' ')];
+  }
+
+  function withInflections(term, aliases) {
+    const seen = new Set([term.toLowerCase()]), out = [];
+    for (const p of [...aliases, ...[term, ...aliases].flatMap(inflections)]) {
+      if (!seen.has(p.toLowerCase())) { seen.add(p.toLowerCase()); out.push(p); }
+    }
+    return out;
+  }
+
+  // First year by which the term has real use (3 papers, or 1% of all). Earlier records
+  // are rare and sometimes misdated in OpenAlex, so they are flagged, not trusted.
+  function onsetYear(counts) {
+    const total = counts.reduce((n, [, c]) => n + c, 0), need = Math.max(3, total * 0.01);
+    let acc = 0;
+    for (const [y, c] of [...counts].sort((a, b) => a[0] - b[0])) { acc += c; if (acc >= need) return y; }
+    return null;
+  }
+
+  const clip = s => { const cps = [...s]; return cps.length <= MAX_SENTENCE_CHARS ? s : cps.slice(0, MAX_SENTENCE_CHARS - 1).join('') + '…'; };
+
   function sentencesWithTerm(text, pattern) {
     const out = [];
-    for (let s of text.split(/(?<=[.!?])\s+(?=[A-Z"'(\[])/)) {
+    for (let s of text.split(/(?<=[.!?])\s+(?=[A-Z"'(\[])|(?<=[。！？])/)) {
       s = s.trim();
       if (!s || !pattern.test(s)) continue;
       const cps = [...s];
@@ -155,10 +190,12 @@
 
   async function harvest(oa, term, aliases, opts = {}) {
     const { earliest = 25, topCited = 150, recent = 60, maxEvidence = 160, onStep = () => {} } = opts;
-    const query = phraseQuery(term, aliases);
+    // Search with singular/plural variants too, but keep only the user's spellings as aliases.
+    const spellings = withInflections(term, aliases);
+    const query = phraseQuery(term, spellings);
     onStep('Counting papers per year…');
     const counts = await oa.yearCounts(query);
-    const pattern = termPattern(term, aliases);
+    const pattern = termPattern(term, spellings);
     const works = new Map();
     const add = list => list.forEach(w => { if (!works.has(w.id)) works.set(w.id, w); });
     onStep('Reading the earliest papers…');
@@ -176,7 +213,7 @@
     for (const w of ordered) {
       const sents = sentencesWithTerm(w.abstract, pattern);
       if (sents.length) perWork.push([w, sents.slice(0, 2), false]);
-      else if (pattern.test(w.title)) perWork.push([w, [w.title], true]);
+      else if (pattern.test(w.title)) perWork.push([w, [clip(w.title)], true]);
     }
     // Stay under maxEvidence without cutting the latest years.
     if (perWork.reduce((n, p) => n + p[1].length, 0) > maxEvidence) perWork = perWork.map(([w, s, t]) => [w, s.slice(0, 1), t]);
@@ -256,10 +293,16 @@
     return t;
   }
 
+  const EARLY_DATE_NOTE = 'Earliest record found, from before the term was in regular use. OpenAlex dates for rare early records are sometimes wrong; check the paper.';
+
   function baseline(t) {
-    const seen = new Set(), early = [];
-    for (const e of t.evidence) { if (!seen.has(e.work.id)) { seen.add(e.work.id); early.push(e); } if (early.length === 3) break; }
-    for (const e of early) t.milestones.push({ year: e.work.year || 0, kind: 'origin', title: e.work.title, why: 'One of the earliest uses found.', evidence: [e.eid], work: e.work, link: 'in-sample' });
+    const onset = onsetYear(t.counts), seen = new Set(), firsts = [];
+    for (const e of t.evidence) if (!seen.has(e.work.id)) { seen.add(e.work.id); firsts.push(e); }
+    // One pre-onset record at most (flagged), then the earliest uses from the onset on.
+    const before = firsts.filter(e => onset && (e.work.year || 0) < onset).slice(0, 1);
+    const after = firsts.filter(e => !onset || (e.work.year || 0) >= onset).slice(0, 3 - before.length);
+    for (const e of before) t.milestones.push({ year: e.work.year || 0, kind: 'origin', title: e.work.title, why: EARLY_DATE_NOTE, evidence: [e.eid], work: e.work, link: 'in-sample' });
+    for (const e of after) t.milestones.push({ year: e.work.year || 0, kind: 'origin', title: e.work.title, why: 'One of the earliest uses found.', evidence: [e.eid], work: e.work, link: 'in-sample' });
     const best = new Map();
     for (const e of t.evidence) if (!best.has(e.work.id)) best.set(e.work.id, e);
     const top = [...best.values()].sort((a, b) => b.work.citedBy - a.work.citedBy).slice(0, 5);
@@ -296,7 +339,7 @@
     };
   }
 
-  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, buildPrompt, titleOverlap, applyAnalysis, baseline, toData };
+  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, buildPrompt, titleOverlap, applyAnalysis, baseline, toData };
   global.IdealineCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

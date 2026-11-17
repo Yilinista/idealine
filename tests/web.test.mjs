@@ -52,7 +52,7 @@ test('harvest makes 4 OpenAlex requests, title+abstract filter, sorted counts, e
   const oa = new C.OpenAlex({ fetchFn: fakeOpenAlex(calls), sleep: async () => {} });
   const t = await C.harvest(oa, 'chain of thought', []);
   assert.equal(calls.length, 4);
-  assert.ok(calls.every(c => new URL(c.url).searchParams.get('filter').startsWith('title_and_abstract.search:"chain of thought"')));
+  assert.ok(calls.every(c => new URL(c.url).searchParams.get('filter').startsWith('title_and_abstract.search.exact:"chain of thought" OR "chain of thoughts"')));
   assert.match(new URL(calls[3].url).searchParams.get('filter'), /publication_year:>2023$/);
   assert.deepEqual(t.counts, [[1990, 1], [2022, 10], [2025, 30]]);
   assert.deepEqual(t.evidence.map(e => e.eid), ['E1', 'E2', 'E3']);
@@ -248,4 +248,39 @@ test('anthropic retries once without effort when the model rejects it', async ()
   assert.deepEqual(out, { summary: 'ok' });
   assert.equal(bodies.length, 2);
   assert.ok(!('effort' in bodies[1].output_config));
+});
+
+// --- quality fixes from real-data testing (2026-11-17) -------------------------
+
+import { readFileSync } from 'node:fs';
+const CASES = JSON.parse(readFileSync(new URL('./inflection_cases.json', import.meta.url), 'utf8'));
+
+test('inflections match the shared table (same table as the Python test)', () => {
+  for (const [phrase, want] of Object.entries(CASES)) assert.deepEqual(C.inflections(phrase), want, phrase);
+  assert.deepEqual(C.withInflections('scaling laws', ['scaling law']), ['scaling law']);
+});
+
+test('harvest uses exact search with singular/plural variants', async () => {
+  const calls = [];
+  const oa = new C.OpenAlex({ fetchFn: fakeOpenAlex(calls) });
+  const t = await C.harvest(oa, 'world model', []);
+  assert.equal(new URL(calls[0].url).searchParams.get('filter'), 'title_and_abstract.search.exact:"world model" OR "world models"');
+  assert.deepEqual(t.aliases, []);  // variants are searched, not shown as aliases
+});
+
+test('onset year and flagged early record in free mode', () => {
+  assert.equal(C.onsetYear([[1800, 1], [2024, 50], [2025, 900]]), 2024);
+  const w = (id, year, cited) => ({ id, year, title: 'T' + id, citedBy: cited, shortAuthors: 'A' });
+  const t = { counts: [[1800, 1], [2024, 50], [2025, 900]], milestones: [], evidence: [
+    { eid: 'E1', work: w('a', 1800, 1) }, { eid: 'E2', work: w('b', 2024, 5) }, { eid: 'E3', work: w('c', 2024, 9) }, { eid: 'E4', work: w('d', 2025, 99) } ] };
+  C.baseline(t);
+  const origins = t.milestones.filter(m => m.kind === 'origin');
+  assert.deepEqual(origins.map(m => m.year), [1800, 2024, 2024]);
+  assert.match(origins[0].why, /sometimes wrong/);
+  assert.equal(origins[1].why, 'One of the earliest uses found.');
+});
+
+test('Chinese text splits into sentences at 。！？', () => {
+  const out = C.sentencesWithTerm('第一句没有。基于注意力机制的模型很好！最后一句。', C.termPattern('注意力机制', []));
+  assert.deepEqual(out, ['基于注意力机制的模型很好！']);
 });

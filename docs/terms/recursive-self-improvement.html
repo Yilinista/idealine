@@ -211,8 +211,12 @@ footer a{color:inherit}
     if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
     if (detail) detail.textContent = '';
     select(0);
+    // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
     const sc = chart.closest('.scroller');
-    if (sc) sc.scrollLeft = sc.scrollWidth;
+    if (sc) {
+      const lastX = Math.max(0, ...msLaid.map(m => m.x));
+      sc.scrollLeft = lastX ? Math.min(sc.scrollWidth - sc.clientWidth, lastX - 24) : sc.scrollWidth;
+    }
   }
 
   global.renderTimeline = renderTimeline;

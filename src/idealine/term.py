@@ -75,6 +75,61 @@ class TermTimeline:
 
 # --- harvest -------------------------------------------------------------------
 
+_LOWER_WORD = re.compile(r"[a-z]{3,}")
+
+
+def inflections(phrase: str) -> list[str]:
+    """Singular/plural of the last word, since exact search does not stem.
+
+    "world model" -> ["world models"], "scaling laws" -> ["scaling law"],
+    "emergent abilities" -> ["emergent ability"]. Only plain lowercase English words;
+    acronyms, names, and other scripts are left alone. Same rule as web/core.js.
+    """
+    words = phrase.strip().split(" ")
+    last = words[-1]
+    # Skip words that are rarely plural nouns: gerunds, -ics, -ism, -ness, -sis.
+    if not _LOWER_WORD.fullmatch(last) or last.endswith(("ing", "ics", "ism", "ness", "is")):
+        return []
+    if last.endswith("ies"):
+        alt = last[:-3] + "y"
+    elif last.endswith(("sses", "xes", "ches", "shes")):
+        alt = last[:-2]
+    elif last.endswith("s") and not last.endswith(("ss", "us", "is")):
+        alt = last[:-1]
+    elif last.endswith("y") and last[-2] not in "aeiou":
+        alt = last[:-1] + "ies"
+    elif last.endswith(("s", "x", "z", "ch", "sh")):
+        alt = last + "es"
+    else:
+        alt = last + "s"
+    return [" ".join(words[:-1] + [alt])]
+
+
+def with_inflections(term: str, aliases: list[str]) -> list[str]:
+    """User aliases plus singular/plural variants of every spelling, deduplicated."""
+    seen = {term.lower()}
+    out: list[str] = []
+    for p in [*aliases, *(v for p in [term, *aliases] for v in inflections(p))]:
+        if p.lower() not in seen:
+            seen.add(p.lower())
+            out.append(p)
+    return out
+
+
+def onset_year(counts: dict[int, int]) -> int | None:
+    """First year by which the term has real use (3 papers, or 1% of all papers).
+
+    Papers before it are rare and sometimes misdated in OpenAlex (e.g. a CRISPR
+    paper dated 1800), so they are flagged instead of trusted as the origin.
+    """
+    total = sum(counts.values())
+    need, acc = max(3, total * 0.01), 0
+    for y in sorted(counts):
+        acc += counts[y]
+        if acc >= need:
+            return y
+    return None
+
 _NO_SPACE_SCRIPT = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\u0e00-\u0e7f]")
 
 
@@ -93,7 +148,11 @@ def term_pattern(term: str, aliases: list[str]) -> re.Pattern:
     return re.compile(r"(?:" + "|".join(parts) + r")", re.IGNORECASE)
 
 
-_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z\"'(\[])")
+_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z\"'(\[])|(?<=[。！？])")
+
+
+def _clip(s: str) -> str:
+    return s if len(s) <= MAX_SENTENCE_CHARS else s[: MAX_SENTENCE_CHARS - 1] + "…"
 
 
 def sentences_with_term(text: str, pattern: re.Pattern) -> list[str]:
@@ -114,9 +173,11 @@ def harvest(
     recent: int = 60,
     max_evidence: int = 160,
 ) -> TermTimeline:
-    query = phrase_query(term, aliases)
+    # Search with singular/plural variants too, but keep only the user's spellings as aliases.
+    spellings = with_inflections(term, aliases)
+    query = phrase_query(term, spellings)
     counts = client.year_counts(query)
-    pattern = term_pattern(term, aliases)
+    pattern = term_pattern(term, spellings)
 
     # Four requests per term (OpenAlex bills per request): earliest uses,
     # most-cited overall, most-cited of the last two years, and the counts above.
@@ -137,7 +198,7 @@ def harvest(
         if sents:
             per_work.append((w, sents[:2], False))
         elif pattern.search(w.title):
-            per_work.append((w, [w.title], True))
+            per_work.append((w, [_clip(w.title)], True))
 
     # Stay under max_evidence without cutting off the latest years:
     # first drop to one sentence per work, then thin evenly across time.
@@ -177,6 +238,10 @@ Return:
   e.g. "Good, 'Speculations Concerning the First Ultraintelligent Machine'"),
   why (one sentence), evidence IDs, and work_ref: the evidence ID whose own paper IS
   this milestone, or "" if the milestone is a work that the sentences name or cite.
+
+Publication years come from OpenAlex and are occasionally wrong (a modern paper
+dated 1800, say). If a sentence clearly does not fit its year (it names later
+methods, tools, or events), do not treat it as the origin.
 
 Rules: every era and milestone needs at least one evidence ID. Never use outside
 knowledge to add works, dates, or people that the evidence does not mention; it is
@@ -336,11 +401,23 @@ def analyze(
     return apply_analysis(t, json.loads(text), resolver)
 
 
+EARLY_DATE_NOTE = (
+    "Earliest record found, from before the term was in regular use. "
+    "OpenAlex dates for rare early records are sometimes wrong; check the paper."
+)
+
+
 def baseline(t: TermTimeline) -> TermTimeline:
     """No-LLM view: earliest uses and most-cited works become milestones."""
+    onset = onset_year(t.counts)
     seen: set[str] = set()
-    early = [e for e in t.evidence if not (e.work.work_id in seen or seen.add(e.work.work_id))][:3]
-    for e in early:
+    firsts = [e for e in t.evidence if not (e.work.work_id in seen or seen.add(e.work.work_id))]
+    # One pre-onset record at most (flagged), then the earliest uses from the onset on.
+    before = [e for e in firsts if onset and (e.work.year or 0) < onset][:1]
+    after = [e for e in firsts if not onset or (e.work.year or 0) >= onset][: 3 - len(before)]
+    for e in before:
+        t.milestones.append(Milestone(e.work.year or 0, "origin", e.work.title, EARLY_DATE_NOTE, [e.eid], e.work, "in-sample"))
+    for e in after:
         t.milestones.append(Milestone(e.work.year or 0, "origin", e.work.title, "One of the earliest uses found.", [e.eid], e.work, "in-sample"))
     first: dict[str, Evidence] = {}
     for e in t.evidence:

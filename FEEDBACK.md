@@ -10,6 +10,10 @@ Every piece of user feedback, and what it changed. Newest first.
 
 | Date | Finding | What changed |
 |---|---|---|
+| 2026-11-17 | Real-data test of 16 terms (with an OpenAlex key): OpenAlex stems phrase searches, so *agentic* counted every "agent" paper (4,054,790). | Switched to `title_and_abstract.search.exact` (43,485 for *agentic*) and search singular/plural variants automatically (*world model* + *world models*). |
+| 2026-11-17 | Same test: some early records are misdated in OpenAlex (a CRISPR-Cas9 paper dated 1800; *vibe coding* papers dated 2019–2020), and free mode showed them as the origin. | Records from before the term's onset (3 papers or 1% of all) are flagged "date may be wrong"; free-mode origins come from the onset on; the model prompt warns about anachronistic dates. |
+| 2026-11-17 | Chinese abstracts were not split into sentences (only `.!?` counted), so a whole abstract became one quote. | Also split at 。！？; long titles are clipped like sentences. |
+| 2026-11-17 | On a phone, the timeline scrolled to its right edge and cut off the newest milestone labels. | It now scrolls to the newest milestone's dot. |
 | 2026-11-17 | Yilin (first reviewer): a gallery that only shows terms I picked is not something people can really use; let visitors bring their own key, not only Anthropic (e.g. OpenAI). | Built the browser app: type any term on the site, choose Anthropic, OpenAI, Gemini, or OpenRouter, paste your own key. Dropped the planned issue-request bot. |
 | 2026-11-17 | OpenAlex returned "free daily budget used up" after ~2 terms of testing (shared per IP, resets midnight UTC). Strangers on a shared network would hit this too. | Cut requests per term from ~20 to 4, fail fast with a clear message instead of retrying, and support an optional free `OPENALEX_API_KEY`. |
 | 2026-11-17 | *chain-of-thought* has scattered uses back to 1914, so an even year axis spent most of its width on empty decades. | Year widths now follow activity; 1914–2026 fits on one screen and the 2021–26 shift is readable. |

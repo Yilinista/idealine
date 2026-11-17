@@ -52,7 +52,10 @@ Tips:
   requests). If you hit it, get a [free OpenAlex key](https://help.openalex.org/api/authentication/)
   (in the browser: "More options"; on the command line: `export OPENALEX_API_KEY=...`).
 - Spell terms out. Acronyms like "RSI" also match finance and medicine.
-- Add other spellings (`--alias`, or the "Other spellings" box).
+- Add other spellings (`--alias`, or the "Other spellings" box). The singular/plural of the
+  last word is added for you (*world model* also finds *world models*).
+- Very old dates in OpenAlex are sometimes wrong, so records from before a term was in regular
+  use are marked "date may be wrong".
 - It works for any field OpenAlex covers, not only AI.
 
 ## How it works
@@ -96,6 +99,7 @@ idealine claim "Compute-optimal models should scale data and parameters equally"
 - **Abstracts only.** Books and old essays without abstracts show up only when newer papers
   name them, so the true origin of a term can be missing.
 - **Exact phrase.** Papers that describe the idea in other words are not counted.
+- **Dates come from OpenAlex.** A few early records are misdated; the page marks the suspicious ones.
 
 ## Feedback
 
