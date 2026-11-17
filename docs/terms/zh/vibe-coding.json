@@ -3310,5 +3310,61 @@
       "shift": "broadening"
     }
   ],
-  "totalsAsOf": "2026-11-17"
+  "totalsAsOf": "2026-11-17",
+  "readingGuide": {
+    "question": {
+      "en": "How much code review or supervision does each paper’s use of vibe coding imply?",
+      "zh": "各篇论文所说的 vibe coding 意味着多少代码审查或监督？"
+    },
+    "entries": [
+      {
+        "id": "E31",
+        "text": "We examine \"vibe coding\": an emerging programming paradigm where developers primarily write code by interacting with code-generating large language models rather than writing code directly.",
+        "url": "https://doi.org/10.48550/arxiv.2506.23253",
+        "year": 2025,
+        "checkedUrl": "https://arxiv.org/abs/2506.23253",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Programming through conversation",
+          "zh": "通过对话编程"
+        },
+        "note": {
+          "en": "This passage emphasizes interaction with a code-generating model.",
+          "zh": "这段原文强调与代码生成模型交互。"
+        }
+      },
+      {
+        "id": "E51",
+        "text": "The advancement of large language models (LLMs) has catalyzed a paradigm shift from code generation assistance to autonomous coding agents, enabling a novel development methodology termed \"Vibe Coding\" where developers validate AI-generated implementations through outcome observation rather than line-by-line code comprehension.",
+        "url": "https://doi.org/10.48550/arxiv.2510.12399",
+        "year": 2025,
+        "checkedUrl": "https://arxiv.org/abs/2510.12399",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Checking outcomes",
+          "zh": "观察结果"
+        },
+        "note": {
+          "en": "Compare its focus on outcome observation instead of line-by-line comprehension.",
+          "zh": "比较这里对观察结果而非逐行理解代码的强调。"
+        }
+      },
+      {
+        "id": "E58",
+        "text": "Vibe coding is a new software development paradigm in which human engineers prompt a large language model (LLM) agent to complete complex coding tasks with little supervision.",
+        "url": "https://doi.org/10.48550/arxiv.2512.03262",
+        "year": 2025,
+        "checkedUrl": "https://arxiv.org/abs/2512.03262",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Limited supervision",
+          "zh": "有限监督"
+        },
+        "note": {
+          "en": "Read how a security benchmark frames the practice in terms of little supervision.",
+          "zh": "阅读安全基准论文如何用少量监督描述这种实践。"
+        }
+      }
+    ]
+  }
 }

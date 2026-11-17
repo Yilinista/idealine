@@ -5136,5 +5136,61 @@
       "shift": ""
     }
   ],
-  "totalsAsOf": "2026-11-17"
+  "totalsAsOf": "2026-11-17",
+  "readingGuide": {
+    "question": {
+      "en": "What changes when a world model represents an environment, supports behavior learning, or generates driving scenes?",
+      "zh": "当世界模型用于表示环境、学习行为或生成驾驶场景时，用法有什么不同？"
+    },
+    "entries": [
+      {
+        "id": "E79",
+        "text": "Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.",
+        "url": "https://doi.org/10.5281/zenodo.1207631",
+        "year": 2018,
+        "checkedUrl": "https://arxiv.org/abs/1803.10122",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "A learned environment",
+          "zh": "学习得到的环境表示"
+        },
+        "note": {
+          "en": "Start with a model that learns a compressed spatial and temporal representation.",
+          "zh": "从学习压缩的空间与时间表示开始。"
+        }
+      },
+      {
+        "id": "E82",
+        "text": "Learned world models summarize an agent's experience to facilitate learning complex behaviors.",
+        "url": "https://doi.org/10.48550/arxiv.1912.01603",
+        "year": 2019,
+        "checkedUrl": "https://arxiv.org/abs/1912.01603",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Learning behavior",
+          "zh": "学习行为"
+        },
+        "note": {
+          "en": "Compare how this passage connects world models to an agent’s experience and behavior.",
+          "zh": "比较这段原文如何把世界模型与智能体经验、行为学习联系起来。"
+        }
+      },
+      {
+        "id": "E94",
+        "text": "To address this challenge, we introduce GAIA-1 ('Generative AI for Autonomy'), a generative world model that leverages video, text, and action inputs to generate realistic driving scenarios while offering fine-grained control over ego-vehicle behavior and scene features.",
+        "url": "https://doi.org/10.48550/arxiv.2309.17080",
+        "year": 2023,
+        "checkedUrl": "https://arxiv.org/abs/2309.17080",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Generating driving scenes",
+          "zh": "生成驾驶场景"
+        },
+        "note": {
+          "en": "Here the model uses video, text, and actions to generate driving scenarios.",
+          "zh": "这里的模型用视频、文本和动作生成驾驶场景。"
+        }
+      }
+    ]
+  }
 }

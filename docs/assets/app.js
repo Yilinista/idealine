@@ -23,7 +23,6 @@
   // --- language -----------------------------------------------------------------
   let lang = I.detectLang(store.get('idealine.lang'), navigator.language);
   const tx = () => I.T[lang];
-  const labels = () => Object.assign({ kinds: I.KINDS[lang] }, tx());
 
   function applyLang() {
     const T = tx();
@@ -291,10 +290,10 @@
     const providerId = providerSel.value, key = keyIn.value.trim(), model = modelIn.value.trim();
     if (term.length < 2) return formMsg(() => tx().needTerm, true);
     formMsg(null);
-    // A #m- milestone link applies only to the first run from a shared link.
+    // A passage or milestone link applies only to the first run from a shared link.
     const keep = keepHash;
     keepHash = false;
-    if (!keep && /^#m-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+    if (!keep && /^#[mq]-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
     const live = forceLive;
     forceLive = false;
     if (!live && !aliases.length && !meaning && READY[term.toLowerCase()]) {
@@ -403,6 +402,7 @@
       // With a #m- milestone link, scroll to that milestone's detail instead.
       const toResult = () => {
         const det = /^#m-/.test(location.hash) && $('result').querySelector('[data-part="detail"]');
+        if (/^#q-/.test(location.hash)) return;
         (det || $('result')).scrollIntoView({ block: det ? 'center' : 'start' });
       };
       toResult();
@@ -412,7 +412,7 @@
 
   // kind: 'example' (ready-made), 'interim' (free view while the model reads), 'result'.
   let shownKind = 'example';
-  let keepHash = false;  // true only for the first run from a shared link with #m-…
+  let keepHash = false;  // preserve the first shared passage or milestone link
   function setUrl(term, aliases, meaning) {
     const u = new URL(location.href);
     u.searchParams.set('term', term);
@@ -421,7 +421,7 @@
     history.replaceState(null, '', u);
   }
 
-  function show(d, scroll, kind) {
+  function show(d, scroll, kind, opts) {
     shown = d;
     shownKind = kind || 'example';
     $('result').hidden = false;
@@ -438,18 +438,12 @@
     $('r-roots').hidden = !nReq;
     if (nReq) $('r-roots').textContent = tx().rootsBtn(nReq);
     $('r-term').textContent = d.term;
-    $('r-summary').textContent = d.summary || '';
-    const years = d.counts.map(c => c[0]);
-    const span = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : 'n/a';
-    $('r-meta').textContent = T.meta(d.total, span, d.model, d.evidenceCount) +
-      (shownKind !== 'example' && d.total < 20 ? ' ' + T.thin(d.total) : '') +
-      (shownKind === 'ready' ? ' ' + T.readyNote(d.generated) : '');
-    window.renderTimeline(kindChecks && !d.kindChecks ? { ...d, kindChecks } : d, $('result'), labels());
-    if (scroll) $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.IdealineReading.renderReadingBrief(kindChecks && !d.kindChecks ? { ...d, kindChecks } : d, $('result'), lang,
+      { pending: shownKind === 'interim', applyHash: shownKind !== 'example', showRoots: !!(opts && opts.showRoots) });
+    if (scroll && !/^#[mq]-/.test(location.hash)) $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // --- downloads: a standalone page (same as the CLI's) and the JSON -----------
-  const escHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   function slug(s) { return (s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 50).replace(/-+$/, '')) || 'timeline'; }
   function download(name, text, type) {
     const a = document.createElement('a');
@@ -460,49 +454,7 @@
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
   $('dl-html').addEventListener('click', () => {
-    if (!lastData) return;
-    const d = lastData, e = escHtml;
-    const years = d.counts.map(c => c[0]);
-    const span = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : 'n/a';
-    const pl = d.lang === 'zh' ? 'zh' : 'en', PT = SPEC.pageText[pl];
-    const fill = (tpl, vals) => tpl.replace(/\{(\w+)\}/g, (_, k) => (k in vals ? vals[k] : ''));
-    const how = d.model ? fill(PT.how_model, { model: e(d.model), n: d.evidenceCount }) : PT.how_none;
-    const data = JSON.stringify(d).replace(/</g, '\\u003c');
-    const noEnd = js => js.replace(/<\/script/gi, '<\\/script');
-    const lib = pl === 'zh' ? noEnd(SPEC.i18nJs) + '\n' + noEnd(SPEC.timelineJs) : noEnd(SPEC.timelineJs);
-    const call = pl === 'zh'
-      ? "renderTimeline(JSON.parse(document.getElementById('data').textContent), document, Object.assign({kinds: IdealineI18n.KINDS.zh}, IdealineI18n.T.zh));"
-      : "renderTimeline(JSON.parse(document.getElementById('data').textContent));";
-    const page = `<!doctype html>
-<html lang="${pl === 'zh' ? 'zh-CN' : 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${e(d.term)} · idealine</title>
-<style>${SPEC.css}</style></head>
-<body><main>
-<div class="brand"><a href="${e(SPEC.siteUrl)}">idealine</a> · ${PT.tagline}</div>
-<h1>${e(d.term)}</h1>
-<p class="summary">${e(d.summary)}</p>
-<p class="meta">${fill(PT.meta, { total: d.total.toLocaleString('en-US'), span })}${how}${fill(PT.asof || '', { date: e(d.generated || '') })}</p>
-<p class="headline" data-part="headline"></p>
-<div class="senses" data-part="senses"></div>
-<div class="card">
-  <div class="hint">${PT.hint}</div>
-  <div class="scroller"><div data-part="chart"></div></div>
-  <div class="legend" data-part="legend"></div>
-  <div class="detail" data-part="detail" aria-live="polite"></div>
-</div>
-<div class="eras" data-part="eras"></div>
-<div class="roots" data-part="roots"></div>
-<details><summary>${PT.details}</summary>
-<p>${fill(PT.details_body, { generated: e(d.generated) })}</p>
-</details>
-<footer>${fill(PT.footer, { repo: e(SPEC.siteUrl), site: e(SPEC.siteUrl) })}</footer>
-</main>
-<script type="application/json" id="data">${data}</script>
-<script>${lib}
-${call}</script>
-</body></html>
-`;
-    download(slug(d.term) + '.html', page, 'text/html');
+    if (lastData) download(slug(lastData.term) + '.html', window.IdealineReading.pageHtml(lastData, SPEC, lang), 'text/html');
   });
   $('r-roots').addEventListener('click', async () => {
     if (busy || !lastT || !lastOa) return;
@@ -513,7 +465,7 @@ ${call}</script>
       lastT.roots = await C.findRoots(lastOa, lastT, m => status(m));
       lastData = C.toData(lastT);
       status('');
-      show(lastData, false, 'result');
+      show(lastData, false, 'result', { showRoots: true });
     } catch (e) {
       status(() => tx().wentWrong(I.trMessage(lang, e.message)), true);
     } finally {
@@ -539,8 +491,8 @@ ${call}</script>
   const params = new URLSearchParams(location.search);
   if (params.get('term')) {
     // Keep a milestone deep link (#m-2025-coined); drop other fragments.
-    if (location.hash && !/^#m-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
-    keepHash = /^#m-/.test(location.hash);
+    if (location.hash && !/^#[mq]-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+    keepHash = /^#[mq]-/.test(location.hash);
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
     $('meaning').value = (params.get('meaning') || '').slice(0, 200);

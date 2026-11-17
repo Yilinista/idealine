@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CRISPR · idealine</title>
-<meta name="description" content="Where the term CRISPR came from and how its meaning changed, with quotes from the papers.">
+<meta name="description" content="Read how papers use CRISPR: quoted passages, source links, and a short reading route.">
 <style>
 :root{--bg:#fbfaf7;--panel:#ffffff;--fg:#1c1b19;--muted:#6d6a63;--ink-soft:#4a4844;--line:#e4e0d6;--accent:#3b5bdb;--on-accent:#ffffff;
 --ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
@@ -90,29 +90,427 @@ details{margin-top:28px;color:var(--muted);font-size:.88rem}
 details summary{cursor:pointer}
 footer{margin-top:36px;color:var(--muted);font-size:.82rem}
 footer a{color:inherit}
+
+/* Shared reading surface: quiet paper, ink, and selective evidence highlights. */
+:root{--bg:#f6f5f0;--panel:#fffefa;--fg:#202d2b;--muted:#646e68;--ink-soft:#48534e;--line:#dce0d7;--accent:#255b4e;--on-accent:#fffefa;--glow:transparent;--shadow:0 5px 20px #20352d05;--quote-mark:#e4ecfb;--warning-bg:#fff0ce}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141b19;--panel:#1b2521;--fg:#edf0e8;--muted:#a7b4ac;--ink-soft:#c2cdc5;--line:#35443c;--accent:#9bcbb5;--on-accent:#17271f;--quote-mark:#2b4059;--warning-bg:#514426;--glow:transparent;--shadow:none}}
+body{background:var(--bg);font-size:16px;line-height:1.6}
+main{max-width:1120px;padding:26px 36px 64px}
+a{color:var(--accent);text-underline-offset:3px}
+button,input,select,textarea{font:inherit}
+button,a,summary,input,select,textarea{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+[hidden]{display:none!important}
+.site-nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.site-nav .wordmark{font-weight:750;font-size:1.2rem;text-decoration:none;color:var(--fg);letter-spacing:-.04em}
+.reading-lang{display:flex;gap:3px;padding:3px;border:1px solid var(--line);border-radius:8px}
+.reading-lang button{border:0;background:transparent;color:var(--muted);padding:4px 10px;border-radius:5px;cursor:pointer}
+.reading-lang button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+.term-header{padding:26px 0 4px}
+.term-header>a{font-size:.83rem;text-decoration:none}
+.term-header h1{font-family:ui-serif,Georgia,"Songti SC",serif;font-weight:500;letter-spacing:-.025em;font-size:clamp(2rem,5vw,3.5rem);margin:18px 0 0}
+.eyebrow,.source-label{font-size:.71rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.brief-meta{display:flex;flex-wrap:wrap;gap:4px 20px;padding:12px 0 26px;color:var(--muted);font-size:.79rem}
+.brief-meta span+span{margin-left:auto}
+.reading-layout{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:44px;align-items:start}
+.reading-main{min-width:0}
+.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap}
+.section-heading h3{font-size:1.03rem;letter-spacing:-.015em;margin:0;color:var(--fg)}
+.section-heading>span{font-size:.72rem;color:var(--muted)}
+.section-intro{font-size:.86rem;color:var(--muted);margin:6px 0 20px;max-width:65ch}
+.source-card{padding:24px 28px;margin:0 0 16px;border:1px solid var(--line);border-radius:10px;background:var(--panel);scroll-margin:20px}
+.source-card:focus{outline:2px solid var(--accent);outline-offset:3px}
+.source-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.source-year{color:var(--ink-soft);font-size:.8rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.source-type{font-size:.69rem;color:var(--muted);margin:6px 0 10px}
+.source-type span{color:var(--muted)}
+.source-card blockquote{font-family:ui-serif,Georgia,"Songti SC",serif;font-size:1.22rem;line-height:1.65;letter-spacing:-.008em;margin:0;padding:0;border:0;overflow-wrap:anywhere}
+mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decoration:none;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .1em}
+.reading-note{font-size:.82rem;color:var(--ink-soft);margin:16px 0 0;line-height:1.6}
+.reading-note b{font-weight:600;color:var(--accent);margin-right:5px}
+.source-citation{border-top:1px solid var(--line);padding-top:14px;margin-top:20px}
+.source-citation h4{font-size:.83rem;font-weight:600;line-height:1.5;margin:0;overflow-wrap:anywhere}
+.source-citation h4 a{color:var(--fg);text-decoration:none}
+.source-citation h4 a:hover{text-decoration:underline}
+.source-citation p{font-size:.75rem;color:var(--muted);margin:4px 0 0}
+.source-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:17px;font-size:.76rem}
+.source-actions button,.source-actions a{cursor:pointer;min-height:36px;padding:7px 11px;border:1px solid var(--line);border-radius:5px;background:transparent;color:var(--accent);text-decoration:none;line-height:1.4}
+.source-actions .paper-link{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.source-actions .passage-link{margin-left:auto}
+.source-actions button:hover{border-color:var(--accent)}
+.source-warning{background:var(--warning-bg);color:var(--fg);font-size:.76rem;padding:6px 10px;border-radius:4px;margin:12px 0 0}
+.copy-status{font-size:.75rem;color:var(--accent)}
+.copy-status:not(:empty){margin-top:10px}
+.copy-status textarea{display:block;width:100%;min-height:150px;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:12px;margin-top:8px;font-size:.8rem}
+.reading-aside{border-top:2px solid var(--accent);padding-top:18px;position:sticky;top:22px}
+.reading-aside>p{font-family:ui-serif,Georgia,"Songti SC",serif;font-size:1.38rem;line-height:1.5;margin:12px 0 22px}
+.reading-aside>a{display:flex;align-items:center;justify-content:space-between;text-decoration:none;font-size:.8rem;font-weight:600;border-bottom:1px solid var(--line);padding-bottom:12px}
+.aside-count{font-size:.73rem;color:var(--muted);padding-top:12px}
+.evidence-browser,.method-panel{border-top:1px solid var(--line);padding-top:22px;margin-top:30px;color:var(--ink-soft)}
+.evidence-browser>summary,.method-panel>summary,.timeline-diagnostics>summary{font-size:.94rem;color:var(--fg);font-weight:600;cursor:pointer}
+.evidence-browser>summary span{font-size:.75rem;margin-left:8px;font-weight:400;color:var(--muted)}
+.evidence-browser>p,.method-panel>p{font-size:.84rem;max-width:76ch}
+.evidence-filters{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0 14px}
+.evidence-filters label{display:flex;flex-direction:column;gap:4px;font-size:.72rem;flex:1;min-width:140px;max-width:330px}
+.evidence-filters select{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:5px;padding:8px;font-size:.8rem;min-width:0;max-width:100%}
+.filter-status{font-size:.77rem;color:var(--muted)}
+.quote-results{max-width:780px}
+.quote-results .source-card blockquote{font-size:1.06rem}
+.load-more{padding:9px 18px;border:1px solid var(--accent);border-radius:5px;background:transparent;color:var(--accent);cursor:pointer}
+.empty-state{border:1px dashed var(--line);padding:24px;border-radius:8px;font-size:.88rem}
+.usage-panel{border-top:1px solid var(--line);padding-top:24px;margin-top:30px}
+.usage-panel>p{font-size:.78rem;color:var(--muted);max-width:76ch;margin:8px 0 22px}
+.usage-panel svg{display:block;width:100%;height:82px;fill:var(--accent)}
+.usage-panel .partial-bar{opacity:.4}
+.usage-axis{display:flex;justify-content:space-between;font-size:.71rem;color:var(--muted);margin-top:8px}
+.method-panel h3{font-size:.88rem}
+.timeline-diagnostics{margin-top:20px}
+.file-tools{border-top:1px solid var(--line);margin-top:22px;padding-top:20px}
+.file-tools>summary{font-size:.84rem;cursor:pointer}
+.file-tools .actions{padding-top:12px}
+.home main{max-width:1120px}
+.home nav{padding-bottom:18px;border-bottom:1px solid var(--line)}
+.home nav .logo{font-size:1.2rem;letter-spacing:-.04em}
+.home .hero{text-align:left;max-width:none;margin:38px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:0 56px}
+.home .hero-copy h1{font-size:clamp(2.1rem,4.2vw,3.2rem);font-weight:500;letter-spacing:-.035em;line-height:1.1;margin:12px 0 18px;max-width:530px}
+.home .hero-copy>p{font-size:.98rem;max-width:49ch;color:var(--ink-soft);margin:0 0 22px}
+.home .hero-example{border-left:1px solid var(--line);padding:12px 0 10px 25px;align-self:start}
+.hero-example blockquote{font-family:ui-serif,Georgia,serif;font-size:1.04rem;line-height:1.65;border:0;padding:0;margin:12px 0}
+.hero-example cite{font-size:.73rem;color:var(--muted);font-style:normal}
+.hero-example>a{display:block;font-size:.77rem;margin-top:12px}
+.home #trace-form{grid-column:1/-1;max-width:none;margin-top:4px}
+.home .search{max-width:none;margin:0;border-radius:8px;padding:6px 6px 6px 18px;box-shadow:none}
+.home .search input{font-size:1rem}
+.home .btn{border-radius:5px;font-size:.85rem;padding:11px 20px}
+.home .chips{justify-content:flex-start;max-width:none;margin-top:12px;gap:7px}
+.home .chip{font-size:.77rem;padding:4px 10px;background:transparent;border:1px solid var(--line);color:var(--ink-soft);border-radius:4px}
+.home .chip:hover{border-color:var(--accent);color:var(--accent)}
+.home .keyline{font-size:.74rem;margin-top:13px}
+.home .opts{max-width:none;margin:10px 0 0;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:0;background:transparent}
+.home .opts>summary{font-size:.76rem;padding:8px 0}
+.home .opts[open]{padding:10px 0 16px}
+.home #formmsg{margin:0;grid-column:1/-1;min-height:0}
+.home #formmsg:not(:empty){padding-top:12px}
+.home #result{margin-top:38px;border-top:1px solid var(--line);padding-top:24px}
+.home .result-h h2{font-size:2.25rem;font-weight:500;letter-spacing:-.025em}
+.home .tag{font-size:.65rem;letter-spacing:.09em}
+.home #result.pending [data-part=reading],.home #result.pending .file-tools{display:none}
+.home .section-h{font-size:1.3rem;font-weight:500;margin-top:48px}
+.home .grid{grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:12px}
+.home .tcard{border-radius:8px;box-shadow:none;padding:18px;transition:border-color .15s}
+.home .tcard:hover,.home .tcard:focus{transform:none;border-color:var(--accent)}
+.home .tcard h3{font-size:1.06rem}
+.home .tcard .spark{height:28px;opacity:.5}
+.home .how{margin-top:44px;gap:24px}
+.home .how b{font-size:.8rem}
+.home .how p{font-size:.82rem}
+.home .cli{margin-top:28px}
+.home footer{border-top:1px solid var(--line);padding-top:18px;max-width:85ch}
+.skip-link{position:absolute;left:12px;top:-100px;background:var(--panel);padding:10px;z-index:5}
+.skip-link:focus{top:12px}
+@media(max-width:760px){main{padding:18px 20px 44px}.reading-layout{grid-template-columns:minmax(0,1fr);gap:16px}.reading-aside{position:static;grid-row:1;padding:12px 0;border-top:0;border-bottom:1px solid var(--line)}.reading-aside>p{font-size:1.12rem;margin:6px 0 12px}.reading-aside>a{border:0;padding:0}.aside-count{display:none}.source-card{padding:20px}.home .hero{grid-template-columns:1fr;gap:0;margin-top:28px}.home .hero-example{display:none}.home .hero-copy h1{max-width:550px}.home .hero-copy>p{margin-bottom:18px}.brief-meta span+span{margin-left:0}.home .keyline{line-height:1.7}.home .result-h h2{font-size:1.9rem}}
+@media(max-width:460px){main{padding:16px 14px 36px}.source-card{padding:18px 16px}.source-card blockquote{font-size:1.12rem}.source-actions{gap:8px}.source-actions button,.source-actions a{min-height:40px}.home nav .links{gap:10px}.home nav .links>a{font-size:.75rem}.home .hero-copy h1{font-size:2.2rem}.home .search{padding-left:12px}.home .search input{font-size:.89rem}.home .btn{padding:11px 12px}.evidence-filters label{min-width:120px}.section-heading>span{width:100%}}
 </style></head>
-<body><main>
-<div class="brand"><a href="https://github.com/Yilinista/idealine">idealine</a> · where did this idea come from?</div>
-<h1>CRISPR</h1>
-<p class="summary">CRISPR began in the early 2000s as a name for a family of repeated DNA sequences found in bacterial and archaeal genomes, which researchers then showed to be part of an adaptive immune system against viruses and plasmids. Since 2013 it has mainly meant a programmable, RNA-guided toolkit, above all CRISPR-Cas9, used for genome editing, genetic screens, gene regulation, diagnostics and emerging therapies.</p>
-<p class="meta">125,120 papers in OpenAlex use this term (1800–2027). Proposed by <code>claude-opus-5-5</code> from 160 quoted sentences only; every milestone shows its quotes so you can check it. Data as of 2026-11-17.</p>
-<p class="headline" data-part="headline"></p>
-<div class="senses" data-part="senses"></div>
-<div class="card">
-  <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
-  <div class="scroller"><div data-part="chart"></div></div>
-  <div class="legend" data-part="legend"></div>
-  <div class="detail" data-part="detail" aria-live="polite"></div>
-</div>
-<div class="eras" data-part="eras"></div>
-<div class="roots" data-part="roots"></div>
-<details><summary>How this was made and what it can miss</summary>
-<p>Counts and papers come from <a href="https://openalex.org">OpenAlex</a>, searching titles and abstracts for the exact phrase. Sentences come from abstracts, so works without an abstract (often older books and essays) only appear if the newer papers name them. Labels are generated and can be wrong; the quotes are the evidence. Generated 2026-11-17.</p>
-</details>
-<footer>Made with <a href="https://github.com/Yilinista/idealine">idealine</a>. Want another term? <a href="https://yilinista.github.io/idealine/">Trace it yourself</a>.</footer>
+<body>
+<a class="skip-link" href="#reading">Skip to sources</a>
+<main>
+<nav class="site-nav"><a class="wordmark" href="../index.html">idealine<span aria-hidden="true"> ↗</span></a>
+<div class="reading-lang" role="group" aria-label="Language"><button type="button" data-reading-lang="en" aria-pressed="true">EN</button><button type="button" data-reading-lang="zh" aria-pressed="false">中</button></div></nav>
+<header class="term-header"><a data-reading-back href="../index.html">← Find another term</a><h1>CRISPR</h1></header>
+<div data-part="reading" id="reading"></div>
+<noscript>This reading brief needs JavaScript to display the saved source passages.</noscript>
+<footer>idealine · <a href="https://openalex.org">OpenAlex</a> · <a href="https://github.com/Yilinista/idealine">Source &amp; feedback</a></footer>
 </main>
+
 <script type="application/json" id="data">{"term": "CRISPR", "aliases": ["CRISPR-Cas9"], "summary": "CRISPR began in the early 2000s as a name for a family of repeated DNA sequences found in bacterial and archaeal genomes, which researchers then showed to be part of an adaptive immune system against viruses and plasmids. Since 2013 it has mainly meant a programmable, RNA-guided toolkit, above all CRISPR-Cas9, used for genome editing, genetic screens, gene regulation, diagnostics and emerging therapies.", "counts": [[1800, 1], [1879, 1], [1891, 1], [1905, 2], [1911, 1], [1917, 1], [1945, 1], [1947, 1], [1951, 1], [1952, 4], [1953, 1], [1955, 2], [1957, 2], [1962, 2], [1963, 2], [1964, 3], [1967, 1], [1970, 2], [1971, 3], [1972, 9], [1973, 9], [1974, 8], [1975, 12], [1976, 6], [1977, 8], [1978, 12], [1979, 11], [1980, 8], [1981, 13], [1982, 9], [1983, 9], [1984, 17], [1985, 14], [1986, 11], [1987, 16], [1988, 25], [1989, 12], [1990, 18], [1991, 20], [1992, 11], [1993, 11], [1994, 15], [1995, 6], [1996, 4], [1997, 7], [1998, 6], [1999, 7], [2000, 16], [2001, 4], [2002, 7], [2003, 5], [2004, 13], [2005, 13], [2006, 13], [2007, 35], [2008, 36], [2009, 58], [2010, 86], [2011, 131], [2012, 211], [2013, 515], [2014, 1099], [2015, 2169], [2016, 4082], [2017, 5628], [2018, 7494], [2019, 9093], [2020, 9677], [2021, 9854], [2022, 11086], [2023, 12719], [2024, 13328], [2025, 17750], [2026, 19651], [2027, 1]], "total": 125120, "model": "claude-opus-5-5", "generated": "2026-11-17", "lang": "en", "evidenceCount": 160, "eras": [{"start": 2002, "end": 2006, "label": "Mysterious prokaryotic repeats", "meaning": "CRISPR named a family of clustered, regularly spaced repeat elements separated by unique spacers in prokaryotic genomes, whose function was still being worked out.", "evidence": [{"id": "E22", "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).", "title": "Identification of genes that are associated with DNA repeats in prokaryotes", "year": 2002, "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x", "authors": "Ruud Jansen et al.", "fromTitle": false}, {"id": "E23", "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.", "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies", "year": 2005, "url": "https://doi.org/10.1099/mic.0.27437-0", "authors": "Christine Pourcel et al.", "fromTitle": false}, {"id": "E24", "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.", "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "year": 2005, "url": "https://doi.org/10.1099/mic.0.28048-0", "authors": "Alexander Bolotin et al.", "fromTitle": false}, {"id": "E25", "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.", "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action", "year": 2006, "url": "https://doi.org/10.1186/1745-6150-1-7", "authors": "Kira S. Makarova et al.", "fromTitle": false}]}, {"start": 2007, "end": 2012, "label": "Bacterial adaptive immune system", "meaning": "CRISPR and its Cas genes were understood as an RNA-guided defense system that gives bacteria and archaea acquired immunity against phages and plasmids.", "evidence": [{"id": "E27", "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.", "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "year": 2007, "url": "https://doi.org/10.1128/jb.01412-07", "authors": "Hélène Deveau et al.", "fromTitle": false}, {"id": "E28", "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).", "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "year": 2008, "url": "https://doi.org/10.1126/science.1159689", "authors": "Stan J. J. Brouns et al.", "fromTitle": false}, {"id": "E29", "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.", "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA", "year": 2008, "url": "https://doi.org/10.1126/science.1165771", "authors": "Luciano A. Marraffini et al.", "fromTitle": false}, {"id": "E30", "text": "In many Bacteria and most Archaea, clustered regularly interspaced short palindromic repeats (CRISPR) form peculiar genetic loci, which provide acquired immunity against viruses and plasmids by targeting nucleic acid in a sequence-specific manner.", "title": "CRISPR/Cas, the Immune System of Bacteria and Archaea", "year": 2010, "url": "https://doi.org/10.1126/science.1179555", "authors": "Philippe Horvath et al.", "fromTitle": false}, {"id": "E31", "text": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA", "title": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA", "year": 2010, "url": "https://doi.org/10.1038/nature09523", "authors": "Josiane E. Garneau et al.", "fromTitle": true}, {"id": "E33", "text": "Evolution and classification of the CRISPR–Cas systems", "title": "Evolution and classification of the CRISPR–Cas systems", "year": 2011, "url": "https://doi.org/10.1038/nrmicro2577", "authors": "Kira S. Makarova et al.", "fromTitle": true}, {"id": "E34", "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.", "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "year": 2012, "url": "https://doi.org/10.1073/pnas.1208507109", "authors": "Giedrius Gasiūnas et al.", "fromTitle": false}]}, {"start": 2013, "end": 2016, "label": "Programmable genome-editing tool", "meaning": "CRISPR-Cas9 was repurposed as an RNA-guided nuclease for editing genomes in human cells, animals, plants and microbes, for genome-wide screens and for control of gene expression.", "evidence": [{"id": "E35", "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.", "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "year": 2013, "url": "https://doi.org/10.1126/science.1231143", "authors": "Le Cong et al.", "fromTitle": false}, {"id": "E36", "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.", "title": "RNA-Guided Human Genome Engineering via Cas9", "year": 2013, "url": "https://doi.org/10.1126/science.1232033", "authors": "Prashant Mali et al.", "fromTitle": false}, {"id": "E38", "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.", "title": "RNA-programmed genome editing in human cells", "year": 2013, "url": "https://doi.org/10.7554/elife.00471", "authors": "Martin Jínek et al.", "fromTitle": false}, {"id": "E39", "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "year": 2013, "url": "https://doi.org/10.1016/j.cell.2013.02.022", "authors": "Lei S. Qi et al.", "fromTitle": true}, {"id": "E50", "text": "Genome engineering using the CRISPR-Cas9 system", "title": "Genome engineering using the CRISPR-Cas9 system", "year": 2013, "url": "https://doi.org/10.1038/nprot.2013.143", "authors": "F. Ann Ran et al.", "fromTitle": true}, {"id": "E53", "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.", "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "year": 2013, "url": "https://doi.org/10.1126/science.1247005", "authors": "Ophir Shalem et al.", "fromTitle": false}, {"id": "E60", "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "year": 2014, "url": "https://doi.org/10.1016/j.cell.2014.05.010", "authors": "Patrick D. Hsu et al.", "fromTitle": true}, {"id": "E64", "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.", "title": "The new frontier of genome engineering with CRISPR-Cas9", "year": 2014, "url": "https://doi.org/10.1126/science.1258096", "authors": "Jennifer A. Doudna et al.", "fromTitle": false}]}, {"start": 2017, "end": 2026, "label": "Diversified platform and therapies", "meaning": "CRISPR became a broad technology platform spanning RNA-targeting Cas13, diagnostics based on Cas12 and Cas13, perturbation screens, crop engineering and clinical in vivo editing.", "evidence": [{"id": "E84", "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.", "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "year": 2017, "url": "https://doi.org/10.1126/science.aam9321", "authors": "Jonathan S. Gootenberg et al.", "fromTitle": false}, {"id": "E86", "text": "RNA targeting with CRISPR–Cas13", "title": "RNA targeting with CRISPR–Cas13", "year": 2017, "url": "https://doi.org/10.1038/nature24049", "authors": "Omar O. Abudayyeh et al.", "fromTitle": true}, {"id": "E95", "text": "CRISPR is becoming an indispensable tool in biological research.", "title": "The CRISPR tool kit for genome editing and beyond", "year": 2018, "url": "https://doi.org/10.1038/s41467-018-04252-2", "authors": "Mazhar Adli", "fromTitle": false}, {"id": "E98", "text": "The diversity, modularity, and efficacy of CRISPR-Cas systems are driving a biotechnological revolution.", "title": "CRISPR-Cas guides the future of genetic engineering", "year": 2018, "url": "https://doi.org/10.1126/science.aat5011", "authors": "Gavin J. Knott et al.", "fromTitle": false}, {"id": "E109", "text": "CRISPR–Cas12-based detection of SARS-CoV-2", "title": "CRISPR–Cas12-based detection of SARS-CoV-2", "year": 2020, "url": "https://doi.org/10.1038/s41587-020-0513-4", "authors": "James P. Broughton et al.", "fromTitle": true}, {"id": "E112", "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "year": 2021, "url": "https://doi.org/10.1056/nejmoa2107454", "authors": "Julian David Gillmore et al.", "fromTitle": true}, {"id": "E113", "text": "CRISPR-based diagnostics", "title": "CRISPR-based diagnostics", "year": 2021, "url": "https://doi.org/10.1038/s41551-021-00760-7", "authors": "Michael M. Kaminski et al.", "fromTitle": true}, {"id": "E121", "text": "CRISPR-based diagnostic platforms have gained significant momentum in recent years, enabling highly sensitive and specific detection of pathogens and diseases.", "title": "CRISPR-on-Chip for Point-of-Care Diagnostics", "year": 2026, "url": "https://doi.org/10.1021/acsnano.5c19771", "authors": "Nazente Atçeken et al.", "fromTitle": false}, {"id": "E128", "text": "CRISPR-Cas genome-editing technologies have emerged as powerful tools for precise DNA and RNA modulation, offering promising therapeutic strategies for neurodegenerative disorders such as Alzheimer's disease (AD), Parkinson's disease (PD), Huntington's disease (HD), and amyotrophic lateral sclerosis (ALS).", "title": "CRISPR–Cas technologies in neurodegenerative disorders: mechanistic insights, therapeutic potential, and translational challenges", "year": 2026, "url": "https://doi.org/10.3389/fneur.2025.1737468", "authors": "Raya Kh. Yashooa et al.", "fromTitle": false}, {"id": "E137", "text": "We develop Spatial Perturb-Seq, an in vivo CRISPR technology that interrogates multiple genes within single cells of intact tissues, compatible with both sequencing-based and probe-based spatial technologies.", "title": "Spatial perturb-seq: single-cell functional genomics within intact tissue architecture", "year": 2026, "url": "https://doi.org/10.1038/s41467-026-69677-6", "authors": "Kimberle Shen et al.", "fromTitle": false}]}], "milestones": [{"year": 2002, "kind": "coined", "title": "Identification of genes that are associated with DNA repeats in prokaryotes", "why": "The authors proposed the name 'clustered regularly interspaced short palindromic repeats (CRISPR)' for this family of repeats.", "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x", "workTitle": "Identification of genes that are associated with DNA repeats in prokaryotes", "authors": "Ruud Jansen et al.", "link": "in-sample", "evidence": [{"id": "E22", "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).", "title": "Identification of genes that are associated with DNA repeats in prokaryotes", "year": 2002, "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x", "authors": "Ruud Jansen et al.", "fromTitle": false}]}, {"year": 2005, "kind": "redefined", "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "why": "This work showed that the spacers come from foreign DNA, linking the repeats to phage and plasmid sequences.", "url": "https://doi.org/10.1099/mic.0.28048-0", "workTitle": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "authors": "Alexander Bolotin et al.", "link": "in-sample", "evidence": [{"id": "E23", "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.", "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies", "year": 2005, "url": "https://doi.org/10.1099/mic.0.27437-0", "authors": "Christine Pourcel et al.", "fromTitle": false}, {"id": "E24", "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.", "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin", "year": 2005, "url": "https://doi.org/10.1099/mic.0.28048-0", "authors": "Alexander Bolotin et al.", "fromTitle": false}]}, {"year": 2006, "kind": "redefined", "title": "A putative RNA-interference-based immune system in prokaryotes", "why": "It reinterpreted CRISPR-cas, previously linked to DNA repair, as a hypothesized RNAi-like immune system.", "url": "https://doi.org/10.1186/1745-6150-1-7", "workTitle": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action", "authors": "Kira S. Makarova et al.", "link": "in-sample", "evidence": [{"id": "E25", "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.", "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action", "year": 2006, "url": "https://doi.org/10.1186/1745-6150-1-7", "authors": "Kira S. Makarova et al.", "fromTitle": false}]}, {"year": 2007, "kind": "redefined", "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "why": "It linked CRISPR experimentally to acquired resistance against bacteriophages.", "url": "https://doi.org/10.1128/jb.01412-07", "workTitle": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "authors": "Hélène Deveau et al.", "link": "in-sample", "evidence": [{"id": "E27", "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.", "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus", "year": 2007, "url": "https://doi.org/10.1128/jb.01412-07", "authors": "Hélène Deveau et al.", "fromTitle": false}]}, {"year": 2008, "kind": "redefined", "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "why": "It showed that small CRISPR RNAs guide antiviral defense, establishing the RNA-guided mechanism.", "url": "https://doi.org/10.1126/science.1159689", "workTitle": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "authors": "Stan J. J. Brouns et al.", "link": "in-sample", "evidence": [{"id": "E28", "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).", "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes", "year": 2008, "url": "https://doi.org/10.1126/science.1159689", "authors": "Stan J. J. Brouns et al.", "fromTitle": false}, {"id": "E29", "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.", "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA", "year": 2008, "url": "https://doi.org/10.1126/science.1165771", "authors": "Luciano A. Marraffini et al.", "fromTitle": false}]}, {"year": 2012, "kind": "redefined", "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "why": "It characterized Cas9 as an RNA-guided DNA endonuclease, setting up its later use as a tool.", "url": "https://doi.org/10.1073/pnas.1208507109", "workTitle": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "authors": "Giedrius Gasiūnas et al.", "link": "in-sample", "evidence": [{"id": "E34", "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.", "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria", "year": 2012, "url": "https://doi.org/10.1073/pnas.1208507109", "authors": "Giedrius Gasiūnas et al.", "fromTitle": false}]}, {"year": 2013, "kind": "applied", "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "why": "It moved the CRISPR/Cas system into mammalian genome engineering and became the most-cited paper in the evidence.", "url": "https://doi.org/10.1126/science.1231143", "workTitle": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "authors": "Le Cong et al.", "link": "in-sample", "evidence": [{"id": "E35", "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.", "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems", "year": 2013, "url": "https://doi.org/10.1126/science.1231143", "authors": "Le Cong et al.", "fromTitle": false}, {"id": "E36", "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.", "title": "RNA-Guided Human Genome Engineering via Cas9", "year": 2013, "url": "https://doi.org/10.1126/science.1232033", "authors": "Prashant Mali et al.", "fromTitle": false}, {"id": "E38", "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.", "title": "RNA-programmed genome editing in human cells", "year": 2013, "url": "https://doi.org/10.7554/elife.00471", "authors": "Martin Jínek et al.", "fromTitle": false}]}, {"year": 2013, "kind": "applied", "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "why": "It extended CRISPR beyond cutting DNA to regulating transcription.", "url": "https://doi.org/10.1016/j.cell.2013.02.022", "workTitle": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "authors": "Lei S. Qi et al.", "link": "in-sample", "evidence": [{"id": "E39", "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression", "year": 2013, "url": "https://doi.org/10.1016/j.cell.2013.02.022", "authors": "Lei S. Qi et al.", "fromTitle": true}, {"id": "E43", "text": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes", "title": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes", "year": 2013, "url": "https://doi.org/10.1016/j.cell.2013.06.044", "authors": "Luke A. Gilbert et al.", "fromTitle": true}, {"id": "E44", "text": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors", "title": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors", "year": 2013, "url": "https://doi.org/10.1038/nmeth.2600", "authors": "Pablo Pérez‐Piñera et al.", "fromTitle": true}]}, {"year": 2013, "kind": "applied", "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "why": "It established genome-wide CRISPR screens as a way to study gene function.", "url": "https://doi.org/10.1126/science.1247005", "workTitle": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "authors": "Ophir Shalem et al.", "link": "in-sample", "evidence": [{"id": "E53", "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.", "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells", "year": 2013, "url": "https://doi.org/10.1126/science.1247005", "authors": "Ophir Shalem et al.", "fromTitle": false}, {"id": "E54", "text": "The bacterial clustered regularly interspaced short palindromic repeats (CRISPR)-Cas9 system for genome editing has greatly expanded the toolbox for mammalian genetics, enabling the rapid generation of isogenic cell lines and mice with modified alleles.", "title": "Genetic Screens in Human Cells Using the CRISPR-Cas9 System", "year": 2013, "url": "https://doi.org/10.1126/science.1246981", "authors": "Wang Tim et al.", "fromTitle": false}, {"id": "E61", "text": "Improved vectors and genome-wide libraries for CRISPR screening", "title": "Improved vectors and genome-wide libraries for CRISPR screening", "year": 2014, "url": "https://doi.org/10.1038/nmeth.3047", "authors": "Neville E. Sanjana et al.", "fromTitle": true}]}, {"year": 2014, "kind": "popularized", "title": "The new frontier of genome engineering with CRISPR-Cas9", "why": "This highly cited review framed CRISPR-Cas9 as transforming biology.", "url": "https://doi.org/10.1126/science.1258096", "workTitle": "The new frontier of genome engineering with CRISPR-Cas9", "authors": "Jennifer A. Doudna et al.", "link": "in-sample", "evidence": [{"id": "E64", "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.", "title": "The new frontier of genome engineering with CRISPR-Cas9", "year": 2014, "url": "https://doi.org/10.1126/science.1258096", "authors": "Jennifer A. Doudna et al.", "fromTitle": false}, {"id": "E60", "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering", "year": 2014, "url": "https://doi.org/10.1016/j.cell.2014.05.010", "authors": "Patrick D. Hsu et al.", "fromTitle": true}]}, {"year": 2017, "kind": "applied", "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "why": "It used the collateral cleavage activity of a CRISPR enzyme for diagnostics, opening the CRISPR-Dx field.", "url": "https://doi.org/10.1126/science.aam9321", "workTitle": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "authors": "Jonathan S. Gootenberg et al.", "link": "in-sample", "evidence": [{"id": "E84", "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.", "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2", "year": 2017, "url": "https://doi.org/10.1126/science.aam9321", "authors": "Jonathan S. Gootenberg et al.", "fromTitle": false}, {"id": "E92", "text": "Recently, a very promising CRISPR-based diagnostic (CRISPR-Dx) (namely SHERLOCK) was established, which was based on the collateral effect of an RNA-guided and RNA-targeting CRISPR effector, Cas13a 4 .", "title": "CRISPR-Cas12a-assisted nucleic acid detection", "year": 2018, "url": "https://doi.org/10.1038/s41421-018-0028-z", "authors": "Shiyuan Li et al.", "fromTitle": false}, {"id": "E109", "text": "CRISPR–Cas12-based detection of SARS-CoV-2", "title": "CRISPR–Cas12-based detection of SARS-CoV-2", "year": 2020, "url": "https://doi.org/10.1038/s41587-020-0513-4", "authors": "James P. Broughton et al.", "fromTitle": true}, {"id": "E113", "text": "CRISPR-based diagnostics", "title": "CRISPR-based diagnostics", "year": 2021, "url": "https://doi.org/10.1038/s41551-021-00760-7", "authors": "Michael M. Kaminski et al.", "fromTitle": true}]}, {"year": 2018, "kind": "critique", "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "why": "It raised safety concerns about unintended genomic damage, alongside earlier work on off-target effects and p53 responses.", "url": "https://doi.org/10.1038/nbt.4192", "workTitle": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "authors": "Michael Kosicki et al.", "link": "in-sample", "evidence": [{"id": "E97", "text": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements", "year": 2018, "url": "https://doi.org/10.1038/nbt.4192", "authors": "Michael Kosicki et al.", "fromTitle": true}, {"id": "E96", "text": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response", "title": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response", "year": 2018, "url": "https://doi.org/10.1038/s41591-018-0049-z", "authors": "Emma Maria Haapaniemi et al.", "fromTitle": true}, {"id": "E76", "text": "CRISPR/Cas9 is a versatile genome-editing technology that is widely used for studying the functionality of genetic elements, creating genetically modified organisms as well as preclinical research of genetic disorders.", "title": "Off-target Effects in CRISPR/Cas9-mediated Genome Engineering", "year": 2015, "url": "https://doi.org/10.1038/mtna.2015.37", "authors": "Xiaohui Zhang et al.", "fromTitle": false}]}, {"year": 2021, "kind": "applied", "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "why": "It marked the translation of CRISPR editing into human in vivo therapy.", "url": "https://doi.org/10.1056/nejmoa2107454", "workTitle": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "authors": "Julian David Gillmore et al.", "link": "in-sample", "evidence": [{"id": "E112", "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis", "year": 2021, "url": "https://doi.org/10.1056/nejmoa2107454", "authors": "Julian David Gillmore et al.", "fromTitle": true}, {"id": "E120", "text": "Applications span vaccines, protein replacement, siRNA/ASO delivery, and CRISPR platforms, with clinical examples like patisiran, COVID-19 and RSV mRNA vaccines, in-human transthyretin (TTR) editing, and individualized melanoma vaccination.", "title": "Programmable lipid nanoparticles for RNA therapeutics: Design principles and clinical translation", "year": 2026, "url": "https://doi.org/10.1016/j.mtbio.2026.102774", "authors": "Mahdi Navid Talemi et al.", "fromTitle": false}]}], "totals": [[1800, 7700], [1801, 4743], [1802, 3707], [1803, 3649], [1804, 3611], [1805, 3098], [1806, 3377], [1807, 2870], [1808, 3756], [1809, 3154], [1810, 3393], [1811, 3334], [1812, 3551], [1813, 3143], [1814, 3093], [1815, 3740], [1816, 3827], [1817, 3652], [1818, 4188], [1819, 3737], [1820, 4485], [1821, 5162], [1822, 4914], [1823, 6426], [1824, 7166], [1825, 7122], [1826, 7041], [1827, 8403], [1828, 8673], [1829, 8312], [1830, 8725], [1831, 8140], [1832, 7986], [1833, 8152], [1834, 9104], [1835, 8952], [1836, 8924], [1837, 9947], [1838, 9577], [1839, 11294], [1840, 12287], [1841, 11739], [1842, 12248], [1843, 12606], [1844, 12613], [1845, 13480], [1846, 15565], [1847, 17929], [1848, 17584], [1849, 15937], [1850, 19178], [1851, 20005], [1852, 20576], [1853, 21289], [1854, 21942], [1855, 22852], [1856, 23428], [1857, 24312], [1858, 23310], [1859, 22597], [1860, 23577], [1861, 22452], [1862, 23140], [1863, 23103], [1864, 22262], [1865, 21615], [1866, 22447], [1867, 24769], [1868, 24788], [1869, 25625], [1870, 28437], [1871, 24702], [1872, 29106], [1873, 30282], [1874, 31047], [1875, 32604], [1876, 38896], [1877, 35259], [1878, 36816], [1879, 38431], [1880, 44706], [1881, 41073], [1882, 41405], [1883, 45331], [1884, 46831], [1885, 48204], [1886, 51293], [1887, 53745], [1888, 55000], [1889, 54725], [1890, 57183], [1891, 56241], [1892, 56116], [1893, 61525], [1894, 63724], [1895, 66680], [1896, 71057], [1897, 70771], [1898, 72070], [1899, 76763], [1900, 93237], [1901, 84568], [1902, 85195], [1903, 85898], [1904, 88083], [1905, 93457], [1906, 91311], [1907, 92802], [1908, 96786], [1909, 101648], [1910, 106843], [1911, 107994], [1912, 108013], [1913, 111523], [1914, 107043], [1915, 96856], [1916, 92958], [1917, 89646], [1918, 87966], [1919, 93201], [1920, 106357], [1921, 111236], [1922, 121285], [1923, 122247], [1924, 129221], [1925, 134401], [1926, 152453], [1927, 152498], [1928, 155127], [1929, 161062], [1930, 172079], [1931, 166799], [1932, 169221], [1933, 166479], [1934, 167417], [1935, 175481], [1936, 179062], [1937, 179504], [1938, 183106], [1939, 179158], [1940, 190016], [1941, 159107], [1942, 147898], [1943, 137792], [1944, 129555], [1945, 133340], [1946, 164564], [1947, 193866], [1948, 220726], [1949, 236764], [1950, 303938], [1951, 310928], [1952, 323252], [1953, 338601], [1954, 347259], [1955, 357867], [1956, 365616], [1957, 386613], [1958, 406198], [1959, 430067], [1960, 485792], [1961, 479135], [1962, 505793], [1963, 556711], [1964, 587802], [1965, 631468], [1966, 670245], [1967, 721736], [1968, 767232], [1969, 812930], [1970, 952991], [1971, 882971], [1972, 924499], [1973, 947199], [1974, 983414], [1975, 1023309], [1976, 1048106], [1977, 1089439], [1978, 1139301], [1979, 1190981], [1980, 1300404], [1981, 1291099], [1982, 1324842], [1983, 1374666], [1984, 1427816], [1985, 1488565], [1986, 1563942], [1987, 1648997], [1988, 1729626], [1989, 1830595], [1990, 1995458], [1991, 1989397], [1992, 2075541], [1993, 2169232], [1994, 2281914], [1995, 2430990], [1996, 2593987], [1997, 2700791], [1998, 2835895], [1999, 2979925], [2000, 3396678], [2001, 3585372], [2002, 4173629], [2003, 4403763], [2004, 4744244], [2005, 5138846], [2006, 5584169], [2007, 6047822], [2008, 6448492], [2009, 6975803], [2010, 7439321], [2011, 7942884], [2012, 8252143], [2013, 8640926], [2014, 9129466], [2015, 9352128], [2016, 9772181], [2017, 9658892], [2018, 9620609], [2019, 10105903], [2020, 10710989], [2021, 10234246], [2022, 9919123], [2023, 10662282], [2024, 10984643], [2025, 14188833], [2026, 18745510]], "totalsAsOf": "2026-11-17", "kindChecks": {"ancestor": [2, 4], "origin": [5, 5], "popularized": [6, 13], "redefined": [12, 17], "applied": [24, 24], "critique": [10, 12], "coined": [2, 2]}}</script>
-<script>// idealine timeline renderer. renderTimeline(D, root) draws the interactive
+<script>// idealine interface text in English and Simplified Chinese.
+// Static text: elements with data-i18n (text), data-i18n-ph (placeholder), data-i18n-title.
+// Runtime messages from core.js / providers.js are English; trMessage() translates
+// the known ones and leaves anything else as is. Paper titles and quotes are never translated.
+(function (global) {
+  'use strict';
+
+  const KINDS = {
+    en: { ancestor: 'ancestor', origin: 'earliest found', coined: 'coined', popularized: 'popularized', redefined: 'redefined', applied: 'applied', critique: 'critique' },
+    zh: { ancestor: '前身', origin: '最早记录', coined: '命名', popularized: '流行', redefined: '含义转变', applied: '跨界应用', critique: '批评' },
+  };
+
+  const fmtShare = v => { const pm = v * 1e6; return pm >= 10 ? Math.round(pm).toLocaleString('en-US') : pm.toFixed(pm >= 1 ? 1 : 2); };
+
+  const T = {
+    en: {
+      langGroup: 'Language',
+      saveKey: 'Save and check key', checking: 'Checking the key…',
+      keyOk: short => `${short} accepted the key. You're set: press Find sources.`,
+      modelOn: (short, model) => `Using ${short} (${model}) for suggested meanings and diagnostics.`, modelOff: 'not checked yet', change: 'Change',
+      heroEyebrow: 'A reading companion for AI ideas', exampleEyebrow: 'Inside a reading brief · world model', exampleLink: 'Explore the reading brief ↗', downloads: 'Downloads & tools',
+      heroTitle: 'Understand the term. Read the evidence.',
+      heroSub: 'A few useful papers. Their actual words. Find out how an idea is used, and decide what to read next.',
+      termPh: 'Try “world model” or “in-context learning”', termLabel: 'Term', go: 'Find sources',
+      freeLine: 'Read source passages for free. For optional meaning labels,', addKey: 'add your own model key',
+      optsSummary: 'Search options & optional model key',
+      aliasesLabel: 'Other spellings (optional, comma-separated)', aliasesPh: 'e.g. mixture-of-experts, MoE layer',
+      meaningLabel: 'Which meaning? (optional; used with a model key)', meaningPh: 'e.g. AI agents that plan and use tools on their own',
+      providerLabel: 'Model', providerNone: 'No model (free source passages)',
+      keyLabel: 'API key', modelLabel: 'Model ID', remember: 'Remember my keys on this device (not on a shared computer)',
+      getKey: p => `Get a ${p} key`,
+      privacyFree: 'Read source passages and phrase counts without a model. OpenAlex may require its free key if your network reaches its daily budget.',
+      privacyKey: (host, short) => `Your key goes straight from your browser to ${host}. This site has no server and never sees it. One request per term, about 15–25k input tokens, billed to your ${short} account.`,
+      oakeyLabel: 'OpenAlex key (optional, free; use it if OpenAlex says the daily budget is used up)',
+      forget: 'Forget saved keys', forgotten: 'Saved keys removed from this browser.',
+      exampleTag: 'Example reading brief', resultTag: 'Your reading brief', interimTag: 'First look · the model is still reading',
+      step_count: 'Counting papers per year in OpenAlex', step_early: 'Reading the earliest papers', step_cited: 'Reading the most-cited papers',
+      step_recent: 'Reading recent papers', step_model: 'The model reads the quotes and builds eras and milestones', step_links: 'Linking milestones to papers',
+      stepModelN: (short, n) => `${short} reads ${n} quoted sentences and builds eras and milestones (often 30–90 s)`,
+      stepModelLive: (short, stage, k, n) => `${short} is writing: ` + ({
+        senses: `sorting out meanings (${k} so far)`,
+        tags: `tagging sentences by meaning (${Math.min(k, n)} of ${n})`,
+        eras: `eras (${k} so far)`,
+        milestones: `milestones (${k} so far)`,
+      }[stage] || '…'),
+      seconds: n => ` · ${n} s`,
+      keptFree: 'Showing the free source passages instead.',
+      tracingTag: 'Finding sources…', failedTag: 'No sources yet', readyTag: 'Prepared reading brief',
+      readyNote: date => `Made in advance (${date}), so it opens instantly.`,
+      traceLive: 'Refresh from live data',
+      thin: n => `Only ${n} papers use this term, so it is very new or rare; the timeline will be thin.`,
+      suggest: 'Meanwhile, these prepared reading briefs open instantly:',
+      howKindsH: 'Milestone types',
+      howKinds: 'origin: first use · coined: someone names it · popularized: it spreads · redefined: the meaning shifts · applied: used in a new field · critique: pushback · ancestor: an older idea it builds on',
+      howLimitsH: 'Limits',
+      howLimits: 'Only titles and abstracts, mostly English, so use the English term. Very new terms have few papers. OpenAlex limits free use per network; a free OpenAlex key lifts that.',
+      howKeyH: 'Your key',
+      howKey: 'The site has no server. Your model key goes from your browser straight to the provider you picked, and is saved only if you tick “Remember”.',
+      hint: 'Click a dot to see the quotes behind it. Scroll sideways for earlier years.',
+      dlHtml: 'Download page (.html)', dlJson: 'Download data (.json)',
+      moreH: 'Choose your next term',
+      how1h: '01 / Find the passage', how1: 'Search titles and abstracts in OpenAlex. Read the actual words, with a link to their paper.',
+      how2h: '02 / Compare the uses', how2: 'Read a few starting points, then browse the sample by date or suggested meaning.',
+      how3h: '03 / Take a source with you', how3: 'Open the paper, or copy a passage together with its title, author, year, and source link.',
+      cliH: 'Prefer the command line?',
+      feedback: 'Something wrong or missing? Open an issue on GitHub.',
+      footer: 'Eras and milestones come from a language model that may cite only the quoted sentences, and can be wrong; the quotes are the evidence.',
+      navHow: 'How it works',
+      meta: (total, span, model, n) => `${total.toLocaleString('en-US')} papers in OpenAlex use this term (${span}). ` + (model ? `Proposed by ${model} from ${n} quoted sentences only; check the quotes.` : 'No model: milestones are the earliest and most-cited papers that use the term.'),
+      cardMeta: (total, n) => `${n} source passages · prepared brief`,
+      needTerm: 'Type a term first.',
+      needKey: short => `Paste your ${short} key, or pick “No model” for the free view.`,
+      asking: (short, model, n) => `Asking ${short} (${model}) to read ${n} sentences. This can take a minute…`,
+      noPapers: term => `No paper titles or abstracts in OpenAlex use “${term}”. Try another spelling or add one under “Other spellings”.`,
+      noPapersCjk: term => `No paper titles or abstracts in OpenAlex use “${term}”. Most papers there are in English, so try the English term (for example “vibe coding”).`,
+      noMilestones: 'The model returned no milestones backed by the quoted sentences. Try again, or try another model.',
+      acronym: 'Tip: acronyms often match other fields; the spelled-out term usually gives a cleaner timeline.',
+      pressTrace: 'Press Find sources to run it with your key.',
+      wentWrong: m => 'Something went wrong: ' + m,
+      // timeline
+      legendDashed: 'dashed = no link found', legendBars: 'bars = papers per year',
+      legendBarsQ: 'bars = papers per year; recent years by quarter',
+      follows: 'This timeline follows:',
+      otherSenses: n => `The same words also mean ${n === 1 ? 'one unrelated thing' : n + ' unrelated things'} in these papers. Left out of eras and milestones; the bars still count them.`,
+      otherSensesShow: 'Show the other meanings',
+      quotesN: n => `${n} quote${n === 1 ? '' : 's'}`,
+      wrongSense: 'Meant another one? Describe it under “Options and model key” → “Which meaning?”, then trace again.',
+      quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
+      undated: n => `${n} dated only by year, not in any quarter`,
+      papers: n => `${n} papers`, yearPapers: (y, n) => `${y}: ${n} papers`, timelineOf: term => `Timeline of ${term}`,
+      inSample: 'Linked paper uses the term itself.',
+      resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+      unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+      titleOf: 'Title of ',
+      msg: s => s,
+      legendShare: 'bars = papers per million in all of OpenAlex that year', legendLog: 'log scale', legendPartial: 'hatched = period not over yet', noTotal: ys => `no full-year OpenAlex total for ${ys} yet, so no bar`,
+      yLabel: 'Bars', yPapers: 'Papers', yShare: 'Share of all papers', scaleLabel: 'Scale', scaleLinear: 'Linear', scaleLog: 'Log',
+      shareOf: (y, v) => `${y}: ${fmtShare(v)} per million papers in OpenAlex`, perMillion: v => `${fmtShare(v)} per million`,
+      partial: d => `not over yet (data as of ${d})`, burst: 'burst', takeoff: y => `takeoff ${y}`,
+      takeoffTip: 'Takeoff: the year the curve leaves its slow start (Ke et al. 2015). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
+      headline: h => `First seen ${h.first}` + (h.ta ? `; under ${h.before} papers a year until ${h.ta - 1}, then took off` : '') + `; ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : '') + '.',
+      laneBySense: 'ticks = quoted sentences, coloured by meaning', laneByField: 'ticks = quoted sentences, coloured by the paper’s field',
+      fieldUnknown: 'field unknown', otherFields: 'other fields', unclear: 'meaning unclear', otherMeanings: 'other meanings',
+      mixTitle: 'Meanings in this era', moved: v => `meaning moved ${v} since the previous era (0 = same mix, 1 = no overlap)`,
+      newSense: l => `new: ${l}`, fadedSense: l => `faded: ${l}`, fewQuotes: n => `${n} tagged quote${n === 1 ? '' : 's'}: too few to compare`, fewPrevQuotes: n => `previous era has only ${n} tagged quote${n === 1 ? '' : 's'}: too few to compare`,
+      mixNote: 'Meaning mixes count quoted sentences (titles and abstracts only); the labels come from the model and can be wrong.',
+      words: 'Common words', newWords: 'new', simLatest: v => `similarity to the latest era: ${v}`,
+      provCounted: 'Counted from OpenAlex; no model.', provModel: (model, n, date) => `Labelled by ${model} from ${n} quote${n === 1 ? '' : 's'} (${date}).`,
+      earliestCaveat: 'Earliest paper found in OpenAlex (titles and abstracts only). Preprints, blogs and talks often come earlier.', earlierUse: 'Know an earlier use?',
+      checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
+      shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
+      checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
+      checked: (ok, n) => `A separate AI check of the ready-made timelines agreed with this label ${ok} times out of ${n}.`,
+      rootsTitle: 'Roots: what the papers using the term cite',
+      rootsNote: (p, r) => `From the references of ${p} sampled papers that use the term (${r} cited works looked up). Peaks are publication years cited far more than their neighbours (reference publication year spectroscopy, Marx et al. 2014); each shows its most-cited work.`,
+      rootsCites: n => `cited by ${n} of these papers`,
+      rootsBtn: n => `Find roots (about ${n} OpenAlex requests)`,
+    },
+    zh: {
+      langGroup: '语言',
+      saveKey: '保存并检查 key', checking: '正在检查 key……',
+      keyOk: short => `${short} 的 key 可用，已就绪：点击“查找来源”。`,
+      modelOn: (short, model) => `已启用模型：${short}（${model}），用于建议词义与诊断图表。`, modelOff: '尚未检查', change: '更改',
+      heroEyebrow: 'AI 概念的阅读伴侣', exampleEyebrow: '阅读简报示例 · world model', exampleLink: '打开阅读简报 ↗', downloads: '下载与工具',
+      heroTitle: '理解术语，从原文开始。',
+      heroSub: '几篇有用的论文，作者真实的表达。比较概念的不同用法，找到下一篇值得读的文献。',
+      termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '查找来源',
+      freeLine: '免费阅读原文。若想使用可选词义标签，', addKey: '填入你自己的模型 key',
+      optsSummary: '搜索选项与可选模型 key',
+      aliasesLabel: '其他写法（可选，用逗号分隔）', aliasesPh: '例如 mixture-of-experts, MoE layer',
+      meaningLabel: '你指的是哪个意思？（可选，配合模型 key 使用）', meaningPh: '例如：能自己规划、调用工具的 AI 智能体',
+      providerLabel: '模型', providerNone: '不用模型（免费原文证据）',
+      keyLabel: 'API key', modelLabel: '模型 ID', remember: '在这台设备上记住我的 key（公共电脑请勿勾选）',
+      getKey: p => `获取 ${p} key`,
+      privacyFree: '无需模型即可阅读原文和词组数量。若所在网络达到 OpenAlex 每日限额，可填写免费的 OpenAlex key。',
+      privacyKey: (host, short) => `你的 key 只会从你的浏览器直接发给 ${host}。本站没有服务器，看不到你的 key。每个术语一次请求，约 1.5–2.5 万输入 token，费用记在你的 ${short} 账户。`,
+      oakeyLabel: 'OpenAlex key（可选，免费；如果提示 OpenAlex 今日额度用完，就填这个）',
+      forget: '清除已保存的 key', forgotten: '已从这个浏览器清除保存的 key。',
+      exampleTag: '阅读简报示例', resultTag: '你的阅读简报', interimTag: '初步结果 · 模型还在阅读',
+      step_count: '统计 OpenAlex 每年的论文数', step_early: '读取最早的论文', step_cited: '读取被引最多的论文',
+      step_recent: '读取最新的论文', step_model: '模型阅读原句，划分时期和里程碑', step_links: '把里程碑链接到论文',
+      stepModelN: (short, n) => `${short} 正在阅读 ${n} 条原句，划分时期和里程碑（通常 30–90 秒）`,
+      stepModelLive: (short, stage, k, n) => `${short} 正在写：` + ({
+        senses: `区分词义（已 ${k} 个）`,
+        tags: `给原句标词义（${Math.min(k, n)} / ${n}）`,
+        eras: `时期（已 ${k} 个）`,
+        milestones: `里程碑（已 ${k} 个）`,
+      }[stage] || '…'),
+      seconds: n => ` · ${n} 秒`,
+      keptFree: '先为你显示免费的原文证据。',
+      tracingTag: '正在查找来源……', failedTag: '暂时没有来源', readyTag: '预先准备的阅读简报',
+      readyNote: date => `这是预先生成的完整版（${date}），所以能直接打开。`,
+      traceLive: '用实时数据刷新',
+      thin: n => `只有 ${n} 篇论文用到这个词，说明它很新或很少见，时间线会比较单薄。`,
+      suggest: '可以先看看这些准备好的阅读简报，点开即看：',
+      howKindsH: '里程碑类型',
+      howKinds: '起源：最早使用 · 命名：有人给它起了名 · 流行：开始被广泛使用 · 含义转变：意思变了 · 跨界应用：用到新领域 · 批评：反对或质疑 · 前身：它所继承的更早的想法',
+      howLimitsH: '局限',
+      howLimits: '只看标题和摘要，而且大多是英文，所以请输入英文术语。很新的词论文很少。OpenAlex 对每个网络的免费用量有限，填一个免费的 OpenAlex key 就不受限。',
+      howKeyH: '你的 key',
+      howKey: '本站没有服务器。你的模型 key 只从你的浏览器直接发给你选的模型提供方；只有勾选“记住”才会保存在本机。',
+      hint: '点击圆点查看背后的原文句子。左右滑动可以看更早的年份。',
+      dlHtml: '下载网页（.html）', dlJson: '下载数据（.json）',
+      moreH: '下一个想了解的术语',
+      how1h: '01 / 找到原文', how1: '在 OpenAlex 标题与摘要中搜索，直接阅读带有论文链接的原句。',
+      how2h: '02 / 比较用法', how2: '从几段建议原文开始，再按年份或建议词义浏览完整样本。',
+      how3h: '03 / 留下出处', how3: '打开论文，或连同标题、作者、年份和来源链接一起复制原文。',
+      cliH: '想用命令行？',
+      feedback: '发现问题或缺了什么？欢迎在 GitHub 上提 issue。',
+      footer: '时期和里程碑由语言模型根据引用的原句生成，可能有误，请以原句为准。数据与源码：',
+      navHow: '原理',
+      meta: (total, span, model, n) => `OpenAlex 中有 ${total.toLocaleString('zh-CN')} 篇论文使用这个词（${span}）。` + (model ? `时期和里程碑由 ${model} 仅根据 ${n} 条原句生成，请核对原句。` : '未使用模型：里程碑是使用这个词的最早和被引最多的论文。'),
+      cardMeta: (total, n) => `${n} 段原文 · 阅读简报`,
+      needTerm: '请先输入一个术语。',
+      needKey: short => `请粘贴你的 ${short} key，或者选“不用模型”使用免费模式。`,
+      asking: (short, model, n) => `正在请 ${short}（${model}）阅读 ${n} 条句子，可能需要一分钟……`,
+      noPapers: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。换个写法，或在“其他写法”里补充。`,
+      noPapersCjk: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。那里的论文大多是英文，请输入英文术语（例如 “vibe coding”）。`,
+      noMilestones: '模型没有给出有原句支撑的里程碑。请重试，或换一个模型。',
+      acronym: '提示：缩写常会匹配到其他领域，写全称通常更准确。',
+      pressTrace: '点击“查找来源”用你的 key 运行。',
+      wentWrong: m => '出错了：' + m,
+      legendDashed: '虚线 = 没找到链接', legendBars: '柱子 = 每年论文数',
+      legendBarsQ: '柱子 = 每年论文数，近几年按季度',
+      follows: '这条时间线跟踪的意思：',
+      otherSenses: n => `这些论文里，同一个词还有 ${n} 种不相干的意思。它们没放进时期和里程碑，但柱子里的论文数仍包括它们。`,
+      otherSensesShow: '看看其他意思', quotesN: n => `${n} 句原文`,
+      wrongSense: '不是你想要的意思？在“选项与模型 key”→“你指的是哪个意思？”里写一句描述，再追溯一次。', quarterPapers: (y, q, n) => `${y} 年第 ${q} 季度：${n} 篇`,
+      undated: n => `其中 ${n} 篇只标了年份，没算进任何季度`,
+      papers: n => `${n} 篇`, yearPapers: (y, n) => `${y} 年：${n} 篇`, timelineOf: term => `${term} 的时间线`,
+      inSample: '链接的论文本身就用到了这个词。',
+      resolved: title => `原句提到了这项工作，已在 OpenAlex 匹配到《${title}》，请核对是否匹配正确。`,
+      unresolved: '原句提到了这项工作，但在 OpenAlex 里没找到，所以没有链接。',
+      titleOf: '标题：',
+      msg: s => trMessage('zh', s),
+      legendShare: '柱子 = 当年 OpenAlex 每百万篇论文中的篇数', legendLog: '对数刻度', legendPartial: '斜线 = 这一期还没结束', noTotal: ys => `${ys} 还没有完整一年的 OpenAlex 总数，所以不画柱`,
+      yLabel: '柱子', yPapers: '论文数', yShare: '占全部论文', scaleLabel: '刻度', scaleLinear: '线性', scaleLog: '对数',
+      shareOf: (y, v) => `${y} 年：OpenAlex 每百万篇论文中 ${fmtShare(v)} 篇`, perMillion: v => `每百万篇 ${fmtShare(v)} 篇`,
+      partial: d => `还没结束（数据截至 ${d}）`, burst: '爆发期', takeoff: y => `${y} 起飞`,
+      takeoffTip: '起飞点：曲线离开缓慢起步的那一年（Ke 等，2015）。爆发期：使用量异常高的年份（Kleinberg，2002）。两者都由论文数算出，没用模型。',
+      headline: h => `最早见于 ${h.first} 年` + (h.ta ? `；到 ${h.ta - 1} 年为止每年不到 ${h.before} 篇，之后起飞` : '') + `；${h.peakYear} 年 ${h.peak.toLocaleString('en-US')} 篇` + (h.partialPeak ? '（截至目前）' : '') + '。',
+      laneBySense: '刻度 = 每句原文，颜色表示词义', laneByField: '刻度 = 每句原文，颜色表示论文所属领域',
+      fieldUnknown: '领域未知', otherFields: '其他领域', unclear: '词义不确定', otherMeanings: '其他意思',
+      mixTitle: '这个时期里的词义构成', moved: v => `和上一时期相比，词义变化 ${v}（0 = 构成相同，1 = 完全不同）`,
+      newSense: l => `新出现：${l}`, fadedSense: l => `淡出：${l}`, fewQuotes: n => `只有 ${n} 句标了词义，太少，不比较`, fewPrevQuotes: n => `上一时期只有 ${n} 句标了词义，太少，不比较`,
+      mixNote: '词义构成按原文句子计数（只有标题和摘要）；词义标签由模型给出，可能有误。',
+      words: '常见词', newWords: '新出现', simLatest: v => `与最近时期的相似度：${v}`,
+      provCounted: '由 OpenAlex 计数得出，未使用模型。', provModel: (model, n, date) => `由 ${model} 根据 ${n} 句原文标注（${date}）。`,
+      earliestCaveat: '这是在 OpenAlex（只查标题和摘要）里找到的最早论文。预印本、博客和演讲往往更早。', earlierUse: '知道更早的用法？',
+      checkExact: '原文里有这个完整词组', checkSense: '用的是这个意思', checkCoin: '把这个名字当作新提出的',
+      shiftOf: s => `变化类型：${({ broadening: '范围变宽', narrowing: '范围变窄', metaphor: '比喻用法', 'new field': '进入新领域' })[s] || s}`,
+      checksNote: 'n/m = 另一轮 AI 抽查 7 条现成时间线时，这类标签 m 个里有 n 个被认为标得对（不是对本页的检查）',
+      checked: (ok, n) => `另一轮 AI 抽查现成时间线：这类标签 ${n} 个里有 ${ok} 个被认为标得对。`,
+      rootsTitle: '根源：用到这个词的论文都在引用什么',
+      rootsNote: (p, r) => `取自抽样中 ${p} 篇用到这个词的论文的参考文献（查了 ${r} 篇被引文献）。峰值年份是被引次数远高于前后几年的出版年份（参考文献出版年谱分析，Marx 等，2014），每个峰值列出当年被引最多的作品。`,
+      rootsCites: n => `被其中 ${n} 篇引用`,
+      rootsBtn: n => `查找根源（约 ${n} 个 OpenAlex 请求）`,
+    },
+  };
+
+  // Known English runtime messages -> Chinese. Anything unmatched stays English.
+  const MSG_ZH = [
+    [/^Counting papers per year…$/, () => '正在统计每年的论文数……'],
+    [/^Counting papers per quarter…$/, () => '正在按季度统计论文数……'],
+    [/^Looking up cited works \((\d+) of (\d+)\)…$/, m => `正在查找被引文献（${m[1]} / ${m[2]}）……`],
+    [/^One of the earliest uses found\.$/, () => '找到的最早用法之一。'],
+    [/^Earliest record found, from before the term was in regular use\./, () => '找到的最早记录，早于这个词被经常使用的时候。OpenAlex 对罕见早期记录的年份有时有误，请核对原文。'],
+    [/^Cited by (\d+) of the sampled papers that use the term \((\d+) times overall\)\.$/, m => `被抽样的、用到这个词的论文引用 ${m[1]} 次（总被引 ${m[2]} 次）。`],
+    [/^Cited (\d+) times\.$/, m => `被引 ${m[1]} 次。`],
+    [/^Reading the earliest papers…$/, () => '正在读取最早的论文……'],
+    [/^Reading the most-cited papers…$/, () => '正在读取被引最多的论文……'],
+    [/^Reading recent papers…$/, () => '正在读取最新的论文……'],
+    [/^Looking up “(.*)”…$/, m => `正在查找“${m[1]}”……`],
+    [/^OpenAlex is busy; retrying in (\d+) s…$/, m => `OpenAlex 繁忙，${m[1]} 秒后重试……`],
+    [/^OpenAlex returned (\d+); retrying…$/, m => `OpenAlex 返回 ${m[1]}，正在重试……`],
+    [/^OpenAlex's free daily budget for your network is used up \(resets in about (.+?), at midnight UTC\)\./, m => `你所在网络的 OpenAlex 免费额度今天已用完（大约 ${m[1].replace(' min', ' 分钟').replace(' h', ' 小时')}后重置，即 UTC 午夜）。可以在“选项与模型 key”里填一个免费的 OpenAlex key，或稍后再试。`],
+    [/^OpenAlex is rate-limiting requests right now/, () => 'OpenAlex 正在限流，请等一分钟再试。'],
+    [/^Could not reach OpenAlex/, () => '连不上 OpenAlex，请检查网络后重试。'],
+    [/^OpenAlex error (\d+)\.$/, m => `OpenAlex 出错（${m[1]}）。`],
+    [/^OpenAlex kept failing/, () => 'OpenAlex 一直失败，请过一分钟再试。'],
+    [/^(.+?) rejected the key \((\d+)\)\. Check that you pasted the whole key and that it is active\.(.*)$/s, m => `${m[1]} 拒绝了这个 key（${m[2]}）。请确认 key 完整且有效。${detail(m[3])}`],
+    [/^(.+?) does not know that model \(404\)\. Check the model ID\.(.*)$/s, m => `${m[1]} 不认识这个模型（404），请检查模型 ID。${detail(m[2])}`],
+    [/^(.+?) says you hit a rate or spending limit \(429\)\. Wait a bit or check your account's billing\.(.*)$/s, m => `${m[1]} 提示你触发了速率或额度上限（429）。请稍后再试，或检查账户余额。${detail(m[2])}`],
+    [/^(.+?) refused the request \(400\)\.(.*?)(?: ?Some models do not support[^]*)?$/s, m => `${m[1]} 拒绝了这次请求（400）。${detail(m[2])} 部分模型不支持结构化 JSON 输出或这些设置，可以试试默认模型。`],
+    [/^(.+?) error (\d+)\.(.*)$/s, m => `${m[1]} 出错（${m[2]}）。${detail(m[3])}`],
+    [/^Google stopped the answer \((.+)\)\.$/, m => `Google 中止了回答（${m[1]}）。`],
+    [/^Unknown provider\.$/, () => '未知的模型提供方。'],
+    [/^Paste your API key first\.$/, () => '请先粘贴你的 API key。'],
+    [/^Type a model ID\.$/, () => '请填写模型 ID。'],
+    [/^Could not reach (.+?)\. /, m => `连不上 ${m[1]}，请检查网络（或广告拦截插件）后重试。`],
+    [/^(.+?) is overloaded right now/, m => `${m[1]} 当前过载，请等一分钟再试。`],
+    [/^(.+?) stopped with an error: ([\s\S]*)$/, m => `${m[1]} 中途出错：${m[2]}`],
+    [/^The connection dropped while the answer was coming in/, () => '回答传输到一半时连接断了，请重试。'],
+    [/^(.+?) returned an empty answer/, m => `${m[1]} 返回了空答案，请重试。`],
+    [/^(.+?) returned text that is not valid JSON/, m => `${m[1]} 返回的内容不是有效的 JSON，请重试或换个模型。`],
+    [/^The model declined this request\.$/, () => '模型拒绝了这个请求。'],
+    [/^The answer was cut off/, () => '回答被截断了（超出最大 token），请重试。'],
+    [/^(.+?)'s content filter blocked the answer\.$/, m => `${m[1]} 的内容过滤拦截了回答。`],
+    [/^(.+?) reported an error(.*)$/s, m => { const d = m[2].replace(/^[:.]\s*/, '').trim(); return `${m[1]} 报错${d ? '：' + d : '。'}`; }],
+    [/^(.+?) returned no answer(?: \(blocked: (.+?)\))?\.$/, m => `${m[1]} 没有返回答案${m[2] ? `（被拦截：${m[2]}）` : ''}。`],
+    [/^That Gemini model ID has characters/, () => '这个 Gemini 模型 ID 含有不该有的字符。'],
+  ];
+
+  // Provider's own error text (kept in its original language), appended after the translation.
+  function detail(s) {
+    const d = String(s || '').trim();
+    return d ? ' ' + d : '';
+  }
+
+  function detectLang(stored, navLang) {
+    if (stored === 'en' || stored === 'zh') return stored;
+    return /^zh\b/i.test(navLang || '') ? 'zh' : 'en';
+  }
+
+  function trMessage(lang, msg) {
+    if (lang !== 'zh' || typeof msg !== 'string') return msg;
+    for (const [re, fn] of MSG_ZH) {
+      const m = msg.match(re);
+      if (m) return fn(m);
+    }
+    return msg;
+  }
+
+  const api = { T, KINDS, detectLang, trMessage };
+  global.IdealineI18n = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+// idealine timeline renderer. renderTimeline(D, root) draws the interactive
 // timeline for one term into the elements under `root` marked with data-part:
 // headline, senses, chart, legend, detail, eras. Used by the static term pages and
 // the web app. All text from data is inserted with textContent or escaped; links
@@ -794,7 +1192,274 @@ footer a{color:inherit}
   global.IdealineTimeline = helpers;
   if (typeof module !== 'undefined' && module.exports) module.exports = Object.assign({ renderTimeline }, helpers);
 })(typeof window !== 'undefined' ? window : globalThis);
+// Evidence-first reading brief, shared by live results and self-contained pages.
+(function (global) {
+  'use strict';
 
-renderTimeline(JSON.parse(document.getElementById('data').textContent));
+  const TEXT = {
+    en: {
+      start: 'Start with these sources', browse: 'Browse the evidence',
+      route: 'A short reading route', suggested: 'Suggested starting points',
+      intro: 'Read the passages, compare the uses, then choose a paper to explore.',
+      auto: 'Selected from the sample for different dates or suggested meanings. Check each source; this is not a complete reading list.',
+      scope: 'Titles and abstracts only · a sample, not a complete history',
+      saved: 'Data snapshot', question: 'A question to read with',
+      defaultQuestion: 'How do these papers use the same term?',
+      source: 'Abstract excerpt', titleOnly: 'Title match only', open: 'Open paper ↗',
+      copy: 'Copy quote + source', copied: 'Copied with source', copyFail: 'Copy unavailable. Select the text below and copy it.',
+      link: 'Link to passage', noLink: 'No source link available', unknownYear: 'Year unknown', unknownAuthor: 'Authors unavailable',
+      checked: 'Source text checked', suggestedMeaning: 'Suggested meaning', untagged: 'Not assigned a meaning',
+      note: 'Reading note', earlier: 'An earlier sampled use', different: 'Another sampled use', recent: 'A recent sampled use',
+      dateWarning: 'Sparse early record — check the date', futureWarning: 'Date is after this snapshot — check the source',
+      year: 'Year', allYears: 'All years', meaning: 'Suggested meaning', allMeanings: 'All meanings',
+      sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', more: 'Show more passages',
+      shown: (n, total) => `${n} of ${total} passages`, matches: n => `${n} passages in the sample`,
+      none: 'No passages match these filters. Try another year or meaning.',
+      noQuotes: 'No source passages are available in this result. Try a different spelling or another term.',
+      noFeatured: 'No linked abstract passages with usable dates are available as starting points. Browse the sample below.',
+      meaningNote: 'Meaning labels are model suggestions. The original passages stay in their source language.',
+      curve: 'How often the phrase appears', curveNote: 'All phrase matches in OpenAlex titles and abstracts, including other meanings. Counts do not establish who introduced an idea.',
+      count: n => `${n.toLocaleString('en-US')} phrase matches`, partial: 'Snapshot year; incomplete',
+      method: 'Method & limitations', diagnostics: 'Explore the original timeline & diagnostics',
+      methodText: 'OpenAlex supplies phrase counts and a sample of early, highly cited, and recent papers. Abstracts can be missing or truncated, and metadata can be wrong. A title match is not an abstract quotation. Books, posts, and ideas expressed in other words may be absent.',
+      methodModel: 'The optional model proposes meanings, eras, and milestones from these passages. A source link does not prove a model label. Diagnostic plots describe the sample, not a validated history.',
+      modelSummary: 'Model interpretation — verify against the passages',
+      noModel: 'No model was used. The passages are available without meaning labels.',
+      modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
+      originalHint: 'Click a milestone to inspect its evidence. All labels below are suggestions.',
+    },
+    zh: {
+      start: '从这些原文开始', browse: '浏览原文证据', route: '简短阅读路线', suggested: '建议阅读起点',
+      intro: '读原句、比较用法，再选一篇论文深入阅读。',
+      auto: '从样本中按年份或建议词义选取。请核对来源；这不是完整的阅读清单。',
+      scope: '仅限标题与摘要 · 抽样证据，不是完整历史', saved: '数据快照', question: '带着这个问题读',
+      defaultQuestion: '这些论文如何使用同一个术语？', source: '摘要原文', titleOnly: '仅标题匹配', open: '打开论文 ↗',
+      copy: '复制原文与出处', copied: '已复制原文与出处', copyFail: '无法自动复制。请选中下方文字并复制。',
+      link: '链接到这段原文', noLink: '暂无来源链接', unknownYear: '年份未知', unknownAuthor: '作者信息缺失',
+      checked: '已核对来源原文', suggestedMeaning: '建议词义', untagged: '未标注词义', note: '阅读提示',
+      earlier: '样本中较早的用法', different: '另一种样本用法', recent: '样本中较新的用法',
+      dateWarning: '稀疏早期记录，请核对日期', futureWarning: '日期晚于数据快照，请核对来源',
+      year: '年份', allYears: '所有年份', meaning: '建议词义', allMeanings: '所有词义', sort: '排序',
+      newest: '从新到旧', oldest: '从旧到新', more: '显示更多原文',
+      shown: (n, total) => `已显示 ${n} / ${total} 段原文`, matches: n => `样本包含 ${n} 段原文`,
+      none: '没有符合筛选条件的原文。请换一个年份或词义。',
+      noQuotes: '这个结果暂无来源原文。请尝试其他写法或术语。',
+      noFeatured: '暂无日期可用且带链接的摘要原文作为阅读起点。可浏览下方完整样本。',
+      meaningNote: '词义标签是模型的建议；原文保留来源语言。',
+      curve: '词组出现的频率', curveNote: '统计 OpenAlex 标题与摘要中的所有词组匹配，包括其他含义。数量不能证明谁最先提出一个概念。',
+      count: n => `${n.toLocaleString('en-US')} 条词组匹配`, partial: '快照所在年份，尚不完整',
+      method: '方法与局限', diagnostics: '查看原时间线与诊断图表',
+      methodText: 'OpenAlex 提供词组数量，以及较早、被引较多和近期论文的样本。摘要可能缺失或截断，元数据可能有误。标题匹配不等于摘要引文。书籍、博客及使用其他表达的概念可能未收录。',
+      methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
+      modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
+      originalHint: '点击里程碑查看证据。以下标签均为建议。',
+    },
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function safeUrl(value) {
+    try { const u = new URL(value); return /^https?:$/.test(u.protocol) ? u.href : ''; } catch (_) { return ''; }
+  }
+  const localized = (value, lang) => typeof value === 'string' ? value : (value && (value[lang] || value.en)) || '';
+  const yearOf = q => Number.isInteger(q.year) && q.year > 0 ? q.year : null;
+  const sourceKey = q => q.url || `${q.title}\n${q.authors}\n${q.year}`;
+
+  function readingModel(d) {
+    const raw = Array.isArray(d.quotes) ? d.quotes : [...(d.milestones || []), ...(d.eras || [])].flatMap(m => m.evidence || []);
+    const seen = new Set(), ids = new Set();
+    const quotes = raw.filter(q => q && typeof q.text === 'string' && q.text.trim()).map((q, i) => {
+      let id = String(q.id || `quote-${i + 1}`).replace(/[^a-zA-Z0-9_-]/g, '-');
+      while (ids.has(id)) id += '-2';
+      ids.add(id);
+      return { ...q, id, url: safeUrl(q.url), year: yearOf(q) };
+    }).filter(q => {
+      const key = `${sourceKey(q)}\n${q.text}`;
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+    const counts = (d.counts || []).filter(([y, n]) => Number.isInteger(y) && Number.isFinite(n) && n > 0).sort((a,b) => a[0]-b[0]);
+    const threshold = Math.max(3, counts.reduce((sum, [, n]) => sum + n, 0) * .01);
+    let sum = 0;
+    const onset = counts.find(([, n]) => (sum += n) >= threshold)?.[0];
+    // Doubtful early dates: records cut off from the main run of use by more than three
+    // empty years before the onset (e.g. a misdated 2019 "vibe coding" paper). Papers just
+    // before the onset of a fast-growing term are real early uses, not date errors.
+    let mainStart = counts.length ? counts[0][0] : null;
+    for (let i = 1; i < counts.length; i++) if (counts[i][0] - counts[i - 1][0] > 3 && onset && counts[i][0] <= onset) mainStart = counts[i][0];
+    const snapshot = Number(String(d.generated || '').slice(0,4)) || null;
+    const entries = d.readingGuide?.entries || [];
+    for (const q of quotes) {
+      // A reviewed selection is tied to the exact saved passage and its own source.
+      q.review = entries.find(e => e.id === q.id && e.text === q.text && safeUrl(e.url) === q.url && e.year === q.year && safeUrl(e.checkedUrl)) || null;
+      q.warning = q.year && snapshot && q.year > snapshot ? 'futureWarning' : q.year && mainStart && q.year < mainStart && !q.review ? 'dateWarning' : '';
+    }
+    const featured = entries.map(e => quotes.find(q => q.review === e && !q.warning && !q.fromTitle)).filter(Boolean).slice(0,3);
+    const curated = featured.length > 0;
+    if (!curated) {
+      const senses = d.senses || [];
+      const related = new Set(senses.filter(s => s.related).map(s => s.key));
+      const eligible = quotes.filter(q => q.url && q.year && !q.warning && !q.fromTitle && (!related.size || related.has(q.sense))).sort((a,b) => a.year-b.year);
+      const add = q => { if (q && !featured.some(x => sourceKey(x) === sourceKey(q))) featured.push(q); };
+      add(eligible[0]);
+      add(eligible.find(q => q.sense && q.sense !== featured[0]?.sense && sourceKey(q) !== sourceKey(featured[0] || {})));
+      add([...eligible].reverse().find(q => !featured.some(x => sourceKey(x) === sourceKey(q))));
+      for (const q of eligible) { if (featured.length >= 3) break; add(q); }
+      featured.sort((a,b) => a.year-b.year);
+    }
+    return { quotes, featured, curated, counts, snapshot };
+  }
+
+  function filterQuotes(quotes, {year = '', sense = '', order = 'newest'} = {}) {
+    return quotes.filter(q => (!year || String(q.year || 'unknown') === year) && (!sense || (q.sense || 'untagged') === sense))
+      .sort((a,b) => {
+        if (a.year == null || b.year == null) return a.year == null ? (b.year == null ? 0 : 1) : -1;
+        return (a.year-b.year) * (order === 'oldest' ? 1 : -1);
+      });
+  }
+
+  function citationText(q, lang = 'en') {
+    const T = TEXT[lang] || TEXT.en;
+    const source = safeUrl(q.review?.checkedUrl) || safeUrl(q.url);
+    return `${q.fromTitle ? T.titleOnly : T.source}:\n“${q.text}”\n\n${q.title || ''}\n${q.authors || T.unknownAuthor} · ${q.year || T.unknownYear}\n${source || T.noLink}${q.warning ? '\n' + T[q.warning] : ''}`;
+  }
+
+  function highlight(text, terms) {
+    const parts = terms.filter(t => typeof t === 'string' && t.trim()).map(t => t.trim().split(/[\s-]+/).map(w => w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('[\\s-]+'));
+    if (!parts.length) return esc(text);
+    return String(text).split(new RegExp(`(${parts.join('|')})`,'igu')).map((part,i) => i%2 ? `<mark>${esc(part)}</mark>` : esc(part)).join('');
+  }
+
+  function quoteCard(q, { lang = 'en', terms = [], label = '', featured = false } = {}) {
+    const T = TEXT[lang] || TEXT.en, url = safeUrl(q.review?.checkedUrl) || q.url;
+    const note = localized(q.review?.note, lang);
+    return `<article class="source-card${featured ? ' featured-source' : ''}" id="${featured ? 'q-' : 'sample-'}${esc(q.id)}">
+      <div class="source-top"><span class="source-label">${esc(localized(q.review?.label,lang) || label)}</span><span class="source-year">${esc(q.year || T.unknownYear)}</span></div>
+      <p class="source-type">${esc(q.fromTitle ? T.titleOnly : T.source)}${q.review ? ` <span>· ${esc(T.checked)} ${esc(q.review.checked)}</span>` : ''}</p>
+      <blockquote>${highlight(q.text, terms)}</blockquote>
+      ${note ? `<p class="reading-note"><b>${esc(T.note)}</b> ${esc(note)}</p>` : ''}
+      <div class="source-citation"><h4>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(q.title || '')}</a>` : esc(q.title || '')}</h4><p>${esc(q.authors || T.unknownAuthor)} · ${esc(q.year || T.unknownYear)}</p></div>
+      ${q.warning ? `<p class="source-warning">${esc(T[q.warning])}</p>` : ''}
+      <div class="source-actions">${url ? `<a class="paper-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(T.open)}</a>` : `<span class="muted">${esc(T.noLink)}</span>`}<button type="button" data-copy="${esc(q.id)}">${esc(T.copy)}</button><a class="passage-link" href="#q-${esc(q.id)}" data-passage="${esc(q.id)}" aria-label="${esc(T.link)}">#</a></div>
+      <div class="copy-status" role="status" aria-live="polite"></div>
+    </article>`;
+  }
+
+  function usageChart(model, T) {
+    if (!model.counts.length) return '';
+    const counts = model.counts, max = Math.max(...counts.map(([,n]) => n)), start = counts[0][0], end = counts[counts.length-1][0];
+    const width = 680, height = 82, step = width / (end-start+1);
+    const bars = counts.map(([year,n]) => {
+      const h = Math.max(2, n/max*height);
+      return `<rect x="${(year-start)*step}" y="${height-h}" width="${Math.max(.8,step*.72)}" height="${h}" class="${year === model.snapshot ? 'partial-bar' : ''}"><title>${year}: ${n}${year === model.snapshot ? ' · ' + esc(T.partial) : ''}</title></rect>`;
+    }).join('');
+    return `<section class="usage-panel"><div class="section-heading"><h3>${esc(T.curve)}</h3><span>${esc(T.count(counts.reduce((s,[,n])=>s+n,0)))}</span></div><p>${esc(T.curveNote)}</p><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(T.curve + '. ' + T.curveNote)}">${bars}</svg><div class="usage-axis"><span>${start}</span><span>${end}${model.snapshot === end ? ' · ' + esc(T.partial) : ''}</span></div></section>`;
+  }
+
+  // opts.pending: a model is still reading; opts.applyHash: false for the built-in example;
+  // opts.showRoots: open the original timeline at its roots section.
+  function renderReadingBrief(d, root, lang = 'en', opts = {}) {
+    lang = lang === 'zh' ? 'zh' : 'en';
+    const T = TEXT[lang], model = readingModel(d), host = root.querySelector('[data-part="reading"]');
+    if (!host) return;
+    const terms = [d.term, ...(d.aliases || [])];
+    const senseMap = new Map((d.senses || []).map(s => [s.key, s.label]));
+    const card = (q, featured, index) => quoteCard(q, {lang, terms, featured,
+      label: featured ? [T.earlier,T.different,T.recent][index] : q.sense ? `${T.suggestedMeaning}: ${senseMap.get(q.sense) || T.untagged}` : T.untagged});
+    const years = [...new Set(model.quotes.map(q => q.year).filter(Boolean))].sort((a,b)=>b-a);
+    const senseKeys = [...new Set(model.quotes.map(q=>q.sense || 'untagged'))];
+    host.innerHTML = `<div class="brief-meta"><span>${esc(T.scope)}</span><span>${esc(T.saved)} ${esc(d.generated || '—')}</span></div>
+      <div class="reading-layout"><section class="reading-main"><div class="section-heading"><h3>${esc(T.start)}</h3><span>${esc(model.curated ? T.route : T.suggested)}</span></div><p class="section-intro">${esc(model.curated ? T.intro : T.auto)}</p>
+      ${model.featured.map((q,i)=>card(q,true,i)).join('') || `<p class="empty-state">${esc(model.quotes.length ? T.noFeatured : T.noQuotes)}</p>`}</section>
+      <aside class="reading-aside"><span class="eyebrow">${esc(T.question)}</span><p>${esc(localized(d.readingGuide?.question,lang) || T.defaultQuestion)}</p><a href="#evidence" data-browse>${esc(T.browse)} <span>↘</span></a><div class="aside-count">${esc(T.matches(model.quotes.length))}</div></aside></div>
+      <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
+      <p>${esc(d.model ? T.meaningNote : opts.pending ? T.modelPending : T.noModel)}</p><div class="evidence-filters">
+      <label>${esc(T.year)}<select data-filter="year"><option value="">${esc(T.allYears)}</option>${years.map(y=>`<option>${y}</option>`).join('')}${model.quotes.some(q=>!q.year) ? `<option value="unknown">${esc(T.unknownYear)}</option>` : ''}</select></label>
+      ${senseKeys.some(k=>k!=='untagged') ? `<label>${esc(T.meaning)}<select data-filter="sense"><option value="">${esc(T.allMeanings)}</option>${senseKeys.map(k=>`<option value="${esc(k)}">${esc(senseMap.get(k) || T.untagged)}</option>`).join('')}</select></label>` : ''}
+      <label>${esc(T.sort)}<select data-filter="order"><option value="newest">${esc(T.newest)}</option><option value="oldest">${esc(T.oldest)}</option></select></label></div>
+      <p class="filter-status" role="status" aria-live="polite"></p><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
+      ${usageChart(model,T)}
+      <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p>
+      ${d.summary ? `<h3>${esc(T.modelSummary)}</h3><p>${esc(d.summary)}</p>` : ''}
+      <details class="timeline-diagnostics"><summary>${esc(T.diagnostics)}</summary><div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div></details></details>`;
+    const browser = host.querySelector('.evidence-browser'), list = host.querySelector('.quote-results'), more = host.querySelector('.load-more');
+    let limit = 12;
+    function refresh() {
+      const opts = Object.fromEntries([...host.querySelectorAll('[data-filter]')].map(s=>[s.dataset.filter,s.value]));
+      const filtered = filterQuotes(model.quotes,opts);
+      list.innerHTML = filtered.slice(0,limit).map(q=>card(q,false)).join('') || `<p class="empty-state">${esc(T.none)}</p>`;
+      host.querySelector('.filter-status').textContent = T.shown(Math.min(limit,filtered.length),filtered.length);
+      more.hidden = filtered.length <= limit;
+    }
+    host.querySelectorAll('[data-filter]').forEach(s=>s.addEventListener('change',()=>{limit=12;refresh();}));
+    more.addEventListener('click',()=>{limit+=12;refresh();});
+    refresh();
+    function reveal(id) {
+      const q = model.quotes.find(q=>q.id===id);
+      if (!q) return;
+      let target = [...host.querySelectorAll('.featured-source')].find(el=>el.id===`q-${id}`);
+      if (!target) {
+        browser.open = true;
+        host.querySelectorAll('[data-filter]').forEach(s=>{s.value = s.dataset.filter==='order' ? 'newest' : '';});
+        limit = model.quotes.length; refresh();
+        target = [...list.children].find(el=>el.id===`sample-${id}`);
+      }
+      target?.scrollIntoView({block:'center'});
+      if (target) {target.tabIndex=-1;target.focus({preventScroll:true});}
+    }
+    host.onclick = async ev => {
+      const button = ev.target.closest('[data-copy]'), passage = ev.target.closest('[data-passage]');
+      if (ev.target.closest('[data-browse]')) { ev.preventDefault(); browser.open=true; browser.scrollIntoView({block:'start'}); }
+      if (passage) {ev.preventDefault(); global.history.replaceState(null,'',`#q-${passage.dataset.passage}`);reveal(passage.dataset.passage);}
+      if (!button) return;
+      const q = model.quotes.find(q=>q.id===button.dataset.copy), status = button.closest('article').querySelector('.copy-status');
+      if (!q) return;
+      const text = citationText(q,lang);
+      try {await global.navigator.clipboard.writeText(text);status.textContent=T.copied;}
+      catch (_) {
+        status.textContent=T.copyFail;
+        const area=document.createElement('textarea');area.readOnly=true;area.value=text;area.setAttribute('aria-label',T.copy);
+        status.appendChild(area);area.focus();area.select();
+      }
+    };
+    const diagnostics=host.querySelector('.timeline-diagnostics');
+    diagnostics.addEventListener('toggle',()=> {
+      if (diagnostics.open && global.renderTimeline) {
+        const I=global.IdealineI18n, labels=I ? Object.assign({kinds:I.KINDS[lang]},I.T[lang]) : {};
+        global.renderTimeline(d,diagnostics,labels);
+      }
+    });
+    const hash=opts.applyHash === false ? '' : global.location?.hash || '';
+    if (hash.startsWith('#q-')) reveal(hash.slice(3));
+    if (hash.startsWith('#m-') || opts.showRoots) {host.querySelector('.method-panel').open=true;diagnostics.open=true;}
+    if (opts.showRoots) {
+      // The toggle event that draws the timeline fires asynchronously; scroll after it.
+      setTimeout(() => host.querySelector('[data-part="roots"]')?.scrollIntoView({block:'start'}), 50);
+    }
+  }
+
+  function mountPage(d, lang) {
+    let current = lang === 'zh' ? 'zh' : 'en';
+    const render = () => {
+      document.documentElement.lang=current==='zh'?'zh-CN':'en';
+      document.querySelectorAll('[data-reading-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.readingLang===current)));
+      const back=document.querySelector('[data-reading-back]');if(back)back.textContent=current==='zh'?'← 查找其他术语':'← Find another term';
+      renderReadingBrief(d,document,current);
+    };
+    document.querySelectorAll('[data-reading-lang]').forEach(b=>b.addEventListener('click',()=>{current=b.dataset.readingLang;render();}));
+    render();
+  }
+  function pageHtml(d, spec, lang = 'en') {
+    lang = lang === 'zh' ? 'zh' : 'en';
+    const values = {home:esc(spec.siteUrl), term:esc(d.term), en:String(lang==='en'), zh:String(lang==='zh'), back:lang==='zh'?'← 查找其他术语':'← Find another term'};
+    const body=spec.pageShell.replace(/\{(\w+)\}/g,(_,key)=>values[key] || '');
+    const noEnd=js=>js.replace(/<\/script/gi,'<\\/script');
+    const libraries=[spec.i18nJs,spec.timelineJs,spec.readingJs].map(noEnd).join('\n');
+    return `<!doctype html>\n<html lang="${lang==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.term)} · idealine</title><style>${spec.css}</style></head><body>${body}<script type="application/json" id="data">${JSON.stringify(d).replace(/</g,'\\u003c')}<\/script><script>${libraries}\nIdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent),${JSON.stringify(lang)});<\/script></body></html>`;
+  }
+  const api={TEXT,safeUrl,readingModel,filterQuotes,citationText,highlight,quoteCard,renderReadingBrief,mountPage,pageHtml};
+  global.IdealineReading=api;
+  if(typeof module!=='undefined' && module.exports)module.exports=api;
+})(typeof window!=='undefined'?window:globalThis);
+
+IdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent), "en");
 </script>
 </body></html>

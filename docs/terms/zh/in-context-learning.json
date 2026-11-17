@@ -3849,5 +3849,61 @@
       "shift": ""
     }
   ],
-  "totalsAsOf": "2026-11-17"
+  "totalsAsOf": "2026-11-17",
+  "readingGuide": {
+    "question": {
+      "en": "Does in-context learning refer to examples in a prompt, decreasing token loss, or learning from tabular inputs?",
+      "zh": "上下文学习指提示中的示例、随位置降低的损失，还是从表格输入中学习？"
+    },
+    "entries": [
+      {
+        "id": "E8",
+        "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
+        "url": "https://doi.org/10.48550/arxiv.2111.02080",
+        "year": 2021,
+        "checkedUrl": "https://arxiv.org/abs/2111.02080",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Examples in a prompt",
+          "zh": "提示中的示例"
+        },
+        "note": {
+          "en": "This passage describes learning a task by conditioning on input-output examples.",
+          "zh": "这段原文把任务学习描述为以输入输出示例为条件。"
+        }
+      },
+      {
+        "id": "E22",
+        "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).",
+        "url": "https://doi.org/10.48550/arxiv.2209.11895",
+        "year": 2022,
+        "checkedUrl": "https://arxiv.org/abs/2209.11895",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "A different operational meaning",
+          "zh": "不同的操作性定义"
+        },
+        "note": {
+          "en": "Notice the parenthetical definition: decreasing loss at increasing token indices. The mechanism is presented as a hypothesis.",
+          "zh": "注意括号中的定义：随着 token 位置增加而降低的损失。机制被表述为假设。"
+        }
+      },
+      {
+        "id": "E20",
+        "text": "TabPFN performs in-context learning (ICL), it learns to make predictions using sequences of labeled examples (x, f(x)) given in the input, without requiring further parameter updates.",
+        "url": "https://doi.org/10.48550/arxiv.2207.01848",
+        "year": 2022,
+        "checkedUrl": "https://arxiv.org/abs/2207.01848",
+        "checked": "2026-11-17",
+        "label": {
+          "en": "Beyond language tasks",
+          "zh": "超出语言任务"
+        },
+        "note": {
+          "en": "Compare the same term applied to tabular prediction without parameter updates.",
+          "zh": "比较同一术语用于无需参数更新的表格预测。"
+        }
+      }
+    ]
+  }
 }

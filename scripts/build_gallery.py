@@ -10,12 +10,12 @@ import json
 from importlib import resources
 from pathlib import Path
 
-from idealine.render_term import CSS, PAGE_TEXT, REPO_URL, TIMELINE_JS
+from idealine.render_term import CSS, PAGE_SHELL, PAGE_TEXT, READING_JS, REPO_URL, TIMELINE_JS, html_from_data, with_reading_guide
 from idealine.term import OUTPUT_LANG, OUTPUT_SCHEMA, SYSTEM_PROMPT
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 from idealine.render_term import SITE_URL  # noqa: E402
-WEB_FILES = ("i18n.js", "core.js", "providers.js", "timeline.js", "app.js")
+WEB_FILES = ("i18n.js", "core.js", "providers.js", "timeline.js", "reading.js", "app.js")
 # The page talks only to OpenAlex and the model provider the visitor picks.
 CSP = (
     "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
@@ -41,16 +41,19 @@ def sparkline(counts: list[list[int]], w: int = 240, h: int = 46) -> str:
 
 def card(d: dict, href: str, zh_href: str | None = None) -> str:
     e = html.escape
-    years = [y for y, _ in d["counts"]]
-    span = f"{min(years)}–{max(years)}" if years else ""
-    n = len(d["milestones"])
+    quotes = d.get("quotes")
+    if not isinstance(quotes, list):
+        quotes = [q for item in [*d.get("milestones", []), *d.get("eras", [])]
+                  for q in item.get("evidence", [])]
+    n = len({(q.get("url") or (q.get("title"), q.get("authors"), q.get("year")), q["text"])
+             for q in quotes if isinstance(q.get("text"), str) and q["text"].strip()})
     return (
         f'<a class="tcard" href="{e(href)}" data-href-en="{e(href)}"'
         + (f' data-href-zh="{e(zh_href)}"' if zh_href else "")
         + ">"
         f'<h3>{e(d["term"])}</h3>{sparkline(d["counts"])}'
         f'<div class="tmeta"><span class="cardmeta" data-total="{d["total"]}" data-n="{n}">'
-        f'{d["total"]:,} papers · {n} milestones</span> · {span}</div></a>'
+        f'{n} source passages · prepared brief</span></div></a>'
     )
 
 
@@ -159,7 +162,7 @@ nav a:hover{color:var(--fg)}
 
 def spec_json() -> str:
     """Prompt, schema, and page assets shared with the web app (one source of truth)."""
-    spec = {"system": SYSTEM_PROMPT, "schema": OUTPUT_SCHEMA, "css": CSS, "timelineJs": TIMELINE_JS, "siteUrl": SITE_URL, "outputLang": OUTPUT_LANG,
+    spec = {"system": SYSTEM_PROMPT, "schema": OUTPUT_SCHEMA, "css": CSS, "timelineJs": TIMELINE_JS, "readingJs": READING_JS, "pageShell": PAGE_SHELL, "siteUrl": SITE_URL, "outputLang": OUTPUT_LANG,
             "pageText": PAGE_TEXT, "i18nJs": (resources.files("idealine") / "web" / "i18n.js").read_text(encoding="utf-8")}
     return json.dumps(spec, ensure_ascii=False).replace("<", "\\u003c")
 
@@ -176,7 +179,7 @@ TRACE_FORM = """
 <form id="trace-form" autocomplete="off">
   <div class="search">
     <input id="term" required minlength="2" maxlength="80" aria-label="Term" data-i18n-aria="termLabel" data-i18n-ph="termPh" placeholder="Try “world model” or “in-context learning”">
-    <button class="btn" id="go" type="submit" data-i18n="go">Trace</button>
+    <button class="btn" id="go" type="submit" data-i18n="go">Find sources</button>
   </div>
   <div class="chips">{chips}</div>
   <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
@@ -215,37 +218,35 @@ RESULT = """
   <ol id="progress" class="progress" hidden></ol>
   <div id="status" role="status" aria-live="polite"></div>
   <div id="r-suggest" class="suggest" hidden></div>
-  <p class="summary" id="r-summary"></p>
-  <p class="meta" id="r-meta"></p>
-  <p class="headline" data-part="headline"></p>
-  <div class="senses" data-part="senses"></div>
-  <div class="card">
-    <div class="hint" data-i18n="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
-    <div class="scroller"><div data-part="chart"></div></div>
-    <div class="legend" data-part="legend"></div>
-    <div class="detail" data-part="detail"></div>
-  </div>
-  <div class="eras" data-part="eras"></div>
-  <div class="roots" data-part="roots"></div>
-  <div class="actions" id="r-actions" hidden>
+  <div data-part="reading"></div>
+  <details class="file-tools" id="r-actions" hidden><summary data-i18n="downloads">Downloads &amp; tools</summary><div class="actions">
     <button class="btn ghost" id="r-roots" type="button" hidden></button>
     <button class="btn ghost" id="dl-html" type="button" data-i18n="dlHtml">Download page (.html)</button>
     <button class="btn ghost" id="dl-json" type="button" data-i18n="dlJson">Download data (.json)</button>
     <button class="btn ghost" id="r-live" type="button" data-i18n="traceLive" hidden>Trace again with live data</button>
-  </div>
+  </div></details>
 </section>
 """
 
-EXAMPLE = "recursive-self-improvement"
+EXAMPLE = "world-model"
 
 
 def main() -> None:
     copy_web_assets()
+    # Keep standalone English/Chinese pages and saved ready-made data in sync.
+    for path in sorted((DOCS / "terms").rglob("*.json")):
+        original = json.loads(path.read_text(encoding="utf-8"))
+        prepared = with_reading_guide(original)
+        if prepared != original:
+            path.write_text(json.dumps(prepared, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        home_href = "../../index.html" if path.parent.name == "zh" else "../index.html"
+        path.with_suffix(".html").write_text(html_from_data(prepared, home_href), encoding="utf-8")
     terms = []
     for path in sorted((DOCS / "terms").glob("*.json")):
         d = json.loads(path.read_text())
         terms.append((path.stem, d, f"terms/{path.stem}.html"))
-    terms.sort(key=lambda x: -x[1]["total"])
+    pilots = ["world-model", "in-context-learning", "vibe-coding"]
+    terms.sort(key=lambda x: (pilots.index(x[0]) if x[0] in pilots else len(pilots), x[0]))
     example = next((d for stem, d, _ in terms if stem == EXAMPLE), terms[0][1] if terms else None)
     zh_dir = DOCS / "terms" / "zh"
     zh_path = zh_dir / f"{EXAMPLE}.json"
@@ -269,17 +270,19 @@ def main() -> None:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="{CSP}">
 <meta name="referrer" content="no-referrer">
-<title>idealine · where did this idea come from?</title>
-<meta name="description" content="Interactive timelines of where a term came from and how its meaning changed, with a quote behind every step.">
+<title>idealine · understand the term, read the evidence</title>
+<meta name="description" content="A reading brief for AI terms. Compare quoted passages from papers, check their sources, and find what to read next.">
 <style>{CSS}{PAGE_CSS}</style></head>
-<body><main>
+<body class="home"><a class="skip-link" href="#result">Skip to sources</a><main>
 <nav>
   <a class="logo" href="./">{LOGO}idealine</a>
   <span class="links"><a href="#how" data-i18n="navHow">How it works</a><a href="{REPO_URL}">GitHub</a><span class="langseg" id="lang" role="group" aria-label="Language"><button type="button" data-lang="zh" aria-pressed="false">中</button><button type="button" data-lang="en" aria-pressed="true">EN</button></span></span>
 </nav>
 <section class="hero">
-  <h1 data-i18n="heroTitle">Where did this idea come from?</h1>
-  <p data-i18n="heroSub">Type any term. See when it first appeared, who shaped it, and how its meaning shifted, with the sentence behind every step.</p>
+  <div class="hero-copy"><span class="eyebrow" data-i18n="heroEyebrow">A reading companion for AI ideas</span>
+  <h1 data-i18n="heroTitle">Understand the term. Read the evidence.</h1>
+  <p data-i18n="heroSub">A few useful papers. Their actual words. Find out how an idea is used, and decide what to read next.</p></div>
+  <aside class="hero-example"><span class="eyebrow" data-i18n="exampleEyebrow">Inside a reading brief · world model</span><blockquote>Our <mark>world model</mark> can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.</blockquote><cite>Ha &amp; Schmidhuber · 2018 · <a href="https://arxiv.org/abs/1803.10122" target="_blank" rel="noopener noreferrer">World Models</a></cite><a href="terms/world-model.html" data-i18n="exampleLink">Explore the reading brief ↗</a></aside>
   {TRACE_FORM.format(chips=chips)}
 </section>
 {RESULT}
@@ -289,7 +292,6 @@ def main() -> None:
   <div><b data-i18n="how1h">1 · Count</b><p data-i18n="how1">Papers per year in OpenAlex that use the exact phrase in a title or abstract.</p></div>
   <div><b data-i18n="how2h">2 · Quote</b><p data-i18n="how2">The sentences that use it, from the earliest, most-cited, and newest papers.</p></div>
   <div><b data-i18n="how3h">3 · Explain</b><p data-i18n="how3">A model groups them into eras and milestones, and may cite only those quotes.</p></div>
-  <div><b data-i18n="howKindsH">Milestone types</b><p data-i18n="howKinds"></p></div>
   <div><b data-i18n="howLimitsH">Limits</b><p data-i18n="howLimits"></p></div>
   <div><b data-i18n="howKeyH">Your key</b><p data-i18n="howKey"></p></div>
 </section>
