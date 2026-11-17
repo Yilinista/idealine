@@ -1,11 +1,22 @@
 # Launch checklist and post drafts
 
-Drafts only. Nothing here has been posted.
+## Posted
 
-**2026-11-17 status:** Phase 2 changes the main experience to a source-first reading
-brief. The drafts below describe the earlier timeline product and need revision
-after local review and a real-reader check. Do not reuse their historical claims
-without checking the underlying evidence. This implementation has not been pushed.
+| Date | Where | Link | By |
+|---|---|---|---|
+| 2026-11-17 | X | (link to add) | Yilin |
+
+Text as posted:
+
+> I made idealine, a free open-source tool (no sign-up): type a term like "vibe coding" and get a timeline of where it came from and how its meaning shifted, quoted from real papers.
+>
+> Papers only, so dates can run late.
+>
+> Try a term and tell me if it's off: https://yilinista.github.io/idealine/
+
+Replies go to `FEEDBACK.md`, with what each one changed.
+
+The checklist and drafts below were written before launch and are kept for reference.
 
 ## Before posting
 
