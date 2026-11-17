@@ -387,9 +387,11 @@
       }
       el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
       if (ta) {
-        const x = X(ta + (fine ? 0 : 0.5));  // quarter years: the start of the takeoff year
+        // At the start of the takeoff year, in the gap between bars, and through the whole
+        // chart so it reads as "everything right of this line came after takeoff".
+        const x = X(ta);
+        el('line', { x1: x, x2: x, y1: Math.max(0, top - 6), y2: axisY + barH + 6, stroke: css('popularized'), 'stroke-width': 1.5, 'stroke-dasharray': '4 3', opacity: 0.9 }, svg);
         el('path', { d: `M${x - 5},${axisY - 1} L${x + 5},${axisY - 1} L${x},${axisY - 9} Z`, fill: css('popularized') }, svg);
-        el('line', { x1: x, x2: x, y1: axisY, y2: axisY + barH + 6, stroke: css('popularized'), 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: 0.7 }, svg);
         const t = el('text', { x: x + 4, y: axisY + barH + 12, class: 'muted', 'font-size': 10 }, svg);
         t.textContent = L.takeoff(ta);
         el('title', {}, t).textContent = L.takeoffTip;

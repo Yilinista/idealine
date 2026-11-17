@@ -97,7 +97,7 @@ def to_markdown(t: TermTimeline) -> str:
 CSS = r"""
 :root{--bg:#f6f7f9;--panel:#ffffff;--fg:#151821;--muted:#667085;--ink-soft:#3d4452;--line:#e1e5ec;--accent:#3b5bdb;--on-accent:#ffffff;
 --ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
---bar:#c3cad6;--era1:rgba(59,91,219,.07);--era2:rgba(183,121,31,.08);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
+--bar:#c3cad6;--era1:rgba(59,91,219,.07);--era2:rgba(15,138,126,.06);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0c0f15;--panel:#141922;--fg:#e7eaf0;--muted:#8a93a5;--ink-soft:#c2c8d3;--line:#252c39;--accent:#7c9cff;--on-accent:#0a0f1f;
 --ancestor:#b6a6ff;--origin:#5fd3c4;--coined:#7ea2ff;--popularized:#7bd88f;--redefined:#e3b341;--applied:#a99cf5;--critique:#ff8a65;
 --bar:#3a4050;--era1:rgba(124,156,255,.08);--era2:rgba(95,211,196,.06);--glow:rgba(124,156,255,.10);--shadow:0 12px 40px rgba(0,0,0,.45)}}
