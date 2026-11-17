@@ -1,6 +1,6 @@
 /* Shared reading surface: quiet paper, ink, and selective evidence highlights. */
-:root{--bg:#f6f5f0;--panel:#fffefa;--fg:#202d2b;--muted:#646e68;--ink-soft:#48534e;--line:#dce0d7;--accent:#255b4e;--on-accent:#fffefa;--glow:transparent;--shadow:0 5px 20px #20352d05;--quote-mark:#e4ecfb;--warning-bg:#fff0ce}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141b19;--panel:#1b2521;--fg:#edf0e8;--muted:#a7b4ac;--ink-soft:#c2cdc5;--line:#35443c;--accent:#9bcbb5;--on-accent:#17271f;--quote-mark:#2b4059;--warning-bg:#514426;--glow:transparent;--shadow:none}}
+:root{--quote-mark:#e4ecfb;--warning-bg:#fff0ce}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--quote-mark:#2b3550;--warning-bg:#514426}}
 body{background:var(--bg);font-size:16px;line-height:1.6}
 main{max-width:1120px;padding:26px 36px 64px}
 a{color:var(--accent);text-underline-offset:3px}
@@ -15,7 +15,7 @@ button,a,summary,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .reading-lang button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
 .term-header{padding:26px 0 4px}
 .term-header>a{font-size:.83rem;text-decoration:none}
-.term-header h1{font-family:ui-serif,Georgia,"Songti SC",serif;font-weight:500;letter-spacing:-.025em;font-size:clamp(2rem,5vw,3.5rem);margin:18px 0 0}
+.term-header h1{font-weight:500;letter-spacing:-.025em;font-size:clamp(2rem,5vw,3.5rem);margin:18px 0 0}
 .eyebrow,.source-label{font-size:.71rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .brief-meta{display:flex;flex-wrap:wrap;gap:4px 20px;padding:12px 0 26px;color:var(--muted);font-size:.79rem}
 .brief-meta span+span{margin-left:auto}
@@ -31,7 +31,7 @@ button,a,summary,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .source-year{color:var(--ink-soft);font-size:.8rem;font-variant-numeric:tabular-nums;white-space:nowrap}
 .source-type{font-size:.69rem;color:var(--muted);margin:6px 0 10px}
 .source-type span{color:var(--muted)}
-.source-card blockquote{font-family:ui-serif,Georgia,"Songti SC",serif;font-size:1.22rem;line-height:1.65;letter-spacing:-.008em;margin:0;padding:0;border:0;overflow-wrap:anywhere}
+.source-card blockquote{font-size:1.22rem;line-height:1.65;letter-spacing:-.008em;margin:0;padding:0;border:0;overflow-wrap:anywhere}
 mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decoration:none;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .1em}
 .reading-note{font-size:.82rem;color:var(--ink-soft);margin:16px 0 0;line-height:1.6}
 .reading-note b{font-weight:600;color:var(--accent);margin-right:5px}
@@ -50,7 +50,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .copy-status:not(:empty){margin-top:10px}
 .copy-status textarea{display:block;width:100%;min-height:150px;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:12px;margin-top:8px;font-size:.8rem}
 .reading-aside{border-top:2px solid var(--accent);padding-top:18px;position:sticky;top:22px}
-.reading-aside>p{font-family:ui-serif,Georgia,"Songti SC",serif;font-size:1.38rem;line-height:1.5;margin:12px 0 22px}
+.reading-aside>p{font-size:1.38rem;line-height:1.5;margin:12px 0 22px}
 .reading-aside>a{display:flex;align-items:center;justify-content:space-between;text-decoration:none;font-size:.8rem;font-weight:600;border-bottom:1px solid var(--line);padding-bottom:12px}
 .aside-count{font-size:.73rem;color:var(--muted);padding-top:12px}
 .evidence-browser,.method-panel{border-top:1px solid var(--line);padding-top:22px;margin-top:30px;color:var(--ink-soft)}
@@ -82,7 +82,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home .hero-copy h1{font-size:clamp(2.1rem,4.2vw,3.2rem);font-weight:500;letter-spacing:-.035em;line-height:1.1;margin:12px 0 18px;max-width:530px}
 .home .hero-copy>p{font-size:.98rem;max-width:49ch;color:var(--ink-soft);margin:0 0 22px}
 .home .hero-example{border-left:1px solid var(--line);padding:12px 0 10px 25px;align-self:start}
-.hero-example blockquote{font-family:ui-serif,Georgia,serif;font-size:1.04rem;line-height:1.65;border:0;padding:0;margin:12px 0}
+.hero-example blockquote{font-size:1.04rem;line-height:1.65;border:0;padding:0;margin:12px 0}
 .hero-example cite{font-size:.73rem;color:var(--muted);font-style:normal}
 .hero-example>a{display:block;font-size:.77rem;margin-top:12px}
 .home #trace-form{grid-column:1/-1;max-width:none;margin-top:4px}
@@ -121,3 +121,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .timeline-main{margin:6px 0 34px}
 .timeline-main .timeline-summary{font-size:1.02rem;line-height:1.6;max-width:72ch;color:var(--fg);margin:0 0 10px}
 .timeline-main .card{margin-top:8px}
+
+/* Toolbar lines up with the hint text inside the timeline card. */
+.card>.tlbar{padding:0 16px}
+/* The roots spectrum scales down on narrow screens instead of widening the page. */
+.roots svg{max-width:100%;height:auto}
