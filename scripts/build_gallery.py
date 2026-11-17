@@ -135,15 +135,15 @@ nav a:hover{color:var(--fg)}
 #status.error{color:var(--critique)}
 #result{margin-top:44px;scroll-margin-top:16px}
 .result-h{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
-.result-h h2{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:clamp(1.5rem,3.4vw,2rem);font-weight:600;margin:0;line-height:1.2}
+.result-h h2{letter-spacing:-.02em;font-size:clamp(1.5rem,3.4vw,2rem);font-weight:600;margin:0;line-height:1.2}
 .tag{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 #result .summary{margin-top:8px}
 #result .actions{margin-top:16px}
-.section-h{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:1.4rem;font-weight:600;margin:56px 0 14px}
+.section-h{font-size:1.4rem;font-weight:600;margin:56px 0 14px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .tcard{display:block;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px 14px;color:inherit;text-decoration:none;transition:transform .15s,box-shadow .15s,border-color .15s}
 .tcard:hover,.tcard:focus{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--accent)}
-.tcard h3{margin:0 0 4px;font-family:ui-serif,Georgia,serif;font-size:1.15rem;font-weight:600}
+.tcard h3{margin:0 0 4px;font-size:1.15rem;font-weight:600}
 .spark{display:block;width:100%;height:46px;margin:12px 0 8px;fill:var(--accent);opacity:.75}
 .tmeta{font-size:.78rem;color:var(--muted)}
 .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:56px}

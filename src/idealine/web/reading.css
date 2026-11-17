@@ -1,6 +1,6 @@
 /* Shared reading surface: quiet paper, ink, and selective evidence highlights. */
 :root{--quote-mark:#e4ecfb;--warning-bg:#fff0ce}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--quote-mark:#2b3550;--warning-bg:#514426}}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--quote-mark:#26345a;--warning-bg:#4a4024}}
 body{background:var(--bg);font-size:16px;line-height:1.6}
 main{max-width:1120px;padding:26px 36px 64px}
 a{color:var(--accent);text-underline-offset:3px}
@@ -15,7 +15,7 @@ button,a,summary,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .reading-lang button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
 .term-header{padding:26px 0 4px}
 .term-header>a{font-size:.83rem;text-decoration:none}
-.term-header h1{font-weight:500;letter-spacing:-.025em;font-size:clamp(2rem,5vw,3.5rem);margin:18px 0 0}
+.term-header h1{font-weight:650;letter-spacing:-.025em;font-size:clamp(2rem,5vw,3.5rem);margin:18px 0 0}
 .eyebrow,.source-label{font-size:.71rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .brief-meta{display:flex;flex-wrap:wrap;gap:4px 20px;padding:12px 0 26px;color:var(--muted);font-size:.79rem}
 .brief-meta span+span{margin-left:auto}
@@ -78,7 +78,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home nav{padding-bottom:18px;border-bottom:1px solid var(--line)}
 .home nav .logo{font-size:1.2rem;letter-spacing:-.04em}
 .home .hero{text-align:left;max-width:none;margin:38px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:0 56px}
-.home .hero-copy h1{font-size:clamp(2.1rem,4.2vw,3.2rem);font-weight:500;letter-spacing:-.035em;line-height:1.1;margin:12px 0 18px;max-width:530px}
+.home .hero-copy h1{font-size:clamp(2.1rem,4.2vw,3.2rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;margin:12px 0 18px;max-width:530px}
 .home .hero-copy>p{font-size:.98rem;max-width:49ch;color:var(--ink-soft);margin:0 0 22px}
 .home .hero-example{border-left:1px solid var(--line);padding:12px 0 10px 25px;align-self:start}
 .hero-example blockquote{font-size:1.04rem;line-height:1.65;border:0;padding:0;margin:12px 0}
@@ -95,10 +95,10 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home #formmsg{margin:0;grid-column:1/-1;min-height:0}
 .home #formmsg:not(:empty){padding-top:12px}
 .home #result{margin-top:38px;border-top:1px solid var(--line);padding-top:24px}
-.home .result-h h2{font-size:2.25rem;font-weight:500;letter-spacing:-.025em}
+.home .result-h h2{font-size:2.25rem;font-weight:650;letter-spacing:-.025em}
 .home .tag{font-size:.65rem;letter-spacing:.09em}
 .home #result.pending [data-part=reading],.home #result.pending .file-tools{display:none}
-.home .section-h{font-size:1.3rem;font-weight:500;margin-top:48px}
+.home .section-h{font-size:1.3rem;font-weight:650;margin-top:48px}
 .home .grid{grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:12px}
 .home .tcard{border-radius:8px;box-shadow:none;padding:18px;transition:border-color .15s}
 .home .tcard:hover,.home .tcard:focus{transform:none;border-color:var(--accent)}
