@@ -467,3 +467,15 @@ def test_reading_guide_is_removed_when_the_term_has_no_guide():
 
     d = {"term": "no such term in the guides", "quotes": [], "readingGuide": {"entries": [{"id": "E1"}]}}
     assert "readingGuide" not in with_reading_guide(d)
+
+
+def test_baseline_marks_the_last_three_years():
+    from idealine.openalex import Work
+    from idealine.term import Evidence
+    rows = [("a", 2000, 900), ("b", 2001, 800), ("c", 2002, 700), ("d", 2003, 600), ("e", 2004, 500), ("f", 2005, 400),
+            ("g", 2006, 300), ("h", 2024, 4), ("i", 2024, 9), ("j", 2025, 7), ("k", 2026, 1)]
+    ev = [Evidence(f"E{n}", "x", Work(i, "T" + i, y, None, "u", c)) for n, (i, y, c) in enumerate(rows)]
+    t = baseline(TermTimeline("x", [], {2000: 3, 2024: 40, 2025: 90, 2026: 30}, ev))
+    assert [m.work.work_id for m in t.milestones if m.year >= 2024] == ["i", "j", "k"]
+    ids = [m.work.work_id for m in t.milestones]
+    assert len(ids) == len(set(ids))

@@ -647,5 +647,16 @@ def baseline(t: TermTimeline) -> TermTimeline:
         why = (f"Cited by {e.work.in_set} of the sampled papers that use the term ({e.work.cited_by} times overall)."
                if e.work.in_set else f"Cited {e.work.cited_by} times.")
         t.milestones.append(Milestone(e.work.year or 0, "popularized", e.work.title, why, [e.eid], e.work, "in-sample"))
+    # Recent use: the most-cited paper of each of the last three years in the sample, so
+    # the surge after takeoff has markers too (the all-time most-cited are usually older).
+    used = {m.work.work_id for m in t.milestones if m.work}
+    for y in sorted({e.work.year for e in first.values() if e.work.year}, reverse=True)[:3]:
+        cands = [e for e in first.values() if e.work.year == y and e.work.work_id not in used]
+        if not cands:
+            continue
+        e = max(cands, key=lambda e: e.work.cited_by)
+        used.add(e.work.work_id)
+        t.milestones.append(Milestone(y, "popularized", e.work.title,
+                                      f"The most-cited use from {y} in the sample ({e.work.cited_by} citations).", [e.eid], e.work, "in-sample"))
     t.milestones.sort(key=lambda m: m.year)
     return t

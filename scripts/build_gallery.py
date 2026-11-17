@@ -185,31 +185,23 @@ TRACE_FORM = """
   <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
   <details class="opts" id="opts">
     <summary data-i18n="optsSummary">Settings</summary>
-    <div class="opts-body">
-      <div class="opts-sec">
-        <div class="opts-title"><span id="prov-label" data-i18n="optsModelH">Model</span><span class="opts-hint" data-i18n="optsModelP">Optional. Adds eras, milestones and meaning labels.</span></div>
-        <div class="seg" id="prov-seg" role="group" aria-labelledby="prov-label"></div>
-        <select id="provider" hidden aria-hidden="true" tabindex="-1"><option value="none" data-i18n="providerNone">No model</option></select>
-        <div id="keyrow" hidden>
-          <div class="keybox"><input id="key" type="password" spellcheck="false" autocomplete="off" aria-label="API key" data-i18n-aria="keyLabel"><button id="save-key" type="button" data-i18n="saveKey">Check</button></div>
-          <div class="keymeta"><label for="model" data-i18n="modelLabel">Model</label><span class="select"><select id="model"></select></span><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
-          <div id="keycheck" role="status" aria-live="polite"></div>
-        </div>
-        <p class="privacy" id="privacy"></p>
+    <div class="opts-body slist">
+      <details class="srow" id="row-provider"><summary><span class="sl" data-i18n="optsModelH">Model</span><span class="sv" id="sv-provider"></span></summary>
+        <div class="sedit"><p class="opts-hint" data-i18n="optsModelP">Optional · adds eras, milestones and meaning labels</p><div class="seg" id="prov-seg" role="group" aria-label="Model" data-i18n-aria="optsModelH"></div><select id="provider" hidden aria-hidden="true" tabindex="-1"><option value="none" data-i18n="providerNone">No model</option></select><p class="privacy" id="privacy"></p></div></details>
+      <div id="keyrow" hidden>
+      <details class="srow" id="row-key"><summary><span class="sl" data-i18n="keyLabel">API key</span><span class="sv" id="sv-key"></span></summary>
+        <div class="sedit"><div class="keybox"><input id="key" type="password" spellcheck="false" autocomplete="off" aria-label="API key" data-i18n-aria="keyLabel"><button id="save-key" type="button" data-i18n="saveKey">Check</button></div><div id="keycheck" role="status" aria-live="polite"></div><a id="keylink" class="slink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div></details>
+      <details class="srow" id="row-model"><summary><span class="sl" data-i18n="modelLabel">Version</span><span class="sv" id="sv-model"></span></summary>
+        <div class="sedit"><span class="select"><select id="model" aria-label="Version" data-i18n-aria="modelLabel"></select></span></div></details>
       </div>
-      <details class="opts-more" id="opts-more">
-        <summary data-i18n="optsMore">More options</summary>
-        <div class="opts-more-body">
-          <label class="f"><span data-i18n="aliasesLabel">Other spellings, comma-separated</span><input id="aliases" maxlength="200" data-i18n-ph="aliasesPh" placeholder="e.g. mixture-of-experts, MoE layer"></label>
-          <label class="f"><span data-i18n="meaningLabel">Which meaning? (needs a model)</span><input id="meaning" maxlength="200" data-i18n-ph="meaningPh" placeholder="e.g. AI agents that plan and use tools on their own"></label>
-          <div class="f"><label for="oakey"><span data-i18n="oakeyLabel">OpenAlex key (free)</span> <span class="opts-hint" data-i18n="optsDeviceP">· only if OpenAlex says the daily budget is used up</span></label><input id="oakey" type="password" spellcheck="false" autocomplete="off">
-            <ol class="oa-how"><li><span data-i18n="oaStep1">Create a free account at</span> <a href="https://openalex.org/signup" target="_blank" rel="noopener noreferrer">openalex.org/signup</a> <span data-i18n="oaStep1b">(about 30 seconds).</span></li><li><span data-i18n="oaStep2">Open</span> <a href="https://openalex.org/settings/api-key" target="_blank" rel="noopener noreferrer" data-i18n="oaStep2Link">Settings → API key</a> <span data-i18n="oaStep2b">and copy the key.</span></li><li data-i18n="oaStep3">Paste it above. It gives about 10× the free daily budget.</li></ol></div>
-        </div>
-      </details>
-      <div class="opts-foot">
-        <label class="check"><input type="checkbox" id="remember"> <span data-i18n="remember">Remember keys on this device</span></label>
-        <button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button>
-      </div>
+      <details class="srow" id="row-aliases"><summary><span class="sl" data-i18n="aliasesShort">Other spellings</span><span class="sv" id="sv-aliases"></span></summary>
+        <div class="sedit"><input id="aliases" maxlength="200" aria-label="Other spellings" data-i18n-aria="aliasesLabel" data-i18n-ph="aliasesPh" placeholder="e.g. mixture-of-experts, MoE layer"><p class="opts-hint" data-i18n="aliasesLabel">Other spellings, comma-separated</p></div></details>
+      <details class="srow" id="row-meaning"><summary><span class="sl" data-i18n="meaningShort">Which meaning?</span><span class="sv" id="sv-meaning"></span></summary>
+        <div class="sedit"><input id="meaning" maxlength="200" aria-label="Which meaning?" data-i18n-aria="meaningLabel" data-i18n-ph="meaningPh" placeholder="e.g. AI agents that plan and use tools on their own"><p class="opts-hint" data-i18n="meaningHint">Needs a model. Describe the meaning you want the timeline to follow.</p></div></details>
+      <details class="srow" id="row-oakey"><summary><span class="sl" data-i18n="oakeyLabel">OpenAlex key (free)</span><span class="sv" id="sv-oakey"></span></summary>
+        <div class="sedit"><input id="oakey" type="password" spellcheck="false" autocomplete="off" aria-label="OpenAlex key" data-i18n-aria="oakeyLabel"><p class="opts-hint" data-i18n="optsDeviceP">Only needed if OpenAlex says the daily budget is used up.</p><ol class="oa-how"><li><span data-i18n="oaStep1">Create a free account at</span> <a href="https://openalex.org/signup" target="_blank" rel="noopener noreferrer">openalex.org/signup</a> <span data-i18n="oaStep1b">(about 30 seconds).</span></li><li><span data-i18n="oaStep2">Open</span> <a href="https://openalex.org/settings/api-key" target="_blank" rel="noopener noreferrer" data-i18n="oaStep2Link">Settings → API key</a> <span data-i18n="oaStep2b">and copy the key.</span></li><li data-i18n="oaStep3">Paste it above. It gives about 10× the free daily budget.</li></ol></div></details>
+      <label class="sswitch"><span class="sl"><span data-i18n="remember">Remember keys on this device</span><span class="opts-hint" data-i18n="rememberHint">Leave off on a shared computer</span></span><input type="checkbox" id="remember" class="switch"></label>
+      <div class="sfoot"><button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button></div>
     </div>
   </details>
 </form>
@@ -222,6 +214,7 @@ RESULT = """
   <ol id="progress" class="progress" hidden></ol>
   <div id="status" role="status" aria-live="polite"></div>
   <div id="r-suggest" class="suggest" hidden></div>
+  <div id="r-upsell" class="upsell" hidden><p data-i18n="upsellText">Free view: the markers are the earliest and most-cited papers, picked by counting. With your own model key, idealine also splits the history into eras, finds the turning points and labels each passage by meaning.</p><button type="button" class="btn" id="r-addkey" data-i18n="upsellBtn">Add a model key</button></div>
   <div data-part="reading"></div>
   <details class="file-tools" id="r-actions" hidden><summary data-i18n="downloads">Downloads &amp; tools</summary><div class="actions">
     <button class="btn ghost" id="r-roots" type="button" hidden></button>

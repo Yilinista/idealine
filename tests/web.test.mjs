@@ -463,7 +463,7 @@ test('both languages define the same interface keys', () => {
 test('known runtime messages are translated; unknown ones stay as they are', () => {
   assert.equal(I.trMessage('zh', 'Counting papers per year…'), '正在统计每年的论文数……');
   assert.match(I.trMessage('zh', 'Claude rejected the key (401). Check that you pasted the whole key and that it is active.'), /^Claude 拒绝了这个 key（401）/);
-  assert.match(I.trMessage('zh', "OpenAlex's free daily budget for your network is used up (resets in about 3 h, at midnight UTC). Add a free OpenAlex key under \"Settings → More options\", or try again later."), /3 小时/);
+  assert.match(I.trMessage('zh', "OpenAlex's free daily budget for your network is used up (resets in about 3 h, at midnight UTC). Add a free OpenAlex key under \"Settings → OpenAlex key\", or try again later."), /3 小时/);
   assert.equal(I.trMessage('zh', 'Something new'), 'Something new');
   assert.equal(I.trMessage('en', 'Counting papers per year…'), 'Counting papers per year…');
 });
@@ -633,4 +633,15 @@ test('evidence period filter accepts single years, ranges and unknown', () => {
 test('"other meanings" groups every meaning that only shares the words', () => {
   const qs=[{id:'a',year:1,sense:'s1'},{id:'b',year:1,sense:'s2'},{id:'c',year:1,sense:'s3'}];
   assert.deepEqual(R.filterQuotes(qs,{sense:'other',others:new Set(['s2','s3'])}).map(q=>q.id).sort(),['b','c']);
+});
+
+test('free mode marks the most-cited paper of each of the last three years', () => {
+  const w = (id, year, cited) => ({ id, year, title: 'T' + id, citedBy: cited, shortAuthors: 'A' });
+  // Old papers hold the all-time citations; the recent surge would otherwise get no markers.
+  const ev = [['a', 2000, 900], ['b', 2001, 800], ['c', 2002, 700], ['d', 2003, 600], ['e', 2004, 500], ['f', 2005, 400], ['g', 2006, 300],
+    ['h', 2024, 4], ['i', 2024, 9], ['j', 2025, 7], ['k', 2026, 1]].map(([id, y, c], n) => ({ eid: 'E' + n, work: w(id, y, c) }));
+  const t = C.baseline({ counts: [[2000, 3], [2024, 40], [2025, 90], [2026, 30]], milestones: [], evidence: ev });
+  const recent = t.milestones.filter(m => m.year >= 2024).map(m => m.work.id);
+  assert.deepEqual(recent, ['i', 'j', 'k']);
+  assert.equal(new Set(t.milestones.map(m => m.work.id)).size, t.milestones.length);
 });

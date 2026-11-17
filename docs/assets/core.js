@@ -85,7 +85,7 @@
         if (resp.status === 429) {
           const ra = Number(resp.headers.get('retry-after') || '');
           if (ra > 120) {
-            throw new IdealineError(`OpenAlex's free daily budget for your network is used up (resets in about ${waitText(ra)}, at midnight UTC). Add a free OpenAlex key under "Settings → More options", or try again later.`);
+            throw new IdealineError(`OpenAlex's free daily budget for your network is used up (resets in about ${waitText(ra)}, at midnight UTC). Add a free OpenAlex key under "Settings → OpenAlex key", or try again later.`);
           }
           if (attempt < 4) {
             const wait = ra > 0 ? ra * 1000 : delay;
@@ -425,6 +425,17 @@
       if (used.has(e.work.id)) continue;
       const why = e.work.inSet ? `Cited by ${e.work.inSet} of the sampled papers that use the term (${e.work.citedBy} times overall).` : `Cited ${e.work.citedBy} times.`;
       t.milestones.push({ year: e.work.year || 0, kind: 'popularized', title: e.work.title, why, evidence: [e.eid], work: e.work, link: 'in-sample' });
+      used.add(e.work.id);
+    }
+    // Recent use: the most-cited paper of each of the last three years in the sample, so
+    // the surge after takeoff has markers too (the all-time most-cited are usually older).
+    const years = [...new Set([...best.values()].map(e => e.work.year).filter(Boolean))].sort((a, b) => b - a).slice(0, 3);
+    for (const y of years) {
+      const e = [...best.values()].filter(x => x.work.year === y && !used.has(x.work.id))
+        .sort((a, b) => b.work.citedBy - a.work.citedBy)[0];
+      if (!e) continue;
+      used.add(e.work.id);
+      t.milestones.push({ year: y, kind: 'popularized', title: e.work.title, why: `The most-cited use from ${y} in the sample (${e.work.citedBy} citations).`, evidence: [e.eid], work: e.work, link: 'in-sample' });
     }
     t.milestones.sort((a, b) => a.year - b.year);
     return t;

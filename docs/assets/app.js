@@ -40,6 +40,7 @@
     progress.relabel();
     renderSeg();
     fillModels(providerSel.value, modelIn.value);
+    syncRows();
     if (lastForm) formMsg(lastForm.fn, lastForm.isError);
     if (shownKind === 'pending' || shownKind === 'failed') pending(pendingTerm, shownKind === 'failed', lastAlternatives);
     else if (shownKind === 'ready' && shown) {
@@ -132,6 +133,7 @@
     keyIn.value = '';
     $('oakey').value = '';
     remember.checked = false;
+    keyChecked = false; showCheck(null); syncKeyline();
     formMsg(() => tx().forgotten);
   });
   $('oakey').value = store.get('idealine.openalexKey') || '';
@@ -145,6 +147,7 @@
     s.className = cls || '';
   }
   function syncKeyline() {
+    syncRows();
     const id = providerSel.value, on = id !== 'none' && !!keyIn.value.trim();
     $('keyline-free').hidden = on;
     $('keyline-on').hidden = !on;
@@ -153,9 +156,32 @@
       $('keyline-text').textContent = tx().modelOn(p.short, modelIn.value.trim() || p.defaultModel) + (keyChecked ? ' ✓' : (lang === 'zh' ? `（${tx().modelOff}）` : ` (${tx().modelOff})`));
     }
   }
+  // Settings list: each row shows its current value; one row open at a time.
+  function syncRows() {
+    const T = tx(), id = providerSel.value, short = s => (s.length > 28 ? s.slice(0, 27) + '…' : s);
+    const set = (k, text, cls) => { const e = $('sv-' + k); if (e) { e.textContent = text; e.className = 'sv' + (cls ? ' ' + cls : ''); } };
+    set('provider', id === 'none' ? T.provNone : P.PROVIDERS[id].label.split(' (')[0]);
+    set('key', !keyIn.value.trim() ? T.svNone : keyChecked ? T.svKeyOk : T.svKeySet, keyChecked ? 'ok' : '');
+    set('model', (modelIn.selectedOptions[0] || {}).textContent || '');
+    set('aliases', $('aliases').value.trim() ? short($('aliases').value.trim()) : T.svNone);
+    set('meaning', $('meaning').value.trim() ? short($('meaning').value.trim()) : T.svNone);
+    set('oakey', $('oakey').value.trim() ? T.svSet : T.svOaHow, $('oakey').value.trim() ? '' : 'link');
+  }
+  function openRow(id) {
+    $('opts').open = true;
+    $(id).open = true;
+  }
+  document.querySelectorAll('.srow').forEach(r => r.addEventListener('toggle', () => {
+    if (r.open) document.querySelectorAll('.srow[open]').forEach(o => { if (o !== r) o.open = false; });
+  }));
+  ['aliases', 'meaning', 'oakey'].forEach(k => $(k).addEventListener('input', syncRows));
   keyIn.addEventListener('input', () => { keyChecked = false; showCheck(null); syncKeyline(); });
   modelIn.addEventListener('change', () => { const p = P.PROVIDERS[providerSel.value]; if (p) store.set('idealine.model.' + providerSel.value, modelIn.value); syncKeyline(); });
-  $('change-key').addEventListener('click', () => { $('opts').open = true; keyIn.focus(); });
+  $('r-addkey').addEventListener('click', () => {
+    openRow(providerSel.value === 'none' ? 'row-provider' : 'row-key');
+    $('opts').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  $('change-key').addEventListener('click', () => { openRow('row-key'); keyIn.focus(); });
   $('save-key').addEventListener('click', async () => {
     const id = providerSel.value, key = keyIn.value.trim(), p = P.PROVIDERS[id];
     if (!p) return;
@@ -184,9 +210,7 @@
   });
 
   $('open-opts').addEventListener('click', () => {
-    const d = $('opts');
-    d.open = true;
-    if (providerSel.value === 'none') ($('prov-seg').querySelector('[aria-pressed=true]') || $('prov-seg')).focus(); else keyIn.focus();
+    if (providerSel.value === 'none') { openRow('row-provider'); ($('prov-seg').querySelector('[aria-pressed=true]') || $('prov-seg')).focus(); } else { openRow('row-key'); keyIn.focus(); }
   });
 
   // --- progress: a step list with a running clock, so a slow run never looks stuck ---
@@ -275,12 +299,13 @@
     renderSuggest(failed, alternatives);
   }
   let pendingTerm = '', lastAlternatives = null;
+  const fallbacks = new WeakSet(); // free views kept after a failed model step
   function chip(label, term) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'chip';
     b.textContent = label;
-    b.addEventListener('click', () => { $('term').value = term; $('aliases').value = ''; $('meaning').value = ''; $('trace-form').requestSubmit(); });
+    b.addEventListener('click', () => { $('term').value = term; $('aliases').value = ''; $('meaning').value = ''; syncRows(); $('trace-form').requestSubmit(); });
     return b;
   }
   function renderSuggest(on, alternatives) {
@@ -327,6 +352,7 @@
     $('term').value = c.textContent;
     $('aliases').value = '';
     $('meaning').value = '';
+    syncRows();
     $('trace-form').requestSubmit();
   }));
 
@@ -361,7 +387,7 @@
         return;
       }
     }
-    if (providerId !== 'none' && !key) { $('opts').open = true; return formMsg(() => tx().needKey(P.PROVIDERS[providerId].short), true); }
+    if (providerId !== 'none' && !key) { openRow('row-key'); return formMsg(() => tx().needKey(P.PROVIDERS[providerId].short), true); }
     if (providerId !== 'none') {
       if (remember.checked) store.set(KEY_PREFIX + providerId, key); else store.del(KEY_PREFIX + providerId);
       store.set('idealine.model.' + providerId, model);
@@ -437,11 +463,11 @@
       setUrl(term, aliases, meaning);
     } catch (e) {
       const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
-      if (known && /OpenAlex key/.test(e.message)) { $('opts').open = true; $('opts-more').open = true; }
+      if (known && /OpenAlex key/.test(e.message)) openRow('row-oakey');
       const m = e && e.message ? e.message : String(e);
       progress.finish();
       // If the model step failed, keep the free view as the result.
-      if (interim) { lastData = interim; show(interim, false, 'result'); } else pending(term, true, e && e.alternatives);
+      if (interim) { lastData = interim; fallbacks.add(interim); show(interim, false, 'result'); } else pending(term, true, e && e.alternatives);
       const kept = interim ? () => ' ' + tx().keptFree : () => '';
       if (e && e.local) status(() => e.local() + kept(), true);
       else if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones + kept(), true);
@@ -485,6 +511,8 @@
     $('r-tag').classList.toggle('pulse', shownKind === 'interim');
     $('r-actions').hidden = shownKind !== 'result' && shownKind !== 'ready';
     $('r-live').hidden = shownKind !== 'ready';
+    // Only for a free run; a model run that failed and fell back already has a key.
+    $('r-upsell').hidden = !(shownKind === 'result' && !d.model && !(d.eras || []).length && !fallbacks.has(d));
     // Roots cost extra OpenAlex requests, so they run only when asked.
     const canRoots = shownKind === 'result' && lastT && d === lastData && !d.roots;
     const nReq = canRoots ? Math.ceil(C.rootsPlan(C.inFocus(lastT)).ids.length / 100) : 0;
@@ -549,7 +577,7 @@
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
     $('meaning').value = (params.get('meaning') || '').slice(0, 200);
-    if ($('aliases').value || $('meaning').value) { $('opts').open = true; $('opts-more').open = true; }
+    if ($('aliases').value || $('meaning').value) { $('opts').open = true; syncRows(); }
     // Start after load, so the browser's own jump to a #fragment cannot pull the page away.
     const go = () => setTimeout(() => {
       if (providerSel.value === 'none' || (READY[$('term').value.toLowerCase()] && !$('meaning').value)) $('trace-form').requestSubmit();
