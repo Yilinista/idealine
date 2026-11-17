@@ -231,6 +231,12 @@ RESULT = """
 EXAMPLE = "world-model"
 
 
+def _short_hash(path: Path) -> str:
+    import hashlib
+
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:10]
+
+
 def main() -> None:
     copy_web_assets()
     # Keep standalone English/Chinese pages and saved ready-made data in sync.
@@ -255,7 +261,9 @@ def main() -> None:
         card(d, href, f"terms/zh/{stem}.html" if (zh_dir / f"{stem}.html").exists() else None) for stem, d, href in terms
     )
     chips = "".join(f'<button type="button" class="chip">{html.escape(c)}</button>' for c in CHIPS)
-    scripts = "".join(f'<script src="assets/{n}"></script>' for n in WEB_FILES)
+    # A content hash in each URL, so a browser never pairs a new page with old cached
+    # scripts (GitHub Pages lets browsers keep assets for about 10 minutes).
+    scripts = "".join(f'<script src="assets/{n}?v={_short_hash(DOCS / "assets" / n)}"></script>' for n in WEB_FILES)
     example_json = json.dumps(examples, ensure_ascii=False).replace("<", "\\u003c")
     # Ready-made timelines: typed term or alias (lowercase) -> data files, so they open without API calls.
     ready: dict[str, dict] = {}
