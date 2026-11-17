@@ -173,7 +173,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home .hero{text-align:left;max-width:none;margin:38px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:0 56px}
 .home .hero-copy h1{font-size:clamp(2.1rem,4.2vw,3.2rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;margin:12px 0 18px;max-width:530px}
 .home .hero-copy>p{font-size:.98rem;max-width:49ch;color:var(--ink-soft);margin:0 0 22px}
-.home .hero-example{border-left:1px solid var(--line);padding:12px 0 10px 25px;align-self:start}
+.home .hero-example{border-left:1px solid var(--line);padding:0 0 10px 25px;align-self:start}
 .hero-example blockquote{font-size:1.04rem;line-height:1.65;border:0;padding:0;margin:12px 0}
 .hero-example cite{font-size:.73rem;color:var(--muted);font-style:normal}
 .hero-example>a{display:block;font-size:.77rem;margin-top:12px}
@@ -197,11 +197,11 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home .tcard:hover,.home .tcard:focus{transform:none;border-color:var(--accent)}
 .home .tcard h3{font-size:1.06rem}
 .home .tcard .spark{height:28px;opacity:.5}
-.home .how{margin-top:44px;gap:24px}
+.home .how{margin-top:44px;gap:24px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
 .home .how b{font-size:.8rem}
 .home .how p{font-size:.82rem}
-.home .cli{margin-top:28px}
-.home footer{border-top:1px solid var(--line);padding-top:18px;max-width:85ch}
+.home .cli{margin-top:28px;max-width:none}
+.home footer{border-top:1px solid var(--line);padding-top:18px;max-width:none}
 .skip-link{position:absolute;left:12px;top:-100px;background:var(--panel);padding:10px;z-index:5}
 .skip-link:focus{top:12px}
 @media(max-width:760px){main{padding:18px 20px 44px}.reading-layout{grid-template-columns:minmax(0,1fr);gap:16px}.reading-aside{position:static;grid-row:1;padding:12px 0;border-top:0;border-bottom:1px solid var(--line)}.reading-aside>p{font-size:1.12rem;margin:6px 0 12px}.reading-aside>a{border:0;padding:0}.aside-count{display:none}.source-card{padding:20px}.home .hero{grid-template-columns:1fr;gap:0;margin-top:28px}.home .hero-example{display:none}.home .hero-copy h1{max-width:550px}.home .hero-copy>p{margin-bottom:18px}.brief-meta span+span{margin-left:0}.home .keyline{line-height:1.7}.home .result-h h2{font-size:1.9rem}}
@@ -329,6 +329,11 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .upsell p{margin:0;flex:1;font-size:.82rem;line-height:1.55;color:var(--ink-soft)}
 .upsell .btn{flex:none;white-space:nowrap}
 @media(max-width:560px){.upsell{flex-direction:column;align-items:flex-start}}
+
+/* One left inset (16px) for everything inside the timeline card. */
+.card .mslist{padding:0 8px}
+.card .detail{padding:18px 16px}
+.mslist button{display:grid;grid-template-columns:1.6em minmax(0,1fr);align-items:baseline}
 </style></head>
 <body>
 <a class="skip-link" href="#reading">Skip to sources</a>
@@ -946,7 +951,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
       const avail = Math.max(320, chart.parentElement.clientWidth || 900);
       const compact = avail < 600;  // phones: numbered dots, cards listed below
-      const left = compact ? 24 : 40, labelRoom = compact ? 40 : 230, width = Math.max(compact ? 340 : 600, avail);
+      const left = 26, labelRoom = compact ? 40 : 150, width = Math.max(compact ? 340 : 600, avail);
       const share = view.y === 'share';
       // Slots along the axis: one per year, or one per quarter for the years that
       // data.quarters covers (young terms; not in the share view, which is yearly).
@@ -976,7 +981,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       const hasMs = s => msT.some(t => t >= s.t0 && t < s.t1);
       const raw = s => (hasMs(s) ? (compact ? 18 : 30) : 0) + 34 * Math.sqrt(s.c / peakC) + (s.q ? 12 : s.c / peakC > 0.002 ? 6 : 2);
       const total = slots.reduce((a, s) => a + raw(s), 0);
-      const scale = Math.max(compact ? 0.4 : 1, Math.min(2.2, (width - left - labelRoom) / total));
+      const scale = Math.max(0.4, Math.min(2.2, (width - left - labelRoom) / total));
       let acc = left;
       for (const s of slots) { s.x0 = acc; acc += raw(s) * scale; s.x1 = acc; s.xc = (s.x0 + s.x1) / 2; }
       const X = t => {
@@ -992,10 +997,13 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
         const label = compact ? String(i + 1) : m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
         const text = compact ? label : `${m.year} · ${label}`;
         const w = [...text].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(msT[i]);
+        // A label that would run past the right edge goes on the left of its dot, so the
+        // chart fits the card instead of scrolling for one label.
+        const flip = !compact && x + w + 24 > width && x - w > left;
         let lane = 0;
-        while ((lanes[lane] ?? -1e9) > x - 6) lane++;
-        lanes[lane] = x + w;
-        return { ...m, kind: KIND_OK(m.kind), i, label, text, x, lane };
+        while ((lanes[lane] ?? -1e9) > (flip ? x - w : x) - 6) lane++;
+        lanes[lane] = flip ? x + 10 : x + w;
+        return { ...m, kind: KIND_OK(m.kind), i, label, text, x, lane, flip };
       });
       const nLanes = Math.max(1, lanes.length);
       const W = Math.max(width, ...lanes.map(r => r + 24), acc + 20);
@@ -1097,10 +1105,11 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       msLaid.forEach(m => {
         const y = axisY - axisPad - m.lane * laneH;
         const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
-        el('rect', { x: m.x - 10, y: y - 12, width: m.text.length * 6.3 + (compact ? 24 : 70), height: 24, fill: 'transparent' }, g);
+        const hitW = m.text.length * 6.3 + (compact ? 24 : 70);
+        el('rect', { x: m.flip ? m.x + 10 - hitW : m.x - 10, y: y - 12, width: hitW, height: 24, fill: 'transparent' }, g);
         el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
         el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
-        const t = el('text', { x: m.x + 11, y: y + 4 }, g);
+        const t = el('text', m.flip ? { x: m.x - 11, y: y + 4, 'text-anchor': 'end' } : { x: m.x + 11, y: y + 4 }, g);
         t.textContent = m.text;
         g.addEventListener('click', () => select(m.i, true));
         g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i, true); } });

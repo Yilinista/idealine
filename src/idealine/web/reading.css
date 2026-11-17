@@ -80,7 +80,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home .hero{text-align:left;max-width:none;margin:38px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:0 56px}
 .home .hero-copy h1{font-size:clamp(2.1rem,4.2vw,3.2rem);font-weight:700;letter-spacing:-.035em;line-height:1.1;margin:12px 0 18px;max-width:530px}
 .home .hero-copy>p{font-size:.98rem;max-width:49ch;color:var(--ink-soft);margin:0 0 22px}
-.home .hero-example{border-left:1px solid var(--line);padding:12px 0 10px 25px;align-self:start}
+.home .hero-example{border-left:1px solid var(--line);padding:0 0 10px 25px;align-self:start}
 .hero-example blockquote{font-size:1.04rem;line-height:1.65;border:0;padding:0;margin:12px 0}
 .hero-example cite{font-size:.73rem;color:var(--muted);font-style:normal}
 .hero-example>a{display:block;font-size:.77rem;margin-top:12px}
@@ -104,11 +104,11 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .home .tcard:hover,.home .tcard:focus{transform:none;border-color:var(--accent)}
 .home .tcard h3{font-size:1.06rem}
 .home .tcard .spark{height:28px;opacity:.5}
-.home .how{margin-top:44px;gap:24px}
+.home .how{margin-top:44px;gap:24px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
 .home .how b{font-size:.8rem}
 .home .how p{font-size:.82rem}
-.home .cli{margin-top:28px}
-.home footer{border-top:1px solid var(--line);padding-top:18px;max-width:85ch}
+.home .cli{margin-top:28px;max-width:none}
+.home footer{border-top:1px solid var(--line);padding-top:18px;max-width:none}
 .skip-link{position:absolute;left:12px;top:-100px;background:var(--panel);padding:10px;z-index:5}
 .skip-link:focus{top:12px}
 @media(max-width:760px){main{padding:18px 20px 44px}.reading-layout{grid-template-columns:minmax(0,1fr);gap:16px}.reading-aside{position:static;grid-row:1;padding:12px 0;border-top:0;border-bottom:1px solid var(--line)}.reading-aside>p{font-size:1.12rem;margin:6px 0 12px}.reading-aside>a{border:0;padding:0}.aside-count{display:none}.source-card{padding:20px}.home .hero{grid-template-columns:1fr;gap:0;margin-top:28px}.home .hero-example{display:none}.home .hero-copy h1{max-width:550px}.home .hero-copy>p{margin-bottom:18px}.brief-meta span+span{margin-left:0}.home .keyline{line-height:1.7}.home .result-h h2{font-size:1.9rem}}
@@ -236,3 +236,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .upsell p{margin:0;flex:1;font-size:.82rem;line-height:1.55;color:var(--ink-soft)}
 .upsell .btn{flex:none;white-space:nowrap}
 @media(max-width:560px){.upsell{flex-direction:column;align-items:flex-start}}
+
+/* One left inset (16px) for everything inside the timeline card. */
+.card .mslist{padding:0 8px}
+.card .detail{padding:18px 16px}
+.mslist button{display:grid;grid-template-columns:1.6em minmax(0,1fr);align-items:baseline}

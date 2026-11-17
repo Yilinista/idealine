@@ -300,7 +300,7 @@
       const nowYear = Math.max(...years), minYear = Math.max(Math.min(...years), nowYear - 600);
       const avail = Math.max(320, chart.parentElement.clientWidth || 900);
       const compact = avail < 600;  // phones: numbered dots, cards listed below
-      const left = compact ? 24 : 40, labelRoom = compact ? 40 : 230, width = Math.max(compact ? 340 : 600, avail);
+      const left = 26, labelRoom = compact ? 40 : 150, width = Math.max(compact ? 340 : 600, avail);
       const share = view.y === 'share';
       // Slots along the axis: one per year, or one per quarter for the years that
       // data.quarters covers (young terms; not in the share view, which is yearly).
@@ -330,7 +330,7 @@
       const hasMs = s => msT.some(t => t >= s.t0 && t < s.t1);
       const raw = s => (hasMs(s) ? (compact ? 18 : 30) : 0) + 34 * Math.sqrt(s.c / peakC) + (s.q ? 12 : s.c / peakC > 0.002 ? 6 : 2);
       const total = slots.reduce((a, s) => a + raw(s), 0);
-      const scale = Math.max(compact ? 0.4 : 1, Math.min(2.2, (width - left - labelRoom) / total));
+      const scale = Math.max(0.4, Math.min(2.2, (width - left - labelRoom) / total));
       let acc = left;
       for (const s of slots) { s.x0 = acc; acc += raw(s) * scale; s.x1 = acc; s.xc = (s.x0 + s.x1) / 2; }
       const X = t => {
@@ -346,10 +346,13 @@
         const label = compact ? String(i + 1) : m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title;
         const text = compact ? label : `${m.year} · ${label}`;
         const w = [...text].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(msT[i]);
+        // A label that would run past the right edge goes on the left of its dot, so the
+        // chart fits the card instead of scrolling for one label.
+        const flip = !compact && x + w + 24 > width && x - w > left;
         let lane = 0;
-        while ((lanes[lane] ?? -1e9) > x - 6) lane++;
-        lanes[lane] = x + w;
-        return { ...m, kind: KIND_OK(m.kind), i, label, text, x, lane };
+        while ((lanes[lane] ?? -1e9) > (flip ? x - w : x) - 6) lane++;
+        lanes[lane] = flip ? x + 10 : x + w;
+        return { ...m, kind: KIND_OK(m.kind), i, label, text, x, lane, flip };
       });
       const nLanes = Math.max(1, lanes.length);
       const W = Math.max(width, ...lanes.map(r => r + 24), acc + 20);
@@ -451,10 +454,11 @@
       msLaid.forEach(m => {
         const y = axisY - axisPad - m.lane * laneH;
         const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
-        el('rect', { x: m.x - 10, y: y - 12, width: m.text.length * 6.3 + (compact ? 24 : 70), height: 24, fill: 'transparent' }, g);
+        const hitW = m.text.length * 6.3 + (compact ? 24 : 70);
+        el('rect', { x: m.flip ? m.x + 10 - hitW : m.x - 10, y: y - 12, width: hitW, height: 24, fill: 'transparent' }, g);
         el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
         el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
-        const t = el('text', { x: m.x + 11, y: y + 4 }, g);
+        const t = el('text', m.flip ? { x: m.x - 11, y: y + 4, 'text-anchor': 'end' } : { x: m.x + 11, y: y + 4 }, g);
         t.textContent = m.text;
         g.addEventListener('click', () => select(m.i, true));
         g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i, true); } });
