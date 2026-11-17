@@ -143,6 +143,29 @@
     return parseJson(short, typeof content === 'string' ? content : Array.isArray(content) ? content.map(c => c.text || '').join('') : '');
   }
 
+  // A free request that only checks the key (lists models; no tokens are used).
+  const CHECK = {
+    anthropic: key => ['https://api.anthropic.com/v1/models?limit=1', { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }],
+    openai: key => ['https://api.openai.com/v1/models', { Authorization: `Bearer ${key}` }],
+    gemini: key => ['https://generativelanguage.googleapis.com/v1beta/models?pageSize=1', { 'x-goog-api-key': key }],
+    openrouter: key => ['https://openrouter.ai/api/v1/key', { Authorization: `Bearer ${key}` }],
+  };
+
+  async function checkKey(providerId, key, fetchFn) {
+    const p = PROVIDERS[providerId], make = CHECK[providerId];
+    if (!p || !make) throw new ProviderError('Unknown provider.');
+    if (!key) throw new ProviderError('Paste your API key first.');
+    const [url, headers] = make(key);
+    let resp;
+    try {
+      resp = await (fetchFn || ((...a) => global.fetch(...a)))(url, { headers });
+    } catch (e) {
+      throw new ProviderError(`Could not reach ${p.short}. Check your connection (or an ad blocker) and try again.`);
+    }
+    if (!resp.ok) throw httpError(p.short, resp.status, await readError(resp));
+    return true;
+  }
+
   async function callModel(providerId, opts) {
     const adapter = adapters[providerId];
     if (!adapter) throw new ProviderError('Unknown provider.');
@@ -151,7 +174,7 @@
     return adapter({ ...opts, fetchFn: opts.fetchFn || ((...a) => global.fetch(...a)) });
   }
 
-  const api = { PROVIDERS, ProviderError, callModel, parseJson };
+  const api = { PROVIDERS, ProviderError, callModel, checkKey, parseJson };
   global.IdealineProviders = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

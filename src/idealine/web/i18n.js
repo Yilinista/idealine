@@ -12,7 +12,10 @@
 
   const T = {
     en: {
-      langToggle: '中文', langToggleTitle: 'Switch to Chinese',
+      langGroup: 'Language',
+      saveKey: 'Save and check key', checking: 'Checking the key…',
+      keyOk: short => `${short} accepted the key. You're set: press Trace.`,
+      modelOn: (short, model) => `Using ${short} (${model}) for eras and milestones.`, modelOff: 'not checked yet', change: 'Change',
       heroTitle: 'Where did this idea come from?',
       heroSub: 'Type any term. See when it first appeared, who shaped it, and how its meaning shifted, with the sentence behind every step.',
       termPh: 'Try “world model” or “in-context learning”', termLabel: 'Term', go: 'Trace',
@@ -73,7 +76,10 @@
       titleOf: 'Title of ',
     },
     zh: {
-      langToggle: 'EN', langToggleTitle: '切换到英文',
+      langGroup: '语言',
+      saveKey: '保存并检查 key', checking: '正在检查 key……',
+      keyOk: short => `${short} 的 key 可用，已就绪：直接点“追溯”。`,
+      modelOn: (short, model) => `已启用模型：${short}（${model}），会生成时期和里程碑。`, modelOff: '尚未检查', change: '更改',
       heroTitle: '这个概念从哪里来？',
       heroSub: '输入任意术语，看它何时出现、谁推动了它、含义如何变化。每一步都附上论文原句作证据。',
       termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '追溯',

@@ -32,9 +32,10 @@
     document.querySelectorAll('[data-i18n-aria]').forEach(e => { e.setAttribute('aria-label', T[e.dataset.i18nAria]); });
     document.querySelectorAll('.cardmeta').forEach(e => { e.textContent = T.cardMeta(Number(e.dataset.total), Number(e.dataset.n)); });
     document.querySelectorAll('.tcard').forEach(c => { c.href = (lang === 'zh' && c.dataset.hrefZh) || c.dataset.hrefEn; });
-    const lb = $('lang');
-    lb.textContent = T.langToggle;
-    lb.title = T.langToggleTitle;
+    $('lang').setAttribute('aria-label', T.langGroup);
+    $('lang').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    syncKeyline();
+    if (lastCheck) showCheck(lastCheck.fn, lastCheck.cls);
     syncProvider();
     progress.relabel();
     if (lastForm) formMsg(lastForm.fn, lastForm.isError);
@@ -46,11 +47,12 @@
     } else if (shown) show(shownKind === 'example' ? exampleFor(lang) : shown, false, shownKind);
     if (lastStatus) status(lastStatus.key ? lastStatus.key() : lastStatus.msg, lastStatus.isError);
   }
-  $('lang').addEventListener('click', () => {
-    lang = lang === 'zh' ? 'en' : 'zh';
+  $('lang').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.lang === lang) return;
+    lang = b.dataset.lang;
     store.set('idealine.lang', lang);
     applyLang();
-  });
+  }));
 
   // --- provider picker ----------------------------------------------------------
   const providerSel = $('provider'), modelIn = $('model'), keyIn = $('key'), remember = $('remember');
@@ -80,7 +82,7 @@
   }
   providerSel.value = store.get('idealine.provider') || 'none';
   if (!P.PROVIDERS[providerSel.value] && providerSel.value !== 'none') providerSel.value = 'none';
-  providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(true); });
+  providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(true); keyChecked = false; showCheck(null); syncKeyline(); });
   syncProvider(true);
   remember.addEventListener('change', () => {
     if (!remember.checked) { store.del(KEY_PREFIX + providerSel.value); store.del('idealine.openalexKey'); }
@@ -95,6 +97,52 @@
   });
   $('oakey').value = store.get('idealine.openalexKey') || '';
   if ($('oakey').value) remember.checked = true;
+  // --- "Save and check key": a free request that confirms the key, then fold the panel away ---
+  let keyChecked = false, lastCheck = null;
+  function showCheck(fn, cls) {
+    lastCheck = fn ? { fn, cls } : null;
+    const s = $('keycheck');
+    s.textContent = fn ? fn() : '';
+    s.className = cls || '';
+  }
+  function syncKeyline() {
+    const id = providerSel.value, on = id !== 'none' && !!keyIn.value.trim();
+    $('keyline-free').hidden = on;
+    $('keyline-on').hidden = !on;
+    if (on) {
+      const p = P.PROVIDERS[id];
+      $('keyline-text').textContent = tx().modelOn(p.short, modelIn.value.trim() || p.defaultModel) + (keyChecked ? ' ✓' : (lang === 'zh' ? `（${tx().modelOff}）` : ` (${tx().modelOff})`));
+    }
+  }
+  keyIn.addEventListener('input', () => { keyChecked = false; showCheck(null); syncKeyline(); });
+  modelIn.addEventListener('input', syncKeyline);
+  $('change-key').addEventListener('click', () => { $('opts').open = true; keyIn.focus(); });
+  $('save-key').addEventListener('click', async () => {
+    const id = providerSel.value, key = keyIn.value.trim(), p = P.PROVIDERS[id];
+    if (!p) return;
+    if (!key) return showCheck(() => tx().needKey(p.short), 'error');
+    if (remember.checked) store.set(KEY_PREFIX + id, key); else store.del(KEY_PREFIX + id);
+    store.set('idealine.model.' + id, modelIn.value.trim() || p.defaultModel);
+    const oaKey = $('oakey').value.trim();
+    if (oaKey && remember.checked) store.set('idealine.openalexKey', oaKey);
+    $('save-key').disabled = true;
+    showCheck(() => tx().checking, '');
+    try {
+      await P.checkKey(id, key);
+      keyChecked = true;
+      showCheck(() => tx().keyOk(p.short), 'ok');
+      syncKeyline();
+      setTimeout(() => { if (keyChecked) { $('opts').open = false; $('term').focus(); } }, 900);
+    } catch (e) {
+      keyChecked = false;
+      const m = e && e.message ? e.message : String(e);
+      showCheck(() => I.trMessage(lang, m), 'error');
+      syncKeyline();
+    } finally {
+      $('save-key').disabled = false;
+    }
+  });
+
   $('open-opts').addEventListener('click', () => {
     const d = $('opts');
     d.open = true;

@@ -71,7 +71,15 @@ nav .logo{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--fg
 nav .links{display:flex;align-items:center;gap:18px}
 nav a{color:inherit;text-decoration:none}
 nav a:hover{color:var(--fg)}
-.langbtn{font:inherit;font-size:.82rem;font-weight:600;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer}
+.langseg{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:var(--panel);padding:2px}
+.langseg button{font:inherit;font-size:.8rem;font-weight:600;color:var(--muted);background:none;border:0;border-radius:999px;padding:3px 10px;cursor:pointer}
+.langseg button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+.langseg button:focus{outline:none}
+.langseg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.keyok{color:var(--origin);font-weight:600}
+#keycheck{font-size:.85rem;color:var(--muted)}
+#keycheck.ok{color:var(--origin)}
+#keycheck.error{color:var(--critique)}
 .hero{text-align:center;max-width:760px;margin:60px auto 0}
 .hero h1{font-size:clamp(2.1rem,5.4vw,3.6rem);letter-spacing:-.02em;margin:0 0 14px}
 .hero>p{font-size:1.1rem;color:var(--ink-soft);margin:0 auto 28px;max-width:600px}
@@ -171,7 +179,7 @@ TRACE_FORM = """
     <button class="btn" id="go" type="submit" data-i18n="go">Trace</button>
   </div>
   <div class="chips">{chips}</div>
-  <div class="keyline"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</div>
+  <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
   <details class="opts" id="opts">
     <summary data-i18n="optsSummary">Options and model key</summary>
     <div class="row">
@@ -182,7 +190,7 @@ TRACE_FORM = """
         <div><label for="key" data-i18n="keyLabel">API key</label><input id="key" type="password" spellcheck="false" autocomplete="off"></div>
         <div><label for="model" data-i18n="modelLabel">Model ID</label><input id="model" spellcheck="false"></div>
       </div>
-      <div class="actions"><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
+      <div class="actions"><button class="btn ghost" id="save-key" type="button" data-i18n="saveKey">Save and check key</button><span id="keycheck" role="status" aria-live="polite"></span><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
     </div>
     <p class="privacy" id="privacy"></p>
     <div class="row">
@@ -262,7 +270,7 @@ def main() -> None:
 <body><main>
 <nav>
   <a class="logo" href="./">{LOGO}idealine</a>
-  <span class="links"><a href="#how" data-i18n="navHow">How it works</a><a href="{REPO_URL}">GitHub</a><button class="langbtn" id="lang" type="button" title="Switch to Chinese">中文</button></span>
+  <span class="links"><a href="#how" data-i18n="navHow">How it works</a><a href="{REPO_URL}">GitHub</a><span class="langseg" id="lang" role="group" aria-label="Language"><button type="button" data-lang="zh" aria-pressed="false">中</button><button type="button" data-lang="en" aria-pressed="true">EN</button></span></span>
 </nav>
 <section class="hero">
   <h1 data-i18n="heroTitle">Where did this idea come from?</h1>
