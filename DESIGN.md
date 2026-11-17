@@ -1,22 +1,24 @@
 # idealine: design (v1)
 
-Date: 2026-11-17. Status: building. Mode: builder (course bonus project; the goal
+Date: 2026-11-17. Status: Phase 2 implemented locally; review and deployment pending. Mode: builder (course bonus project; the goal
 is the full build → launch → feedback → iterate loop, per Lecture 8).
 
 ## Problem
 
-AI moves fast and its vocabulary moves with it. A term like "recursive
-self-improvement" was a niche AI-safety idea for 15 years (≤10 papers a year in
-OpenAlex), then 611 papers used it in 2026, now meaning "agents that improve their
-own code and training". Newcomers, students, and people writing about AI meet these
-terms mid-shift and cannot see where they came from or which meaning a paper uses.
+Students and readers meet unfamiliar AI terms and need to choose papers worth
+reading. Phrase counts and model-generated history do not by themselves answer
+what a paper means by a term. The immediate task is to compare actual uses and
+leave with a source they can read and cite.
 
 Today they ask a chatbot (fluent, but dates and "who coined it" are often made up and
 unsourced), read Wikipedia (missing or stale for new terms), or dig through papers by hand.
 
 ## What idealine does
 
-Type a term. Get one interactive horizontal timeline:
+Type a term. Get a reading brief with up to three source passages, paper links,
+and copy-with-source actions. Browse the full sample by year and suggested
+meaning. A compact usage chart follows the passages. The model summary and the
+following original timeline views are folded into **Method & limitations**:
 
 - **Usage curve:** papers per year that use the exact phrase in title or abstract.
   For young terms (real use spans at most three calendar years) and when an OpenAlex key is
@@ -29,10 +31,39 @@ Type a term. Get one interactive horizontal timeline:
 - **Milestones:** origin, coined, popularized, redefined, applied, critique, ancestor.
 - **Evidence:** click any milestone to see the sentences it rests on, with links.
 
-The rule that makes it trustworthy: **the model can only use the quoted sentences.**
+The evidence rule: **the model can only use the quoted sentences.**
 Every era and milestone must cite sentence IDs; anything without evidence is dropped.
 Works the sentences only name (e.g. "Good (1965)") are looked up in OpenAlex and
 shown dashed if not found.
+
+## Phase 2 reading brief (2026-11-17)
+
+- **User decision:** Yilin approved the reading-brief direction after reporting that
+  the faster live site still did not feel useful and its layout was mediocre
+  (in chat). Whether the new
+  design helps a real reader is still an untested hypothesis.
+- **Implementation:** `web/reading.js` owns the shared reader and export, with
+  `web/reading.css` for the responsive layout. The homepage opens with search and
+  a real quoted example; standalone term pages use the same reader. The main
+  path needs no model call. Existing diagnostics and provider controls remain available.
+- **Evidence boundary:** cards cite the work containing the quotation, never a
+  separately resolved milestone target. Title-only, unknown-date, and flagged-date
+  records remain browsable but are excluded from automatic starting points.
+  Counts cover all phrase meanings and do not establish priority.
+- **Selected pilots:** `web/reading-guides.json` records three passages each for
+  world model, in-context learning, and vibe coding, with abstract URLs and the
+  text-check date. Entries attach only when ID, text, original URL, and year match
+  the saved quote exactly; stale checks cannot silently attach to changed evidence.
+- **Verification:** Python 58/58 and Node 52/52 passed; `scripts/build_gallery.py`
+  rebuilt seven terms (13 English/Chinese pages). Checks cover provenance, stale
+  selections, date warnings, filters, safe rendering, and standalone exports
+  (`tests/web.test.mjs`, `tests/test_term.py`). Chrome file previews covered desktop
+  and 390px layouts and reading interactions; ready-made terms were also checked over
+  HTTP. Successful live OpenAlex searches and real-reader
+  usefulness remain unverified. No new model generation or user study is claimed.
+
+The design explorations below document the earlier timeline direction. They are
+retained as background; the reading brief above defines the current front door.
 
 A second, smaller mode (`idealine claim`) traces one claim of one paper through
 the sentences that cite it, labeled supports / refutes / refines / mentions.
@@ -118,9 +149,10 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
   `core.js`/`providers.js` stay English in code and are mapped to Chinese by pattern; anything
   unmatched is shown in English. In Chinese, one extra line in the prompt (`OUTPUT_LANG` in
   `term.py`, shared with the CLI's `--lang zh`) asks the model to write labels in Chinese.
-- Look: search first (one pill input, example chips), the model-key settings folded away, and a
-  ready-made example timeline in the result slot until the visitor traces their own. Light by
-  default, dark palette when the system is in dark mode; term pages share the same tokens.
+- Look: a two-column introduction with a quoted example, a prominent search field,
+  and a ready-made reading brief. Model-key settings and diagnostics are folded away.
+  Source cards use a wide reading column beside a short reading question; narrow
+  screens use one column. Light/dark palettes share the same tokens across pages.
 
 ## Reading aids (borrowed from similar tools, 2026-11-17)
 
@@ -156,6 +188,7 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
 
 ## Next steps
 
-1. Publish the repo and site (GitHub Pages).
-2. Classmates first, then Show HN / X / Reddit (see `LAUNCH.md`).
-3. Add requested terms; fix what users trip on.
+1. Review the local Phase 2 changes, then deploy through the existing GitHub Pages site.
+2. Ask one reader to choose a paper and copy a supported passage in two minutes;
+   record whether they can explain the choice without help. No result yet.
+3. Update launch drafts to the validated product before posting (see `LAUNCH.md`).

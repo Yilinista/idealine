@@ -2,6 +2,11 @@
 
 Drafts only. Nothing here has been posted.
 
+**2026-11-17 status:** Phase 2 changes the main experience to a source-first reading
+brief. The drafts below describe the earlier timeline product and need revision
+after local review and a real-reader check. Do not reuse their historical claims
+without checking the underlying evidence. This implementation has not been pushed.
+
 ## Before posting
 
 - [ ] Create the public repo `Yilinista/idealine` and push
@@ -9,6 +14,8 @@ Drafts only. Nothing here has been posted.
 - [ ] On the live site: run one term in free mode and one with a real key (each provider you can), then "Forget saved keys"
 - [ ] Check whether other GitHub Pages sites share the `yilinista.github.io` origin (remembered keys are readable there)
 - [ ] Spot-check two milestones per gallery page against the linked paper
+- [ ] Review and deploy the reading-brief changes; check search, exports, and narrow layouts over HTTP
+- [ ] Ask one reader to choose a paper and copy a supporting passage in two minutes, without help
 - [ ] Ask 2–3 classmates to trace a term on the site, watch without helping
 - [ ] Read each community's self-promotion rules
 

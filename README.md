@@ -1,21 +1,23 @@
 # idealine
 
-**Where did this AI idea come from?**
+**Understand the term. Read the evidence.**
 
-AI moves fast, and its words move with it. idealine takes a term, like
-*recursive self-improvement*, *world model*, or *test-time compute*, and draws one
-interactive timeline: when it first appeared, who shaped it, how its meaning shifted,
-and how many papers used it each year. Every step shows the sentence it is based on,
-with a link to the paper.
+idealine turns an AI term into a short reading brief: a few starting papers,
+the abstract passages that use the term, and links to read further. Compare the
+uses, browse the sample, and copy a passage with its source. The evidence comes
+before the optional model interpretation; this is a reading aid, not a complete
+history or a claim about who coined the term.
 
 **[Open idealine →](https://yilinista.github.io/idealine/)**
 
 ## Use it in the browser
 
-Open the site, type a term, press **Trace**. Nothing to install.
+Open a ready-made brief, or type a term and press **Find sources**. Nothing to install.
 
-- **Free mode (no key):** the usage curve plus the earliest and most-cited papers.
-- **With your own model key:** eras and milestones. Pick Claude (Anthropic), OpenAI, Gemini,
+- **Free mode (no key):** source passages, suggested starting papers, year filters,
+  quote copying, and a small phrase-usage chart.
+- **With your own model key:** suggested meaning labels and optional timeline diagnostics.
+  Pick Claude (Anthropic), OpenAI, Gemini,
   or OpenRouter, paste your key, and the page calls that provider straight from your browser.
   One request per term, roughly 15–25k input tokens, billed to your account.
 
@@ -25,17 +27,25 @@ from your browser to the provider you picked. It stays in the tab unless you tic
 "Forget saved keys"). Anyone who can open your browser's devtools could read a remembered key,
 so do not tick it on a shared computer. A spending limit on your provider account is a good idea.
 
-You can download each result as a self-contained HTML page or as JSON.
+The briefs for **world model**, **in-context learning**, and **vibe coding** each
+include three selected passages checked against their linked abstracts on
+2026-11-17. Reading notes describe those passages; they do not establish historical
+priority. Other terms use automatic starting points from the sample.
 
-The page is in English and Simplified Chinese (the 中文 / EN button; it starts in your browser's
-language). In Chinese, the model writes the summary, eras and notes in Chinese; paper titles and
-quotes stay in their original language.
+Open **Browse the evidence** to filter by year or suggested meaning. **Method &
+limitations** contains the original model summary, timeline, and diagnostics.
+Live and loaded results can be downloaded as a self-contained HTML page or JSON
+under **Downloads & tools**.
+
+The interface and selected reading notes are in English and Simplified Chinese
+(the 中 / EN buttons). Source passages stay in their original language. Switching
+an exported page's interface does not translate its saved model output.
 
 ## Use it from the command line
 
 You need [uv](https://docs.astral.sh/uv/getting-started/installation/) (one install command).
 
-**1. Without an API key** (usage curve plus the earliest and most-cited papers):
+**1. Without an API key** (source passages and phrase counts):
 
 ```bash
 uvx --from git+https://github.com/Yilinista/idealine idealine "mixture of experts" --no-llm
@@ -71,7 +81,9 @@ Tips:
    must cite sentence IDs; anything without evidence is dropped.
 3. **Resolve:** works that the sentences name but that were not sampled (e.g. "Good, 1965") are
    looked up in OpenAlex. Unmatched ones are drawn dashed.
-4. **Render:** one HTML page, plus Markdown and the JSON data.
+4. **Render:** a reading brief in one self-contained HTML page, plus Markdown and
+   the JSON data. Quotation links always point to the work containing the passage,
+   even when a milestone names a different work.
 
 ## Claim mode
 
@@ -109,6 +121,9 @@ idealine claim "Compute-optimal models should scale data and parameters equally"
 - **Exact phrase.** Papers that describe the idea in other words are not counted.
 - **"Earliest found" is not "first ever".** It is the earliest paper OpenAlex has with the phrase.
 - **Dates come from OpenAlex.** A few early records are misdated; the page marks the suspicious ones.
+- **Selections are a starting point.** Automatically selected passages omit title-only
+  matches, missing dates, and flagged dates. These records remain in the evidence browser.
+  Meaning labels are model suggestions. The count chart includes unrelated meanings.
 
 ## Feedback
 
