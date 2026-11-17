@@ -483,8 +483,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       showAll: 'Show all years',
       noPapersSince: (term, y, n) => `No papers from ${y} on use “${term}”; ${n.toLocaleString('en-US')} earlier paper${n === 1 ? ' was' : 's were'} left out.`,
       onlySince: y => `Show only papers from ${y} on`,
-      misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites' : 'they cite'} later work).`,
-      misdatedEg: (y, c) => `E.g. dated ${y}, cites a ${c} paper:`,
+      misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites or is copyrighted' : 'they cite or are copyrighted'} years later).`,
+      misdatedEg: (y, c, why) => (why === 'copyright' ? `E.g. dated ${y}, but its text says © ${c}:` : `E.g. dated ${y}, cites a ${c} paper:`),
       checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
       shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
       checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
@@ -601,8 +601,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       showAll: '显示全部年份',
       noPapersSince: (term, y, n) => `${y} 年起没有论文用到“${term}”；更早的 ${n.toLocaleString('en-US')} 篇未计入。`,
       onlySince: y => `只看 ${y} 年起的论文`,
-      misdated: n => `已排除 ${n} 篇年份标错的早期论文（引用了比自己更晚发表的文献）。`,
-      misdatedEg: (y, c) => `例如标注为 ${y} 年，却引用了 ${c} 年的论文：`,
+      misdated: n => `已排除 ${n} 篇年份标错的早期论文（引用了更晚的文献，或正文写着更晚的版权年份）。`,
+      misdatedEg: (y, c, why) => (why === 'copyright' ? `例如标注为 ${y} 年，正文却写着 © ${c}：` : `例如标注为 ${y} 年，却引用了 ${c} 年的论文：`),
       checkExact: '原文里有这个完整词组', checkSense: '用的是这个意思', checkCoin: '把这个名字当作新提出的',
       shiftOf: s => `变化类型：${({ broadening: '范围变宽', narrowing: '范围变窄', metaphor: '比喻用法', 'new field': '进入新领域' })[s] || s}`,
       checksNote: 'n/m = 另一轮 AI 抽查 7 条现成时间线时，这类标签 m 个里有 n 个被认为标得对（不是对本页的检查）',
@@ -912,8 +912,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     olderUse: (n, label, date) => `${n.toLocaleString('en-US')} papers used these words before ${label} existed (${date}), in another sense; they are included.`,
     showAll: 'Show all years',
     onlySince: y => `Show only papers from ${y} on`,
-    misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites' : 'they cite'} later work).`,
-    misdatedEg: (y, c) => `E.g. dated ${y}, cites a ${c} paper:`,
+    misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites or is copyrighted' : 'they cite or are copyrighted'} years later).`,
+    misdatedEg: (y, c, why) => (why === 'copyright' ? `E.g. dated ${y}, but its text says © ${c}:` : `E.g. dated ${y}, cites a ${c} paper:`),
     checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
     shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
     checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
@@ -941,7 +941,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     if (o && e) out.push(esc(L.olderUse(o.n, e.label, e.date)) + ` <a href="${esc(rerun(o.year))}">${esc(L.onlySince(o.year))}</a>`);
     if (bad.length) {
       const w = bad[0];
-      out.push(esc(L.misdated(bad.length)) + ' ' + esc(L.misdatedEg(w.year, w.cites)) + ' ' + link(w.url, w.title));
+      out.push(esc(L.misdated(bad.length)) + ' ' + esc(L.misdatedEg(w.year, w.cites, w.why)) + ' ' + link(w.url, w.title));
     }
     return out;
   }

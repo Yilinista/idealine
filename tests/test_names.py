@@ -106,8 +106,8 @@ def test_harvest_drops_a_record_that_cites_later_work():
     assert len(calls) == 5
     assert t.counts == {2022: 10, 2025: 30}
     assert all(e.work.year != 1990 for e in t.evidence)
-    assert t.misdated == [{"title": "Paper W1", "year": 1990, "url": "https://doi.org/10.1/W1", "cites": 2021}]
-    assert scope_lines(t) == ["1 early paper was left out because it cites work published years after its own date (the date is wrong)."]
+    assert t.misdated == [{"title": "Paper W1", "year": 1990, "url": "https://doi.org/10.1/W1", "cites": 2021, "why": "cites"}]
+    assert scope_lines(t) == ["1 early paper was left out because the date is wrong: it cites or is copyrighted years later."]
 
 
 def test_harvest_keeps_a_record_with_older_references():
@@ -181,3 +181,17 @@ def test_site_csp_allows_every_host_the_browser_code_calls():
               "https://aistudio.google.com", "https://console.anthropic.com", "https://platform.openai.com"}
     missing = sorted(h for h in hosts if h not in connect)
     assert not missing, missing
+
+
+def test_cites_later_copyright_rule_matches_core_js():
+    from idealine.openalex import Work
+    from idealine.term import copyright_year
+
+    def w(wid, year, abstract):
+        return Work(work_id=wid, title="t", year=year, date=None, url="", abstract=abstract)
+    junk = w("W1", 2015, "AI Research Partner: ChatGPT (GPT-5.1). © 2025 Y. Seo.")
+    reprint = w("W2", 1960, "A classic paper. Copyright © 2010 Wiley.")
+    fine = w("W3", 2016, "© 2017 Elsevier.")
+    out = cites_later(None, [junk, reprint, fine], 2018)
+    assert [(x.work_id, c, why) for x, c, why in out] == [("W1", 2025, "copyright")]
+    assert copyright_year(w("W4", 2000, "(c) 2003 and Copyright 2007")) == 2007

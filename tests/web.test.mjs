@@ -765,8 +765,8 @@ test('harvest drops an early record that cites later work, and takes it off the 
   assert.equal(calls.length, 5);
   assert.deepEqual(t.counts, [[2022, 10], [2025, 30]]);
   assert.ok(t.evidence.every(e => e.work.year !== 1990));
-  assert.deepEqual(t.misdated, [{ title: 'Early paper', year: 1990, url: 'https://doi.org/10.1/1', cites: 2021 }]);
-  assert.match(C.buildPrompt(t), /1 early paper was left out because it cites work published years after its own date/);
+  assert.deepEqual(t.misdated, [{ title: 'Early paper', year: 1990, url: 'https://doi.org/10.1/1', cites: 2021, why: 'cites' }]);
+  assert.match(C.buildPrompt(t), /1 early paper was left out because the date is wrong: it cites or is copyrighted years later\./);
 });
 
 test('harvest keeps an early record whose references are older (the check is not a filter on age)', async () => {
@@ -822,4 +822,15 @@ test('scope notes: hidden years can be brought back, and reruns keep aliases and
   const n = TL.scopeNotes(D, TL.LABELS_EN)[1];
   assert.match(n, /^Left out: 10 papers dated before 2015, well before OpenAI existed \(2015-12-08\)/);
   assert.match(n, /href="https:\/\/yilinista\.github\.io\/idealine\/\?term=OpenAI&amp;alias=Open%20AI&amp;meaning=the%20company&amp;since=all">Show all years</);
+});
+
+test('citesLater: a pre-onset record copyrighted years later, within the active period of the term, is misdated', async () => {
+  const oa = { get: async () => { throw new Error('no request expected'); } };
+  const w = (id, year, abstract) => ({ id, year, title: 't', abstract, refs: [] });
+  const junk = w('W1', 2015, 'AI Research Partner: ChatGPT (GPT-5.1). © 2025 Y. Seo.');
+  const reprint = w('W2', 1960, 'A classic paper. Copyright © 2010 Wiley.');   // digitized before the term took hold
+  const fine = w('W3', 2016, '© 2017 Elsevier.');                               // one year later: normal
+  const out = await C.citesLater(oa, [junk, reprint, fine], 2018);
+  assert.deepEqual(out.map(o => [o.work.id, o.cites, o.why]), [['W1', 2025, 'copyright']]);
+  assert.equal(C.copyrightYear({ title: '', abstract: '(c) 2003 and Copyright 2007' }), 2007);
 });

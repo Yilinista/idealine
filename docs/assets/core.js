@@ -367,21 +367,36 @@
     return { since: null, olderUse: { n: before, year: entity.floor } };
   }
 
-  // Early records whose date cannot be right: they cite work published more than a year
-  // after their own date. Checks the papers from before the onset (rare, often misdated).
+  // Latest copyright year in a record's own text ("© 2025", "(c) 2025", "Copyright 2025").
+  function copyrightYear(w) {
+    let late = 0;
+    for (const m of `${w.title || ''} ${w.abstract || ''}`.matchAll(/(?:©|\(c\)|copyright)\s*(\d{4})\b/gi)) late = Math.max(late, +m[1]);
+    return late;
+  }
+
+  // Early records whose date cannot be right. Checks the papers from before the onset
+  // (rare, often misdated): one whose own text is copyrighted two or more years later,
+  // within the term's active period (an old paper digitized later carries an earlier
+  // copyright), or one that cites work published more than a year after its date.
+  // why: 'copyright' | 'cites'; cites: that later year.
   async function citesLater(oa, works, onset, maxPapers = 25) {
-    const suspects = [...works].filter(w => onset != null && w.year && w.year < onset && (w.refs || []).length).slice(0, maxPapers);
-    if (!suspects.length) return [];
-    const ids = [...new Set(suspects.flatMap(w => w.refs))].slice(0, 300);
+    const suspects = [...works].filter(w => onset != null && w.year && w.year < onset).slice(0, maxPapers);
+    const out = [], rest = [];
+    for (const w of suspects) {
+      const c = copyrightYear(w);
+      if (c >= w.year + 2 && c >= onset) out.push({ work: w, cites: c, why: 'copyright' });
+      else if ((w.refs || []).length) rest.push(w);
+    }
+    if (!rest.length) return out;
+    const ids = [...new Set(rest.flatMap(w => w.refs))].slice(0, 300);
     const years = new Map();
     for (let i = 0; i < ids.length; i += 100) {
       const data = await oa.get({ filter: 'openalex_id:' + ids.slice(i, i + 100).join('|'), per_page: '100', select: 'id,publication_year' });
       for (const d of data.results || []) years.set(String(d.id || '').split('/').pop(), d.publication_year || 0);
     }
-    const out = [];
-    for (const w of suspects) {
+    for (const w of rest) {
       const late = Math.max(0, ...w.refs.map(r => years.get(r) || 0));
-      if (late > w.year + 1) out.push({ work: w, cites: late });
+      if (late > w.year + 1) out.push({ work: w, cites: late, why: 'cites' });
     }
     return out;
   }
@@ -447,7 +462,7 @@
     }
     const evidence = [];
     for (const [w, sents, fromTitle] of perWork) for (const s of sents) evidence.push({ eid: `E${evidence.length + 1}`, text: s, work: w, fromTitle });
-    return { ...base, counts, evidence, misdated: misdated.map(({ work: w, cites }) => ({ title: w.title, year: w.year, url: w.url, cites })) };
+    return { ...base, counts, evidence, misdated: misdated.map(({ work: w, cites, why }) => ({ title: w.title, year: w.year, url: w.url, cites, why })) };
   }
 
   // --- analyze ------------------------------------------------------------------
@@ -458,7 +473,7 @@
     if (e) out.push(`The term names ${e.kind === 'organization' ? 'an organization' : 'software'}: ${e.label}${e.description ? ` (${e.description})` : ''}, since ${e.date} (Wikidata ${e.id}).`);
     if (h) out.push(`Papers dated before ${h.year} were left out (${h.n})` + (h.named && e ? `: well before ${e.label} existed, so their dates are wrong or the words mean something else.` : ', as the reader asked.'));
     if (o && e) out.push(`${o.n} papers dated before ${o.year} use these words before ${e.label} existed: that is another meaning of the words.`);
-    if (k) out.push(`${k} early paper${k === 1 ? ' was' : 's were'} left out because ${k === 1 ? 'it cites' : 'they cite'} work published years after ${k === 1 ? 'its' : 'their'} own date (the date is wrong).`);
+    if (k) out.push(`${k} early paper${k === 1 ? ' was' : 's were'} left out because the date is wrong: ${k === 1 ? 'it cites or is copyrighted' : 'they cite or are copyrighted'} years later.`);
     return out;
   }
 
@@ -700,7 +715,7 @@
     };
   }
 
-  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, lookupEntity, startDate, nameScope, citesLater, scopeLines, inflections, withInflections, shorterPhrases, suggestPhrases, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData, answerProgress };
+  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, copyrightYear, lookupEntity, startDate, nameScope, citesLater, scopeLines, inflections, withInflections, shorterPhrases, suggestPhrases, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData, answerProgress };
   global.IdealineCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

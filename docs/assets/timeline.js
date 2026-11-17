@@ -228,8 +228,8 @@
     olderUse: (n, label, date) => `${n.toLocaleString('en-US')} papers used these words before ${label} existed (${date}), in another sense; they are included.`,
     showAll: 'Show all years',
     onlySince: y => `Show only papers from ${y} on`,
-    misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites' : 'they cite'} later work).`,
-    misdatedEg: (y, c) => `E.g. dated ${y}, cites a ${c} paper:`,
+    misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites or is copyrighted' : 'they cite or are copyrighted'} years later).`,
+    misdatedEg: (y, c, why) => (why === 'copyright' ? `E.g. dated ${y}, but its text says © ${c}:` : `E.g. dated ${y}, cites a ${c} paper:`),
     checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
     shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
     checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
@@ -257,7 +257,7 @@
     if (o && e) out.push(esc(L.olderUse(o.n, e.label, e.date)) + ` <a href="${esc(rerun(o.year))}">${esc(L.onlySince(o.year))}</a>`);
     if (bad.length) {
       const w = bad[0];
-      out.push(esc(L.misdated(bad.length)) + ' ' + esc(L.misdatedEg(w.year, w.cites)) + ' ' + link(w.url, w.title));
+      out.push(esc(L.misdated(bad.length)) + ' ' + esc(L.misdatedEg(w.year, w.cites, w.why)) + ' ' + link(w.url, w.title));
     }
     return out;
   }

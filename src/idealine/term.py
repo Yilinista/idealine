@@ -312,19 +312,36 @@ def name_scope(counts: dict[int, int], entity: dict | None) -> tuple[int | None,
     return None, {"n": before, "year": floor}
 
 
-def cites_later(client: OpenAlexClient, works, onset: int | None, max_papers: int = 25) -> list[tuple[Work, int]]:
-    """Early records whose date cannot be right: they cite work published more than a
-    year after their own date. Checks the papers from before the onset."""
-    suspects = [w for w in works if onset is not None and w.year and w.year < onset and w.refs][:max_papers]
-    if not suspects:
-        return []
-    ids = list(dict.fromkeys(r for w in suspects for r in w.refs))[:300]
-    years = {w.work_id: w.year or 0 for w in client.works_by_ids(ids)}
-    out = []
+COPYRIGHT = re.compile(r"(?:©|\(c\)|copyright)\s*(\d{4})\b", re.IGNORECASE)
+
+
+def copyright_year(w: Work) -> int:
+    """Latest copyright year in a record's own text ("© 2025", "(c) 2025", "Copyright 2025")."""
+    return max([int(m) for m in COPYRIGHT.findall(f"{w.title or ''} {w.abstract or ''}")] + [0])
+
+
+def cites_later(client: OpenAlexClient, works, onset: int | None, max_papers: int = 25) -> list[tuple[Work, int, str]]:
+    """Early records whose date cannot be right, as (work, later year, why). Checks the
+    papers from before the onset: copyrighted two or more years later within the term's
+    active period ('copyright'), or citing work published more than a year later ('cites').
+    Same rules as citesLater in web/core.js."""
+    suspects = [w for w in works if onset is not None and w.year and w.year < onset][:max_papers]
+    out: list[tuple[Work, int, str]] = []
+    rest = []
     for w in suspects:
+        c = copyright_year(w)
+        if c >= w.year + 2 and c >= onset:
+            out.append((w, c, "copyright"))
+        elif w.refs:
+            rest.append(w)
+    if not rest:
+        return out
+    ids = list(dict.fromkeys(r for w in rest for r in w.refs))[:300]
+    years = {w.work_id: w.year or 0 for w in client.works_by_ids(ids)}
+    for w in rest:
         late = max([years.get(r, 0) for r in w.refs] + [0])
         if late > w.year + 1:
-            out.append((w, late))
+            out.append((w, late, "cites"))
     return out
 
 
@@ -365,10 +382,10 @@ def harvest(
 
     # Four requests per term (OpenAlex bills per request): earliest uses,
     # most-cited overall, most-cited of the last two years, and the counts above.
-    def timeline(evidence: list[Evidence], bad: list[tuple[Work, int]]) -> TermTimeline:
+    def timeline(evidence: list[Evidence], bad: list[tuple[Work, int, str]]) -> TermTimeline:
         return TermTimeline(term=term, aliases=aliases, counts=counts, evidence=evidence, quarters=quarters, undated=undated,
                             entity=entity, hidden_before=hidden_before, older_use=older_use,
-                            misdated=[{"title": w.title, "year": w.year, "url": w.url, "cites": c} for w, c in bad])
+                            misdated=[{"title": w.title, "year": w.year, "url": w.url, "cites": c, "why": why} for w, c, why in bad])
 
     if not counts:
         return timeline([], [])
@@ -385,7 +402,7 @@ def harvest(
         bad = cites_later(client, works.values(), onset_year(counts))
     except OpenAlexError:
         bad = []
-    for w, _ in bad:
+    for w, _, _ in bad:
         works.pop(w.work_id, None)
         if w.year in counts:
             counts[w.year] -= 1
@@ -564,8 +581,8 @@ def scope_lines(t: TermTimeline) -> list[str]:
     if o and e:
         out.append(f"{o['n']} papers dated before {o['year']} use these words before {e['label']} existed: that is another meaning of the words.")
     if k:
-        out.append(f"{k} early paper{' was' if k == 1 else 's were'} left out because {'it cites' if k == 1 else 'they cite'} "
-                   f"work published years after {'its' if k == 1 else 'their'} own date (the date is wrong).")
+        out.append(f"{k} early paper{' was' if k == 1 else 's were'} left out because the date is wrong: "
+                   f"{'it cites or is copyrighted' if k == 1 else 'they cite or are copyrighted'} years later.")
     return out
 
 
