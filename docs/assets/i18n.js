@@ -6,9 +6,11 @@
   'use strict';
 
   const KINDS = {
-    en: { ancestor: 'ancestor', origin: 'origin', coined: 'coined', popularized: 'popularized', redefined: 'redefined', applied: 'applied', critique: 'critique' },
-    zh: { ancestor: '前身', origin: '起源', coined: '命名', popularized: '流行', redefined: '含义转变', applied: '跨界应用', critique: '批评' },
+    en: { ancestor: 'ancestor', origin: 'earliest found', coined: 'coined', popularized: 'popularized', redefined: 'redefined', applied: 'applied', critique: 'critique' },
+    zh: { ancestor: '前身', origin: '最早记录', coined: '命名', popularized: '流行', redefined: '含义转变', applied: '跨界应用', critique: '批评' },
   };
+
+  const fmtShare = v => { const pm = v * 1e6; return pm >= 10 ? Math.round(pm).toLocaleString('en-US') : pm.toFixed(pm >= 1 ? 1 : 2); };
 
   const T = {
     en: {
@@ -83,6 +85,29 @@
       resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
       unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
       titleOf: 'Title of ',
+      msg: s => s,
+      legendShare: 'bars = papers per million in all of OpenAlex that year', legendLog: 'log scale', legendPartial: 'hatched = period not over yet', noTotal: ys => `no full-year OpenAlex total for ${ys} yet, so no bar`,
+      yLabel: 'Bars', yPapers: 'Papers', yShare: 'Share of all papers', scaleLabel: 'Scale', scaleLinear: 'Linear', scaleLog: 'Log',
+      shareOf: (y, v) => `${y}: ${fmtShare(v)} per million papers in OpenAlex`, perMillion: v => `${fmtShare(v)} per million`,
+      partial: d => `not over yet (data as of ${d})`, burst: 'burst', takeoff: y => `takeoff ${y}`,
+      takeoffTip: 'Takeoff: the year the curve leaves its slow start (Ke et al. 2015). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
+      headline: h => `First seen ${h.first}` + (h.ta ? `; under ${h.before} papers a year until ${h.ta - 1}, then took off` : '') + `; ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : '') + '.',
+      laneBySense: 'ticks = quoted sentences, coloured by meaning', laneByField: 'ticks = quoted sentences, coloured by the paper’s field',
+      fieldUnknown: 'field unknown', otherFields: 'other fields', unclear: 'meaning unclear', otherMeanings: 'other meanings',
+      mixTitle: 'Meanings in this era', moved: v => `meaning moved ${v} since the previous era (0 = same mix, 1 = no overlap)`,
+      newSense: l => `new: ${l}`, fadedSense: l => `faded: ${l}`, fewQuotes: n => `${n} tagged quote${n === 1 ? '' : 's'}: too few to compare`, fewPrevQuotes: n => `previous era has only ${n} tagged quote${n === 1 ? '' : 's'}: too few to compare`,
+      mixNote: 'Meaning mixes count quoted sentences (titles and abstracts only); the labels come from the model and can be wrong.',
+      words: 'Common words', newWords: 'new', simLatest: v => `similarity to the latest era: ${v}`,
+      provCounted: 'Counted from OpenAlex; no model.', provModel: (model, n, date) => `Labelled by ${model} from ${n} quote${n === 1 ? '' : 's'} (${date}).`,
+      earliestCaveat: 'Earliest paper found in OpenAlex (titles and abstracts only). Preprints, blogs and talks often come earlier.', earlierUse: 'Know an earlier use?',
+      checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
+      shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
+      checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
+      checked: (ok, n) => `A separate AI check of the ready-made timelines agreed with this label ${ok} times out of ${n}.`,
+      rootsTitle: 'Roots: what the papers using the term cite',
+      rootsNote: (p, r) => `From the references of ${p} sampled papers that use the term (${r} cited works looked up). Peaks are publication years cited far more than their neighbours (reference publication year spectroscopy, Marx et al. 2014); each shows its most-cited work.`,
+      rootsCites: n => `cited by ${n} of these papers`,
+      rootsBtn: n => `Find roots (about ${n} OpenAlex requests)`,
     },
     zh: {
       langGroup: '语言',
@@ -153,6 +178,29 @@
       resolved: title => `原句提到了这项工作，已在 OpenAlex 匹配到《${title}》，请核对是否匹配正确。`,
       unresolved: '原句提到了这项工作，但在 OpenAlex 里没找到，所以没有链接。',
       titleOf: '标题：',
+      msg: s => trMessage('zh', s),
+      legendShare: '柱子 = 当年 OpenAlex 每百万篇论文中的篇数', legendLog: '对数刻度', legendPartial: '斜线 = 这一期还没结束', noTotal: ys => `${ys} 还没有完整一年的 OpenAlex 总数，所以不画柱`,
+      yLabel: '柱子', yPapers: '论文数', yShare: '占全部论文', scaleLabel: '刻度', scaleLinear: '线性', scaleLog: '对数',
+      shareOf: (y, v) => `${y} 年：OpenAlex 每百万篇论文中 ${fmtShare(v)} 篇`, perMillion: v => `每百万篇 ${fmtShare(v)} 篇`,
+      partial: d => `还没结束（数据截至 ${d}）`, burst: '爆发期', takeoff: y => `${y} 起飞`,
+      takeoffTip: '起飞点：曲线离开缓慢起步的那一年（Ke 等，2015）。爆发期：使用量异常高的年份（Kleinberg，2002）。两者都由论文数算出，没用模型。',
+      headline: h => `最早见于 ${h.first} 年` + (h.ta ? `；到 ${h.ta - 1} 年为止每年不到 ${h.before} 篇，之后起飞` : '') + `；${h.peakYear} 年 ${h.peak.toLocaleString('en-US')} 篇` + (h.partialPeak ? '（截至目前）' : '') + '。',
+      laneBySense: '刻度 = 每句原文，颜色表示词义', laneByField: '刻度 = 每句原文，颜色表示论文所属领域',
+      fieldUnknown: '领域未知', otherFields: '其他领域', unclear: '词义不确定', otherMeanings: '其他意思',
+      mixTitle: '这个时期里的词义构成', moved: v => `和上一时期相比，词义变化 ${v}（0 = 构成相同，1 = 完全不同）`,
+      newSense: l => `新出现：${l}`, fadedSense: l => `淡出：${l}`, fewQuotes: n => `只有 ${n} 句标了词义，太少，不比较`, fewPrevQuotes: n => `上一时期只有 ${n} 句标了词义，太少，不比较`,
+      mixNote: '词义构成按原文句子计数（只有标题和摘要）；词义标签由模型给出，可能有误。',
+      words: '常见词', newWords: '新出现', simLatest: v => `与最近时期的相似度：${v}`,
+      provCounted: '由 OpenAlex 计数得出，未使用模型。', provModel: (model, n, date) => `由 ${model} 根据 ${n} 句原文标注（${date}）。`,
+      earliestCaveat: '这是在 OpenAlex（只查标题和摘要）里找到的最早论文。预印本、博客和演讲往往更早。', earlierUse: '知道更早的用法？',
+      checkExact: '原文里有这个完整词组', checkSense: '用的是这个意思', checkCoin: '把这个名字当作新提出的',
+      shiftOf: s => `变化类型：${({ broadening: '范围变宽', narrowing: '范围变窄', metaphor: '比喻用法', 'new field': '进入新领域' })[s] || s}`,
+      checksNote: 'n/m = 另一轮 AI 抽查 7 条现成时间线时，这类标签 m 个里有 n 个被认为标得对（不是对本页的检查）',
+      checked: (ok, n) => `另一轮 AI 抽查现成时间线：这类标签 ${n} 个里有 ${ok} 个被认为标得对。`,
+      rootsTitle: '根源：用到这个词的论文都在引用什么',
+      rootsNote: (p, r) => `取自抽样中 ${p} 篇用到这个词的论文的参考文献（查了 ${r} 篇被引文献）。峰值年份是被引次数远高于前后几年的出版年份（参考文献出版年谱分析，Marx 等，2014），每个峰值列出当年被引最多的作品。`,
+      rootsCites: n => `被其中 ${n} 篇引用`,
+      rootsBtn: n => `查找根源（约 ${n} 个 OpenAlex 请求）`,
     },
   };
 
@@ -160,6 +208,11 @@
   const MSG_ZH = [
     [/^Counting papers per year…$/, () => '正在统计每年的论文数……'],
     [/^Counting papers per quarter…$/, () => '正在按季度统计论文数……'],
+    [/^Looking up cited works \((\d+) of (\d+)\)…$/, m => `正在查找被引文献（${m[1]} / ${m[2]}）……`],
+    [/^One of the earliest uses found\.$/, () => '找到的最早用法之一。'],
+    [/^Earliest record found, from before the term was in regular use\./, () => '找到的最早记录，早于这个词被经常使用的时候。OpenAlex 对罕见早期记录的年份有时有误，请核对原文。'],
+    [/^Cited by (\d+) of the sampled papers that use the term \((\d+) times overall\)\.$/, m => `被抽样的、用到这个词的论文引用 ${m[1]} 次（总被引 ${m[2]} 次）。`],
+    [/^Cited (\d+) times\.$/, m => `被引 ${m[1]} 次。`],
     [/^Reading the earliest papers…$/, () => '正在读取最早的论文……'],
     [/^Reading the most-cited papers…$/, () => '正在读取被引最多的论文……'],
     [/^Reading recent papers…$/, () => '正在读取最新的论文……'],

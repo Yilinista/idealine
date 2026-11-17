@@ -10,6 +10,7 @@ import argparse
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 from . import __version__
@@ -23,7 +24,7 @@ from .render_term import html_from_data, to_data
 from .render_term import to_html as term_html
 from .render_term import to_markdown as term_markdown
 from .s2 import DEFAULT_CACHE_DIR, S2Client, S2Error
-from .term import AnalyzeError, analyze, baseline, harvest
+from .term import AnalyzeError, Sense, analyze, baseline, find_roots, harvest, load_totals, totals_asof
 
 
 def slugify(text: str, max_len: int = 50) -> str:
@@ -53,6 +54,7 @@ def term_parser() -> argparse.ArgumentParser:
     p.add_argument("term", help='The term, spelled out, e.g. "recursive self-improvement".')
     p.add_argument("--alias", action="append", default=[], help="Another spelling to include (repeatable).")
     p.add_argument("--effort", default="medium", choices=["low", "medium", "high"], help="Model effort (default medium).")
+    p.add_argument("--roots", action="store_true", help="Also find the term's roots: the years and works its papers cite most (about 10-20 more OpenAlex requests).")
     p.add_argument("--meaning", default="", help='Which meaning to follow when the words have several, e.g. "AI agents that use tools".')
     p.add_argument("--lang", default="en", choices=["en", "zh"], help="Language of the summary, eras and notes (default en; zh = Simplified Chinese).")
     _common(p)
@@ -95,6 +97,7 @@ def run_term(argv: list[str], oa: OpenAlexClient | None, llm_client) -> int:
         log(f'Searching OpenAlex for "{args.term}"...')
         t = harvest(oa, args.term, args.alias)
         t.meaning = (args.meaning or "").strip()
+        t.totals, t.totals_asof = load_totals(), totals_asof()
     except OpenAlexError as err:
         log(f"Error: {err}")
         return 2
@@ -112,6 +115,12 @@ def run_term(argv: list[str], oa: OpenAlexClient | None, llm_client) -> int:
             return 3
     else:
         baseline(t)
+    if args.roots:  # after the model, so only papers in the followed meaning count
+        log("Finding roots (cited works by year)...")
+        try:
+            t.roots = find_roots(oa, t)
+        except OpenAlexError as err:
+            log(f"Roots skipped: {err}")
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -172,6 +181,33 @@ def main(argv: list[str] | None = None, s2: S2Client | None = None, oa: OpenAlex
     argv = list(sys.argv[1:] if argv is None else argv)
     if argv and argv[0] == "claim":
         return run_claim(argv[1:], s2, llm_client)
+    if argv and argv[0] == "totals":
+        # idealine totals: refresh the shipped per-year totals of all OpenAlex works (2 requests).
+        client = oa or OpenAlexClient(cache_dir=None, log=log)
+        totals = client.year_totals()
+        path = Path(__file__).parent / "web" / "oa-totals.json"
+        path.write_text(json.dumps({"fetched": date.today().isoformat(), "totals": [[y, c] for y, c in totals.items()]}), encoding="utf-8")
+        log(f"Wrote {path} ({len(totals)} years)")
+        return 0
+    if argv and argv[0] == "roots":
+        # idealine roots page.json [...]: add the roots view to saved data. Re-reads OpenAlex
+        # (cached), reuses the saved sense tags, and makes no model call.
+        client = oa or OpenAlexClient(cache_dir=DEFAULT_CACHE_DIR, log=log)
+        for path in map(Path, argv[1:]):
+            d = json.loads(path.read_text())
+            t = harvest(client, d["term"], d.get("aliases") or [])
+            saved = {q["id"]: q for q in d.get("quotes") or []}
+            for e in t.evidence:
+                q = saved.get(e.eid)
+                e.sense = q.get("sense", "") if q and q.get("text") == e.text else ""
+            t.senses = [Sense(s["label"], s.get("definition", ""), [], key=s["key"], related=bool(s.get("related")))
+                        for s in d.get("senses") or []]
+            matched = sum(1 for e in t.evidence if e.eid in saved and saved[e.eid].get("text") == e.text)
+            d["roots"] = find_roots(client, t)
+            path.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+            path.with_suffix(".html").write_text(html_from_data(d), encoding="utf-8")
+            log(f"Roots for {path}: {len(d['roots']['peaks'])} peaks ({matched}/{len(t.evidence)} quotes matched the saved ones)")
+        return 0
     if argv and argv[0] == "render":
         # idealine render page.json [...]: rebuild HTML from saved data, no API calls.
         for path in map(Path, argv[1:]):

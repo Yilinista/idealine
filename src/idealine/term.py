@@ -16,6 +16,7 @@ import json
 import re
 from dataclasses import dataclass, field
 from datetime import date
+from importlib import resources
 from typing import Any
 
 from .openalex import OpenAlexClient, Work, phrase_query
@@ -31,14 +32,18 @@ class Evidence:
     text: str
     work: Work
     from_title: bool = False
+    sense: str = ""  # the model's sense key for this quote (S1, S2, ...), or "unclear"
 
 
 @dataclass
 class Sense:
-    """An unrelated meaning of the same words, kept out of the eras and milestones."""
+    """A meaning of the words in the evidence. related=False: it only shares the words
+    and is kept out of the eras and milestones."""
     label: str
     meaning: str
     evidence: list[str]
+    key: str = ""
+    related: bool = False
 
 
 @dataclass
@@ -59,6 +64,9 @@ class Milestone:
     evidence: list[str]
     work: Work | None = None
     link_status: str = "unresolved"  # "in-sample", "resolved", or "unresolved"
+    in_sense: bool | None = None  # model: the quotes use the term in the followed meaning
+    coinage: bool | None = None  # model: the work presents the name as new ("we call this ...")
+    shift: str = ""  # model, for redefined/applied: broadening, narrowing, metaphor, new field
 
 
 @dataclass
@@ -68,6 +76,9 @@ class TermTimeline:
     counts: dict[int, int]
     evidence: list[Evidence]
     quarters: list[tuple[str, int]] = field(default_factory=list)  # ("2025-Q1", n) for young terms
+    totals: dict[int, int] = field(default_factory=dict)  # all OpenAlex works per year, for shares
+    totals_asof: str = ""  # when those totals were fetched
+    roots: dict | None = None  # reference publication year spectroscopy, when requested
     undated: list[tuple[int, int]] = field(default_factory=list)  # (year, n) papers dated only by year
     eras: list[Era] = field(default_factory=list)
     milestones: list[Milestone] = field(default_factory=list)
@@ -78,6 +89,7 @@ class TermTimeline:
     meaning: str = ""  # the reader's own description of the meaning they want traced
     focus: str = ""  # the meaning the timeline follows, as the model names it
     other_senses: list[Sense] = field(default_factory=list)
+    senses: list[Sense] = field(default_factory=list)  # every meaning found, related or not
 
     @property
     def total(self) -> int:
@@ -188,6 +200,95 @@ def sentences_with_term(text: str, pattern: re.Pattern) -> list[str]:
     return out
 
 
+def _totals_file() -> dict:
+    try:
+        return json.loads((resources.files("idealine") / "web" / "oa-totals.json").read_text(encoding="utf-8"))
+    except (FileNotFoundError, ValueError):
+        return {}
+
+
+def load_totals() -> dict[int, int]:
+    """All OpenAlex works per year, shipped as idealine/web/oa-totals.json (refresh with
+    `idealine totals`), so shares need no extra request."""
+    return {int(y): int(c) for y, c in _totals_file().get("totals", [])}
+
+
+def totals_asof() -> str:
+    """The date the shipped totals were fetched (its last year was not over then)."""
+    return str(_totals_file().get("fetched", ""))
+
+
+def count_in_set(works: dict[str, Work]) -> None:
+    """For each sampled work, count how many other sampled works cite it. A paper that
+    papers using the term cite matters to the term; a famous paper that mentions it in
+    passing does not (Litmaps' "map connectivity")."""
+    for w in works.values():
+        w.in_set = 0
+    for w in works.values():
+        for r in set(w.refs):
+            if r != w.work_id and r in works:
+                works[r].in_set += 1
+
+
+def in_focus(t: TermTimeline) -> list[Evidence]:
+    """Quotes in the followed meaning: tagged with a related sense, or all quotes when
+    the model tagged none (free view, older data)."""
+    related = {s.key for s in t.senses if s.related}
+    if not related or not any(e.sense for e in t.evidence):
+        return t.evidence
+    return [e for e in t.evidence if e.sense in related]
+
+
+def roots_plan(evidence: list[Evidence], max_papers: int = 100, max_refs: int = 2000) -> tuple[int, list[str], dict[str, int]]:
+    """Which references to look up for the roots view (same rule as core.js rootsPlan)."""
+    seen: set[str] = set()
+    papers = [e.work for e in evidence if not (e.work.work_id in seen or seen.add(e.work.work_id))]
+    papers.sort(key=lambda w: (-w.in_set, -w.cited_by))
+    top = papers[:max_papers]
+    n: dict[str, int] = {}
+    for w in top:
+        for r in set(w.refs):
+            n[r] = n.get(r, 0) + 1
+    ids = [(r, c) for r, c in n.items() if c >= 2]
+    if len(ids) < 50:
+        ids = list(n.items())
+    ids.sort(key=lambda rc: -rc[1])
+    return len(top), [r for r, _ in ids[:max_refs]], n
+
+
+def rpys(items: list[dict], max_peaks: int = 5) -> dict:
+    """Reference publication year spectroscopy (Marx et al. 2014): cited works per
+    publication year, and the years well above the median of their 5-year window."""
+    by_year: dict[int, int] = {}
+    for it in items:
+        if isinstance(it.get("year"), int):
+            by_year[it["year"]] = by_year.get(it["year"], 0) + it["n"]
+    if not by_year:
+        return {"spectrum": [], "peaks": []}
+    lo, hi = min(by_year), max(by_year)
+    spectrum = [[y, by_year.get(y, 0)] for y in range(lo, hi + 1)]
+    total = sum(c for _, c in spectrum)
+
+    def med(y: int) -> int:
+        return sorted(by_year.get(y + d, 0) for d in (-2, -1, 0, 1, 2))[2]
+
+    cands = [(y, c) for y, c in spectrum if c >= max(3, total * 0.01) and c - med(y) > 0]
+    cands.sort(key=lambda yc: -(yc[1] - med(yc[0])))
+    peaks = []
+    for y, c in cands[:max_peaks]:
+        top = max((it for it in items if it.get("year") == y), key=lambda it: it["n"])
+        peaks.append({"year": y, "count": c, "title": top["title"], "url": top["url"], "authors": top["authors"], "cites": top["n"]})
+    return {"spectrum": spectrum, "peaks": sorted(peaks, key=lambda p: p["year"])}
+
+
+def find_roots(client: OpenAlexClient, t: TermTimeline) -> dict:
+    """Look up the years of the works the term's papers cite (about 1 request per 100)."""
+    papers, ids, cites = roots_plan(in_focus(t))
+    items = [{"year": w.year, "n": cites.get(w.work_id, 0), "title": w.title, "url": w.url, "authors": w.short_authors}
+             for w in client.works_by_ids(ids)]
+    return {**rpys(items), "papers": papers, "refs": len(ids)}
+
+
 def harvest(
     client: OpenAlexClient,
     term: str,
@@ -221,6 +322,7 @@ def harvest(
         for w in client.works(query, "cited_by_count:desc", recent, since=latest - 1):
             works.setdefault(w.work_id, w)
 
+    count_in_set(works)
     ordered = sorted(works.values(), key=lambda w: (w.date or str(w.year or 9999), -w.cited_by))
     per_work: list[tuple[Work, list[str], bool]] = []
     for w in ordered:
@@ -258,16 +360,21 @@ The same words often name unrelated things: a sports "super agent" and a softwar
 the reader describes under "Meaning the reader has in mind", if given; otherwise the
 meaning most common in the newest papers. Eras, milestones, and the summary follow
 only that meaning, plus earlier ideas the evidence shows it grew out of (as
-ancestor). Meanings that merely share the words go in other_senses, never in eras or
-milestones.
+ancestor). Meanings that merely share the words are listed in senses with related: false,
+never in eras or milestones.
 
 Return:
 - focus: one sentence naming the meaning this timeline follows.
 - summary: two plain sentences a newcomer can read: where the term came from and
   what it mostly means now.
-- other_senses: unrelated meanings of the same words found in the evidence (empty if
-  all evidence shares one meaning). For each: a 1-4 word label, one sentence on what
-  it means, and the IDs of sentences that show it.
+- senses: every distinct meaning of the words in the evidence, keyed S1, S2, ... For
+  each: a 1-4 word label, a one-line definition as the quotes use it, and related:
+  true for the followed meaning, its sub-senses, and earlier ideas it grew out of;
+  false for meanings that merely share the words. Split the followed meaning into
+  sub-senses only where the quotes clearly use it differently (for example a method
+  versus a product category).
+- quote_senses: for every evidence ID, the key of the sense that sentence uses, or
+  "unclear" when you cannot tell. Do not guess.
 - eras: 2 to 5 consecutive periods in which the term was used in a recognizably
   different way. For each: start_year, end_year, a 2-5 word label, one sentence on
   what the term meant then, and the IDs of sentences that show it.
@@ -280,6 +387,10 @@ Return:
   e.g. "Good, 'Speculations Concerning the First Ultraintelligent Machine'"),
   why (one sentence), evidence IDs, and work_ref: the evidence ID whose own paper IS
   this milestone, or "" if the milestone is a work that the sentences name or cite.
+  Also for each: in_sense (true if its quotes use the term in the followed meaning),
+  coinage (true only if the work itself presents the name as new, e.g. "we call this
+  ..." or "we introduce the term"), and shift: for redefined or applied, one of
+  broadening, narrowing, metaphor, new field; otherwise none.
 
 Publication years come from OpenAlex and are occasionally wrong (a modern paper
 dated 1800, say). If a sentence clearly does not fit its year (it names later
@@ -294,16 +405,26 @@ OUTPUT_SCHEMA = {
     "properties": {
         "focus": {"type": "string"},
         "summary": {"type": "string"},
-        "other_senses": {
+        "senses": {
             "type": "array",
             "items": {
                 "type": "object",
                 "properties": {
+                    "key": {"type": "string"},
                     "label": {"type": "string"},
-                    "meaning": {"type": "string"},
-                    "evidence": {"type": "array", "items": {"type": "string"}},
+                    "definition": {"type": "string"},
+                    "related": {"type": "boolean"},
                 },
-                "required": ["label", "meaning", "evidence"],
+                "required": ["key", "label", "definition", "related"],
+                "additionalProperties": False,
+            },
+        },
+        "quote_senses": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {"id": {"type": "string"}, "sense": {"type": "string"}},
+                "required": ["id", "sense"],
                 "additionalProperties": False,
             },
         },
@@ -333,13 +454,16 @@ OUTPUT_SCHEMA = {
                     "why": {"type": "string"},
                     "evidence": {"type": "array", "items": {"type": "string"}},
                     "work_ref": {"type": "string"},
+                    "in_sense": {"type": "boolean"},
+                    "coinage": {"type": "boolean"},
+                    "shift": {"type": "string", "enum": ["none", "broadening", "narrowing", "metaphor", "new field"]},
                 },
-                "required": ["year", "kind", "title", "why", "evidence", "work_ref"],
+                "required": ["year", "kind", "title", "why", "evidence", "work_ref", "in_sense", "coinage", "shift"],
                 "additionalProperties": False,
             },
         },
     },
-    "required": ["focus", "summary", "other_senses", "eras", "milestones"],
+    "required": ["focus", "summary", "senses", "quote_senses", "eras", "milestones"],
     "additionalProperties": False,
 }
 
@@ -351,7 +475,7 @@ class AnalyzeError(RuntimeError):
 # Extra instruction so the model writes its labels in the reader's language.
 # Paper titles and quotes stay in their original language.
 OUTPUT_LANG = {
-    "zh": "Write the focus, summary, era labels, era meanings, other-sense labels and meanings, and every milestone \"why\" in Simplified Chinese. "
+    "zh": "Write the focus, summary, era labels, era meanings, sense labels and definitions, and every milestone \"why\" in Simplified Chinese. "
     "Keep milestone titles as the work titles in their original language, and keep evidence IDs unchanged.",
 }
 
@@ -368,7 +492,8 @@ def build_prompt(t: TermTimeline, lang: str = "en") -> str:
     ]
     for e in t.evidence:
         kind = "title" if e.from_title else "abstract"
-        lines.append(f"[{e.eid}] ({e.work.year}, cited {e.work.cited_by}x, {kind} of \"{e.work.title}\") {e.text}")
+        within = f", cited by {e.work.in_set} of these papers" if e.work.in_set else ""
+        lines.append(f"[{e.eid}] ({e.work.year}, cited {e.work.cited_by}x{within}, {kind} of \"{e.work.title}\") {e.text}")
     if lang in OUTPUT_LANG:
         lines += ["", "Output language: " + OUTPUT_LANG[lang]]
     return "\n".join(lines)
@@ -405,10 +530,24 @@ def apply_analysis(t: TermTimeline, data: dict, resolver: OpenAlexClient | None)
     data = data if isinstance(data, dict) else {}
     t.summary = text(data.get("summary"))
     t.focus = text(data.get("focus"))
-    t.other_senses = []
-    for s in (data.get("other_senses") or [])[:6] if isinstance(data.get("other_senses"), list) else []:
-        if isinstance(s, dict) and valid(s.get("evidence")) and text(s.get("label")):
-            t.other_senses.append(Sense(text(s.get("label")), text(s.get("meaning")), valid(s.get("evidence"))))
+    # Senses and per-quote tags. Unrelated senses become other_senses (with their quotes).
+    t.senses = []
+    for s in (data.get("senses") or [])[:12] if isinstance(data.get("senses"), list) else []:
+        if isinstance(s, dict) and text(s.get("key")) and text(s.get("label")):
+            t.senses.append(Sense(text(s.get("label")), text(s.get("definition")), [], key=text(s.get("key")),
+                                  related=s.get("related") is not False))
+    keys = {s.key: s for s in t.senses}
+    for e in t.evidence:
+        e.sense = ""
+    for q in data.get("quote_senses") or [] if isinstance(data.get("quote_senses"), list) else []:
+        if isinstance(q, dict) and q.get("id") in by_id:
+            k = text(q.get("sense"))
+            if k in keys:
+                by_id[q["id"]].sense = k
+                keys[k].evidence.append(q["id"])
+            elif k == "unclear":
+                by_id[q["id"]].sense = "unclear"
+    t.other_senses = [s for s in t.senses if not s.related and s.evidence][:6]
     t.eras = []
     for e in data.get("eras") or []:
         if not isinstance(e, dict):
@@ -426,6 +565,9 @@ def apply_analysis(t: TermTimeline, data: dict, resolver: OpenAlexClient | None)
         if not ev or m.get("kind") not in MILESTONE_KINDS or not y:
             continue
         ms = Milestone(y, m["kind"], text(m.get("title")), text(m.get("why")), ev)
+        ms.in_sense = m["in_sense"] if isinstance(m.get("in_sense"), bool) else None
+        ms.coinage = m["coinage"] if isinstance(m.get("coinage"), bool) else None
+        ms.shift = m["shift"] if m.get("shift") in ("broadening", "narrowing", "metaphor", "new field") else ""
         ref = m.get("work_ref") if isinstance(m.get("work_ref"), str) else ""
         if ref in by_id:
             ms.work = by_id[ref].work
@@ -497,12 +639,13 @@ def baseline(t: TermTimeline) -> TermTimeline:
     first: dict[str, Evidence] = {}
     for e in t.evidence:
         first.setdefault(e.work.work_id, e)
-    top = sorted(first.values(), key=lambda e: -e.work.cited_by)
+    # Key papers: first by how many sampled papers that use the term cite them, then overall.
+    top = sorted(first.values(), key=lambda e: (-e.work.in_set, -e.work.cited_by))
     for e in top[:5]:
         if e.work.work_id in {m.work.work_id for m in t.milestones if m.work}:
             continue
-        t.milestones.append(
-            Milestone(e.work.year or 0, "popularized", e.work.title, f"Cited {e.work.cited_by} times.", [e.eid], e.work, "in-sample")
-        )
+        why = (f"Cited by {e.work.in_set} of the sampled papers that use the term ({e.work.cited_by} times overall)."
+               if e.work.in_set else f"Cited {e.work.cited_by} times.")
+        t.milestones.append(Milestone(e.work.year or 0, "popularized", e.work.title, why, [e.eid], e.work, "in-sample"))
     t.milestones.sort(key=lambda m: m.year)
     return t

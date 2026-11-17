@@ -349,10 +349,75 @@ test('other senses: meaning goes into the prompt; senses need valid evidence', a
     { eid: 'E1', text: 'a super agent for sports', work: { title: 'A', year: 2009 } },
     { eid: 'E2', text: 'an AI super agent', work: { title: 'B', year: 2026 } }] };
   assert.match(C.buildPrompt(t), /Meaning the reader has in mind: AI agents/);
-  await C.applyAnalysis(t, { focus: 'AI agents that use tools', summary: 's', eras: [], milestones: [],
-    other_senses: [{ label: 'Sports agent', meaning: 'm', evidence: ['E1'] }, { label: 'No proof', meaning: 'm', evidence: ['E9'] }, 'junk'] }, null);
+  await C.applyAnalysis(t, { focus: 'AI agents that use tools', summary: 's', eras: [],
+    milestones: [{ year: 2026, kind: 'coined', title: 'B', why: 'w', evidence: ['E2'], work_ref: 'E2', in_sense: true, coinage: false, shift: 'bogus' }],
+    senses: [{ key: 'S1', label: 'AI agent', definition: 'd', related: true }, { key: 'S2', label: 'Sports agent', definition: 'm', related: false }, 'junk'],
+    quote_senses: [{ id: 'E1', sense: 'S2' }, { id: 'E2', sense: 'S1' }, { id: 'E9', sense: 'S1' }, null] }, null);
   assert.equal(t.focus, 'AI agents that use tools');
   assert.deepEqual(t.otherSenses.map(s => s.label), ['Sports agent']);
+  assert.deepEqual(t.evidence.map(e => e.sense), ['S2', 'S1']);
+  assert.deepEqual([t.milestones[0].inSense, t.milestones[0].coinage, t.milestones[0].shift], [true, false, '']);
   const d = C.toData(t);
   assert.equal(d.otherSenses[0].evidence[0].text, 'a super agent for sports');
+  assert.equal(d.quotes[1].sense, 'S1');
+  assert.deepEqual(d.milestones[0].checks, { inSense: true, coinage: false });
+});
+
+test('in-set citations: count citations from other sampled papers', () => {
+  const w = (id, refs) => ({ id, refs, inSet: 0 });
+  const works = new Map([['A', w('A', [])], ['B', w('B', ['A'])], ['C', w('C', ['B', 'B', 'C'])], ['D', w('D', ['B', 'X'])]]);
+  C.countInSet(works);
+  assert.deepEqual([...works.values()].map(x => x.inSet), [1, 2, 0, 0]);
+  const wj = C.workFromJson({ id: 'https://openalex.org/W1', primary_topic: { field: { display_name: 'Computer Science' } }, referenced_works: ['https://openalex.org/W2', 5] });
+  assert.equal(wj.field, 'Computer Science');
+  assert.deepEqual(wj.refs, ['W2']);
+});
+
+const TL = require('../src/idealine/web/timeline.js');
+
+test('takeoff: awakening year sits where the slow start ends', () => {
+  const counts = [[2010, 1], [2011, 1], [2012, 2], [2013, 1], [2014, 2], [2015, 3], [2016, 20], [2017, 80], [2018, 200]];
+  assert.equal(TL.awakening(counts), 2016);  // farthest below the first-to-peak line (Ke et al. 2015)
+  assert.equal(TL.awakening([[2020, 1], [2021, 2]]), null);
+  assert.equal(TL.takeoff(counts), 2016);
+  // vibe coding: the awakening point is 2024 (no papers yet); takeoff is 2025.
+  const vc = [[2019, 1], [2020, 1], [2025, 127], [2026, 777]];
+  assert.equal(TL.awakening(vc), 2024);
+  assert.equal(TL.takeoff(vc), 2025);
+});
+
+test('bursts: Kleinberg finds the high-rate run, with or without totals', () => {
+  const counts = [[2000, 2], [2001, 3], [2002, 2], [2003, 3], [2004, 40], [2005, 45], [2006, 3], [2007, 2]];
+  assert.deepEqual(TL.bursts(counts), [[2004, 2005]]);
+  const totals = counts.map(([y]) => [y, 100000]);
+  assert.deepEqual(TL.bursts(counts, totals), [[2004, 2005]]);
+  assert.deepEqual(TL.bursts([[2000, 5], [2001, 5], [2002, 5]]), []);
+});
+
+test('sense mix: Jensen-Shannon distance and the k=2/n=5 rule', () => {
+  assert.equal(TL.jsDistance({ a: 5 }, { a: 9 }), 0);
+  assert.ok(Math.abs(TL.jsDistance({ a: 5 }, { b: 5 }) - 1) < 1e-9);
+  assert.equal(TL.jsDistance({}, { a: 1 }), null);
+  assert.deepEqual(TL.senseChange({ a: 6, b: 1 }, { a: 1, b: 7 }), { gained: ['b'], lost: ['a'] });
+});
+
+test('co-terms skip stop words and the term itself; month placement ignores 1 January', () => {
+  const w = TL.wordCounts(['We study super agents for routing tasks.', 'Routing with tools.'], new Set(['super', 'agent', 'agents']));
+  assert.equal(w.get('routing'), 2);
+  assert.ok(!w.has('super') && !w.has('with') && !w.has('agents'));
+  assert.equal(TL.timeOf(2025, '2025-03-10', 0.5), 2025 + 2.5 / 12);
+  assert.equal(TL.timeOf(2025, '2025-01-01', 0.5), 2025.5);
+});
+
+test('roots: plan picks repeated references; rpys marks the peak year', () => {
+  const mk = (id, refs, inSet) => ({ work: { id, refs, inSet, citedBy: 0 } });
+  const ev = [mk('A', ['R1', 'R2'], 3), mk('B', ['R1'], 1), mk('B', ['R1'], 1)];
+  const plan = C.rootsPlan(ev);
+  assert.equal(plan.papers, 2);
+  assert.deepEqual(plan.ids, ['R1', 'R2']);  // fewer than 50 repeated: all, most-cited first
+  const items = Array.from({ length: 10 }, (_, i) => ({ year: 1990 + i, n: 2, title: 'T' + i, url: 'u', authors: 'A' }));
+  items.push({ year: 1995, n: 30, title: 'Root paper', url: 'u', authors: 'B' });
+  const r = C.rpys(items);
+  assert.equal(r.peaks[0].title, 'Root paper');
+  assert.equal(r.spectrum.length, 10);
 });

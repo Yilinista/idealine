@@ -121,6 +121,25 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
   ready-made example timeline in the result slot until the visitor traces their own. Light by
   default, dark palette when the system is in dark mode; term pages share the same tokens.
 
+## Reading aids (borrowed from similar tools, 2026-11-17)
+
+- **Share and log scale** (Google Ngram): the bar chart can show papers per million OpenAlex
+  papers that year (`oa-totals.json`, refreshed with `idealine totals`); log scale turns on by
+  itself when the busiest year is 50x the quietest.
+- **Bursts and takeoff:** Kleinberg two-state burst detection shades unusual years; the takeoff
+  marker is the first year after the Ke et al. (2015) "awakening" point where the count more
+  than doubles its earlier best.
+- **Meaning per era** (SemEval semantic change): each quote is tagged with a sense; each era
+  card shows the sense mix, a Jensen-Shannon "moved" score against the previous era, and
+  new/faded badges (k=2, n=5). Common words per era are counted in code.
+- **In-set citations** (Litmaps): papers are ranked by how many of the other sampled papers
+  cite them, and the prompt shows that count.
+- **Roots** (RPYS, Marx et al. 2014): the references of the in-focus papers, counted by year;
+  peak years list the most-cited works. `idealine roots page.json` adds this without a model call.
+- **Honest labels:** "origin" is now "earliest found", with a link to report an earlier use;
+  each milestone shows checks (exact phrase found, in the chosen meaning) and how often a
+  separate AI check agreed with that label type (`kind-checks.json`; not a human check).
+
 ## Known limits
 
 - Only title/abstract text. Books and pre-2000 essays without abstracts appear only if

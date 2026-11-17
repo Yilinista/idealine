@@ -353,12 +353,77 @@ def test_other_senses_are_kept_apart_and_need_evidence():
           Evidence("E2", "an AI super agent", Work("b", "B", 2026, None, "https://x", 1))]
     t = TermTimeline("super agent", [], {2009: 1, 2026: 1}, ev, meaning="AI agents")
     assert "Meaning the reader has in mind: AI agents" in build_prompt(t)
-    apply_analysis(t, {"focus": "AI agents that use tools", "summary": "s", "eras": [], "milestones": [],
-                       "other_senses": [{"label": "Sports agent", "meaning": "m", "evidence": ["E1"]},
-                                        {"label": "No proof", "meaning": "m", "evidence": ["E9"]}]}, None)
+    apply_analysis(t, {"focus": "AI agents that use tools", "summary": "s", "eras": [],
+                       "milestones": [{"year": 2026, "kind": "coined", "title": "B", "why": "w", "evidence": ["E2"], "work_ref": "E2",
+                                       "in_sense": True, "coinage": False, "shift": "none"}],
+                       "senses": [{"key": "S1", "label": "AI agent", "definition": "d", "related": True},
+                                  {"key": "S2", "label": "Sports agent", "definition": "m", "related": False},
+                                  {"key": "S3", "label": "No quotes", "definition": "m", "related": False}],
+                       "quote_senses": [{"id": "E1", "sense": "S2"}, {"id": "E2", "sense": "S1"}, {"id": "E9", "sense": "S1"}]}, None)
     assert t.focus == "AI agents that use tools"
     assert [s.label for s in t.other_senses] == ["Sports agent"]
+    assert [e.sense for e in t.evidence] == ["S2", "S1"]
+    assert (t.milestones[0].in_sense, t.milestones[0].coinage, t.milestones[0].shift) == (True, False, "")
     from idealine.render_term import to_data
     d = to_data(t)
     assert d["otherSenses"][0]["evidence"][0]["text"] == "a super agent for sports"
     assert d["meaning"] == "AI agents"
+    assert d["quotes"][1]["sense"] == "S1" and d["senses"][1]["related"] is False
+    assert d["milestones"][0]["checks"] == {"inSense": True, "coinage": False}
+
+
+def test_in_set_citations_rank_key_papers():
+    from idealine.openalex import Work
+    from idealine.term import Evidence, count_in_set
+
+    a = Work("A", "Famous", 2020, None, "u", 9000, refs=[])
+    b = Work("B", "Core", 2021, None, "u", 10, refs=["A"])
+    c = Work("C", "User 1", 2022, None, "u", 1, refs=["B", "B", "C"])
+    d = Work("D", "User 2", 2023, None, "u", 1, refs=["B"])
+    works = {w.work_id: w for w in (a, b, c, d)}
+    count_in_set(works)
+    assert (a.in_set, b.in_set, c.in_set) == (1, 2, 0)
+    early = [Work(f"O{i}", f"Old {i}", 2010, None, "u", 0) for i in range(3)]
+    ev = [Evidence(f"E{i}", "x", w) for i, w in enumerate((*early, a, b, c, d), 1)]
+    t = baseline(TermTimeline("x", [], {2010: 3, 2020: 5, 2021: 5, 2022: 5, 2023: 5}, ev))
+    pop = [m for m in t.milestones if m.kind == "popularized"]
+    assert sorted(pop, key=lambda m: -m.work.in_set)[0].work.work_id == "B"
+    assert "Cited by 2 of the sampled papers" in next(m.why for m in pop if m.work.work_id == "B")
+    assert "cited by 2 of these papers" in build_prompt(t)
+
+
+def test_work_reads_field_and_references():
+    from idealine.openalex import work_from_json
+
+    w = work_from_json({"id": "https://openalex.org/W1", "display_name": "T", "primary_topic": {"field": {"display_name": "Computer Science"}},
+                        "referenced_works": ["https://openalex.org/W2", None]})
+    assert w.field_name == "Computer Science" and w.refs == ["W2"]
+
+
+def test_shipped_totals_load():
+    from idealine.term import load_totals
+
+    tot = load_totals()
+    assert tot and tot[2020] > 1_000_000
+
+
+def test_totals_cover_gap_years_and_carry_their_date():
+    from idealine.render_term import to_data
+    from idealine.term import load_totals, totals_asof
+
+    t = TermTimeline(term="x", aliases=[], counts={2001: 3, 2004: 5}, evidence=[])
+    t.totals, t.totals_asof = load_totals(), totals_asof()
+    d = to_data(t)
+    assert [y for y, _ in d["totals"]] == [2001, 2002, 2003, 2004]
+    assert re.match(r"\d{4}-\d{2}-\d{2}$", d["totalsAsOf"])
+
+
+def test_rpys_finds_peak_years_and_their_top_work():
+    from idealine.term import rpys
+
+    items = [{"year": 1990 + i, "n": 2, "title": f"T{i}", "url": "u", "authors": "A"} for i in range(10)]
+    items += [{"year": 1995, "n": 30, "title": "Root paper", "url": "u", "authors": "B"}]
+    r = rpys(items)
+    assert r["peaks"][0]["year"] == 1995 and r["peaks"][0]["title"] == "Root paper"
+    assert r["spectrum"][0] == [1990, 2] and len(r["spectrum"]) == 10
+    assert rpys([]) == {"spectrum": [], "peaks": []}

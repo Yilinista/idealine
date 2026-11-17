@@ -1,0 +1,35 @@
+{
+ "method": "A separate Claude agent per ready-made English timeline judged, from each milestone's own quotes, whether its type fits. Not a human check.",
+ "date": "2026-11-17",
+ "files": 7,
+ "kinds": {
+  "ancestor": [
+   2,
+   4
+  ],
+  "origin": [
+   5,
+   5
+  ],
+  "popularized": [
+   6,
+   13
+  ],
+  "redefined": [
+   12,
+   17
+  ],
+  "applied": [
+   24,
+   24
+  ],
+  "critique": [
+   10,
+   12
+  ],
+  "coined": [
+   2,
+   2
+  ]
+ }
+}

@@ -124,7 +124,7 @@ nav a:hover{color:var(--fg)}
 #status{margin:10px 0 0;font-size:.95rem;color:var(--muted)}
 #status:empty{display:none}
 #result .progress{margin:16px 0 0}
-#result.pending .summary,#result.pending .meta,#result.pending .card,#result.pending .eras,#result.pending .senses,#result.pending #r-actions{display:none}
+#result.pending .summary,#result.pending .meta,#result.pending .card,#result.pending .eras,#result.pending .roots,#result.pending .senses,#result.pending .headline,#result.pending .tlbar,#result.pending #r-actions{display:none}
 .suggest{margin-top:14px}
 .suggest p{margin:0 0 8px;color:var(--muted);font-size:.9rem}
 .suggest .chip{margin:0 6px 6px 0}
@@ -167,7 +167,7 @@ def spec_json() -> str:
 def copy_web_assets() -> None:
     out = DOCS / "assets"
     out.mkdir(exist_ok=True)
-    for name in WEB_FILES:
+    for name in (*WEB_FILES, "oa-totals.json", "kind-checks.json"):
         src = resources.files("idealine") / "web" / name
         (out / name).write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
 
@@ -217,6 +217,7 @@ RESULT = """
   <div id="r-suggest" class="suggest" hidden></div>
   <p class="summary" id="r-summary"></p>
   <p class="meta" id="r-meta"></p>
+  <p class="headline" data-part="headline"></p>
   <div class="senses" data-part="senses"></div>
   <div class="card">
     <div class="hint" data-i18n="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
@@ -225,7 +226,9 @@ RESULT = """
     <div class="detail" data-part="detail"></div>
   </div>
   <div class="eras" data-part="eras"></div>
+  <div class="roots" data-part="roots"></div>
   <div class="actions" id="r-actions" hidden>
+    <button class="btn ghost" id="r-roots" type="button" hidden></button>
     <button class="btn ghost" id="dl-html" type="button" data-i18n="dlHtml">Download page (.html)</button>
     <button class="btn ghost" id="dl-json" type="button" data-i18n="dlJson">Download data (.json)</button>
     <button class="btn ghost" id="r-live" type="button" data-i18n="traceLive" hidden>Trace again with live data</button>

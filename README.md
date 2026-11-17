@@ -91,12 +91,15 @@ idealine claim "Compute-optimal models should scale data and parameters equally"
 | `--no-llm` | Skip the model; no key needed |
 | `--model ID` | Claude model (default `claude-opus-5-5`) |
 | `--effort` | `low`, `medium` (default), or `high` |
+| `--meaning TEXT` | Which meaning you have in mind; other meanings of the same words are set aside |
+| `--roots` | Also count what the papers cite, by year (about 10–20 more OpenAlex requests) |
 | `--lang` | `en` (default) or `zh`: write the summary, eras and notes in Simplified Chinese |
 | `--out DIR` | Output folder (default: current folder) |
 | `-y, --yes` | Do not ask before calling the API |
 | `--no-cache` | Refetch instead of using cached API responses |
 
 `idealine render page.json` rebuilds the HTML from saved data without any API calls.
+`idealine roots page.json` adds the roots section to saved data (OpenAlex only, no model call).
 
 ## Limits (please read)
 
@@ -104,6 +107,7 @@ idealine claim "Compute-optimal models should scale data and parameters equally"
 - **Abstracts only.** Books and old essays without abstracts show up only when newer papers
   name them, so the true origin of a term can be missing.
 - **Exact phrase.** Papers that describe the idea in other words are not counted.
+- **"Earliest found" is not "first ever".** It is the earliest paper OpenAlex has with the phrase.
 - **Dates come from OpenAlex.** A few early records are misdated; the page marks the suspicious ones.
 
 ## Feedback

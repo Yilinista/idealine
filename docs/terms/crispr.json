@@ -1,1019 +1,1930 @@
 {
- "term": "CRISPR",
- "aliases": [
-  "CRISPR-Cas9"
- ],
- "summary": "CRISPR began in the early 2000s as a name for a family of repeated DNA sequences found in bacterial and archaeal genomes, which researchers then showed to be part of an adaptive immune system against viruses and plasmids. Since 2013 it has mainly meant a programmable, RNA-guided toolkit, above all CRISPR-Cas9, used for genome editing, genetic screens, gene regulation, diagnostics and emerging therapies.",
- "counts": [
-  [
-   1800,
-   1
-  ],
-  [
-   1879,
-   1
-  ],
-  [
-   1891,
-   1
-  ],
-  [
-   1905,
-   2
-  ],
-  [
-   1911,
-   1
-  ],
-  [
-   1917,
-   1
-  ],
-  [
-   1945,
-   1
-  ],
-  [
-   1947,
-   1
-  ],
-  [
-   1951,
-   1
-  ],
-  [
-   1952,
-   4
-  ],
-  [
-   1953,
-   1
-  ],
-  [
-   1955,
-   2
-  ],
-  [
-   1957,
-   2
-  ],
-  [
-   1962,
-   2
-  ],
-  [
-   1963,
-   2
-  ],
-  [
-   1964,
-   3
-  ],
-  [
-   1967,
-   1
-  ],
-  [
-   1970,
-   2
-  ],
-  [
-   1971,
-   3
-  ],
-  [
-   1972,
-   9
-  ],
-  [
-   1973,
-   9
-  ],
-  [
-   1974,
-   8
-  ],
-  [
-   1975,
-   12
-  ],
-  [
-   1976,
-   6
-  ],
-  [
-   1977,
-   8
-  ],
-  [
-   1978,
-   12
-  ],
-  [
-   1979,
-   11
-  ],
-  [
-   1980,
-   8
-  ],
-  [
-   1981,
-   13
-  ],
-  [
-   1982,
-   9
-  ],
-  [
-   1983,
-   9
-  ],
-  [
-   1984,
-   17
-  ],
-  [
-   1985,
-   14
-  ],
-  [
-   1986,
-   11
-  ],
-  [
-   1987,
-   16
-  ],
-  [
-   1988,
-   25
-  ],
-  [
-   1989,
-   12
-  ],
-  [
-   1990,
-   18
-  ],
-  [
-   1991,
-   20
-  ],
-  [
-   1992,
-   11
-  ],
-  [
-   1993,
-   11
-  ],
-  [
-   1994,
-   15
-  ],
-  [
-   1995,
-   6
-  ],
-  [
-   1996,
-   4
-  ],
-  [
-   1997,
-   7
-  ],
-  [
-   1998,
-   6
-  ],
-  [
-   1999,
-   7
-  ],
-  [
-   2000,
-   16
-  ],
-  [
-   2001,
-   4
-  ],
-  [
-   2002,
-   7
-  ],
-  [
-   2003,
-   5
-  ],
-  [
-   2004,
-   13
-  ],
-  [
-   2005,
-   13
-  ],
-  [
-   2006,
-   13
-  ],
-  [
-   2007,
-   35
-  ],
-  [
-   2008,
-   36
-  ],
-  [
-   2009,
-   58
-  ],
-  [
-   2010,
-   86
-  ],
-  [
-   2011,
-   131
-  ],
-  [
-   2012,
-   211
-  ],
-  [
-   2013,
-   515
-  ],
-  [
-   2014,
-   1099
-  ],
-  [
-   2015,
-   2169
-  ],
-  [
-   2016,
-   4082
-  ],
-  [
-   2017,
-   5628
-  ],
-  [
-   2018,
-   7494
-  ],
-  [
-   2019,
-   9093
-  ],
-  [
-   2020,
-   9677
-  ],
-  [
-   2021,
-   9854
-  ],
-  [
-   2022,
-   11086
-  ],
-  [
-   2023,
-   12719
-  ],
-  [
-   2024,
-   13328
-  ],
-  [
-   2025,
-   17750
-  ],
-  [
-   2026,
-   19651
-  ],
-  [
-   2027,
-   1
-  ]
- ],
- "total": 125120,
- "model": "claude-opus-5-5",
- "generated": "2026-11-17",
- "lang": "en",
- "evidenceCount": 160,
- "eras": [
-  {
-   "start": 2002,
-   "end": 2006,
-   "label": "Mysterious prokaryotic repeats",
-   "meaning": "CRISPR named a family of clustered, regularly spaced repeat elements separated by unique spacers in prokaryotic genomes, whose function was still being worked out.",
-   "evidence": [
+  "term": "CRISPR",
+  "aliases": [
+    "CRISPR-Cas9"
+  ],
+  "summary": "CRISPR began in the early 2000s as a name for a family of repeated DNA sequences found in bacterial and archaeal genomes, which researchers then showed to be part of an adaptive immune system against viruses and plasmids. Since 2013 it has mainly meant a programmable, RNA-guided toolkit, above all CRISPR-Cas9, used for genome editing, genetic screens, gene regulation, diagnostics and emerging therapies.",
+  "counts": [
+    [
+      1800,
+      1
+    ],
+    [
+      1879,
+      1
+    ],
+    [
+      1891,
+      1
+    ],
+    [
+      1905,
+      2
+    ],
+    [
+      1911,
+      1
+    ],
+    [
+      1917,
+      1
+    ],
+    [
+      1945,
+      1
+    ],
+    [
+      1947,
+      1
+    ],
+    [
+      1951,
+      1
+    ],
+    [
+      1952,
+      4
+    ],
+    [
+      1953,
+      1
+    ],
+    [
+      1955,
+      2
+    ],
+    [
+      1957,
+      2
+    ],
+    [
+      1962,
+      2
+    ],
+    [
+      1963,
+      2
+    ],
+    [
+      1964,
+      3
+    ],
+    [
+      1967,
+      1
+    ],
+    [
+      1970,
+      2
+    ],
+    [
+      1971,
+      3
+    ],
+    [
+      1972,
+      9
+    ],
+    [
+      1973,
+      9
+    ],
+    [
+      1974,
+      8
+    ],
+    [
+      1975,
+      12
+    ],
+    [
+      1976,
+      6
+    ],
+    [
+      1977,
+      8
+    ],
+    [
+      1978,
+      12
+    ],
+    [
+      1979,
+      11
+    ],
+    [
+      1980,
+      8
+    ],
+    [
+      1981,
+      13
+    ],
+    [
+      1982,
+      9
+    ],
+    [
+      1983,
+      9
+    ],
+    [
+      1984,
+      17
+    ],
+    [
+      1985,
+      14
+    ],
+    [
+      1986,
+      11
+    ],
+    [
+      1987,
+      16
+    ],
+    [
+      1988,
+      25
+    ],
+    [
+      1989,
+      12
+    ],
+    [
+      1990,
+      18
+    ],
+    [
+      1991,
+      20
+    ],
+    [
+      1992,
+      11
+    ],
+    [
+      1993,
+      11
+    ],
+    [
+      1994,
+      15
+    ],
+    [
+      1995,
+      6
+    ],
+    [
+      1996,
+      4
+    ],
+    [
+      1997,
+      7
+    ],
+    [
+      1998,
+      6
+    ],
+    [
+      1999,
+      7
+    ],
+    [
+      2000,
+      16
+    ],
+    [
+      2001,
+      4
+    ],
+    [
+      2002,
+      7
+    ],
+    [
+      2003,
+      5
+    ],
+    [
+      2004,
+      13
+    ],
+    [
+      2005,
+      13
+    ],
+    [
+      2006,
+      13
+    ],
+    [
+      2007,
+      35
+    ],
+    [
+      2008,
+      36
+    ],
+    [
+      2009,
+      58
+    ],
+    [
+      2010,
+      86
+    ],
+    [
+      2011,
+      131
+    ],
+    [
+      2012,
+      211
+    ],
+    [
+      2013,
+      515
+    ],
+    [
+      2014,
+      1099
+    ],
+    [
+      2015,
+      2169
+    ],
+    [
+      2016,
+      4082
+    ],
+    [
+      2017,
+      5628
+    ],
+    [
+      2018,
+      7494
+    ],
+    [
+      2019,
+      9093
+    ],
+    [
+      2020,
+      9677
+    ],
+    [
+      2021,
+      9854
+    ],
+    [
+      2022,
+      11086
+    ],
+    [
+      2023,
+      12719
+    ],
+    [
+      2024,
+      13328
+    ],
+    [
+      2025,
+      17750
+    ],
+    [
+      2026,
+      19651
+    ],
+    [
+      2027,
+      1
+    ]
+  ],
+  "total": 125120,
+  "model": "claude-opus-5-5",
+  "generated": "2026-11-17",
+  "lang": "en",
+  "evidenceCount": 160,
+  "eras": [
     {
-     "id": "E22",
-     "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).",
-     "title": "Identification of genes that are associated with DNA repeats in prokaryotes",
-     "year": 2002,
-     "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x",
-     "authors": "Ruud Jansen et al.",
-     "fromTitle": false
+      "start": 2002,
+      "end": 2006,
+      "label": "Mysterious prokaryotic repeats",
+      "meaning": "CRISPR named a family of clustered, regularly spaced repeat elements separated by unique spacers in prokaryotic genomes, whose function was still being worked out.",
+      "evidence": [
+        {
+          "id": "E22",
+          "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).",
+          "title": "Identification of genes that are associated with DNA repeats in prokaryotes",
+          "year": 2002,
+          "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x",
+          "authors": "Ruud Jansen et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E23",
+          "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.",
+          "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies",
+          "year": 2005,
+          "url": "https://doi.org/10.1099/mic.0.27437-0",
+          "authors": "Christine Pourcel et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E24",
+          "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.",
+          "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
+          "year": 2005,
+          "url": "https://doi.org/10.1099/mic.0.28048-0",
+          "authors": "Alexander Bolotin et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E25",
+          "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.",
+          "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action",
+          "year": 2006,
+          "url": "https://doi.org/10.1186/1745-6150-1-7",
+          "authors": "Kira S. Makarova et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E23",
-     "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.",
-     "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies",
-     "year": 2005,
-     "url": "https://doi.org/10.1099/mic.0.27437-0",
-     "authors": "Christine Pourcel et al.",
-     "fromTitle": false
+      "start": 2007,
+      "end": 2012,
+      "label": "Bacterial adaptive immune system",
+      "meaning": "CRISPR and its Cas genes were understood as an RNA-guided defense system that gives bacteria and archaea acquired immunity against phages and plasmids.",
+      "evidence": [
+        {
+          "id": "E27",
+          "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.",
+          "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
+          "year": 2007,
+          "url": "https://doi.org/10.1128/jb.01412-07",
+          "authors": "Hélène Deveau et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E28",
+          "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).",
+          "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
+          "year": 2008,
+          "url": "https://doi.org/10.1126/science.1159689",
+          "authors": "Stan J. J. Brouns et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E29",
+          "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.",
+          "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA",
+          "year": 2008,
+          "url": "https://doi.org/10.1126/science.1165771",
+          "authors": "Luciano A. Marraffini et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E30",
+          "text": "In many Bacteria and most Archaea, clustered regularly interspaced short palindromic repeats (CRISPR) form peculiar genetic loci, which provide acquired immunity against viruses and plasmids by targeting nucleic acid in a sequence-specific manner.",
+          "title": "CRISPR/Cas, the Immune System of Bacteria and Archaea",
+          "year": 2010,
+          "url": "https://doi.org/10.1126/science.1179555",
+          "authors": "Philippe Horvath et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E31",
+          "text": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA",
+          "title": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA",
+          "year": 2010,
+          "url": "https://doi.org/10.1038/nature09523",
+          "authors": "Josiane E. Garneau et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E33",
+          "text": "Evolution and classification of the CRISPR–Cas systems",
+          "title": "Evolution and classification of the CRISPR–Cas systems",
+          "year": 2011,
+          "url": "https://doi.org/10.1038/nrmicro2577",
+          "authors": "Kira S. Makarova et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E34",
+          "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.",
+          "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
+          "year": 2012,
+          "url": "https://doi.org/10.1073/pnas.1208507109",
+          "authors": "Giedrius Gasiūnas et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E24",
-     "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.",
-     "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
-     "year": 2005,
-     "url": "https://doi.org/10.1099/mic.0.28048-0",
-     "authors": "Alexander Bolotin et al.",
-     "fromTitle": false
+      "start": 2013,
+      "end": 2016,
+      "label": "Programmable genome-editing tool",
+      "meaning": "CRISPR-Cas9 was repurposed as an RNA-guided nuclease for editing genomes in human cells, animals, plants and microbes, for genome-wide screens and for control of gene expression.",
+      "evidence": [
+        {
+          "id": "E35",
+          "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.",
+          "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
+          "year": 2013,
+          "url": "https://doi.org/10.1126/science.1231143",
+          "authors": "Le Cong et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E36",
+          "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.",
+          "title": "RNA-Guided Human Genome Engineering via Cas9",
+          "year": 2013,
+          "url": "https://doi.org/10.1126/science.1232033",
+          "authors": "Prashant Mali et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E38",
+          "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.",
+          "title": "RNA-programmed genome editing in human cells",
+          "year": 2013,
+          "url": "https://doi.org/10.7554/elife.00471",
+          "authors": "Martin Jínek et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E39",
+          "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
+          "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
+          "year": 2013,
+          "url": "https://doi.org/10.1016/j.cell.2013.02.022",
+          "authors": "Lei S. Qi et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E50",
+          "text": "Genome engineering using the CRISPR-Cas9 system",
+          "title": "Genome engineering using the CRISPR-Cas9 system",
+          "year": 2013,
+          "url": "https://doi.org/10.1038/nprot.2013.143",
+          "authors": "F. Ann Ran et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E53",
+          "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.",
+          "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
+          "year": 2013,
+          "url": "https://doi.org/10.1126/science.1247005",
+          "authors": "Ophir Shalem et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E60",
+          "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
+          "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
+          "year": 2014,
+          "url": "https://doi.org/10.1016/j.cell.2014.05.010",
+          "authors": "Patrick D. Hsu et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E64",
+          "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.",
+          "title": "The new frontier of genome engineering with CRISPR-Cas9",
+          "year": 2014,
+          "url": "https://doi.org/10.1126/science.1258096",
+          "authors": "Jennifer A. Doudna et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E25",
-     "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.",
-     "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action",
-     "year": 2006,
-     "url": "https://doi.org/10.1186/1745-6150-1-7",
-     "authors": "Kira S. Makarova et al.",
-     "fromTitle": false
+      "start": 2017,
+      "end": 2026,
+      "label": "Diversified platform and therapies",
+      "meaning": "CRISPR became a broad technology platform spanning RNA-targeting Cas13, diagnostics based on Cas12 and Cas13, perturbation screens, crop engineering and clinical in vivo editing.",
+      "evidence": [
+        {
+          "id": "E84",
+          "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.",
+          "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
+          "year": 2017,
+          "url": "https://doi.org/10.1126/science.aam9321",
+          "authors": "Jonathan S. Gootenberg et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E86",
+          "text": "RNA targeting with CRISPR–Cas13",
+          "title": "RNA targeting with CRISPR–Cas13",
+          "year": 2017,
+          "url": "https://doi.org/10.1038/nature24049",
+          "authors": "Omar O. Abudayyeh et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E95",
+          "text": "CRISPR is becoming an indispensable tool in biological research.",
+          "title": "The CRISPR tool kit for genome editing and beyond",
+          "year": 2018,
+          "url": "https://doi.org/10.1038/s41467-018-04252-2",
+          "authors": "Mazhar Adli",
+          "fromTitle": false
+        },
+        {
+          "id": "E98",
+          "text": "The diversity, modularity, and efficacy of CRISPR-Cas systems are driving a biotechnological revolution.",
+          "title": "CRISPR-Cas guides the future of genetic engineering",
+          "year": 2018,
+          "url": "https://doi.org/10.1126/science.aat5011",
+          "authors": "Gavin J. Knott et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E109",
+          "text": "CRISPR–Cas12-based detection of SARS-CoV-2",
+          "title": "CRISPR–Cas12-based detection of SARS-CoV-2",
+          "year": 2020,
+          "url": "https://doi.org/10.1038/s41587-020-0513-4",
+          "authors": "James P. Broughton et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E112",
+          "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
+          "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
+          "year": 2021,
+          "url": "https://doi.org/10.1056/nejmoa2107454",
+          "authors": "Julian David Gillmore et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E113",
+          "text": "CRISPR-based diagnostics",
+          "title": "CRISPR-based diagnostics",
+          "year": 2021,
+          "url": "https://doi.org/10.1038/s41551-021-00760-7",
+          "authors": "Michael M. Kaminski et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E121",
+          "text": "CRISPR-based diagnostic platforms have gained significant momentum in recent years, enabling highly sensitive and specific detection of pathogens and diseases.",
+          "title": "CRISPR-on-Chip for Point-of-Care Diagnostics",
+          "year": 2026,
+          "url": "https://doi.org/10.1021/acsnano.5c19771",
+          "authors": "Nazente Atçeken et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E128",
+          "text": "CRISPR-Cas genome-editing technologies have emerged as powerful tools for precise DNA and RNA modulation, offering promising therapeutic strategies for neurodegenerative disorders such as Alzheimer's disease (AD), Parkinson's disease (PD), Huntington's disease (HD), and amyotrophic lateral sclerosis (ALS).",
+          "title": "CRISPR–Cas technologies in neurodegenerative disorders: mechanistic insights, therapeutic potential, and translational challenges",
+          "year": 2026,
+          "url": "https://doi.org/10.3389/fneur.2025.1737468",
+          "authors": "Raya Kh. Yashooa et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E137",
+          "text": "We develop Spatial Perturb-Seq, an in vivo CRISPR technology that interrogates multiple genes within single cells of intact tissues, compatible with both sequencing-based and probe-based spatial technologies.",
+          "title": "Spatial perturb-seq: single-cell functional genomics within intact tissue architecture",
+          "year": 2026,
+          "url": "https://doi.org/10.1038/s41467-026-69677-6",
+          "authors": "Kimberle Shen et al.",
+          "fromTitle": false
+        }
+      ]
     }
-   ]
-  },
-  {
-   "start": 2007,
-   "end": 2012,
-   "label": "Bacterial adaptive immune system",
-   "meaning": "CRISPR and its Cas genes were understood as an RNA-guided defense system that gives bacteria and archaea acquired immunity against phages and plasmids.",
-   "evidence": [
+  ],
+  "milestones": [
     {
-     "id": "E27",
-     "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.",
-     "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
-     "year": 2007,
-     "url": "https://doi.org/10.1128/jb.01412-07",
-     "authors": "Hélène Deveau et al.",
-     "fromTitle": false
+      "year": 2002,
+      "kind": "coined",
+      "title": "Identification of genes that are associated with DNA repeats in prokaryotes",
+      "why": "The authors proposed the name 'clustered regularly interspaced short palindromic repeats (CRISPR)' for this family of repeats.",
+      "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x",
+      "workTitle": "Identification of genes that are associated with DNA repeats in prokaryotes",
+      "authors": "Ruud Jansen et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E22",
+          "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).",
+          "title": "Identification of genes that are associated with DNA repeats in prokaryotes",
+          "year": 2002,
+          "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x",
+          "authors": "Ruud Jansen et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E28",
-     "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).",
-     "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
-     "year": 2008,
-     "url": "https://doi.org/10.1126/science.1159689",
-     "authors": "Stan J. J. Brouns et al.",
-     "fromTitle": false
+      "year": 2005,
+      "kind": "redefined",
+      "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
+      "why": "This work showed that the spacers come from foreign DNA, linking the repeats to phage and plasmid sequences.",
+      "url": "https://doi.org/10.1099/mic.0.28048-0",
+      "workTitle": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
+      "authors": "Alexander Bolotin et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E23",
+          "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.",
+          "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies",
+          "year": 2005,
+          "url": "https://doi.org/10.1099/mic.0.27437-0",
+          "authors": "Christine Pourcel et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E24",
+          "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.",
+          "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
+          "year": 2005,
+          "url": "https://doi.org/10.1099/mic.0.28048-0",
+          "authors": "Alexander Bolotin et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E29",
-     "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.",
-     "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA",
-     "year": 2008,
-     "url": "https://doi.org/10.1126/science.1165771",
-     "authors": "Luciano A. Marraffini et al.",
-     "fromTitle": false
+      "year": 2006,
+      "kind": "redefined",
+      "title": "A putative RNA-interference-based immune system in prokaryotes",
+      "why": "It reinterpreted CRISPR-cas, previously linked to DNA repair, as a hypothesized RNAi-like immune system.",
+      "url": "https://doi.org/10.1186/1745-6150-1-7",
+      "workTitle": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action",
+      "authors": "Kira S. Makarova et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E25",
+          "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.",
+          "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action",
+          "year": 2006,
+          "url": "https://doi.org/10.1186/1745-6150-1-7",
+          "authors": "Kira S. Makarova et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E30",
-     "text": "In many Bacteria and most Archaea, clustered regularly interspaced short palindromic repeats (CRISPR) form peculiar genetic loci, which provide acquired immunity against viruses and plasmids by targeting nucleic acid in a sequence-specific manner.",
-     "title": "CRISPR/Cas, the Immune System of Bacteria and Archaea",
-     "year": 2010,
-     "url": "https://doi.org/10.1126/science.1179555",
-     "authors": "Philippe Horvath et al.",
-     "fromTitle": false
+      "year": 2007,
+      "kind": "redefined",
+      "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
+      "why": "It linked CRISPR experimentally to acquired resistance against bacteriophages.",
+      "url": "https://doi.org/10.1128/jb.01412-07",
+      "workTitle": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
+      "authors": "Hélène Deveau et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E27",
+          "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.",
+          "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
+          "year": 2007,
+          "url": "https://doi.org/10.1128/jb.01412-07",
+          "authors": "Hélène Deveau et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E31",
-     "text": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA",
-     "title": "The CRISPR/Cas bacterial immune system cleaves bacteriophage and plasmid DNA",
-     "year": 2010,
-     "url": "https://doi.org/10.1038/nature09523",
-     "authors": "Josiane E. Garneau et al.",
-     "fromTitle": true
+      "year": 2008,
+      "kind": "redefined",
+      "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
+      "why": "It showed that small CRISPR RNAs guide antiviral defense, establishing the RNA-guided mechanism.",
+      "url": "https://doi.org/10.1126/science.1159689",
+      "workTitle": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
+      "authors": "Stan J. J. Brouns et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E28",
+          "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).",
+          "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
+          "year": 2008,
+          "url": "https://doi.org/10.1126/science.1159689",
+          "authors": "Stan J. J. Brouns et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E29",
+          "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.",
+          "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA",
+          "year": 2008,
+          "url": "https://doi.org/10.1126/science.1165771",
+          "authors": "Luciano A. Marraffini et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E33",
-     "text": "Evolution and classification of the CRISPR–Cas systems",
-     "title": "Evolution and classification of the CRISPR–Cas systems",
-     "year": 2011,
-     "url": "https://doi.org/10.1038/nrmicro2577",
-     "authors": "Kira S. Makarova et al.",
-     "fromTitle": true
+      "year": 2012,
+      "kind": "redefined",
+      "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
+      "why": "It characterized Cas9 as an RNA-guided DNA endonuclease, setting up its later use as a tool.",
+      "url": "https://doi.org/10.1073/pnas.1208507109",
+      "workTitle": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
+      "authors": "Giedrius Gasiūnas et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E34",
+          "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.",
+          "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
+          "year": 2012,
+          "url": "https://doi.org/10.1073/pnas.1208507109",
+          "authors": "Giedrius Gasiūnas et al.",
+          "fromTitle": false
+        }
+      ]
     },
     {
-     "id": "E34",
-     "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.",
-     "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
-     "year": 2012,
-     "url": "https://doi.org/10.1073/pnas.1208507109",
-     "authors": "Giedrius Gasiūnas et al.",
-     "fromTitle": false
+      "year": 2013,
+      "kind": "applied",
+      "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
+      "why": "It moved the CRISPR/Cas system into mammalian genome engineering and became the most-cited paper in the evidence.",
+      "url": "https://doi.org/10.1126/science.1231143",
+      "workTitle": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
+      "authors": "Le Cong et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E35",
+          "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.",
+          "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
+          "year": 2013,
+          "url": "https://doi.org/10.1126/science.1231143",
+          "authors": "Le Cong et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E36",
+          "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.",
+          "title": "RNA-Guided Human Genome Engineering via Cas9",
+          "year": 2013,
+          "url": "https://doi.org/10.1126/science.1232033",
+          "authors": "Prashant Mali et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E38",
+          "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.",
+          "title": "RNA-programmed genome editing in human cells",
+          "year": 2013,
+          "url": "https://doi.org/10.7554/elife.00471",
+          "authors": "Martin Jínek et al.",
+          "fromTitle": false
+        }
+      ]
+    },
+    {
+      "year": 2013,
+      "kind": "applied",
+      "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
+      "why": "It extended CRISPR beyond cutting DNA to regulating transcription.",
+      "url": "https://doi.org/10.1016/j.cell.2013.02.022",
+      "workTitle": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
+      "authors": "Lei S. Qi et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E39",
+          "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
+          "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
+          "year": 2013,
+          "url": "https://doi.org/10.1016/j.cell.2013.02.022",
+          "authors": "Lei S. Qi et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E43",
+          "text": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes",
+          "title": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes",
+          "year": 2013,
+          "url": "https://doi.org/10.1016/j.cell.2013.06.044",
+          "authors": "Luke A. Gilbert et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E44",
+          "text": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors",
+          "title": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors",
+          "year": 2013,
+          "url": "https://doi.org/10.1038/nmeth.2600",
+          "authors": "Pablo Pérez‐Piñera et al.",
+          "fromTitle": true
+        }
+      ]
+    },
+    {
+      "year": 2013,
+      "kind": "applied",
+      "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
+      "why": "It established genome-wide CRISPR screens as a way to study gene function.",
+      "url": "https://doi.org/10.1126/science.1247005",
+      "workTitle": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
+      "authors": "Ophir Shalem et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E53",
+          "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.",
+          "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
+          "year": 2013,
+          "url": "https://doi.org/10.1126/science.1247005",
+          "authors": "Ophir Shalem et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E54",
+          "text": "The bacterial clustered regularly interspaced short palindromic repeats (CRISPR)-Cas9 system for genome editing has greatly expanded the toolbox for mammalian genetics, enabling the rapid generation of isogenic cell lines and mice with modified alleles.",
+          "title": "Genetic Screens in Human Cells Using the CRISPR-Cas9 System",
+          "year": 2013,
+          "url": "https://doi.org/10.1126/science.1246981",
+          "authors": "Wang Tim et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E61",
+          "text": "Improved vectors and genome-wide libraries for CRISPR screening",
+          "title": "Improved vectors and genome-wide libraries for CRISPR screening",
+          "year": 2014,
+          "url": "https://doi.org/10.1038/nmeth.3047",
+          "authors": "Neville E. Sanjana et al.",
+          "fromTitle": true
+        }
+      ]
+    },
+    {
+      "year": 2014,
+      "kind": "popularized",
+      "title": "The new frontier of genome engineering with CRISPR-Cas9",
+      "why": "This highly cited review framed CRISPR-Cas9 as transforming biology.",
+      "url": "https://doi.org/10.1126/science.1258096",
+      "workTitle": "The new frontier of genome engineering with CRISPR-Cas9",
+      "authors": "Jennifer A. Doudna et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E64",
+          "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.",
+          "title": "The new frontier of genome engineering with CRISPR-Cas9",
+          "year": 2014,
+          "url": "https://doi.org/10.1126/science.1258096",
+          "authors": "Jennifer A. Doudna et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E60",
+          "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
+          "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
+          "year": 2014,
+          "url": "https://doi.org/10.1016/j.cell.2014.05.010",
+          "authors": "Patrick D. Hsu et al.",
+          "fromTitle": true
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "kind": "applied",
+      "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
+      "why": "It used the collateral cleavage activity of a CRISPR enzyme for diagnostics, opening the CRISPR-Dx field.",
+      "url": "https://doi.org/10.1126/science.aam9321",
+      "workTitle": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
+      "authors": "Jonathan S. Gootenberg et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E84",
+          "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.",
+          "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
+          "year": 2017,
+          "url": "https://doi.org/10.1126/science.aam9321",
+          "authors": "Jonathan S. Gootenberg et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E92",
+          "text": "Recently, a very promising CRISPR-based diagnostic (CRISPR-Dx) (namely SHERLOCK) was established, which was based on the collateral effect of an RNA-guided and RNA-targeting CRISPR effector, Cas13a 4 .",
+          "title": "CRISPR-Cas12a-assisted nucleic acid detection",
+          "year": 2018,
+          "url": "https://doi.org/10.1038/s41421-018-0028-z",
+          "authors": "Shiyuan Li et al.",
+          "fromTitle": false
+        },
+        {
+          "id": "E109",
+          "text": "CRISPR–Cas12-based detection of SARS-CoV-2",
+          "title": "CRISPR–Cas12-based detection of SARS-CoV-2",
+          "year": 2020,
+          "url": "https://doi.org/10.1038/s41587-020-0513-4",
+          "authors": "James P. Broughton et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E113",
+          "text": "CRISPR-based diagnostics",
+          "title": "CRISPR-based diagnostics",
+          "year": 2021,
+          "url": "https://doi.org/10.1038/s41551-021-00760-7",
+          "authors": "Michael M. Kaminski et al.",
+          "fromTitle": true
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "kind": "critique",
+      "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
+      "why": "It raised safety concerns about unintended genomic damage, alongside earlier work on off-target effects and p53 responses.",
+      "url": "https://doi.org/10.1038/nbt.4192",
+      "workTitle": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
+      "authors": "Michael Kosicki et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E97",
+          "text": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
+          "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
+          "year": 2018,
+          "url": "https://doi.org/10.1038/nbt.4192",
+          "authors": "Michael Kosicki et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E96",
+          "text": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response",
+          "title": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response",
+          "year": 2018,
+          "url": "https://doi.org/10.1038/s41591-018-0049-z",
+          "authors": "Emma Maria Haapaniemi et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E76",
+          "text": "CRISPR/Cas9 is a versatile genome-editing technology that is widely used for studying the functionality of genetic elements, creating genetically modified organisms as well as preclinical research of genetic disorders.",
+          "title": "Off-target Effects in CRISPR/Cas9-mediated Genome Engineering",
+          "year": 2015,
+          "url": "https://doi.org/10.1038/mtna.2015.37",
+          "authors": "Xiaohui Zhang et al.",
+          "fromTitle": false
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "kind": "applied",
+      "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
+      "why": "It marked the translation of CRISPR editing into human in vivo therapy.",
+      "url": "https://doi.org/10.1056/nejmoa2107454",
+      "workTitle": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
+      "authors": "Julian David Gillmore et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E112",
+          "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
+          "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
+          "year": 2021,
+          "url": "https://doi.org/10.1056/nejmoa2107454",
+          "authors": "Julian David Gillmore et al.",
+          "fromTitle": true
+        },
+        {
+          "id": "E120",
+          "text": "Applications span vaccines, protein replacement, siRNA/ASO delivery, and CRISPR platforms, with clinical examples like patisiran, COVID-19 and RSV mRNA vaccines, in-human transthyretin (TTR) editing, and individualized melanoma vaccination.",
+          "title": "Programmable lipid nanoparticles for RNA therapeutics: Design principles and clinical translation",
+          "year": 2026,
+          "url": "https://doi.org/10.1016/j.mtbio.2026.102774",
+          "authors": "Mahdi Navid Talemi et al.",
+          "fromTitle": false
+        }
+      ]
     }
-   ]
-  },
-  {
-   "start": 2013,
-   "end": 2016,
-   "label": "Programmable genome-editing tool",
-   "meaning": "CRISPR-Cas9 was repurposed as an RNA-guided nuclease for editing genomes in human cells, animals, plants and microbes, for genome-wide screens and for control of gene expression.",
-   "evidence": [
-    {
-     "id": "E35",
-     "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.",
-     "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
-     "year": 2013,
-     "url": "https://doi.org/10.1126/science.1231143",
-     "authors": "Le Cong et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E36",
-     "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.",
-     "title": "RNA-Guided Human Genome Engineering via Cas9",
-     "year": 2013,
-     "url": "https://doi.org/10.1126/science.1232033",
-     "authors": "Prashant Mali et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E38",
-     "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.",
-     "title": "RNA-programmed genome editing in human cells",
-     "year": 2013,
-     "url": "https://doi.org/10.7554/elife.00471",
-     "authors": "Martin Jínek et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E39",
-     "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
-     "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
-     "year": 2013,
-     "url": "https://doi.org/10.1016/j.cell.2013.02.022",
-     "authors": "Lei S. Qi et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E50",
-     "text": "Genome engineering using the CRISPR-Cas9 system",
-     "title": "Genome engineering using the CRISPR-Cas9 system",
-     "year": 2013,
-     "url": "https://doi.org/10.1038/nprot.2013.143",
-     "authors": "F. Ann Ran et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E53",
-     "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.",
-     "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
-     "year": 2013,
-     "url": "https://doi.org/10.1126/science.1247005",
-     "authors": "Ophir Shalem et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E60",
-     "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
-     "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
-     "year": 2014,
-     "url": "https://doi.org/10.1016/j.cell.2014.05.010",
-     "authors": "Patrick D. Hsu et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E64",
-     "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.",
-     "title": "The new frontier of genome engineering with CRISPR-Cas9",
-     "year": 2014,
-     "url": "https://doi.org/10.1126/science.1258096",
-     "authors": "Jennifer A. Doudna et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "start": 2017,
-   "end": 2026,
-   "label": "Diversified platform and therapies",
-   "meaning": "CRISPR became a broad technology platform spanning RNA-targeting Cas13, diagnostics based on Cas12 and Cas13, perturbation screens, crop engineering and clinical in vivo editing.",
-   "evidence": [
-    {
-     "id": "E84",
-     "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.",
-     "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
-     "year": 2017,
-     "url": "https://doi.org/10.1126/science.aam9321",
-     "authors": "Jonathan S. Gootenberg et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E86",
-     "text": "RNA targeting with CRISPR–Cas13",
-     "title": "RNA targeting with CRISPR–Cas13",
-     "year": 2017,
-     "url": "https://doi.org/10.1038/nature24049",
-     "authors": "Omar O. Abudayyeh et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E95",
-     "text": "CRISPR is becoming an indispensable tool in biological research.",
-     "title": "The CRISPR tool kit for genome editing and beyond",
-     "year": 2018,
-     "url": "https://doi.org/10.1038/s41467-018-04252-2",
-     "authors": "Mazhar Adli",
-     "fromTitle": false
-    },
-    {
-     "id": "E98",
-     "text": "The diversity, modularity, and efficacy of CRISPR-Cas systems are driving a biotechnological revolution.",
-     "title": "CRISPR-Cas guides the future of genetic engineering",
-     "year": 2018,
-     "url": "https://doi.org/10.1126/science.aat5011",
-     "authors": "Gavin J. Knott et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E109",
-     "text": "CRISPR–Cas12-based detection of SARS-CoV-2",
-     "title": "CRISPR–Cas12-based detection of SARS-CoV-2",
-     "year": 2020,
-     "url": "https://doi.org/10.1038/s41587-020-0513-4",
-     "authors": "James P. Broughton et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E112",
-     "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
-     "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
-     "year": 2021,
-     "url": "https://doi.org/10.1056/nejmoa2107454",
-     "authors": "Julian David Gillmore et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E113",
-     "text": "CRISPR-based diagnostics",
-     "title": "CRISPR-based diagnostics",
-     "year": 2021,
-     "url": "https://doi.org/10.1038/s41551-021-00760-7",
-     "authors": "Michael M. Kaminski et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E121",
-     "text": "CRISPR-based diagnostic platforms have gained significant momentum in recent years, enabling highly sensitive and specific detection of pathogens and diseases.",
-     "title": "CRISPR-on-Chip for Point-of-Care Diagnostics",
-     "year": 2026,
-     "url": "https://doi.org/10.1021/acsnano.5c19771",
-     "authors": "Nazente Atçeken et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E128",
-     "text": "CRISPR-Cas genome-editing technologies have emerged as powerful tools for precise DNA and RNA modulation, offering promising therapeutic strategies for neurodegenerative disorders such as Alzheimer's disease (AD), Parkinson's disease (PD), Huntington's disease (HD), and amyotrophic lateral sclerosis (ALS).",
-     "title": "CRISPR–Cas technologies in neurodegenerative disorders: mechanistic insights, therapeutic potential, and translational challenges",
-     "year": 2026,
-     "url": "https://doi.org/10.3389/fneur.2025.1737468",
-     "authors": "Raya Kh. Yashooa et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E137",
-     "text": "We develop Spatial Perturb-Seq, an in vivo CRISPR technology that interrogates multiple genes within single cells of intact tissues, compatible with both sequencing-based and probe-based spatial technologies.",
-     "title": "Spatial perturb-seq: single-cell functional genomics within intact tissue architecture",
-     "year": 2026,
-     "url": "https://doi.org/10.1038/s41467-026-69677-6",
-     "authors": "Kimberle Shen et al.",
-     "fromTitle": false
-    }
-   ]
-  }
- ],
- "milestones": [
-  {
-   "year": 2002,
-   "kind": "coined",
-   "title": "Identification of genes that are associated with DNA repeats in prokaryotes",
-   "why": "The authors proposed the name 'clustered regularly interspaced short palindromic repeats (CRISPR)' for this family of repeats.",
-   "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x",
-   "workTitle": "Identification of genes that are associated with DNA repeats in prokaryotes",
-   "authors": "Ruud Jansen et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E22",
-     "text": "To appreciate their characteri-stic structure, we will refer to this family as the clustered regularly interspaced short palindromic repeats (CRISPR).",
-     "title": "Identification of genes that are associated with DNA repeats in prokaryotes",
-     "year": 2002,
-     "url": "https://doi.org/10.1046/j.1365-2958.2002.02839.x",
-     "authors": "Ruud Jansen et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2005,
-   "kind": "redefined",
-   "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
-   "why": "This work showed that the spacers come from foreign DNA, linking the repeats to phage and plasmid sequences.",
-   "url": "https://doi.org/10.1099/mic.0.28048-0",
-   "workTitle": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
-   "authors": "Alexander Bolotin et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E23",
-     "text": "The remarkable repetitive elements called CRISPRs (clustered regularly interspaced short palindromic repeats) consist of repeats interspaced with non-repetitive elements or 'spacers'.",
-     "title": "CRISPR elements in Yersinia pestis acquire new repeats by preferential uptake of bacteriophage DNA, and provide additional tools for evolutionary studies",
-     "year": 2005,
-     "url": "https://doi.org/10.1099/mic.0.27437-0",
-     "authors": "Christine Pourcel et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E24",
-     "text": "Numerous prokaryote genomes contain structures known as clustered regularly interspaced short palindromic repeats (CRISPRs), composed of 25-50 bp repeats separated by unique sequence spacers of similar length.",
-     "title": "Clustered regularly interspaced short palindrome repeats (CRISPRs) have spacers of extrachromosomal origin",
-     "year": 2005,
-     "url": "https://doi.org/10.1099/mic.0.28048-0",
-     "authors": "Alexander Bolotin et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2006,
-   "kind": "redefined",
-   "title": "A putative RNA-interference-based immune system in prokaryotes",
-   "why": "It reinterpreted CRISPR-cas, previously linked to DNA repair, as a hypothesized RNAi-like immune system.",
-   "url": "https://doi.org/10.1186/1745-6150-1-7",
-   "workTitle": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action",
-   "authors": "Kira S. Makarova et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E25",
-     "text": "BACKGROUND: All archaeal and many bacterial genomes contain Clustered Regularly Interspaced Short Palindrome Repeats (CRISPR) and variable arrays of the CRISPR-associated (cas) genes that have been previously implicated in a novel form of DNA repair on the basis of comparative analysis of their protein product sequences.",
-     "title": "A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action",
-     "year": 2006,
-     "url": "https://doi.org/10.1186/1745-6150-1-7",
-     "authors": "Kira S. Makarova et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2007,
-   "kind": "redefined",
-   "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
-   "why": "It linked CRISPR experimentally to acquired resistance against bacteriophages.",
-   "url": "https://doi.org/10.1128/jb.01412-07",
-   "workTitle": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
-   "authors": "Hélène Deveau et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E27",
-     "text": "Clustered regularly interspaced short palindromic repeats (CRISPR) and their associated genes are linked to a mechanism of acquired resistance against bacteriophages.",
-     "title": "Phage Response to CRISPR-Encoded Resistance in Streptococcus thermophilus",
-     "year": 2007,
-     "url": "https://doi.org/10.1128/jb.01412-07",
-     "authors": "Hélène Deveau et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2008,
-   "kind": "redefined",
-   "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
-   "why": "It showed that small CRISPR RNAs guide antiviral defense, establishing the RNA-guided mechanism.",
-   "url": "https://doi.org/10.1126/science.1159689",
-   "workTitle": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
-   "authors": "Stan J. J. Brouns et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E28",
-     "text": "Prokaryotes acquire virus resistance by integrating short fragments of viral nucleic acid into clusters of regularly interspaced short palindromic repeats (CRISPRs).",
-     "title": "Small CRISPR RNAs Guide Antiviral Defense in Prokaryotes",
-     "year": 2008,
-     "url": "https://doi.org/10.1126/science.1159689",
-     "authors": "Stan J. J. Brouns et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E29",
-     "text": "Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages.",
-     "title": "CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA",
-     "year": 2008,
-     "url": "https://doi.org/10.1126/science.1165771",
-     "authors": "Luciano A. Marraffini et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2012,
-   "kind": "redefined",
-   "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
-   "why": "It characterized Cas9 as an RNA-guided DNA endonuclease, setting up its later use as a tool.",
-   "url": "https://doi.org/10.1073/pnas.1208507109",
-   "workTitle": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
-   "authors": "Giedrius Gasiūnas et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E34",
-     "text": "Clustered, regularly interspaced, short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems provide adaptive immunity against viruses and plasmids in bacteria and archaea.",
-     "title": "Cas9–crRNA ribonucleoprotein complex mediates specific DNA cleavage for adaptive immunity in bacteria",
-     "year": 2012,
-     "url": "https://doi.org/10.1073/pnas.1208507109",
-     "authors": "Giedrius Gasiūnas et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2013,
-   "kind": "applied",
-   "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
-   "why": "It moved the CRISPR/Cas system into mammalian genome engineering and became the most-cited paper in the evidence.",
-   "url": "https://doi.org/10.1126/science.1231143",
-   "workTitle": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
-   "authors": "Le Cong et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E35",
-     "text": "The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage.",
-     "title": "Multiplex Genome Engineering Using CRISPR/Cas Systems",
-     "year": 2013,
-     "url": "https://doi.org/10.1126/science.1231143",
-     "authors": "Le Cong et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E36",
-     "text": "Bacteria and archaea have evolved adaptive immune defenses, termed clustered regularly interspaced short palindromic repeats (CRISPR)/CRISPR-associated (Cas) systems, that use short RNA to direct degradation of foreign nucleic acids.",
-     "title": "RNA-Guided Human Genome Engineering via Cas9",
-     "year": 2013,
-     "url": "https://doi.org/10.1126/science.1232033",
-     "authors": "Prashant Mali et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E38",
-     "text": "Type II CRISPR immune systems in bacteria use a dual RNA-guided DNA endonuclease, Cas9, to cleave foreign DNA at specific sites.",
-     "title": "RNA-programmed genome editing in human cells",
-     "year": 2013,
-     "url": "https://doi.org/10.7554/elife.00471",
-     "authors": "Martin Jínek et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2013,
-   "kind": "applied",
-   "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
-   "why": "It extended CRISPR beyond cutting DNA to regulating transcription.",
-   "url": "https://doi.org/10.1016/j.cell.2013.02.022",
-   "workTitle": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
-   "authors": "Lei S. Qi et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E39",
-     "text": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
-     "title": "Repurposing CRISPR as an RNA-Guided Platform for Sequence-Specific Control of Gene Expression",
-     "year": 2013,
-     "url": "https://doi.org/10.1016/j.cell.2013.02.022",
-     "authors": "Lei S. Qi et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E43",
-     "text": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes",
-     "title": "CRISPR-Mediated Modular RNA-Guided Regulation of Transcription in Eukaryotes",
-     "year": 2013,
-     "url": "https://doi.org/10.1016/j.cell.2013.06.044",
-     "authors": "Luke A. Gilbert et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E44",
-     "text": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors",
-     "title": "RNA-guided gene activation by CRISPR-Cas9–based transcription factors",
-     "year": 2013,
-     "url": "https://doi.org/10.1038/nmeth.2600",
-     "authors": "Pablo Pérez‐Piñera et al.",
-     "fromTitle": true
-    }
-   ]
-  },
-  {
-   "year": 2013,
-   "kind": "applied",
-   "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
-   "why": "It established genome-wide CRISPR screens as a way to study gene function.",
-   "url": "https://doi.org/10.1126/science.1247005",
-   "workTitle": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
-   "authors": "Ophir Shalem et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E53",
-     "text": "The simplicity of programming the CRISPR (clustered regularly interspaced short palindromic repeats)-associated nuclease Cas9 to modify specific genomic loci suggests a new way to interrogate gene function on a genome-wide scale.",
-     "title": "Genome-Scale CRISPR-Cas9 Knockout Screening in Human Cells",
-     "year": 2013,
-     "url": "https://doi.org/10.1126/science.1247005",
-     "authors": "Ophir Shalem et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E54",
-     "text": "The bacterial clustered regularly interspaced short palindromic repeats (CRISPR)-Cas9 system for genome editing has greatly expanded the toolbox for mammalian genetics, enabling the rapid generation of isogenic cell lines and mice with modified alleles.",
-     "title": "Genetic Screens in Human Cells Using the CRISPR-Cas9 System",
-     "year": 2013,
-     "url": "https://doi.org/10.1126/science.1246981",
-     "authors": "Wang Tim et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E61",
-     "text": "Improved vectors and genome-wide libraries for CRISPR screening",
-     "title": "Improved vectors and genome-wide libraries for CRISPR screening",
-     "year": 2014,
-     "url": "https://doi.org/10.1038/nmeth.3047",
-     "authors": "Neville E. Sanjana et al.",
-     "fromTitle": true
-    }
-   ]
-  },
-  {
-   "year": 2014,
-   "kind": "popularized",
-   "title": "The new frontier of genome engineering with CRISPR-Cas9",
-   "why": "This highly cited review framed CRISPR-Cas9 as transforming biology.",
-   "url": "https://doi.org/10.1126/science.1258096",
-   "workTitle": "The new frontier of genome engineering with CRISPR-Cas9",
-   "authors": "Jennifer A. Doudna et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E64",
-     "text": "The advent of facile genome engineering using the bacterial RNA-guided CRISPR-Cas9 system in animals and plants is transforming biology.",
-     "title": "The new frontier of genome engineering with CRISPR-Cas9",
-     "year": 2014,
-     "url": "https://doi.org/10.1126/science.1258096",
-     "authors": "Jennifer A. Doudna et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E60",
-     "text": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
-     "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
-     "year": 2014,
-     "url": "https://doi.org/10.1016/j.cell.2014.05.010",
-     "authors": "Patrick D. Hsu et al.",
-     "fromTitle": true
-    }
-   ]
-  },
-  {
-   "year": 2017,
-   "kind": "applied",
-   "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
-   "why": "It used the collateral cleavage activity of a CRISPR enzyme for diagnostics, opening the CRISPR-Dx field.",
-   "url": "https://doi.org/10.1126/science.aam9321",
-   "workTitle": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
-   "authors": "Jonathan S. Gootenberg et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E84",
-     "text": "The RNA-guided, RNA-targeting clustered regularly interspaced short palindromic repeats (CRISPR) effector Cas13a (previously known as C2c2) exhibits a \"collateral effect\" of promiscuous ribonuclease activity upon target recognition.",
-     "title": "Nucleic acid detection with CRISPR-Cas13a/C2c2",
-     "year": 2017,
-     "url": "https://doi.org/10.1126/science.aam9321",
-     "authors": "Jonathan S. Gootenberg et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E92",
-     "text": "Recently, a very promising CRISPR-based diagnostic (CRISPR-Dx) (namely SHERLOCK) was established, which was based on the collateral effect of an RNA-guided and RNA-targeting CRISPR effector, Cas13a 4 .",
-     "title": "CRISPR-Cas12a-assisted nucleic acid detection",
-     "year": 2018,
-     "url": "https://doi.org/10.1038/s41421-018-0028-z",
-     "authors": "Shiyuan Li et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E109",
-     "text": "CRISPR–Cas12-based detection of SARS-CoV-2",
-     "title": "CRISPR–Cas12-based detection of SARS-CoV-2",
-     "year": 2020,
-     "url": "https://doi.org/10.1038/s41587-020-0513-4",
-     "authors": "James P. Broughton et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E113",
-     "text": "CRISPR-based diagnostics",
-     "title": "CRISPR-based diagnostics",
-     "year": 2021,
-     "url": "https://doi.org/10.1038/s41551-021-00760-7",
-     "authors": "Michael M. Kaminski et al.",
-     "fromTitle": true
-    }
-   ]
-  },
-  {
-   "year": 2018,
-   "kind": "critique",
-   "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
-   "why": "It raised safety concerns about unintended genomic damage, alongside earlier work on off-target effects and p53 responses.",
-   "url": "https://doi.org/10.1038/nbt.4192",
-   "workTitle": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
-   "authors": "Michael Kosicki et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E97",
-     "text": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
-     "title": "Repair of double-strand breaks induced by CRISPR–Cas9 leads to large deletions and complex rearrangements",
-     "year": 2018,
-     "url": "https://doi.org/10.1038/nbt.4192",
-     "authors": "Michael Kosicki et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E96",
-     "text": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response",
-     "title": "CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response",
-     "year": 2018,
-     "url": "https://doi.org/10.1038/s41591-018-0049-z",
-     "authors": "Emma Maria Haapaniemi et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E76",
-     "text": "CRISPR/Cas9 is a versatile genome-editing technology that is widely used for studying the functionality of genetic elements, creating genetically modified organisms as well as preclinical research of genetic disorders.",
-     "title": "Off-target Effects in CRISPR/Cas9-mediated Genome Engineering",
-     "year": 2015,
-     "url": "https://doi.org/10.1038/mtna.2015.37",
-     "authors": "Xiaohui Zhang et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2021,
-   "kind": "applied",
-   "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
-   "why": "It marked the translation of CRISPR editing into human in vivo therapy.",
-   "url": "https://doi.org/10.1056/nejmoa2107454",
-   "workTitle": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
-   "authors": "Julian David Gillmore et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E112",
-     "text": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
-     "title": "CRISPR-Cas9 In Vivo Gene Editing for Transthyretin Amyloidosis",
-     "year": 2021,
-     "url": "https://doi.org/10.1056/nejmoa2107454",
-     "authors": "Julian David Gillmore et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E120",
-     "text": "Applications span vaccines, protein replacement, siRNA/ASO delivery, and CRISPR platforms, with clinical examples like patisiran, COVID-19 and RSV mRNA vaccines, in-human transthyretin (TTR) editing, and individualized melanoma vaccination.",
-     "title": "Programmable lipid nanoparticles for RNA therapeutics: Design principles and clinical translation",
-     "year": 2026,
-     "url": "https://doi.org/10.1016/j.mtbio.2026.102774",
-     "authors": "Mahdi Navid Talemi et al.",
-     "fromTitle": false
-    }
-   ]
-  }
- ]
+  ],
+  "totals": [
+    [
+      1800,
+      7700
+    ],
+    [
+      1801,
+      4743
+    ],
+    [
+      1802,
+      3707
+    ],
+    [
+      1803,
+      3649
+    ],
+    [
+      1804,
+      3611
+    ],
+    [
+      1805,
+      3098
+    ],
+    [
+      1806,
+      3377
+    ],
+    [
+      1807,
+      2870
+    ],
+    [
+      1808,
+      3756
+    ],
+    [
+      1809,
+      3154
+    ],
+    [
+      1810,
+      3393
+    ],
+    [
+      1811,
+      3334
+    ],
+    [
+      1812,
+      3551
+    ],
+    [
+      1813,
+      3143
+    ],
+    [
+      1814,
+      3093
+    ],
+    [
+      1815,
+      3740
+    ],
+    [
+      1816,
+      3827
+    ],
+    [
+      1817,
+      3652
+    ],
+    [
+      1818,
+      4188
+    ],
+    [
+      1819,
+      3737
+    ],
+    [
+      1820,
+      4485
+    ],
+    [
+      1821,
+      5162
+    ],
+    [
+      1822,
+      4914
+    ],
+    [
+      1823,
+      6426
+    ],
+    [
+      1824,
+      7166
+    ],
+    [
+      1825,
+      7122
+    ],
+    [
+      1826,
+      7041
+    ],
+    [
+      1827,
+      8403
+    ],
+    [
+      1828,
+      8673
+    ],
+    [
+      1829,
+      8312
+    ],
+    [
+      1830,
+      8725
+    ],
+    [
+      1831,
+      8140
+    ],
+    [
+      1832,
+      7986
+    ],
+    [
+      1833,
+      8152
+    ],
+    [
+      1834,
+      9104
+    ],
+    [
+      1835,
+      8952
+    ],
+    [
+      1836,
+      8924
+    ],
+    [
+      1837,
+      9947
+    ],
+    [
+      1838,
+      9577
+    ],
+    [
+      1839,
+      11294
+    ],
+    [
+      1840,
+      12287
+    ],
+    [
+      1841,
+      11739
+    ],
+    [
+      1842,
+      12248
+    ],
+    [
+      1843,
+      12606
+    ],
+    [
+      1844,
+      12613
+    ],
+    [
+      1845,
+      13480
+    ],
+    [
+      1846,
+      15565
+    ],
+    [
+      1847,
+      17929
+    ],
+    [
+      1848,
+      17584
+    ],
+    [
+      1849,
+      15937
+    ],
+    [
+      1850,
+      19178
+    ],
+    [
+      1851,
+      20005
+    ],
+    [
+      1852,
+      20576
+    ],
+    [
+      1853,
+      21289
+    ],
+    [
+      1854,
+      21942
+    ],
+    [
+      1855,
+      22852
+    ],
+    [
+      1856,
+      23428
+    ],
+    [
+      1857,
+      24312
+    ],
+    [
+      1858,
+      23310
+    ],
+    [
+      1859,
+      22597
+    ],
+    [
+      1860,
+      23577
+    ],
+    [
+      1861,
+      22452
+    ],
+    [
+      1862,
+      23140
+    ],
+    [
+      1863,
+      23103
+    ],
+    [
+      1864,
+      22262
+    ],
+    [
+      1865,
+      21615
+    ],
+    [
+      1866,
+      22447
+    ],
+    [
+      1867,
+      24769
+    ],
+    [
+      1868,
+      24788
+    ],
+    [
+      1869,
+      25625
+    ],
+    [
+      1870,
+      28437
+    ],
+    [
+      1871,
+      24702
+    ],
+    [
+      1872,
+      29106
+    ],
+    [
+      1873,
+      30282
+    ],
+    [
+      1874,
+      31047
+    ],
+    [
+      1875,
+      32604
+    ],
+    [
+      1876,
+      38896
+    ],
+    [
+      1877,
+      35259
+    ],
+    [
+      1878,
+      36816
+    ],
+    [
+      1879,
+      38431
+    ],
+    [
+      1880,
+      44706
+    ],
+    [
+      1881,
+      41073
+    ],
+    [
+      1882,
+      41405
+    ],
+    [
+      1883,
+      45331
+    ],
+    [
+      1884,
+      46831
+    ],
+    [
+      1885,
+      48204
+    ],
+    [
+      1886,
+      51293
+    ],
+    [
+      1887,
+      53745
+    ],
+    [
+      1888,
+      55000
+    ],
+    [
+      1889,
+      54725
+    ],
+    [
+      1890,
+      57183
+    ],
+    [
+      1891,
+      56241
+    ],
+    [
+      1892,
+      56116
+    ],
+    [
+      1893,
+      61525
+    ],
+    [
+      1894,
+      63724
+    ],
+    [
+      1895,
+      66680
+    ],
+    [
+      1896,
+      71057
+    ],
+    [
+      1897,
+      70771
+    ],
+    [
+      1898,
+      72070
+    ],
+    [
+      1899,
+      76763
+    ],
+    [
+      1900,
+      93237
+    ],
+    [
+      1901,
+      84568
+    ],
+    [
+      1902,
+      85195
+    ],
+    [
+      1903,
+      85898
+    ],
+    [
+      1904,
+      88083
+    ],
+    [
+      1905,
+      93457
+    ],
+    [
+      1906,
+      91311
+    ],
+    [
+      1907,
+      92802
+    ],
+    [
+      1908,
+      96786
+    ],
+    [
+      1909,
+      101648
+    ],
+    [
+      1910,
+      106843
+    ],
+    [
+      1911,
+      107994
+    ],
+    [
+      1912,
+      108013
+    ],
+    [
+      1913,
+      111523
+    ],
+    [
+      1914,
+      107043
+    ],
+    [
+      1915,
+      96856
+    ],
+    [
+      1916,
+      92958
+    ],
+    [
+      1917,
+      89646
+    ],
+    [
+      1918,
+      87966
+    ],
+    [
+      1919,
+      93201
+    ],
+    [
+      1920,
+      106357
+    ],
+    [
+      1921,
+      111236
+    ],
+    [
+      1922,
+      121285
+    ],
+    [
+      1923,
+      122247
+    ],
+    [
+      1924,
+      129221
+    ],
+    [
+      1925,
+      134401
+    ],
+    [
+      1926,
+      152453
+    ],
+    [
+      1927,
+      152498
+    ],
+    [
+      1928,
+      155127
+    ],
+    [
+      1929,
+      161062
+    ],
+    [
+      1930,
+      172079
+    ],
+    [
+      1931,
+      166799
+    ],
+    [
+      1932,
+      169221
+    ],
+    [
+      1933,
+      166479
+    ],
+    [
+      1934,
+      167417
+    ],
+    [
+      1935,
+      175481
+    ],
+    [
+      1936,
+      179062
+    ],
+    [
+      1937,
+      179504
+    ],
+    [
+      1938,
+      183106
+    ],
+    [
+      1939,
+      179158
+    ],
+    [
+      1940,
+      190016
+    ],
+    [
+      1941,
+      159107
+    ],
+    [
+      1942,
+      147898
+    ],
+    [
+      1943,
+      137792
+    ],
+    [
+      1944,
+      129555
+    ],
+    [
+      1945,
+      133340
+    ],
+    [
+      1946,
+      164564
+    ],
+    [
+      1947,
+      193866
+    ],
+    [
+      1948,
+      220726
+    ],
+    [
+      1949,
+      236764
+    ],
+    [
+      1950,
+      303938
+    ],
+    [
+      1951,
+      310928
+    ],
+    [
+      1952,
+      323252
+    ],
+    [
+      1953,
+      338601
+    ],
+    [
+      1954,
+      347259
+    ],
+    [
+      1955,
+      357867
+    ],
+    [
+      1956,
+      365616
+    ],
+    [
+      1957,
+      386613
+    ],
+    [
+      1958,
+      406198
+    ],
+    [
+      1959,
+      430067
+    ],
+    [
+      1960,
+      485792
+    ],
+    [
+      1961,
+      479135
+    ],
+    [
+      1962,
+      505793
+    ],
+    [
+      1963,
+      556711
+    ],
+    [
+      1964,
+      587802
+    ],
+    [
+      1965,
+      631468
+    ],
+    [
+      1966,
+      670245
+    ],
+    [
+      1967,
+      721736
+    ],
+    [
+      1968,
+      767232
+    ],
+    [
+      1969,
+      812930
+    ],
+    [
+      1970,
+      952991
+    ],
+    [
+      1971,
+      882971
+    ],
+    [
+      1972,
+      924499
+    ],
+    [
+      1973,
+      947199
+    ],
+    [
+      1974,
+      983414
+    ],
+    [
+      1975,
+      1023309
+    ],
+    [
+      1976,
+      1048106
+    ],
+    [
+      1977,
+      1089439
+    ],
+    [
+      1978,
+      1139301
+    ],
+    [
+      1979,
+      1190981
+    ],
+    [
+      1980,
+      1300404
+    ],
+    [
+      1981,
+      1291099
+    ],
+    [
+      1982,
+      1324842
+    ],
+    [
+      1983,
+      1374666
+    ],
+    [
+      1984,
+      1427816
+    ],
+    [
+      1985,
+      1488565
+    ],
+    [
+      1986,
+      1563942
+    ],
+    [
+      1987,
+      1648997
+    ],
+    [
+      1988,
+      1729626
+    ],
+    [
+      1989,
+      1830595
+    ],
+    [
+      1990,
+      1995458
+    ],
+    [
+      1991,
+      1989397
+    ],
+    [
+      1992,
+      2075541
+    ],
+    [
+      1993,
+      2169232
+    ],
+    [
+      1994,
+      2281914
+    ],
+    [
+      1995,
+      2430990
+    ],
+    [
+      1996,
+      2593987
+    ],
+    [
+      1997,
+      2700791
+    ],
+    [
+      1998,
+      2835895
+    ],
+    [
+      1999,
+      2979925
+    ],
+    [
+      2000,
+      3396678
+    ],
+    [
+      2001,
+      3585372
+    ],
+    [
+      2002,
+      4173629
+    ],
+    [
+      2003,
+      4403763
+    ],
+    [
+      2004,
+      4744244
+    ],
+    [
+      2005,
+      5138846
+    ],
+    [
+      2006,
+      5584169
+    ],
+    [
+      2007,
+      6047822
+    ],
+    [
+      2008,
+      6448492
+    ],
+    [
+      2009,
+      6975803
+    ],
+    [
+      2010,
+      7439321
+    ],
+    [
+      2011,
+      7942884
+    ],
+    [
+      2012,
+      8252143
+    ],
+    [
+      2013,
+      8640926
+    ],
+    [
+      2014,
+      9129466
+    ],
+    [
+      2015,
+      9352128
+    ],
+    [
+      2016,
+      9772181
+    ],
+    [
+      2017,
+      9658892
+    ],
+    [
+      2018,
+      9620609
+    ],
+    [
+      2019,
+      10105903
+    ],
+    [
+      2020,
+      10710989
+    ],
+    [
+      2021,
+      10234246
+    ],
+    [
+      2022,
+      9919123
+    ],
+    [
+      2023,
+      10662282
+    ],
+    [
+      2024,
+      10984643
+    ],
+    [
+      2025,
+      14188833
+    ],
+    [
+      2026,
+      18745510
+    ]
+  ],
+  "totalsAsOf": "2026-11-17"
 }

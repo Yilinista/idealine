@@ -13,6 +13,7 @@
   };
   const KEY_PREFIX = 'idealine.key.';
   let lastData = null, shown = null, busy = false, lastStatus = null;
+  let lastT = null, lastOa = null;  // the last live run, for the optional roots lookup
   // Ready-made example timeline, one per interface language when available.
   let examples = {};
   try { examples = JSON.parse($('example').textContent) || {}; } catch (e) { /* no example */ }
@@ -199,10 +200,26 @@
     if (!r) return null;
     try {
       const resp = await fetch((l === 'zh' && r.zh) || r.en);
-      return resp.ok ? await resp.json() : null;
+      const d = resp.ok ? await resp.json() : null;
+      if (d && !(d.totals || []).length) {
+        const T = await loadTotals(), y0 = d.counts.length ? d.counts[0][0] : 0, y1 = d.counts.length ? d.counts[d.counts.length - 1][0] : -1;
+        d.totals = T.totals.filter(([y]) => y >= y0 && y <= y1);
+        d.totalsAsOf = T.fetched;
+      }
+      return d;
     } catch (e) { return null; }
   }
   let forceLive = false;
+  // All OpenAlex works per year (shipped with the site), for the "share of all papers" view.
+  let totalsP = null;
+  let kindChecks = null;
+  fetch('assets/kind-checks.json').then(r => (r.ok ? r.json() : null)).then(j => {
+    kindChecks = j && j.kinds;
+    // The example may already be on screen; draw it again with the counts.
+    if (kindChecks && shown && !busy && shownKind !== 'interim') show(shown, false, shownKind);
+  }).catch(() => {});
+  const loadTotals = () => (totalsP ||= fetch('assets/oa-totals.json').then(r => (r.ok ? r.json() : {}))
+    .then(j => ({ totals: j.totals || [], fetched: j.fetched || '' })).catch(() => ({ totals: [], fetched: '' })));
 
   // Result area while a run is going or after it failed: the term, steps and messages.
   function pending(term, failed) {
@@ -256,6 +273,7 @@
   }
 
   document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    if (busy) return;
     $('term').value = c.textContent;
     $('aliases').value = '';
     $('meaning').value = '';
@@ -273,6 +291,10 @@
     const providerId = providerSel.value, key = keyIn.value.trim(), model = modelIn.value.trim();
     if (term.length < 2) return formMsg(() => tx().needTerm, true);
     formMsg(null);
+    // A #m- milestone link applies only to the first run from a shared link.
+    const keep = keepHash;
+    keepHash = false;
+    if (!keep && /^#m-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
     const live = forceLive;
     forceLive = false;
     if (!live && !aliases.length && !meaning && READY[term.toLowerCase()]) {
@@ -300,6 +322,8 @@
 
     busy = true;
     $('go').disabled = true;
+    lastT = null;
+    lastOa = null;
     const acronymHint = /^[A-Z0-9]{2,5}$/.test(term) && !aliases.length;
     const runLang = lang;
     let interim = null;
@@ -313,6 +337,9 @@
       const oa = new C.OpenAlex({ apiKey: oaKey, log: step });
       const t = await C.harvest(oa, term, aliases, { onStep: step });
       t.meaning = meaning;
+      const T = await loadTotals();
+      t.totals = T.totals;
+      t.totalsAsOf = T.fetched;
       if (!t.counts.length || !t.evidence.length) {
         // OpenAlex is mostly English: a Chinese/Japanese/Korean term usually finds nothing.
         const cjk = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(term);
@@ -341,6 +368,7 @@
           throw new C.IdealineError(I.T.en.noMilestones);
         }
       }
+      lastT = t; lastOa = oa;
       lastData = C.toData(t);
       progress.finish();
       show(lastData, false, 'result');
@@ -363,7 +391,11 @@
       $('go').disabled = false;
       // Not smooth, and once more a moment later: the browser may still be applying a
       // #fragment jump from the link that opened the page.
-      const toResult = () => $('result').scrollIntoView({ block: 'start' });
+      // With a #m- milestone link, scroll to that milestone's detail instead.
+      const toResult = () => {
+        const det = /^#m-/.test(location.hash) && $('result').querySelector('[data-part="detail"]');
+        (det || $('result')).scrollIntoView({ block: det ? 'center' : 'start' });
+      };
       toResult();
       setTimeout(toResult, 300);
     }
@@ -371,12 +403,12 @@
 
   // kind: 'example' (ready-made), 'interim' (free view while the model reads), 'result'.
   let shownKind = 'example';
+  let keepHash = false;  // true only for the first run from a shared link with #m-…
   function setUrl(term, aliases, meaning) {
     const u = new URL(location.href);
     u.searchParams.set('term', term);
     if (meaning) u.searchParams.set('meaning', meaning); else u.searchParams.delete('meaning');
     if (aliases.length) u.searchParams.set('alias', aliases.join(', ')); else u.searchParams.delete('alias');
-    u.hash = '';
     history.replaceState(null, '', u);
   }
 
@@ -391,6 +423,11 @@
     $('r-tag').classList.toggle('pulse', shownKind === 'interim');
     $('r-actions').hidden = shownKind !== 'result' && shownKind !== 'ready';
     $('r-live').hidden = shownKind !== 'ready';
+    // Roots cost extra OpenAlex requests, so they run only when asked.
+    const canRoots = shownKind === 'result' && lastT && d === lastData && !d.roots;
+    const nReq = canRoots ? Math.ceil(C.rootsPlan(C.inFocus(lastT)).ids.length / 100) : 0;
+    $('r-roots').hidden = !nReq;
+    if (nReq) $('r-roots').textContent = tx().rootsBtn(nReq);
     $('r-term').textContent = d.term;
     $('r-summary').textContent = d.summary || '';
     const years = d.counts.map(c => c[0]);
@@ -398,7 +435,7 @@
     $('r-meta').textContent = T.meta(d.total, span, d.model, d.evidenceCount) +
       (shownKind !== 'example' && d.total < 20 ? ' ' + T.thin(d.total) : '') +
       (shownKind === 'ready' ? ' ' + T.readyNote(d.generated) : '');
-    window.renderTimeline(d, $('result'), labels());
+    window.renderTimeline(kindChecks && !d.kindChecks ? { ...d, kindChecks } : d, $('result'), labels());
     if (scroll) $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -435,7 +472,8 @@
 <div class="brand"><a href="${e(SPEC.siteUrl)}">idealine</a> · ${PT.tagline}</div>
 <h1>${e(d.term)}</h1>
 <p class="summary">${e(d.summary)}</p>
-<p class="meta">${fill(PT.meta, { total: d.total.toLocaleString('en-US'), span })}${how}</p>
+<p class="meta">${fill(PT.meta, { total: d.total.toLocaleString('en-US'), span })}${how}${fill(PT.asof || '', { date: e(d.generated || '') })}</p>
+<p class="headline" data-part="headline"></p>
 <div class="senses" data-part="senses"></div>
 <div class="card">
   <div class="hint">${PT.hint}</div>
@@ -444,6 +482,7 @@
   <div class="detail" data-part="detail" aria-live="polite"></div>
 </div>
 <div class="eras" data-part="eras"></div>
+<div class="roots" data-part="roots"></div>
 <details><summary>${PT.details}</summary>
 <p>${fill(PT.details_body, { generated: e(d.generated) })}</p>
 </details>
@@ -456,6 +495,25 @@ ${call}</script>
 `;
     download(slug(d.term) + '.html', page, 'text/html');
   });
+  $('r-roots').addEventListener('click', async () => {
+    if (busy || !lastT || !lastOa) return;
+    busy = true;
+    $('r-roots').disabled = true;
+    $('go').disabled = true;
+    try {
+      lastT.roots = await C.findRoots(lastOa, lastT, m => status(m));
+      lastData = C.toData(lastT);
+      status('');
+      show(lastData, false, 'result');
+    } catch (e) {
+      status(() => tx().wentWrong(I.trMessage(lang, e.message)), true);
+    } finally {
+      busy = false;
+      $('r-roots').disabled = false;
+      $('go').disabled = false;
+    }
+  });
+
   $('r-live').addEventListener('click', () => {
     if (busy || !shown) return;
     $('term').value = shown.term;
@@ -471,7 +529,9 @@ ${call}</script>
   if (exampleFor(lang)) show(exampleFor(lang), false); else $('result').hidden = true;
   const params = new URLSearchParams(location.search);
   if (params.get('term')) {
-    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    // Keep a milestone deep link (#m-2025-coined); drop other fragments.
+    if (location.hash && !/^#m-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+    keepHash = /^#m-/.test(location.hash);
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
     $('meaning').value = (params.get('meaning') || '').slice(0, 200);

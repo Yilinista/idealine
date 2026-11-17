@@ -20,7 +20,7 @@ from pathlib import Path
 import httpx
 
 BASE_URL = "https://api.openalex.org"
-SELECT = "id,display_name,publication_year,publication_date,doi,cited_by_count,authorships,abstract_inverted_index"
+SELECT = "id,display_name,publication_year,publication_date,doi,cited_by_count,authorships,abstract_inverted_index,primary_topic,referenced_works"
 MAX_ATTEMPTS = 6
 
 
@@ -38,6 +38,9 @@ class Work:
     cited_by: int = 0
     authors: list[str] = field(default_factory=list)
     abstract: str = ""
+    field_name: str | None = None  # OpenAlex primary topic's field, e.g. "Computer Science"
+    refs: list[str] = field(default_factory=list)  # IDs of the works this one cites
+    in_set: int = 0  # how many other sampled papers that use the term cite this one
 
     @property
     def short_authors(self) -> str:
@@ -72,6 +75,8 @@ def work_from_json(data: dict) -> Work:
             if a.get("author", {}).get("display_name")
         ],
         abstract=abstract_from_index(data.get("abstract_inverted_index")),
+        field_name=((data.get("primary_topic") or {}).get("field") or {}).get("display_name"),
+        refs=[r.rsplit("/", 1)[-1] for r in data.get("referenced_works") or [] if isinstance(r, str)],
     )
 
 
@@ -155,6 +160,31 @@ class OpenAlexClient:
             except (KeyError, ValueError):
                 continue
         return dict(sorted(out.items()))
+
+    def year_totals(self) -> dict[int, int]:
+        """All OpenAlex works per year (the denominator for "share of all papers").
+        group_by returns at most 200 groups, so older years come from a second request."""
+        out: dict[int, int] = {}
+        for flt in (None, "publication_year:<1830"):
+            params = {"group_by": "publication_year", "per_page": 200}
+            if flt:
+                params["filter"] = flt
+            for g in self._get("/works", params).get("group_by") or []:
+                try:
+                    out.setdefault(int(g["key"]), int(g["count"]))
+                except (KeyError, ValueError):
+                    continue
+        return dict(sorted(out.items()))
+
+    def works_by_ids(self, ids: list[str]) -> list[Work]:
+        """Look up works by OpenAlex ID, 100 per request (used for the roots view)."""
+        out: list[Work] = []
+        for i in range(0, len(ids), 100):
+            chunk = ids[i:i + 100]
+            data = self._get("/works", {"filter": "openalex_id:" + "|".join(chunk), "per_page": 100,
+                                        "select": "id,display_name,publication_year,publication_date,doi,cited_by_count,authorships"})
+            out += [work_from_json(w) for w in data.get("results") or []]
+        return out
 
     def quarter_counts(self, query: str, years: list[int], today: date | None = None
                        ) -> tuple[list[tuple[str, int]], list[tuple[int, int]]]:

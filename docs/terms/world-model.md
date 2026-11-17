@@ -1,47 +1,58 @@
 # world model: where it came from
 
-"World model" first appears in this evidence in 1930s–1970s relativistic cosmology, where it meant a mathematical model of the whole universe (expanding, steady-state, Friedmann). From the 1980s it was taken up in AI and robotics for an agent's internal representation of its environment, and today it mostly means a learned, often generative neural model that predicts how an environment evolves in response to actions, used for planning in robotics, autonomous driving, video generation and language-model agents.
+In the evidence, 'world model' first appears in AI planning and robotics in the 1980s as the system's internal representation of its surroundings; from 1991 work on curious neural controllers and Dyna made it an adaptive model learned from experience for planning. Today it mostly means a large learned predictive or generative model (often video-based) of how an environment changes in response to actions, used by robots, self-driving systems and LLM agents to imagine outcomes and plan.
 
 12954 papers in OpenAlex use this term (1899–2026); 160 sentences read.
 
+Follows: This timeline follows 'world model' in AI: an agent's internal model of its environment. It began as a hand-built representation used for planning and robotics and became a learned, often generative, predictive model of how the world evolves under actions.
+
+## Same words, other meanings (left out)
+
+- **Cosmological world model**: A mathematical model of the universe as a whole in relativistic cosmology. (22 quotes)
+- **Global or exemplary model**: A model at global scale, or a country or practice held up as a model for the world to follow. (3 quotes)
+- **Sociological world models**: Globally institutionalized cultural templates of society, curricula or the state in world-society theory. (5 quotes)
+- **Real-world model**: A model drawn from real-world practice rather than a toy example (the phrase 'real-world model'). (10 quotes)
+- **Brane-world model**: A cosmological model in which our universe is a brane in a higher-dimensional spacetime. (11 quotes)
+- **Other compound phrases**: Accidental word sequences such as old world, developed world, open world, small-world, RNA World, or 'world' followed by the verb 'model'. (7 quotes)
+
 ## Eras
 
-- **1934–1982 · Cosmological models of universe**: A world-model was a relativistic or Newtonian model of the universe as a whole, such as expanding, steady-state or oscillating cosmologies to be tested against observation.
-- **1983–2000 · Robot and AI environment representations**: In AI planning, robotics and sensor fusion, a world model was an internal, often symbolic or grid-based representation of the environment that a system builds and updates from sensing.
-- **1991–2017 · Learned models in reinforcement learning**: In learning agents, a world model was an adaptive predictive model of environment dynamics, learned from experience and used for planning or exploration, while cosmology continued using the term for universe models and brane worlds.
-- **2018–2026 · Deep generative world models**: A world model became a neural network, often a large video or multimodal foundation model, that learns compressed representations of the environment and simulates future states for training agents, robot manipulation, driving and LLM reasoning.
+- **1983–1990 · Symbolic planning and robotics**: A world model was the hand-built or sensor-updated representation of the environment that a planner, vision system or mobile robot reasoned over.
+- **1991–2017 · Adaptive models for learning**: Alongside robot maps, the term came to denote a model learned from experience, used for planning and curiosity-driven exploration in reinforcement learning.
+- **2018–2022 · Deep latent world models**: A world model became a neural network that learns compressed latent dynamics of an environment, so that agents can learn behaviours inside imagined rollouts.
+- **2023–2026 · Generative and foundation world models**: The term now chiefly names large generative video or 4D simulators for driving and robotics, and is also used for the internal world representations of LLMs.
 
 ## Milestones
 
-- **1934 · origin**: [World-models and the world-picture](https://openalex.org/W3041098624). Earliest reliable use in the evidence, framing world-models in cosmological and philosophical terms.
-  - > World-models and the world-picture (E. A. Milne, 1934)
-- **1956 · popularized**: [Visual Horizons in World Models](https://doi.org/10.1093/mnras/116.6.662). A highly cited cosmology paper that established 'world models' as standard vocabulary for models of the universe.
-  - > Visual Horizons in World Models (Wolfgang Rindler, 1956)
-- **1961 · popularized**: [The Ability of the 200-INCH Telescope to Discriminate Between Selected World Models](https://doi.org/10.1086/147041). Sandage's paper, widely cited, framed observational tests to choose between world models.
-  - > The present paper reviews several tests which can be performed to decide between world models. (Allan Sandage, 1961)
-  - > Sandage, The ability of the 200-inch telescope to discriminate between selected world models, Astrophys. (Jon Mathews, 1962)
-- **1983 · applied**: [Planning using a temporal world model](https://openalex.org/W166266902). Moved the term into AI problem solving, where a world model is a planner's representation of its domain.
+- **1983 · origin**: [Planning using a temporal world model](https://openalex.org/W166266902). This is the earliest reliably dated AI use, which says problem solvers are limited by inadequate world models (the 1899 date of E1 is clearly an error).
   - > Current problem solving systems are constrained in their applicability by inadequate world models. (James F. Allen et al., 1983)
-- **1991 · redefined**: [A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers](https://doi.org/10.7551/mitpress/3115.003.0030). Recast the world model as an adaptive neural predictor learned online by a curious controller.
+  - > Three particular problem-solving difficulties which may be handled by the dependency-based technique are discussed: (1) subgoal violation detection, (2) description binding, and (3) maintaining a consistent world model. (Philip E. London, 1899)
+- **1988 · applied**: [A stochastic map for uncertain spatial relationships](https://openalex.org/W1606157100). The world model became a measurement-updated spatial map for robot perception and navigation.
+  - > We will show how new constraint information, usually obtained by measurement, can be used to update the world model of relationships consistently, and in some situations, optimally. (Randall K. Smith et al., 1988)
+  - > The omnidirectional mobile robot uses stereo vision, odometry, and contact bumpers to instantiate a symbolic world model. (David Juris Kriegman et al., 1989)
+- **1991 · redefined**: [A Possibility for Implementing Curiosity and Boredom in Model-Building Neural Controllers](https://doi.org/10.7551/mitpress/3115.003.0030). This work introduced an adaptive world model learned by neural controllers for goal-directed on-line learning.
   - > This paper introduces a framework for `curious neural controllers' which employ an adaptive world model for goal directed on-line learning. (Jürgen Schmidhuber, 1991)
   - > Using some sort of adaptive predictive world model, they improve their ability to answer questions such as what happens if I do this or that? (Jürgen Schmidhuber, 2006)
-- **1991 · applied**: [Dyna, an integrated architecture for learning, planning, and reacting](https://doi.org/10.1145/122344.122377). Used learned, imperfect world models for incremental planning in reinforcement learning, later extended in Deep Dyna-Q.
+- **1991 · applied**: [Dyna, an integrated architecture for learning, planning, and reacting](https://doi.org/10.1145/122344.122377). Dyna planned with world models generated by learning processes, which tied the term to model-based reinforcement learning.
   - > Planning is incremental and can use the probabilistic and ofttimes incorrect world models generated by learning processes. (Richard S. Sutton, 1991)
-  - > Training a task-completion dialogue agent via reinforcement learning (RL) is costly because it requires many interactions with real users.One common alternative is to use a user simulator.However, a user simulator usually lacks the language complexity of human interlocutors and the biases in its design may tend to degrade the agent.To address these issues, we present Deep Dyna-Q, which to our knowledge is the first deep RL framework that integra… (Baolin Peng et al., 2018)
-- **1992 · critique**: [Integrating planning and reacting in a heterogeneous asynchronous architecture for controlling real-world mobile robots](https://openalex.org/W184814775). Responded to debates over centralized world models by arguing classical AI methods using them could still serve embedded reactive robots.
-  - > The central result of this work is to show that completely unmodified classical AI programming methodologies using centralized world models can be usefully incorporated into real-world embedded reactive systems. (Erann Gat, 1992)
-- **2018 · popularized**: [World Models](https://doi.org/10.5281/zenodo.1207631). Showed an unsupervised learned compressed spatial-temporal world model, giving the term its modern deep-learning identity.
+  - > Given this prior uncertainty over possible environments, the optimal-learning agent must collect and use information in an intelligent way, balancing greedy exploitation of certainty-equivalent world models with exploratory actions aimed at discerning the true state of nature. (Michael O. Duff et al., 2002)
+- **2018 · popularized**: [World Models](https://doi.org/10.5281/zenodo.1207631). This widely cited paper showed a world model trained unsupervised to learn compressed spatial and temporal representations of an environment.
   - > Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment. (David Ha et al., 2018)
-- **2019 · popularized**: [Dream to Control: Learning Behaviors by Latent Imagination](https://doi.org/10.48550/arxiv.1912.01603). The Dreamer line made learning behaviors inside learned world models a mainstream RL approach, later carried to physical robots.
+- **2019 · popularized**: [Dream to Control: Learning Behaviors by Latent Imagination](https://doi.org/10.48550/arxiv.1912.01603). Dreamer made learned world models a standard tool for learning behaviours by imagination, and a line of follow-ups built on it.
   - > Learned world models summarize an agent's experience to facilitate learning complex behaviors. (Danijar Hafner et al., 2019)
   - > World models facilitate such generalization and allow learning behaviors from imagined outcomes to increase sample-efficiency. (Danijar Hafner et al., 2020)
-- **2023 · applied**: [Reasoning with Language Model is Planning with World Model](https://doi.org/10.18653/v1/2023.emnlp-main.507). Extended the concept to large language models, treating LLM reasoning as planning with an internal world model.
-  - > Large language models (LLMs) have shown remarkable reasoning capabilities, particularly with chain-of-thought (CoT) prompting.However, LLMs sometimes still struggle with problems that are easy for humans, such as generating action plans to achieve given goals in an environment, or performing complex math or logical reasoning.The deficiency stems from the key fact that LLMs lack an internal world model to predict the world state (e.g., environmen… (Shibo Hao et al., 2023)
-  - > Leveraging Pre-trained Large Language Models to Construct and Utilize World Models for Model-based Task Planning (Lin Guan et al., 2023)
-- **2023 · redefined**: [GAIA-1: A Generative World Model for Autonomous Driving](https://doi.org/10.48550/arxiv.2309.17080). Recast world models as large generative video models simulating driving scenarios, launching a wave of driving and video world models.
+- **2023 · redefined**: [GAIA-1: A Generative World Model for Autonomous Driving](https://doi.org/10.48550/arxiv.2309.17080). The world model was recast as a large generative video model that produces realistic driving scenarios, and many later driving world models followed.
   - > To address this challenge, we introduce GAIA-1 ('Generative AI for Autonomy'), a generative world model that leverages video, text, and action inputs to generate realistic driving scenarios while offering fine-grained control over ego-vehicle behavior and scene features. (Anthony Hu et al., 2023)
+  - > DriveDreamer: Towards Real-World-Drive World Models for Autonomous Driving (Xiaofeng Wang et al., 2024)
+- **2023 · applied**: [Reasoning with Language Model is Planning with World Model](https://doi.org/10.18653/v1/2023.emnlp-main.507). The concept was carried over to LLMs, framed as lacking or containing internal world models for reasoning and planning.
+  - > Large language models (LLMs) have shown remarkable reasoning capabilities, particularly with chain-of-thought (CoT) prompting.However, LLMs sometimes still struggle with problems that are easy for humans, such as generating action plans to achieve given goals in an environment, or performing complex math or logical reasoning.The deficiency stems from the key fact that LLMs lack an internal world model to predict the world state (e.g., environmen… (Shibo Hao et al., 2023)
+  - > While further investigation is needed, our results suggest modern LLMs learn rich spatiotemporal representations of the real world and possess basic ingredients of a world model. (Wes Gurnee et al., 2023)
+- **2024 · popularized**: [Genie: Generative Interactive Environments](https://doi.org/10.48550/arxiv.2402.15391). Genie framed an 11B-parameter interactive environment generator as a foundation world model.
   - > At 11B parameters, Genie can be considered a foundation world model. (Jake Bruce et al., 2024)
-- **2026 · critique**: [Do generative video models understand physical principles?](https://doi.org/10.1109/wacv61042.2026.00099). Questions whether video models truly learn world models of physics or are merely pixel predictors.
+- **2025 · popularized**: [Cosmos World Foundation Model Platform for Physical AI](https://doi.org/10.48550/arxiv.2501.03575). Cosmos established world foundation models as a platform category for physical AI, defined as a digital twin of the world.
+  - > It needs a digital twin of itself, the policy model, and a digital twin of the world, the world model. (NVIDIA et al., 2025)
+  - > We introduce Cosmos 3, a family of omnimodal world models designed to jointly process and generate language, image, video, audio, and action sequences within a unified mixture-of-transformers architecture. (NVIDIA et al., 2026)
+- **2026 · critique**: [Do generative video models understand physical principles?](https://doi.org/10.1109/wacv61042.2026.00099). This paper questions whether video models truly learn world models or are merely sophisticated pixel predictors.
   - > These advances have led to a passionate scientific debate: Do video models learn "world models" that discover laws of physics—or, alternatively, are they merely sophisticated pixel predictors that achieve visual realism without understanding the physical principles of reality? (Saman Motamed et al., 2026)
   - > To achieve real "world models" through video generation, the next frontier lies in intrinsic faithfulness to ensure that generated videos adhere to physical laws, commonsense reasoning, anatomical correctness, and compositional integrity. (Dian Zheng et al., 2025)
 

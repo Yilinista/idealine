@@ -8,7 +8,7 @@
   'use strict';
 
   const OPENALEX = 'https://api.openalex.org';
-  const SELECT = 'id,display_name,publication_year,publication_date,doi,cited_by_count,authorships,abstract_inverted_index';
+  const SELECT = 'id,display_name,publication_year,publication_date,doi,cited_by_count,authorships,abstract_inverted_index,primary_topic,referenced_works';
   const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
   const MAX_SENTENCE_CHARS = 450;
 
@@ -37,6 +37,9 @@
       authors,
       shortAuthors: !authors.length ? 'Unknown authors' : authors.length === 1 ? authors[0] : `${authors[0]} et al.`,
       abstract: abstractFromIndex(d.abstract_inverted_index),
+      field: (d.primary_topic && d.primary_topic.field && d.primary_topic.field.display_name) || null,
+      refs: (Array.isArray(d.referenced_works) ? d.referenced_works : []).filter(r => typeof r === 'string').map(r => r.split('/').pop()),
+      inSet: 0,
     };
   }
 
@@ -223,6 +226,13 @@
     return out;
   }
 
+  // For each sampled work, how many other sampled works cite it (Litmaps' "map
+  // connectivity"): papers that use the term cite what matters to the term.
+  function countInSet(works) {
+    for (const w of works.values()) w.inSet = 0;
+    for (const w of works.values()) for (const r of new Set(w.refs || [])) if (r !== w.id && works.has(r)) works.get(r).inSet++;
+  }
+
   async function harvest(oa, term, aliases, opts = {}) {
     // fine: count young terms by quarter (extra requests), on by default only with an OpenAlex key.
     const { earliest = 25, topCited = 150, recent = 60, maxEvidence = 160, onStep = () => {}, fine = !!oa.apiKey } = opts;
@@ -249,6 +259,7 @@
       const latest = Math.max(...counts.map(c => c[0]));
       add(await oa.works(query, 'cited_by_count:desc', recent, latest - 1));
     }
+    countInSet(works);
     const key = w => w.date || String(w.year ?? 9999);
     const ordered = [...works.values()].sort((a, b) => (key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : b.citedBy - a.citedBy));
     let perWork = [];
@@ -281,7 +292,8 @@
       'Evidence:',
     ];
     for (const e of t.evidence) {
-      lines.push(`[${e.eid}] (${e.work.year}, cited ${e.work.citedBy}x, ${e.fromTitle ? 'title' : 'abstract'} of "${e.work.title}") ${e.text}`);
+      const within = e.work.inSet ? `, cited by ${e.work.inSet} of these papers` : '';
+      lines.push(`[${e.eid}] (${e.work.year}, cited ${e.work.citedBy}x${within}, ${e.fromTitle ? 'title' : 'abstract'} of "${e.work.title}") ${e.text}`);
     }
     if (outputLang) lines.push('', 'Output language: ' + outputLang);
     return lines.join('\n');
@@ -308,11 +320,19 @@
     data = data && typeof data === 'object' ? data : {};
     t.summary = str(data.summary);
     t.focus = str(data.focus);
-    t.otherSenses = [];
-    for (const s of (Array.isArray(data.other_senses) ? data.other_senses : []).slice(0, 6)) {
-      const ev = valid(s && s.evidence);
-      if (ev.length && str(s.label)) t.otherSenses.push({ label: str(s.label), meaning: str(s.meaning), evidence: ev });
+    // Senses and per-quote tags. Unrelated senses become otherSenses (with their quotes).
+    t.senses = [];
+    for (const s of (Array.isArray(data.senses) ? data.senses : []).slice(0, 12)) {
+      if (s && str(s.key) && str(s.label)) t.senses.push({ key: str(s.key), label: str(s.label), definition: str(s.definition), related: s.related !== false, evidence: [] });
     }
+    const keys = new Map(t.senses.map(s => [s.key, s]));
+    for (const e of t.evidence) e.sense = '';
+    for (const q of Array.isArray(data.quote_senses) ? data.quote_senses : []) {
+      if (!q || !byId.has(q.id)) continue;
+      const k = str(q.sense);
+      if (keys.has(k)) { byId.get(q.id).sense = k; keys.get(k).evidence.push(q.id); } else if (k === 'unclear') byId.get(q.id).sense = 'unclear';
+    }
+    t.otherSenses = t.senses.filter(s => !s.related && s.evidence.length).slice(0, 6).map(s => ({ label: s.label, meaning: s.definition, evidence: s.evidence }));
     t.eras = [];
     for (const e of Array.isArray(data.eras) ? data.eras : []) {
       const ev = valid(e && e.evidence), s = int(e && e.start_year), en = int(e && e.end_year);
@@ -324,7 +344,9 @@
     for (const m of raw) {
       const ev = valid(m && m.evidence), year = int(m && m.year);
       if (!ev.length || !KINDS.includes(m.kind) || !okYear(year)) continue;
-      const ms = { year, kind: m.kind, title: str(m.title), why: str(m.why), evidence: ev, work: null, link: 'unresolved' };
+      const ms = { year, kind: m.kind, title: str(m.title), why: str(m.why), evidence: ev, work: null, link: 'unresolved',
+        inSense: typeof m.in_sense === 'boolean' ? m.in_sense : null, coinage: typeof m.coinage === 'boolean' ? m.coinage : null,
+        shift: ['broadening', 'narrowing', 'metaphor', 'new field'].includes(m.shift) ? m.shift : '' };
       const ref = typeof m.work_ref === 'string' ? m.work_ref : '';
       if (byId.has(ref)) {
         ms.work = byId.get(ref).work;
@@ -357,14 +379,75 @@
     for (const e of after) t.milestones.push({ year: e.work.year || 0, kind: 'origin', title: e.work.title, why: 'One of the earliest uses found.', evidence: [e.eid], work: e.work, link: 'in-sample' });
     const best = new Map();
     for (const e of t.evidence) if (!best.has(e.work.id)) best.set(e.work.id, e);
-    const top = [...best.values()].sort((a, b) => b.work.citedBy - a.work.citedBy).slice(0, 5);
+    // Key papers: first by how many sampled papers that use the term cite them, then overall.
+    const top = [...best.values()].sort((a, b) => (b.work.inSet || 0) - (a.work.inSet || 0) || b.work.citedBy - a.work.citedBy).slice(0, 5);
     const used = new Set(t.milestones.map(m => m.work.id));
     for (const e of top) {
       if (used.has(e.work.id)) continue;
-      t.milestones.push({ year: e.work.year || 0, kind: 'popularized', title: e.work.title, why: `Cited ${e.work.citedBy} times.`, evidence: [e.eid], work: e.work, link: 'in-sample' });
+      const why = e.work.inSet ? `Cited by ${e.work.inSet} of the sampled papers that use the term (${e.work.citedBy} times overall).` : `Cited ${e.work.citedBy} times.`;
+      t.milestones.push({ year: e.work.year || 0, kind: 'popularized', title: e.work.title, why, evidence: [e.eid], work: e.work, link: 'in-sample' });
     }
     t.milestones.sort((a, b) => a.year - b.year);
     return t;
+  }
+
+  // --- roots (reference publication year spectroscopy, Marx et al. 2014) -----------
+
+  // Which references to look up: from the most connected sampled papers, the works
+  // they cite at least twice (or all, when that leaves too few), most-cited first.
+  function rootsPlan(evidence, maxPapers = 100, maxRefs = 2000) {
+    const seen = new Set(), papers = [];
+    for (const e of evidence) if (!seen.has(e.work.id)) { seen.add(e.work.id); papers.push(e.work); }
+    papers.sort((a, b) => (b.inSet || 0) - (a.inSet || 0) || b.citedBy - a.citedBy);
+    const top = papers.slice(0, maxPapers), n = new Map();
+    for (const w of top) for (const r of new Set(w.refs || [])) n.set(r, (n.get(r) || 0) + 1);
+    let ids = [...n].filter(([, c]) => c >= 2);
+    if (ids.length < 50) ids = [...n];
+    ids = ids.sort((a, b) => b[1] - a[1]).slice(0, maxRefs).map(([id]) => id);
+    return { papers: top.length, ids, cites: n };
+  }
+
+  // Spectrum of cited works by publication year, and the years that stand out from
+  // the median of their five-year window: the term's likely roots.
+  function rpys(items, maxPeaks = 5) {
+    const byYear = new Map();
+    for (const it of items) if (Number.isInteger(it.year)) byYear.set(it.year, (byYear.get(it.year) || 0) + it.n);
+    if (!byYear.size) return { spectrum: [], peaks: [] };
+    const ys = [...byYear.keys()], lo = Math.min(...ys), hi = Math.max(...ys);
+    const spectrum = [];
+    for (let y = lo; y <= hi; y++) spectrum.push([y, byYear.get(y) || 0]);
+    const total = spectrum.reduce((a, [, c]) => a + c, 0);
+    const med = y => { const w = [-2, -1, 0, 1, 2].map(d => byYear.get(y + d) || 0).sort((a, b) => a - b); return w[2]; };
+    const peaks = spectrum.filter(([y, c]) => c >= Math.max(3, total * 0.01) && c - med(y) > 0)
+      .sort((a, b) => (b[1] - med(b[0])) - (a[1] - med(a[0]))).slice(0, maxPeaks)
+      .map(([y, c]) => {
+        const top = items.filter(it => it.year === y).sort((a, b) => b.n - a.n)[0];
+        return { year: y, count: c, title: top.title, url: top.url, authors: top.authors, cites: top.n };
+      }).sort((a, b) => a.year - b.year);
+    return { spectrum, peaks };
+  }
+
+  // Quotes in the followed meaning: tagged with a related sense, or all quotes when
+  // the model tagged none.
+  function inFocus(t) {
+    const related = new Set((t.senses || []).filter(s => s.related).map(s => s.key));
+    if (!related.size || !t.evidence.some(e => e.sense)) return t.evidence;
+    return t.evidence.filter(e => related.has(e.sense));
+  }
+
+  async function findRoots(oa, t, onStep = () => {}) {
+    const plan = rootsPlan(inFocus(t));
+    const items = [];
+    for (let i = 0; i < plan.ids.length; i += 100) {
+      onStep(`Looking up cited works (${Math.min(i + 100, plan.ids.length)} of ${plan.ids.length})…`);
+      const chunk = plan.ids.slice(i, i + 100);
+      const data = await oa.get({ filter: 'openalex_id:' + chunk.join('|'), per_page: '100', select: 'id,display_name,publication_year,doi,cited_by_count,authorships' });
+      for (const d of data.results || []) {
+        const w = workFromJson(d);
+        items.push({ year: w.year, n: plan.cites.get(w.id) || 0, title: w.title, url: w.url, authors: w.shortAuthors });
+      }
+    }
+    return { ...rpys(items), papers: plan.papers, refs: plan.ids.length };
   }
 
   // Same JSON shape as the Python CLI's to_data, so pages and `idealine render` agree.
@@ -372,6 +455,7 @@
     const byId = new Map(t.evidence.map(e => [e.eid, e]));
     const ev = ids => ids.map(i => byId.get(i)).filter(Boolean).map(e => ({
       id: e.eid, text: e.text, title: e.work.title, year: e.work.year, date: e.work.date || null, url: e.work.url, authors: e.work.shortAuthors, fromTitle: e.fromTitle,
+      field: e.work.field || null, inSet: e.work.inSet || 0, sense: e.sense || '',
     }));
     return {
       term: t.term,
@@ -380,6 +464,10 @@
       counts: t.counts,
       quarters: t.quarters || [],
       undated: t.undated || [],
+      // Every year from the first to the last count, so gap years have a total too.
+      totals: t.counts.length ? (t.totals || []).filter(([y]) => y >= t.counts[0][0] && y <= t.counts[t.counts.length - 1][0]) : [],
+      totalsAsOf: (t.totals || []).length ? t.totalsAsOf || '' : '',
+      quotes: ev(t.evidence.map(e => e.eid)),
       total: t.counts.reduce((n, [, c]) => n + c, 0),
       model: t.model,
       generated: t.generated,
@@ -387,17 +475,21 @@
       meaning: t.meaning || '',
       focus: t.focus || '',
       otherSenses: (t.otherSenses || []).map(s => ({ label: s.label, meaning: s.meaning, evidence: ev(s.evidence) })),
+      roots: t.roots || null,
+      senses: (t.senses || []).map(s => ({ key: s.key, label: s.label, definition: s.definition, related: s.related })),
       evidenceCount: t.evidence.length,
       eras: t.eras.map(e => ({ start: e.start, end: e.end, label: e.label, meaning: e.meaning, evidence: ev(e.evidence) })),
       milestones: t.milestones.map(m => ({
         year: m.year, kind: m.kind, title: m.title, why: m.why,
         url: m.work ? m.work.url : null, date: m.work ? m.work.date || null : null, workTitle: m.work ? m.work.title : null, authors: m.work ? m.work.shortAuthors : null,
         link: m.link, evidence: ev(m.evidence),
+        checks: m.inSense != null || m.coinage != null ? { inSense: m.inSense, coinage: m.coinage } : null,
+        shift: m.shift || '',
       })),
     };
   }
 
-  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, fineYears, buildPrompt, titleOverlap, applyAnalysis, baseline, toData };
+  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData };
   global.IdealineCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -1,786 +1,3786 @@
 {
- "term": "in-context learning",
- "aliases": [
-  "in context learning"
- ],
- "summary": "Before 2020 the phrase appeared sporadically in education, second-language vocabulary research and neuroscience, meaning learning words or skills from surrounding context or authentic situations. Since about 2021 it overwhelmingly names the ability of large pretrained models, first GPT-3-style language models and later vision, speech, tabular and multimodal models, to perform a new task from examples placed in the prompt without updating their parameters.",
- "counts": [
-  [
-   1982,
-   2
+  "term": "in-context learning",
+  "aliases": [
+    "in context learning"
   ],
-  [
-   1990,
-   1
+  "summary": "In this evidence the term appears in 2021 for large language models such as GPT-3, which could learn a downstream task just from input-output examples placed in the prompt; older uses of the same words in education and psychology are unrelated. It now mainly names a standard prompting technique and a much-studied transformer capability, which has spread from text to images, speech, tabular data and other domains.",
+  "counts": [
+    [
+      1982,
+      2
+    ],
+    [
+      1990,
+      1
+    ],
+    [
+      1992,
+      1
+    ],
+    [
+      1994,
+      1
+    ],
+    [
+      1996,
+      2
+    ],
+    [
+      1998,
+      1
+    ],
+    [
+      1999,
+      3
+    ],
+    [
+      2002,
+      1
+    ],
+    [
+      2003,
+      1
+    ],
+    [
+      2004,
+      1
+    ],
+    [
+      2005,
+      4
+    ],
+    [
+      2006,
+      2
+    ],
+    [
+      2007,
+      1
+    ],
+    [
+      2008,
+      3
+    ],
+    [
+      2010,
+      2
+    ],
+    [
+      2011,
+      1
+    ],
+    [
+      2012,
+      1
+    ],
+    [
+      2013,
+      2
+    ],
+    [
+      2014,
+      1
+    ],
+    [
+      2015,
+      3
+    ],
+    [
+      2016,
+      1
+    ],
+    [
+      2017,
+      4
+    ],
+    [
+      2018,
+      2
+    ],
+    [
+      2019,
+      3
+    ],
+    [
+      2020,
+      7
+    ],
+    [
+      2021,
+      9
+    ],
+    [
+      2022,
+      67
+    ],
+    [
+      2023,
+      529
+    ],
+    [
+      2024,
+      1360
+    ],
+    [
+      2025,
+      2011
+    ],
+    [
+      2026,
+      2254
+    ]
   ],
-  [
-   1992,
-   1
+  "quarters": [],
+  "undated": [],
+  "totals": [
+    [
+      1982,
+      1324842
+    ],
+    [
+      1983,
+      1374666
+    ],
+    [
+      1984,
+      1427816
+    ],
+    [
+      1985,
+      1488565
+    ],
+    [
+      1986,
+      1563942
+    ],
+    [
+      1987,
+      1648997
+    ],
+    [
+      1988,
+      1729626
+    ],
+    [
+      1989,
+      1830595
+    ],
+    [
+      1990,
+      1995458
+    ],
+    [
+      1991,
+      1989397
+    ],
+    [
+      1992,
+      2075541
+    ],
+    [
+      1993,
+      2169232
+    ],
+    [
+      1994,
+      2281914
+    ],
+    [
+      1995,
+      2430990
+    ],
+    [
+      1996,
+      2593987
+    ],
+    [
+      1997,
+      2700791
+    ],
+    [
+      1998,
+      2835895
+    ],
+    [
+      1999,
+      2979925
+    ],
+    [
+      2000,
+      3396678
+    ],
+    [
+      2001,
+      3585372
+    ],
+    [
+      2002,
+      4173629
+    ],
+    [
+      2003,
+      4403763
+    ],
+    [
+      2004,
+      4744244
+    ],
+    [
+      2005,
+      5138846
+    ],
+    [
+      2006,
+      5584169
+    ],
+    [
+      2007,
+      6047822
+    ],
+    [
+      2008,
+      6448492
+    ],
+    [
+      2009,
+      6975803
+    ],
+    [
+      2010,
+      7439321
+    ],
+    [
+      2011,
+      7942884
+    ],
+    [
+      2012,
+      8252143
+    ],
+    [
+      2013,
+      8640926
+    ],
+    [
+      2014,
+      9129466
+    ],
+    [
+      2015,
+      9352128
+    ],
+    [
+      2016,
+      9772181
+    ],
+    [
+      2017,
+      9658892
+    ],
+    [
+      2018,
+      9620609
+    ],
+    [
+      2019,
+      10105903
+    ],
+    [
+      2020,
+      10710989
+    ],
+    [
+      2021,
+      10234246
+    ],
+    [
+      2022,
+      9919123
+    ],
+    [
+      2023,
+      10662282
+    ],
+    [
+      2024,
+      10984643
+    ],
+    [
+      2025,
+      14188833
+    ],
+    [
+      2026,
+      18745510
+    ]
   ],
-  [
-   1994,
-   1
-  ],
-  [
-   1996,
-   2
-  ],
-  [
-   1998,
-   1
-  ],
-  [
-   1999,
-   3
-  ],
-  [
-   2002,
-   1
-  ],
-  [
-   2003,
-   1
-  ],
-  [
-   2004,
-   1
-  ],
-  [
-   2005,
-   4
-  ],
-  [
-   2006,
-   2
-  ],
-  [
-   2007,
-   1
-  ],
-  [
-   2008,
-   3
-  ],
-  [
-   2010,
-   2
-  ],
-  [
-   2011,
-   1
-  ],
-  [
-   2012,
-   1
-  ],
-  [
-   2013,
-   2
-  ],
-  [
-   2014,
-   1
-  ],
-  [
-   2015,
-   3
-  ],
-  [
-   2016,
-   1
-  ],
-  [
-   2017,
-   4
-  ],
-  [
-   2018,
-   2
-  ],
-  [
-   2019,
-   3
-  ],
-  [
-   2020,
-   7
-  ],
-  [
-   2021,
-   9
-  ],
-  [
-   2022,
-   67
-  ],
-  [
-   2023,
-   529
-  ],
-  [
-   2024,
-   1360
-  ],
-  [
-   2025,
-   2011
-  ],
-  [
-   2026,
-   2254
-  ]
- ],
- "total": 6281,
- "model": "claude-opus-5-5",
- "generated": "2026-11-17",
- "lang": "en",
- "evidenceCount": 160,
- "eras": [
-  {
-   "start": 1990,
-   "end": 2008,
-   "label": "Educational and psychological context learning",
-   "meaning": "Learning vocabulary from surrounding text, learning-support programs embedded in authentic coursework, or animals learning about environmental contexts (hippocampus).",
-   "evidence": [
-    {
-     "id": "E1",
-     "text": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
-     "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
-     "year": 1990,
-     "url": "https://doi.org/10.5070/b5.36657",
-     "authors": "Raymond Devenney",
-     "fromTitle": true
-    },
-    {
-     "id": "E2",
-     "text": "Such faith in context learning has not always received experimental support, however, nor is it commonly shared by L2 learners.",
-     "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency",
-     "year": 1996,
-     "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x",
-     "authors": "Peter Prince",
-     "fromTitle": false
-    },
-    {
-     "id": "E3",
-     "text": "The study documented the design, implementation and evaluation - from both the students' and teacher's perspectives - of an in-context learning support program for first year students, using both quantitative and qualitative methodologies.The program was based on a theoretical framework which integrated cognitive, behavioural and social learning perspectives and focussed on increasing students' repertoire of learning strategies, promoting their …",
-     "title": "Design, implementation and evaluation of an in-context learning support program for first year education students and its impact on educational outcomes.",
-     "year": 1998,
-     "url": "https://openalex.org/W2295722042",
-     "authors": "de la Harpe et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E4",
-     "text": "The two effects also differ in their dependence on the hippocampus, a brain structure that has long been implicated in context learning.",
-     "title": "DISSOCIATIONS OF TWO EFFECTS OF CONTEXT",
-     "year": 1999,
-     "url": "https://openalex.org/W2188718251",
-     "authors": "Mark E. Bouton et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E5",
-     "text": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students",
-     "title": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students",
-     "year": 1999,
-     "url": "https://doi.org/10.14221/ajte.1999v24n2.3",
-     "authors": "Barbara de la Harpe et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E6",
-     "text": "The first concentrates on the instructional design approach which focuses on the definition of specific outcome objectives, design of materials and procedures that are targeted on these objectives, and assessments that determine if learners have attained the desired objectives – adopted by the main stream of adaptive educational hypermedia systems, and the constructivist approach which focuses on in-context learning organized around authentic ta…",
-     "title": "Learning activities and aids in adaptive learning environments",
-     "year": 2005,
-     "url": "https://openalex.org/W2109391286",
-     "authors": "Kyparisia A. Papanikolaou et al.",
-     "fromTitle": false
-    }
-   ]
+  "roots": {
+    "spectrum": [
+      [
+        1957,
+        2
+      ],
+      [
+        1958,
+        0
+      ],
+      [
+        1959,
+        0
+      ],
+      [
+        1960,
+        0
+      ],
+      [
+        1961,
+        0
+      ],
+      [
+        1962,
+        0
+      ],
+      [
+        1963,
+        0
+      ],
+      [
+        1964,
+        2
+      ],
+      [
+        1965,
+        0
+      ],
+      [
+        1966,
+        2
+      ],
+      [
+        1967,
+        0
+      ],
+      [
+        1968,
+        0
+      ],
+      [
+        1969,
+        0
+      ],
+      [
+        1970,
+        0
+      ],
+      [
+        1971,
+        0
+      ],
+      [
+        1972,
+        0
+      ],
+      [
+        1973,
+        0
+      ],
+      [
+        1974,
+        0
+      ],
+      [
+        1975,
+        0
+      ],
+      [
+        1976,
+        2
+      ],
+      [
+        1977,
+        0
+      ],
+      [
+        1978,
+        0
+      ],
+      [
+        1979,
+        0
+      ],
+      [
+        1980,
+        2
+      ],
+      [
+        1981,
+        0
+      ],
+      [
+        1982,
+        0
+      ],
+      [
+        1983,
+        0
+      ],
+      [
+        1984,
+        0
+      ],
+      [
+        1985,
+        0
+      ],
+      [
+        1986,
+        0
+      ],
+      [
+        1987,
+        0
+      ],
+      [
+        1988,
+        3
+      ],
+      [
+        1989,
+        0
+      ],
+      [
+        1990,
+        0
+      ],
+      [
+        1991,
+        2
+      ],
+      [
+        1992,
+        0
+      ],
+      [
+        1993,
+        0
+      ],
+      [
+        1994,
+        0
+      ],
+      [
+        1995,
+        0
+      ],
+      [
+        1996,
+        4
+      ],
+      [
+        1997,
+        3
+      ],
+      [
+        1998,
+        0
+      ],
+      [
+        1999,
+        0
+      ],
+      [
+        2000,
+        2
+      ],
+      [
+        2001,
+        19
+      ],
+      [
+        2002,
+        0
+      ],
+      [
+        2003,
+        4
+      ],
+      [
+        2004,
+        12
+      ],
+      [
+        2005,
+        8
+      ],
+      [
+        2006,
+        6
+      ],
+      [
+        2007,
+        2
+      ],
+      [
+        2008,
+        3
+      ],
+      [
+        2009,
+        13
+      ],
+      [
+        2010,
+        4
+      ],
+      [
+        2011,
+        12
+      ],
+      [
+        2012,
+        5
+      ],
+      [
+        2013,
+        26
+      ],
+      [
+        2014,
+        24
+      ],
+      [
+        2015,
+        50
+      ],
+      [
+        2016,
+        46
+      ],
+      [
+        2017,
+        83
+      ],
+      [
+        2018,
+        115
+      ],
+      [
+        2019,
+        245
+      ],
+      [
+        2020,
+        265
+      ],
+      [
+        2021,
+        430
+      ],
+      [
+        2022,
+        805
+      ],
+      [
+        2023,
+        577
+      ],
+      [
+        2024,
+        105
+      ],
+      [
+        2025,
+        21
+      ],
+      [
+        2026,
+        9
+      ]
+    ],
+    "peaks": [
+      {
+        "year": 2015,
+        "count": 50,
+        "title": "Librispeech: An ASR corpus based on public domain audio books",
+        "url": "https://doi.org/10.1109/icassp.2015.7178964",
+        "authors": "Vassil Panayotov et al.",
+        "cites": 6
+      },
+      {
+        "year": 2022,
+        "count": 805,
+        "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+        "url": "https://doi.org/10.52202/068431-1800",
+        "authors": "Jason Wei et al.",
+        "cites": 37
+      },
+      {
+        "year": 2023,
+        "count": 577,
+        "title": "LLaMA: Open and Efficient Foundation Language Models",
+        "url": "https://doi.org/10.48550/arxiv.2302.13971",
+        "authors": "Hugo Touvron et al.",
+        "cites": 27
+      }
+    ],
+    "papers": 100,
+    "refs": 785
   },
-  {
-   "start": 2021,
-   "end": 2022,
-   "label": "GPT-3 prompt-based few-shot learning",
-   "meaning": "The surprising ability of large language models like GPT-3 to do a new task by conditioning on a prompt of input-output demonstrations, without gradient updates.",
-   "evidence": [
+  "quotes": [
     {
-     "id": "E8",
-     "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
-     "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2111.02080",
-     "authors": "Sang Michael Xie et al.",
-     "fromTitle": false
+      "id": "E1",
+      "text": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
+      "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
+      "year": 1990,
+      "date": "1990-01-01",
+      "url": "https://doi.org/10.5070/b5.36657",
+      "authors": "Raymond Devenney",
+      "fromTitle": true,
+      "field": "Psychology",
+      "inSet": 0,
+      "sense": "S4"
     },
     {
-     "id": "E9",
-     "text": "For example, thanks to scaling, GPT-3 was able to achieve strong results on in-context learning tasks.",
-     "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2112.06905",
-     "authors": "Nan Du et al.",
-     "fromTitle": false
+      "id": "E2",
+      "text": "Such faith in context learning has not always received experimental support, however, nor is it commonly shared by L2 learners.",
+      "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency",
+      "year": 1996,
+      "date": "1996-01-01",
+      "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x",
+      "authors": "Peter Prince",
+      "fromTitle": false,
+      "field": "Psychology",
+      "inSet": 0,
+      "sense": "S4"
     },
     {
-     "id": "E7",
-     "text": "We introduce MetaICL (Meta-training for In-Context Learning), a new meta-training framework for few-shot learning where a pretrained language model is tuned to do in-context learning on a large set of training tasks.",
-     "title": "MetaICL: Learning to Learn In Context",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2110.15943",
-     "authors": "Sewon Min et al.",
-     "fromTitle": false
+      "id": "E3",
+      "text": "The study documented the design, implementation and evaluation - from both the students' and teacher's perspectives - of an in-context learning support program for first year students, using both quantitative and qualitative methodologies.The program was based on a theoretical framework which integrated cognitive, behavioural and social learning perspectives and focussed on increasing students' repertoire of learning strategies, promoting their …",
+      "title": "Design, implementation and evaluation of an in-context learning support program for first year education students and its impact on educational outcomes.",
+      "year": 1998,
+      "date": "1998-01-01",
+      "url": "https://openalex.org/W2295722042",
+      "authors": "de la Harpe et al.",
+      "fromTitle": false,
+      "field": "Psychology",
+      "inSet": 0,
+      "sense": "S5"
     },
     {
-     "id": "E10",
-     "text": "Large language models (LMs) are able to incontext learn-perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs.However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance.In this paper, we show that ground truth demonstrations are in fact not required-randomly replacing labels in th…",
-     "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
-     "year": 2022,
-     "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759",
-     "authors": "Sewon Min et al.",
-     "fromTitle": false
+      "id": "E4",
+      "text": "The two effects also differ in their dependence on the hippocampus, a brain structure that has long been implicated in context learning.",
+      "title": "DISSOCIATIONS OF TWO EFFECTS OF CONTEXT",
+      "year": 1999,
+      "date": "1999-01-01",
+      "url": "https://openalex.org/W2188718251",
+      "authors": "Mark E. Bouton et al.",
+      "fromTitle": false,
+      "field": "Neuroscience",
+      "inSet": 0,
+      "sense": "S6"
     },
     {
-     "id": "E11",
-     "text": "Few-shot in-context learning (ICL) enables pre-trained language models to perform a previously-unseen task without any gradient-based training by feeding a small number of training examples as part of the input.",
-     "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
-     "year": 2022,
-     "url": "https://doi.org/10.52202/068431-0142",
-     "authors": "Haokun Liu et al.",
-     "fromTitle": false
+      "id": "E5",
+      "text": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students",
+      "title": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students",
+      "year": 1999,
+      "date": "1999-11-01",
+      "url": "https://doi.org/10.14221/ajte.1999v24n2.3",
+      "authors": "Barbara de la Harpe et al.",
+      "fromTitle": true,
+      "field": "Psychology",
+      "inSet": 0,
+      "sense": "S5"
     },
     {
-     "id": "E12",
-     "text": "In-context learning is a recent paradigm in natural language understanding, where a large pretrained language model (LM) observes a test instance and a few training examples as its input, and directly decodes the output without any update to its parameters.However, performance has been shown to strongly depend on the selected training examples (termed prompts).In this work, we propose an efficient method for retrieving prompts for in-context lea…",
-     "title": "Learning To Retrieve Prompts for In-Context Learning",
-     "year": 2022,
-     "url": "https://doi.org/10.18653/v1/2022.naacl-main.191",
-     "authors": "Ohad Rubin et al.",
-     "fromTitle": false
+      "id": "E6",
+      "text": "The first concentrates on the instructional design approach which focuses on the definition of specific outcome objectives, design of materials and procedures that are targeted on these objectives, and assessments that determine if learners have attained the desired objectives – adopted by the main stream of adaptive educational hypermedia systems, and the constructivist approach which focuses on in-context learning organized around authentic ta…",
+      "title": "Learning activities and aids in adaptive learning environments",
+      "year": 2005,
+      "date": "2005-01-01",
+      "url": "https://openalex.org/W2109391286",
+      "authors": "Kyparisia A. Papanikolaou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S5"
     },
     {
-     "id": "E21",
-     "text": "Large language models can perform in-context learning, where they learn a new task from a few task demonstrations, without any parameter updates.",
-     "title": "Selective Annotation Makes Language Models Better Few-Shot Learners",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2209.01975",
-     "authors": "Hongjin Su et al.",
-     "fromTitle": false
+      "id": "E7",
+      "text": "We introduce MetaICL (Meta-training for In-Context Learning), a new meta-training framework for few-shot learning where a pretrained language model is tuned to do in-context learning on a large set of training tasks.",
+      "title": "MetaICL: Learning to Learn In Context",
+      "year": 2021,
+      "date": "2021-10-29",
+      "url": "https://doi.org/10.48550/arxiv.2110.15943",
+      "authors": "Sewon Min et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 11,
+      "sense": "S1"
+    },
+    {
+      "id": "E8",
+      "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
+      "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
+      "year": 2021,
+      "date": "2021-11-03",
+      "url": "https://doi.org/10.48550/arxiv.2111.02080",
+      "authors": "Sang Michael Xie et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 25,
+      "sense": "S1"
+    },
+    {
+      "id": "E9",
+      "text": "For example, thanks to scaling, GPT-3 was able to achieve strong results on in-context learning tasks.",
+      "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts",
+      "year": 2021,
+      "date": "2021-12-13",
+      "url": "https://doi.org/10.48550/arxiv.2112.06905",
+      "authors": "Nan Du et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 8,
+      "sense": "S1"
+    },
+    {
+      "id": "E10",
+      "text": "Large language models (LMs) are able to incontext learn-perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs.However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance.In this paper, we show that ground truth demonstrations are in fact not required-randomly replacing labels in th…",
+      "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759",
+      "authors": "Sewon Min et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 41,
+      "sense": "S1"
+    },
+    {
+      "id": "E11",
+      "text": "Few-shot in-context learning (ICL) enables pre-trained language models to perform a previously-unseen task without any gradient-based training by feeding a small number of training examples as part of the input.",
+      "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.52202/068431-0142",
+      "authors": "Haokun Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 8,
+      "sense": "S1"
+    },
+    {
+      "id": "E12",
+      "text": "In-context learning is a recent paradigm in natural language understanding, where a large pretrained language model (LM) observes a test instance and a few training examples as its input, and directly decodes the output without any update to its parameters.However, performance has been shown to strongly depend on the selected training examples (termed prompts).In this work, we propose an efficient method for retrieving prompts for in-context lea…",
+      "title": "Learning To Retrieve Prompts for In-Context Learning",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.18653/v1/2022.naacl-main.191",
+      "authors": "Ohad Rubin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 28,
+      "sense": "S1"
+    },
+    {
+      "id": "E13",
+      "text": "In-context learning refers to the ability of a model to condition on a prompt sequence consisting of in-context examples (input-output pairs corresponding to some task) along with a new query input, and generate the corresponding output.",
+      "title": "What Can Transformers Learn In-Context? a Case Study of Simple Function Classes",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.52202/068431-2217",
+      "authors": "Shivam Garg et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 18,
+      "sense": "S1"
+    },
+    {
+      "id": "E14",
+      "text": "With a handful of demonstration examples, large-scale language models show strong capability to perform various tasks by in-context learning from these examples, without any finetuning.We demonstrate that in-context learning performance can be highly unstable across samples of examples, indicating the idiosyncrasies of how language models acquire information.We formulate example selection for in-context learning as a sequential decision problem,…",
+      "title": "Active Example Selection for In-Context Learning",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.18653/v1/2022.emnlp-main.622",
+      "authors": "Yiming Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 9,
+      "sense": "S1"
+    },
+    {
+      "id": "E15",
+      "text": "Does prompting a large language model (LLM) like GPT-3 with explanations improve in-context learning?",
+      "title": "The Unreliability of Explanations in Few-Shot Prompting for Textual Reasoning",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.52202/068431-2202",
+      "authors": "Xi Ye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E16",
+      "text": "Large pre-trained language models (PLMs) such as GPT-3 have shown strong in-context learning capabilities, which are highly appealing for domains such as biomedicine that feature high and diverse demands of language technologies but also high data annotation costs.In this paper, we present the first systematic and comprehensive study to compare the few-shot performance of GPT-3 in-context learning with fine-tuning smaller (i.e., BERT-sized) PLMs…",
+      "title": "Thinking about GPT-3 In-Context Learning for Biomedical IE? Think Again",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.18653/v1/2022.findings-emnlp.329",
+      "authors": "Bernal Jiménez Gutiérrez et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E17",
+      "text": "The goal of meta-learning is to learn to adapt to a new task with only a few labeled examples.Inspired by the recent progress in large language models, we propose in-context tuning (ICT), which recasts task adaptation and prediction as a simple sequence prediction problem: to form the input sequence, we concatenate the task instruction, labeled in-context examples, and the target input to predict; to metatrain the model to learn from in-context …",
+      "title": "Meta-learning via Language Model In-context Tuning",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.18653/v1/2022.acl-long.53",
+      "authors": "Yanda Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 9,
+      "sense": "S3"
+    },
+    {
+      "id": "E18",
+      "text": "The experimental results show that the black-box tuning with RoBERTa on a few labeled samples not only significantly outperforms manual prompt and GPT-3's in-context learning, but also surpasses the gradient-based counterparts, i.e., prompt tuning and full model tuning.",
+      "title": "Black-Box Tuning for Language-Model-as-a-Service",
+      "year": 2022,
+      "date": "2022-01-10",
+      "url": "https://doi.org/10.48550/arxiv.2201.03514",
+      "authors": "Tianxiang Sun et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E19",
+      "text": "Our model also achieve strong results at in-context learning, outperforming 175B GPT-3 on zero-shot SuperGLUE and tripling the performance of T5-XXL on one-shot summarization.",
+      "title": "UL2: Unifying Language Learning Paradigms",
+      "year": 2022,
+      "date": "2022-05-10",
+      "url": "https://doi.org/10.48550/arxiv.2205.05131",
+      "authors": "Yi Tay et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S1"
+    },
+    {
+      "id": "E20",
+      "text": "TabPFN performs in-context learning (ICL), it learns to make predictions using sequences of labeled examples (x, f(x)) given in the input, without requiring further parameter updates.",
+      "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
+      "year": 2022,
+      "date": "2022-07-05",
+      "url": "https://doi.org/10.48550/arxiv.2207.01848",
+      "authors": "Noah Hollmann et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 6,
+      "sense": "S2"
+    },
+    {
+      "id": "E21",
+      "text": "Large language models can perform in-context learning, where they learn a new task from a few task demonstrations, without any parameter updates.",
+      "title": "Selective Annotation Makes Language Models Better Few-Shot Learners",
+      "year": 2022,
+      "date": "2022-09-05",
+      "url": "https://doi.org/10.48550/arxiv.2209.01975",
+      "authors": "Hongjin Su et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 9,
+      "sense": "S1"
+    },
+    {
+      "id": "E22",
+      "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).",
+      "title": "In-context Learning and Induction Heads",
+      "year": 2022,
+      "date": "2022-09-24",
+      "url": "https://doi.org/10.48550/arxiv.2209.11895",
+      "authors": "Catherine Olsson et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 17,
+      "sense": "S1"
+    },
+    {
+      "id": "E23",
+      "text": "We show that APE-engineered prompts can be applied to steer models toward truthfulness and/or informativeness, as well as to improve few-shot learning performance by simply prepending them to standard in-context learning prompts.",
+      "title": "Large Language Models Are Human-Level Prompt Engineers",
+      "year": 2022,
+      "date": "2022-11-03",
+      "url": "https://doi.org/10.48550/arxiv.2211.01910",
+      "authors": "Yongchao Zhou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E24",
+      "text": "Moreover, we show that RA-CM3 exhibits novel capabilities, such as faithful image generation and multimodal in-context learning (e.g., image generation from demonstrations).",
+      "title": "Retrieval-Augmented Multimodal Language Modeling",
+      "year": 2022,
+      "date": "2022-11-22",
+      "url": "https://doi.org/10.48550/arxiv.2211.12561",
+      "authors": "Michihiro Yasunaga et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E25",
+      "text": "Neural sequence models, especially transformers, exhibit a remarkable capacity for in-context learning.",
+      "title": "What learning algorithm is in-context learning? Investigations with linear models",
+      "year": 2022,
+      "date": "2022-11-28",
+      "url": "https://doi.org/10.48550/arxiv.2211.15661",
+      "authors": "Ekin Akyürek et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 17,
+      "sense": "S1"
+    },
+    {
+      "id": "E26",
+      "text": "At present, the mechanisms of in-context learning in Transformers are not well understood and remain mostly an intuition.",
+      "title": "Transformers learn in-context by gradient descent",
+      "year": 2022,
+      "date": "2022-12-15",
+      "url": "https://doi.org/10.48550/arxiv.2212.07677",
+      "authors": "Johannes von Oswald et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 17,
+      "sense": "S1"
+    },
+    {
+      "id": "E27",
+      "text": "Retrieval-augmented in-context learning has emerged as a powerful approach for addressing knowledge-intensive tasks using frozen language models (LM) and retrieval models (RM).",
+      "title": "Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP",
+      "year": 2022,
+      "date": "2022-12-28",
+      "url": "https://doi.org/10.48550/arxiv.2212.14024",
+      "authors": "Omar Khattab et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E28",
+      "text": "With the increasing capabilities of large language models (LLMs), in-context learning (ICL) has emerged as a new paradigm for natural language processing (NLP), where LLMs make predictions based on contexts augmented with a few examples.",
+      "title": "A Survey on In-context Learning",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.48550/arxiv.2301.00234",
+      "authors": "Qingxiu Dong et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 30,
+      "sense": "S1"
+    },
+    {
+      "id": "E29",
+      "text": "Our approach with in-context learning beats many heavily fine-tuned models by at least 5%.",
+      "title": "DIN-SQL: Decomposed In-Context Learning of Text-to-SQL with Self-Correction",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-1577",
+      "authors": "Mohammadreza Pourreza et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E30",
+      "text": "Large language models (LLMs) have been applied in various applications due to their astonishing capabilities.With advancements in technologies such as chain-of-thought (CoT) prompting and in-context learning (ICL), the prompts fed to LLMs are becoming increasingly lengthy, even exceeding tens of thousands of tokens.To accelerate model inference and reduce cost, this paper presents LLMLingua, a coarse-to-fine prompt compression method that involv…",
+      "title": "LLMLingua: Compressing Prompts for Accelerated Inference of Large Language Models",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.emnlp-main.825",
+      "authors": "Huiqiang Jiang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E31",
+      "text": "Similar to GPT, Voicebox can perform many different tasks through in-context learning, but is more flexible as it can also condition on future context.",
+      "title": "Voicebox: Text-Guided Multilingual Universal Speech Generation at Scale",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-0618",
+      "authors": "Matthew Le et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E32",
+      "text": "Large language models (LLMs) have a wealth of knowledge that allows them to excel in various Natural Language Processing (NLP) tasks.Current research focuses on enhancing their performance within their existing knowledge.Despite their vast knowledge, LLMs are still limited by the amount of information they can accommodate and comprehend.Therefore, the ability to understand their own limitations on the unknows, referred to as self-knowledge, is o…",
+      "title": "Do Large Language Models Know What They Don’t Know?",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.findings-acl.551",
+      "authors": "Zhangyue Yin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E33",
+      "text": "Despite the remarkable success of largescale Language Models (LLMs) such as GPT-3, their performances still significantly underperform fine-tuned models in the task of text classification.This is due to ( 1) the lack of reasoning ability in addressing complex linguistic phenomena (e.g., intensification, contrast, irony etc); (2) limited number of tokens allowed in in-context learning.In this paper, we introduce Clue And Reasoning Prompting (CARP…",
+      "title": "Text Classification via Large Language Models",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.findings-emnlp.603",
+      "authors": "Xiaofei Sun et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E34",
+      "text": "Transformer-based language models (LMs) are powerful and widely-applicable tools, but their usefulness is constrained by a finite context window and the expensive computational cost of processing long text documents.We propose to adapt pre-trained LMs into AutoCompressors.These language models are capable of compressing long contexts into compact summary vectors, which are then accessible to the model as soft prompts.Summary vectors are trained …",
+      "title": "Adapting Language Models to Compress Contexts",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.emnlp-main.232",
+      "authors": "Alexis Chevalier et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "unclear"
+    },
+    {
+      "id": "E35",
+      "text": "Our approach encompasses four stages: first, we use an LLM to generate synthetic prompts, and a topic-guided method to augment the prompt diversity; second, we use a small set of human-written principles for AI models to follow, and guide the LLM through in-context learning from demonstrations (of principles application) to produce helpful, ethical, and reliable responses to user's queries; third, we fine-tune the original LLM with the high-qual…",
+      "title": "Principle-Driven Self-Alignment of Language Models from Scratch with Minimal Human Supervision",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-0115",
+      "authors": "Zhiqing Sun et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E36",
+      "text": "We evaluate LLMs (GPT-3/4) with various prompting approaches on the NLGraph benchmark and find that 1) language models do demonstrate preliminary graph reasoning abilities, 2) the benefit of advanced prompting and in-context learning diminishes on more complex graph problems, while 3) LLMs are also (un)surprisingly brittle in the face of spurious correlations in graph and problem settings.",
+      "title": "Can Language Models Solve Graph Problems in Natural Language?",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-1345",
+      "authors": "Heng Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E37",
+      "text": "Five LLMs (GPT-4, GPT-3.5, Davinci-003, Llama and Galactica) are evaluated for each chemistry task in zero-shot and few-shot in-context learning settings with carefully selected demonstration examples and specially crafted prompts.",
+      "title": "What can Large Language Models do in chemistry? A comprehensive benchmark on eight tasks",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-2607",
+      "authors": "Taicheng Guo et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E38",
+      "text": "In-context learning (ICL) in Large Language Models (LLMs) has emerged as a powerful new learning paradigm.However, its underlying mechanism is still not well understood.In particular, it is challenging to map it to the \"standard\" machine learning framework, where one uses a training set S to find a best-fitting function f (x) in some hypothesis class.Here we make progress on this problem by showing that the functions learned by ICL often have a …",
+      "title": "In-Context Learning Creates Task Vectors",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.findings-emnlp.624",
+      "authors": "Roee Hendel et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 7,
+      "sense": "S1"
+    },
+    {
+      "id": "E39",
+      "text": "Previous studies have shown that large language models (LLMs) like GPTs store massive factual knowledge in their parameters.However, the stored knowledge could be false or outdated.Traditional knowledge editing methods refine LLMs via fine-tuning on texts containing specific knowledge.However, with the increasing scales of LLMs, these gradient-based approaches bring large computation costs.The trend of model-as-a-service also makes it impossible…",
+      "title": "Can We Edit Factual Knowledge by In-Context Learning?",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.emnlp-main.296",
+      "authors": "Ce Zheng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E40",
+      "text": "Large pretrained language models have shown surprising in-context learning (ICL) ability.With a few demonstration input-label pairs, they can predict the label for an unseen input without parameter updates.Despite the great success in performance, its working mechanism still remains an open question.In this paper, we explain language models as metaoptimizers and understand in-context learning as implicit finetuning.Theoretically, we figure out t…",
+      "title": "Why Can GPT Learn In-Context? Language Models Secretly Perform Gradient Descent as Meta-Optimizers",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.findings-acl.247",
+      "authors": "Damai Dai et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 8,
+      "sense": "S1"
+    },
+    {
+      "id": "E41",
+      "text": "The latest large language models (LLMs) such as ChatGPT, exhibit strong capabilities in automated mental health analysis.However, existing relevant studies bear several limitations, including inadequate evaluations, lack of prompting strategies, and ignorance of exploring LLMs for explainability.To bridge these gaps, we comprehensively evaluate the mental health analysis and emotional reasoning ability of LLMs on 11 datasets across 5 tasks.We ex…",
+      "title": "Towards Interpretable Mental Health Analysis with Large Language Models",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.emnlp-main.370",
+      "authors": "Kailai Yang et al.",
+      "fromTitle": false,
+      "field": "Psychology",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E42",
+      "text": "Transformers learn to implement preconditioned gradient descent for in-context learning",
+      "title": "Transformers learn to implement preconditioned gradient descent for in-context learning",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-1977",
+      "authors": "Kwangjun Ahn et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E43",
+      "text": "Neural sequence models based on the transformer architecture have demonstrated remarkable \\emph{in-context learning} (ICL) abilities, where they can perform new tasks when prompted with training and test examples, without any parameter update to the model.",
+      "title": "Transformers as Statisticians: Provable In-Context Learning with In-Context Algorithm Selection",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-2498",
+      "authors": "Yu Bai et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E44",
+      "text": "In-context learning (ICL) emerges as a promising capability of large language models (LLMs) by providing them with demonstration examples to perform diverse tasks.However, the underlying mechanism of how LLMs learn from the provided context remains under-explored.In this paper, we investigate the working mechanism of ICL through an information flow lens.Our findings reveal that label words in the demonstration examples function as anchors:(1) se…",
+      "title": "Label Words are Anchors: An Information Flow Perspective for Understanding In-Context Learning",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.emnlp-main.609",
+      "authors": "Lean Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 7,
+      "sense": "S1"
+    },
+    {
+      "id": "E45",
+      "text": "In recent years, pre-trained large language models (LLMs) have demonstrated remarkable efficiency in achieving an inference-time few-shot learning capability known as in-context learning.",
+      "title": "Large Language Models Are Latent Variable Models: Explaining and Finding Good Demonstrations for In-Context Learning",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-0687",
+      "authors": "Xinyi Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E46",
+      "text": "Large-scale generative models show an impressive ability to perform a wide range of Natural Language Processing (NLP) tasks using in-context learning, where a few examples are used to describe a task to the model.For Machine Translation (MT), these examples are typically randomly sampled from the development dataset with a similar distribution as the evaluation set.However, it is unclear how the choice of these in-context examples and their orde…",
+      "title": "In-context Examples Selection for Machine Translation",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.findings-acl.564",
+      "authors": "Sweta Agrawal et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S1"
+    },
+    {
+      "id": "E47",
+      "text": "Few-shot fine-tuning and in-context learning are two alternative strategies for task adaptation of pre-trained language models.Recently, in-context learning has gained popularity over fine-tuning due to its simplicity and improved out-of-domain generalization, and because extensive evidence shows that fine-tuned models pick up on spurious correlations.Unfortunately, previous comparisons of the two approaches were done using models of different s…",
+      "title": "Few-shot Fine-tuning vs. In-context Learning: A Fair Comparison and Evaluation",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.findings-acl.779",
+      "authors": "Marius Mosbach et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E48",
+      "text": "Despite the impressive few-shot performance of in-context learning (ICL), it remains a common practice to randomly select examples to serve as the context.In this paper, we advocate self-adaptive in-context learning, a new principle for ICL, in which the self-adaption mechanism is introduced to help each input find an in-context example organization (i.e., selection and permutation) that can derive the correct output, thus maximizing performance…",
+      "title": "Self-Adaptive In-Context Learning: An Information Compression Perspective for In-Context Example Selection and Ordering",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.acl-long.79",
+      "authors": "Zhiyong Wu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E49",
+      "text": "Leveraging the in-context learning capability of large language models, we rewrite the text descriptions associated with each image.",
+      "title": "Improving CLIP Training with Language Rewrites",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-1544",
+      "authors": "Lijie Fan et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E50",
+      "text": "In this paper, we present SuTI, a Subject-driven Text-to-Image generator that replaces subject-specific fine tuning with in-context learning.",
+      "title": "Subject-driven Text-to-Image Generation via Apprenticeship Learning",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-1318",
+      "authors": "Wenhu Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E51",
+      "text": "Unified Demonstration Retriever for In-Context Learning",
+      "title": "Unified Demonstration Retriever for In-Context Learning",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.acl-long.256",
+      "authors": "Xiaonan Li et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E52",
+      "text": "In this paper, the main focus is on an emergent ability in large vision models, known as in-context learning, which allows inference on unseen tasks by conditioning on in-context examples (a.k.a.~prompt) without updating the model parameters.",
+      "title": "What Makes Good Examples for Visual In-Context Learning?",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-0780",
+      "authors": "Yuanhan Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E53",
+      "text": "In-context learning has shown great success in i.i.d semantic parsing splits, where the training and test sets are drawn from the same distribution.In this setup, models are typically prompted with demonstrations that are similar to the input utterance.However, in the setup of compositional generalization, where models are tested on outputs with structures that are absent from the training set, selecting similar demonstrations is insufficient, a…",
+      "title": "Diverse Demonstrations Improve In-context Compositional Generalization",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.acl-long.78",
+      "authors": "Itay Levy et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E54",
+      "text": "In-context learning is a surprising and important phenomenon that emerged when modern language models were scaled to billions of learned parameters.",
+      "title": "The Learnability of In-Context Learning",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-1593",
+      "authors": "Noam Wies et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S1"
+    },
+    {
+      "id": "E55",
+      "text": "Knowledge Graph Completion (KGC) is crucial for addressing knowledge graph incompleteness and supporting downstream applications.Many models have been proposed for KGC.They can be categorized into two main classes: triple-based and text-based approaches.Triple-based methods struggle with long-tail entities due to limited structural information and imbalanced entity distributions.Text-based methods alleviate this issue but require costly training…",
+      "title": "KICGPT: Large Language Model with Knowledge in Context for Knowledge Graph Completion",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.18653/v1/2023.findings-emnlp.580",
+      "authors": "Yanbin Wei et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E56",
+      "text": "Vall-E emerges in-context learning capabilities and can be used to synthesize high-quality personalized speech with only a 3-second enrolled recording of an unseen speaker as an acoustic prompt.",
+      "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
+      "year": 2023,
+      "date": "2023-01-05",
+      "url": "https://doi.org/10.48550/arxiv.2301.02111",
+      "authors": "Chengyi Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 8,
+      "sense": "S2"
+    },
+    {
+      "id": "E57",
+      "text": "In-context learning (ICL) is a type of prompting where a transformer model operates on a sequence of (input, output) examples and performs inference on-the-fly.",
+      "title": "Transformers as Algorithms: Generalization and Stability in In-context Learning",
+      "year": 2023,
+      "date": "2023-01-17",
+      "url": "https://doi.org/10.48550/arxiv.2301.07067",
+      "authors": "Yingcong Li et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 6,
+      "sense": "S1"
+    },
+    {
+      "id": "E58",
+      "text": "We report baseline results on statement autoformalization via in-context learning.",
+      "title": "ProofNet: Autoformalizing and Formally Proving Undergraduate-Level Mathematics",
+      "year": 2023,
+      "date": "2023-02-24",
+      "url": "https://doi.org/10.48550/arxiv.2302.12433",
+      "authors": "Zhangir Azerbayev et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E59",
+      "text": "We study how in-context learning (ICL) in language models is affected by semantic priors versus input-label mappings.",
+      "title": "Larger language models do in-context learning differently",
+      "year": 2023,
+      "date": "2023-03-07",
+      "url": "https://doi.org/10.48550/arxiv.2303.03846",
+      "authors": "Jerry Wei et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 15,
+      "sense": "S1"
+    },
+    {
+      "id": "E60",
+      "text": "VALL-E X inherits strong in-context learning capabilities and can be applied for zero-shot cross-lingual text-to-speech synthesis and zero-shot speech-to-speech translation tasks.",
+      "title": "Speak Foreign Languages with Your Own Voice: Cross-Lingual Neural Codec Language Modeling",
+      "year": 2023,
+      "date": "2023-03-07",
+      "url": "https://doi.org/10.48550/arxiv.2303.03926",
+      "authors": "Ziqiang Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E61",
+      "text": "The advancement of large language models (LLM), such as ChatGPT and GPT-4, have shown great potential in processing text data in the medical domain with zero-shot in-context learning, especially in the task of privacy protection, as these models can identify confidential information by their powerful named entity recognition (NER) capability.",
+      "title": "DeID-GPT: Zero-shot Medical Text De-Identification by GPT-4",
+      "year": 2023,
+      "date": "2023-03-20",
+      "url": "https://doi.org/10.48550/arxiv.2303.11032",
+      "authors": "Zhengliang Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E62",
+      "text": "To showcase its capabilities in GEC, we design zero-shot chain-of-thought (CoT) and few-shot CoT settings using in-context learning for ChatGPT.",
+      "title": "Is ChatGPT a Highly Fluent Grammatical Error Correction System? A Comprehensive Evaluation",
+      "year": 2023,
+      "date": "2023-04-04",
+      "url": "https://doi.org/10.48550/arxiv.2304.01746",
+      "authors": "Fang, Tao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E63",
+      "text": "To enhance the zero-shot capability that is important to achieve diverse speech synthesis, we design a speech prompting mechanism to facilitate in-context learning in the diffusion model and the duration/pitch predictor.",
+      "title": "NaturalSpeech 2: Latent Diffusion Models are Natural and Zero-Shot Speech and Singing Synthesizers",
+      "year": 2023,
+      "date": "2023-04-18",
+      "url": "https://doi.org/10.48550/arxiv.2304.09116",
+      "authors": "Kai Shen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E64",
+      "text": "Specifically, from the limited open-accessed resources, we conclude the core techniques of ChatGPT, mainly including large-scale language models, in-context learning, reinforcement learning from human feedback and the key technical steps for developing Chat-GPT.",
+      "title": "A Brief Overview of ChatGPT: The History, Status Quo and Potential Future Development",
+      "year": 2023,
+      "date": "2023-05-01",
+      "url": "https://doi.org/10.1109/jas.2023.123618",
+      "authors": "Tianyu Wu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E65",
+      "text": "Improving Language Model Negotiation with Self-Play and In-Context Learning from AI Feedback",
+      "title": "Improving Language Model Negotiation with Self-Play and In-Context Learning from AI Feedback",
+      "year": 2023,
+      "date": "2023-05-17",
+      "url": "https://doi.org/10.48550/arxiv.2305.10142",
+      "authors": "Yao Fu et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E66",
+      "text": "In-context learning, as a new paradigm in NLP, allows the model to rapidly adapt to various tasks with only a handful of prompts and examples.",
+      "title": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning",
+      "year": 2023,
+      "date": "2023-06-01",
+      "url": "https://doi.org/10.1109/cvpr52729.2023.00660",
+      "authors": "Xinlong Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 6,
+      "sense": "S2"
+    },
+    {
+      "id": "E67",
+      "text": "Based on extensive evaluations conducted on vision-language benchmarks, it has been observed that Otter demonstrates remarkable proficiency in multi-modal perception, reasoning, and in-context learning.",
+      "title": "MIMIC-IT: Multi-Modal In-Context Instruction Tuning",
+      "year": 2023,
+      "date": "2023-06-08",
+      "url": "https://doi.org/10.48550/arxiv.2306.05425",
+      "authors": "Li, Bo et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E68",
+      "text": "Large language models (LLMs) have demonstrated exciting progress in acquiring diverse new capabilities through in-context learning, ranging from logical reasoning to code-writing.",
+      "title": "Language to Rewards for Robotic Skill Synthesis",
+      "year": 2023,
+      "date": "2023-06-14",
+      "url": "https://doi.org/10.48550/arxiv.2306.08647",
+      "authors": "Wenhao Yu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E69",
+      "text": "In addition to the existing capabilities of MLLMs (e.g., perceiving general modalities, following instructions, and performing in-context learning), Kosmos-2 integrates the grounding capability into downstream applications.",
+      "title": "Kosmos-2: Grounding Multimodal Large Language Models to the World",
+      "year": 2023,
+      "date": "2023-06-26",
+      "url": "https://doi.org/10.48550/arxiv.2306.14824",
+      "authors": "Zhiliang Peng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 6,
+      "sense": "S2"
+    },
+    {
+      "id": "E70",
+      "text": "We explore what longer context enables - including the first use of in-context learning in genomics.",
+      "title": "HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution",
+      "year": 2023,
+      "date": "2023-06-27",
+      "url": "https://doi.org/10.48550/arxiv.2306.15794",
+      "authors": "Nguyen, Eric et al.",
+      "fromTitle": false,
+      "field": "Biochemistry, Genetics and Molecular Biology",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E71",
+      "text": "Empirical results on the Big-Bench Hard benchmark suggest that LoraHub, while not surpassing the performance of in-context learning, offers a notable performance-efficiency trade-off in few-shot scenarios by employing a significantly reduced number of tokens per example during inference.",
+      "title": "LoraHub: Efficient Cross-Task Generalization via Dynamic LoRA Composition",
+      "year": 2023,
+      "date": "2023-07-25",
+      "url": "https://doi.org/10.48550/arxiv.2307.13269",
+      "authors": "Chengsong Huang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S1"
+    },
+    {
+      "id": "E72",
+      "text": "The second idea marks a dataset partition as contaminated if a classifier based on GPT-4 with few-shot in-context learning prompt marks multiple generated completions as exact/near-exact matches of the corresponding reference instances.",
+      "title": "Time Travel in LLMs: Tracing Data Contamination in Large Language Models",
+      "year": 2023,
+      "date": "2023-08-16",
+      "url": "https://doi.org/10.48550/arxiv.2308.08493",
+      "authors": "Shahriar Golchin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E73",
+      "text": "As such an ability, we propose `out-of-context reasoning' (in contrast to in-context learning).",
+      "title": "Taken out of context: On measuring situational awareness in LLMs",
+      "year": 2023,
+      "date": "2023-09-01",
+      "url": "https://doi.org/10.48550/arxiv.2309.00667",
+      "authors": "Berglund, Lukas et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E74",
+      "text": "More generally, \\textbf{phi-1.5} exhibits many of the traits of much larger LLMs, both good -- such as the ability to ``think step by step\" or perform some rudimentary in-context learning -- and bad, including hallucinations and the potential for toxic and biased generations -- encouragingly though, we are seeing improvement on that front thanks to the absence of web data.",
+      "title": "Textbooks Are All You Need II: phi-1.5 technical report",
+      "year": 2023,
+      "date": "2023-09-11",
+      "url": "https://doi.org/10.48550/arxiv.2309.05463",
+      "authors": "Yuanzhi Li et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E75",
+      "text": "Initial attempts have leveraged the exceptional capabilities of LLMs, such as rich knowledge and strong generalization through In-context Learning, which involves phrasing the recommendation task as prompts.",
+      "title": "TALLRec: An Effective and Efficient Tuning Framework to Align Large Language Model with Recommendation",
+      "year": 2023,
+      "date": "2023-09-14",
+      "url": "https://doi.org/10.1145/3604915.3608857",
+      "authors": "Keqin Bao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S1"
+    },
+    {
+      "id": "E76",
+      "text": "We show that large language models are powerful general-purpose predictors and that the compression viewpoint provides novel insights into scaling laws, tokenization, and in-context learning.",
+      "title": "Language Modeling Is Compression",
+      "year": 2023,
+      "date": "2023-09-19",
+      "url": "https://doi.org/10.48550/arxiv.2309.10668",
+      "authors": "Grégoire Delétang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E77",
+      "text": "We unify various segmentation tasks into a generalist in-context learning framework that accommodates different kinds of segmentation data by transforming them into the same format of images.",
+      "title": "SegGPT: Towards Segmenting Everything In Context",
+      "year": 2023,
+      "date": "2023-10-01",
+      "url": "https://doi.org/10.1109/iccv51070.2023.00110",
+      "authors": "Xinlong Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S2"
+    },
+    {
+      "id": "E78",
+      "text": "In this work, we ask whether we can maintain generality by using the in-context learning abilities of large language models (LLMs).",
+      "title": "Language Models Enable Simple Systems for Generating Structured Views of Heterogeneous Data Lakes",
+      "year": 2023,
+      "date": "2023-10-01",
+      "url": "https://doi.org/10.14778/3626292.3626294",
+      "authors": "Simran Arora et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E79",
+      "text": "The generality of Eureka also enables a new gradient-free in-context learning approach to reinforcement learning from human feedback (RLHF), readily incorporating human inputs to improve the quality and the safety of the generated rewards without model updating.",
+      "title": "Eureka: Human-Level Reward Design via Coding Large Language Models",
+      "year": 2023,
+      "date": "2023-10-19",
+      "url": "https://doi.org/10.48550/arxiv.2310.12931",
+      "authors": "Yecheng Jason Ma et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E80",
+      "text": "Using causal mediation analysis on a diverse range of in-context-learning (ICL) tasks, we find that a small number attention heads transport a compact representation of the demonstrated task, which we call a function vector (FV).",
+      "title": "Function Vectors in Large Language Models",
+      "year": 2023,
+      "date": "2023-10-23",
+      "url": "https://doi.org/10.48550/arxiv.2310.15213",
+      "authors": "Eric Todd et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E81",
+      "text": "Sparsity is a natural approach to reduce this cost, but existing methods either require costly retraining, have to forgo LLM's in-context learning ability, or do not yield wall-clock time speedup on modern hardware.",
+      "title": "Deja Vu: Contextual Sparsity for Efficient LLMs at Inference Time",
+      "year": 2023,
+      "date": "2023-10-26",
+      "url": "https://doi.org/10.48550/arxiv.2310.17157",
+      "authors": "Zichang Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E82",
+      "text": "Furthermore, drawing inspiration from the above insights, we develop a framework called GPT4AIGChip, which features an automated demo-augmented prompt-generation pipeline utilizing in-context learning to guide LLMs towards creating high-quality AI accelerator design.",
+      "title": "GPT4AIGChip: Towards Next-Generation AI Accelerator Design Automation via Large Language Models",
+      "year": 2023,
+      "date": "2023-10-28",
+      "url": "https://doi.org/10.1109/iccad57390.2023.10323953",
+      "authors": "Yonggan Fu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E83",
+      "text": "Large language models (LLMs) demonstrate emergent in-context learning capabilities, where they adapt to new tasks based on example demonstrations.",
+      "title": "In-context Vectors: Making In Context Learning More Effective and Controllable Through Latent Space Steering",
+      "year": 2023,
+      "date": "2023-11-11",
+      "url": "https://doi.org/10.48550/arxiv.2311.06668",
+      "authors": "Sheng Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S1"
+    },
+    {
+      "id": "E84",
+      "text": "URIAL achieves effective alignment purely through in-context learning (ICL) with base LLMs, requiring as few as three constant stylistic examples and a system prompt.",
+      "title": "The Unlocking Spell on Base LLMs: Rethinking Alignment via In-Context Learning",
+      "year": 2023,
+      "date": "2023-12-04",
+      "url": "https://doi.org/10.48550/arxiv.2312.01552",
+      "authors": "Bill Yuchen Lin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S1"
+    },
+    {
+      "id": "E85",
+      "text": "A Survey on In-context Learning",
+      "title": "A Survey on In-context Learning",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.18653/v1/2024.emnlp-main.64",
+      "authors": "Qingxiu Dong et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 7,
+      "sense": "S1"
+    },
+    {
+      "id": "E86",
+      "text": "Large language models (LLMs) excel at few-shot in-context learning (ICL) -- learning from a few examples provided in context at inference, without any weight updates.",
+      "title": "Many-Shot In-Context Learning",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.52202/079017-2447",
+      "authors": "Rishabh Agarwal et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S1"
+    },
+    {
+      "id": "E87",
+      "text": "In Large Visual Language Models (LVLMs), the efficacy of In-Context Learning (ICL) remains limited by challenges in cross-modal interactions and representation disparities.To overcome these challenges, we introduce a novel Visual In-Context Learning (VICL) method comprising Visual Demonstration Retrieval, Intent-Oriented Image Summarization, and Intent-Oriented Demonstration Composition.Our approach retrieves images via \"Retrieval & Rerank\" para…",
+      "title": "Visual In-Context Learning for Large Vision-Language Models",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.18653/v1/2024.findings-acl.940",
+      "authors": "Yucheng Zhou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E88",
+      "text": "Are Emergent Abilities in Large Language Models just In-Context Learning?",
+      "title": "Are Emergent Abilities in Large Language Models just In-Context Learning?",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.18653/v1/2024.acl-long.279",
+      "authors": "Sheng Fu Lu et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E89",
+      "text": "Large language models (LLMs) have demonstrated their ability to learn in-context, allowing them to perform various tasks based on a few input-output examples.However, the effectiveness of in-context learning is heavily reliant on the quality of the selected examples.In this paper, we propose a novel framework to iteratively train dense retrievers that can identify high-quality in-context examples for LLMs.Our framework initially trains a reward …",
+      "title": "Learning to Retrieve In-Context Examples for Large Language Models",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.18653/v1/2024.eacl-long.105",
+      "authors": "Liang Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E90",
+      "text": "Specifically, we guide LLMs using in-context learning to iteratively generate operations and update the table to represent a tabular reasoning chain.",
+      "title": "Chain-of-Table: Evolving Tables in the Reasoning Chain for Table Understanding",
+      "year": 2024,
+      "date": "2024-01-09",
+      "url": "https://doi.org/10.48550/arxiv.2401.04398",
+      "authors": "Zilong Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E91",
+      "text": "The in-context learning abilities are on par with the contemporaneous language models while covering a larger number of languages, including underrepresented and low-resource languages of the Commonwealth of Independent States and the indigenous peoples in Russia.",
+      "title": "mGPT: Few-Shot Learners Go Multilingual",
+      "year": 2024,
+      "date": "2024-01-31",
+      "url": "https://doi.org/10.1162/tacl_a_00633",
+      "authors": "Oleh Shliazhko et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E92",
+      "text": "In this paper, we propose Audio Flamingo, a novel audio language model with 1) strong audio understanding abilities, 2) the ability to quickly adapt to unseen tasks via in-context learning and retrieval, and 3) strong multi-turn dialogue abilities.",
+      "title": "Audio Flamingo: A Novel Audio Language Model with Few-Shot Learning and Dialogue Abilities",
+      "year": 2024,
+      "date": "2024-02-02",
+      "url": "https://doi.org/10.48550/arxiv.2402.01831",
+      "authors": "Zhifeng Kong et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E93",
+      "text": "Indeed, experiments on two large-scale datasets demonstrate the rationale of our insights: by adopting the in-context learning paradigm and giving adequate prompts to the LLM (e.g., providing it with ten or more examples), the LLM can significantly outperform a state-of-the-art supervised learning approach on generating comments with multiple intents.",
+      "title": "Large Language Models are Few-Shot Summarizers: Multi-Intent Comment Generation via In-Context Learning",
+      "year": 2024,
+      "date": "2024-02-06",
+      "url": "https://doi.org/10.1145/3597503.3608134",
+      "authors": "Mingyang Geng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E94",
+      "text": "It also examines different finetuning and in-context learning techniques used in downstream tasks.",
+      "title": "A Review of Current Trends, Techniques, and Challenges in Large Language Models (LLMs)",
+      "year": 2024,
+      "date": "2024-03-01",
+      "url": "https://doi.org/10.3390/app14052074",
+      "authors": "Rajvardhan Patil et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E95",
+      "text": "GRACE: Empowering LLM-based software vulnerability detection with graph structure and in-context learning",
+      "title": "GRACE: Empowering LLM-based software vulnerability detection with graph structure and in-context learning",
+      "year": 2024,
+      "date": "2024-03-21",
+      "url": "https://doi.org/10.1016/j.jss.2024.112031",
+      "authors": "Guilong Lu et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E96",
+      "text": "Additionally, AnomalyGPT supports multi-turn dialogues and exhibits impressive few-shot in-context learning capabilities.",
+      "title": "AnomalyGPT: Detecting Industrial Anomalies Using Large Vision-Language Models",
+      "year": 2024,
+      "date": "2024-03-24",
+      "url": "https://doi.org/10.1609/aaai.v38i3.27963",
+      "authors": "Zhaopeng Gu et al.",
+      "fromTitle": false,
+      "field": "Engineering",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E97",
+      "text": "We introduce a benchmark (LongICLBench) for long in-context learning in extreme-label classification using six datasets with 28 to 174 classes and input lengths from 2K to 50K tokens.",
+      "title": "Long-context LLMs Struggle with Long In-context Learning",
+      "year": 2024,
+      "date": "2024-04-02",
+      "url": "https://doi.org/10.48550/arxiv.2404.02060",
+      "authors": "Tianle Li et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E98",
+      "text": "The common theme behind these attacks is that adaptivity is crucial: different models are vulnerable to different prompting templates (e.g., R2D2 is very sensitive to in-context learning prompts), some models have unique vulnerabilities based on their APIs (e.g., prefilling for Claude), and in some settings, it is crucial to restrict the token search space based on prior knowledge (e.g., for trojan detection).",
+      "title": "Jailbreaking Leading Safety-Aligned LLMs with Simple Adaptive Attacks",
+      "year": 2024,
+      "date": "2024-04-02",
+      "url": "https://doi.org/10.48550/arxiv.2404.02151",
+      "authors": "Maksym Andriushchenko et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E99",
+      "text": "This is known as in-context learning, which is an art and science that requires understanding the strengths and weaknesses of different LLMs and prompt engineering approaches.",
+      "title": "An Empirical Evaluation of Prompting Strategies for Large Language Models in Zero-Shot Clinical Natural Language Processing: Algorithm Development and Validation Study",
+      "year": 2024,
+      "date": "2024-04-08",
+      "url": "https://doi.org/10.2196/55318",
+      "authors": "Sonish Sivarajkumar et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E100",
+      "text": "By harnessing multiple advanced abilities of LLMs, including in-context learning, instruction following, and social intelligence, RPLAs achieve a remarkable sense of human likeness and vivid role-playing performance.",
+      "title": "From Persona to Personalization: A Survey on Role-Playing Language Agents",
+      "year": 2024,
+      "date": "2024-04-28",
+      "url": "https://doi.org/10.48550/arxiv.2404.18231",
+      "authors": "Jiangjie Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E101",
+      "text": "On the other hand, Large Language Models (LLMs), like ChatGPT, have shown remarkable performance in various cross-modal tasks due to their powerful capabilities in natural language understanding, generalization, and in-context learning (ICL), which provides unprecedented opportunities to advance molecule discovery.",
+      "title": "Empowering Molecule Discovery for Molecule-Caption Translation With Large Language Models: A ChatGPT Perspective",
+      "year": 2024,
+      "date": "2024-05-02",
+      "url": "https://doi.org/10.1109/tkde.2024.3393356",
+      "authors": "Jiatong Li et al.",
+      "fromTitle": false,
+      "field": "Pharmacology, Toxicology and Pharmaceutics",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E102",
+      "text": "The planning performance of LLMs is significantly improved via prompting techniques, such as in-context learning or re-prompting with state feedback, placing new importance on the token budget for the context window.",
+      "title": "Scalable Multi-Robot Collaboration with Large Language Models: Centralized or Decentralized Systems?",
+      "year": 2024,
+      "date": "2024-05-13",
+      "url": "https://doi.org/10.1109/icra57147.2024.10610676",
+      "authors": "Yongchao Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E103",
+      "text": "Seed-TTS serves as a foundation model for speech generation and excels in speech in-context learning, achieving performance in speaker similarity and naturalness that matches ground truth human speech in both objective and subjective evaluations.",
+      "title": "Seed-TTS: A Family of High-Quality Versatile Speech Generation Models",
+      "year": 2024,
+      "date": "2024-06-04",
+      "url": "https://doi.org/10.48550/arxiv.2406.02430",
+      "authors": "Philip Anastassiou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E104",
+      "text": "Our results show that while pure SSMs match or exceed Transformers on many tasks, they lag behind Transformers on tasks which require strong copying or in-context learning abilities (e.g., 5-shot MMLU, Phonebook) or long-context reasoning.",
+      "title": "An Empirical Study of Mamba-based Language Models",
+      "year": 2024,
+      "date": "2024-06-12",
+      "url": "https://doi.org/10.48550/arxiv.2406.07887",
+      "authors": "Roger Waleffe et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E105",
+      "text": "In this work, we demonstrate that the task-agnostic in-context learning capabilities of large multimodal models can be significantly enhanced by effective scaling-up.",
+      "title": "Generative Multimodal Models are In-Context Learners",
+      "year": 2024,
+      "date": "2024-06-16",
+      "url": "https://doi.org/10.1109/cvpr52733.2024.01365",
+      "authors": "Quan Sun et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S2"
+    },
+    {
+      "id": "E106",
+      "text": "SenseVoice-Small delivers exceptionally low-latency ASR for 5 languages, and SenseVoice-Large supports high-precision ASR for over 50 languages, while CosyVoice excels in multi-lingual voice generation, zero-shot in-context learning, cross-lingual voice cloning, and instruction-following capabilities.",
+      "title": "FunAudioLLM: Voice Understanding and Generation Foundation Models for Natural Interaction Between Humans and LLMs",
+      "year": 2024,
+      "date": "2024-07-04",
+      "url": "https://doi.org/10.48550/arxiv.2407.04051",
+      "authors": "An, Keyu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E107",
+      "text": "To facilitate accurate and robust log parsing, LILAC leverages the in-context learning (ICL) capability of the LLM by performing a hierarchical candidate sampling algorithm and selecting high-quality demonstrations.",
+      "title": "LILAC: Log Parsing using LLMs with Adaptive Parsing Cache",
+      "year": 2024,
+      "date": "2024-07-12",
+      "url": "https://doi.org/10.1145/3643733",
+      "authors": "Zhihan Jiang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E108",
+      "text": "Open-world generalization requires robotic systems to have a profound understanding of the physical world and the user command to solve diverse and complex tasks.While the recent advancement in vision-language models (VLMs) has offered unprecedented opportunities to solve open-world problems, how to leverage their capabilities to control robots remains a grand challenge.In this paper, we introduce Marking Openworld Keypoint Affordances (MOKA), a…",
+      "title": "MOKA: Open-World Robotic Manipulation through Mark-Based Visual Prompting",
+      "year": 2024,
+      "date": "2024-07-15",
+      "url": "https://doi.org/10.15607/rss.2024.xx.062",
+      "authors": "Kuan Fang et al.",
+      "fromTitle": false,
+      "field": "Engineering",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E109",
+      "text": "In particular, language models of sufficient scale demonstrate in-context learning, i.e., they can learn from associations between a small number of input patterns to generate outputs incorporating such associations (also called few-shot prompting).",
+      "title": "Language Model Crossover: Variation through Few-Shot Prompting",
+      "year": 2024,
+      "date": "2024-09-05",
+      "url": "https://doi.org/10.1145/3694791",
+      "authors": "Elliot Meyerson et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E110",
+      "text": "More intriguingly, it offers notable advantages in practical applications, such as long-context modeling, key information retrieval, hallucination mitigation, in-context learning, and reduction of activation outliers.",
+      "title": "Differential Transformer",
+      "year": 2024,
+      "date": "2024-10-07",
+      "url": "https://doi.org/10.48550/arxiv.2410.05258",
+      "authors": "Tianzhu Ye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E111",
+      "text": "(3) Decoder-only text encoder: we replaced T5 with modern decoder-only small LLM as the text encoder and designed complex human instruction with in-context learning to enhance the image-text alignment.",
+      "title": "SANA: Efficient High-Resolution Image Synthesis with Linear Diffusion Transformers",
+      "year": 2024,
+      "date": "2024-10-14",
+      "url": "https://doi.org/10.48550/arxiv.2410.10629",
+      "authors": "Enze Xie et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E112",
+      "text": "We first discuss on the existing LLM paradigms like in-context learning and instruction tuning, proposing basic structural information injection approaches.",
+      "title": "Making Large Language Models Perform Better in Knowledge Graph Completion",
+      "year": 2024,
+      "date": "2024-10-26",
+      "url": "https://doi.org/10.1145/3664647.3681327",
+      "authors": "Yichi Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E113",
+      "text": "We continue with multimodal hallucination and extended techniques, including multimodal in-context learning, multimodal chain of thought and LLM-aided visual reasoning.",
+      "title": "A survey on multimodal large language models",
+      "year": 2024,
+      "date": "2024-11-11",
+      "url": "https://doi.org/10.1093/nsr/nwae403",
+      "authors": "Shukang Yin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E114",
+      "text": "In language processing, in-context learning provides an alternative, where models learn from within prompts, bypassing the need for parameter updates.",
+      "title": "In-context learning enables multimodal large language models to classify cancer pathology images",
+      "year": 2024,
+      "date": "2024-11-21",
+      "url": "https://doi.org/10.1038/s41467-024-51465-9",
+      "authors": "Dyke Ferber et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E115",
+      "text": "By employing progressive semantic decoding with two popular generative models, language models (LMs) and Flow Matching, CosyVoice demonstrated high prosody naturalness, content consistency, and speaker similarity in speech in-context learning.",
+      "title": "CosyVoice 2: Scalable Streaming Speech Synthesis with Large Language Models",
+      "year": 2024,
+      "date": "2024-12-13",
+      "url": "https://doi.org/10.48550/arxiv.2412.10117",
+      "authors": "Zhihao Du et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E116",
+      "text": "Remarkably, LLaDA 8B is competitive with strong LLMs like LLaMA3 8B in in-context learning and, after SFT, exhibits impressive instruction-following abilities in case studies such as multi-turn dialogue.",
+      "title": "Large Language Diffusion Models",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-1689",
+      "authors": "Shen Nie et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E117",
+      "text": "The prowess of LLMs is underpinned by their substantial model size, extensive and diverse datasets, and the vast computational power harnessed during training, all of which contribute to the emergent abilities of LLMs (e.g., in-context learning) that are not present in small models.",
+      "title": "A Survey on Mixture of Experts in Large Language Models",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.1109/tkde.2025.3554028",
+      "authors": "Weilin Cai et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E118",
+      "text": "To this end, we embed existing properties into a vector database and retrieve a reference property for LLM-based in-context learning to generate a new property for a given code.",
+      "title": "PropertyGPT: LLM-driven Formal Verification of Smart Contracts through Retrieval-Augmented Property Generation",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.14722/ndss.2025.241357",
+      "authors": "Ye Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E119",
+      "text": "In-Context Learning with Long-Context Models: An In-Depth Exploration",
+      "title": "In-Context Learning with Long-Context Models: An In-Depth Exploration",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.18653/v1/2025.naacl-long.605",
+      "authors": "Amanda Bertsch et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E120",
+      "text": "In-context learning, the ability of large language models to perform tasks using only examples provided in the prompt, has recently been adapted for time series forecasting.",
+      "title": "TiRex: Zero-Shot Forecasting Across Long and Short Horizons with Enhanced In-Context Learning",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-1929",
+      "authors": "Andreas Auer et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E121",
+      "text": "Chain-of-thought (CoT) reasoning has enabled large language models (LLMs) to utilize additional computation through intermediate tokens to solve complex tasks.However, we posit that typical reasoning traces contain many redundant tokens, incurring extraneous inference costs.Upon examination of the output distribution of current LLMs, we find evidence on their latent ability to reason more concisely, relative to their default behavior.To elicit t…",
+      "title": "Self-Training Elicits Concise Reasoning in Large Language Models",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.18653/v1/2025.findings-acl.1289",
+      "authors": "Tergel Munkhbat et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E122",
+      "text": "Since the seminal work of TabPFN, research on tabular foundation models (TFMs) based on in-context learning (ICL) has challenged long-standing paradigms in machine learning.",
+      "title": "Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-0535",
+      "authors": "Xiyuan Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E123",
+      "text": "The recently introduced transformer-based Tabular Prior-data Fitted Network v2 (TabPFN v2) achieves unprecedented in-context learning performance across diverse downstream datasets, marking a pivotal advancement in tabular foundation models.",
+      "title": "A Closer Look at TabPFN v2: Understanding Its Strengths and Extending Its Capabilities",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-4527",
+      "authors": "Han-Jia Ye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E124",
+      "text": "To mitigate these effects, we introduce and evaluate four strategies: in-context learning, self-reflection, self-selective reasoning, and classifier-selective reasoning.",
+      "title": "When Thinking Fails: The Pitfalls of Reasoning for Instruction-Following in LLMs",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-2612",
+      "authors": "Xiaomin Li et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E125",
+      "text": "The In-Context Learning (ICL) is to understand a new task via a few demonstrations (aka. prompt) and predict new inputs without tuning the models.",
+      "title": "Exploring Effective Factors for Improving Visual In-Context Learning",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.1109/tip.2025.3554410",
+      "authors": "Yanpeng Sun et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E126",
+      "text": "Small language models (SLMs) have emerged as a promising solution for deploying resourceconstrained devices, such as smartphones and Web of Things.This work presents the first comprehensive study of over 60 SLMs such as Microsoft Phi and Google Gemma that are publicly accessible.Our findings show that state-of-the-art SLMs outperform 7B models in general tasks, proving their practical viability.However, SLMs' in-context learning capabilities rem…",
+      "title": "Demystifying Small Language Models for Edge Deployment",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.18653/v1/2025.acl-long.718",
+      "authors": "Zhichun Lu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E127",
+      "text": "We assess the quality of our synthetic data by using them in both training-based scenarios and training-free in-context learning (ICL), where we craft innovative retrieval approaches optimized for agents.",
+      "title": "Learn-by-interact: A Data-Centric Framework for Self-Adaptive Agents in Realistic Environments",
+      "year": 2025,
+      "date": "2025-01-18",
+      "url": "https://doi.org/10.48550/arxiv.2501.10893",
+      "authors": "Hongjin Su et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E128",
+      "text": "To address these challenges, previous research explored in-context learning (ICL) and retrieval-augmented generation (RAG) as strategies to guide the LLM generative process with task-specific prompt examples.",
+      "title": "Exploring Parameter-Efficient Fine-Tuning Techniques for Code Generation with Large Language Models",
+      "year": 2025,
+      "date": "2025-01-22",
+      "url": "https://doi.org/10.1145/3714461",
+      "authors": "Martin Weyssow et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E129",
+      "text": "Enhancing knowledge retrieval with in-context learning and semantic search through generative AI",
+      "title": "Enhancing knowledge retrieval with in-context learning and semantic search through generative AI",
+      "year": 2025,
+      "date": "2025-01-23",
+      "url": "https://doi.org/10.1016/j.knosys.2025.113047",
+      "authors": "Mohammed-Khalil Ghali et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E130",
+      "text": "This human-in-the-loop AI-assisted SLR system demonstrates the potential of GPT-4's in context learning capabilities by eliminating the need for manually annotated training data.",
+      "title": "Enhancing systematic literature reviews with generative artificial intelligence: development, applications, and performance evaluation",
+      "year": 2025,
+      "date": "2025-02-05",
+      "url": "https://doi.org/10.1093/jamia/ocaf030",
+      "authors": "Ying Li et al.",
+      "fromTitle": false,
+      "field": "Decision Sciences",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E131",
+      "text": "This issue is amplified when using original problems for in-context learning.",
+      "title": "MATH-Perturb: Benchmarking LLMs' Math Reasoning Abilities against Hard Perturbations",
+      "year": 2025,
+      "date": "2025-02-10",
+      "url": "https://doi.org/10.48550/arxiv.2502.06453",
+      "authors": "Kaixuan Huang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E132",
+      "text": "Additionally, we enhance VerilogEval’s infrastructure by automatically classifying failures, introducing in-context learning support, and extending the tasks to specification-to-RTL translation.",
+      "title": "Revisiting VerilogEval: A Year of Improvements in Large-Language Models for Hardware Code Generation",
+      "year": 2025,
+      "date": "2025-02-19",
+      "url": "https://doi.org/10.1145/3718088",
+      "authors": "Nathaniel Pinckney et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E133",
+      "text": "We also considered the impact of using in-context learning by incorporating labeled examples within the prompt.",
+      "title": "Large language models are less effective at clinical prediction tasks than locally trained machine learning models",
+      "year": 2025,
+      "date": "2025-02-21",
+      "url": "https://doi.org/10.1093/jamia/ocaf038",
+      "authors": "Katherine E Brown et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E134",
+      "text": "These emergent abilities, ranging from advanced reasoning and in-context learning to coding and problem-solving, have sparked an intense scientific debate: Are they truly emergent, or do they simply depend on external factors, such as training dynamics, the type of problems, or the chosen metric?",
+      "title": "Emergent Abilities in Large Language Models: A Survey",
+      "year": 2025,
+      "date": "2025-02-28",
+      "url": "https://doi.org/10.48550/arxiv.2503.05788",
+      "authors": "Leonardo Berti et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E135",
+      "text": "Large Language Models (LLMs) have shown impressive In-Context Learning (ICL) ability in code generation.",
+      "title": "Large Language Model-Aware In-Context Learning for Code Generation",
+      "year": 2025,
+      "date": "2025-02-28",
+      "url": "https://doi.org/10.1145/3715908",
+      "authors": "Jia Li et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E136",
+      "text": "Instead of relying on traditional neural architectures used in existing emotional TTS models, we propose utilizing the emotion-aware LLM-TTS neural architecture to leverage LLMs’ in-context learning and instruction-following capabilities.",
+      "title": "Emo-DPO: Controllable Emotional Speech Synthesis through Direct Preference Optimization",
+      "year": 2025,
+      "date": "2025-03-12",
+      "url": "https://doi.org/10.1109/icassp49660.2025.10888737",
+      "authors": "Xiaoxue Gao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E137",
+      "text": "In particular, this work first introduces LLM fundamentals and compares different prompting techniques such as in-context learning, chain-of-thought, and self-refinement.",
+      "title": "Large Language Models for Wireless Networks: An Overview from the Prompt Engineering Perspective",
+      "year": 2025,
+      "date": "2025-03-17",
+      "url": "https://doi.org/10.1109/mwc.001.2400384",
+      "authors": "Hao Zhou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E138",
+      "text": "Specifically, we propose two approaches: first, a prompt-based method that segregates visual and textual content, employing a multimodal In-Context Learning strategy to balance focus across modalities; second, a late fusion technique that directly integrates visual information into the final representations.",
+      "title": "NoteLLM-2: Multimodal Large Representation Models for Recommendation",
+      "year": 2025,
+      "date": "2025-04-04",
+      "url": "https://doi.org/10.1145/3690624.3709440",
+      "authors": "Chao Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E139",
+      "text": "Multimodal in-context learning (ICL) equips Large Vision-language Models (LVLMs) with the ability to adapt to new tasks via multiple user-provided demonstrations, without requiring any model parameter updates.",
+      "title": "M$^2$IV: Towards Efficient and Fine-grained Multimodal In-Context Learning via Representation Engineering",
+      "year": 2025,
+      "date": "2025-04-06",
+      "url": "https://doi.org/10.48550/arxiv.2504.04633",
+      "authors": "Yanshu Li et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E140",
+      "text": "Despite the notable advancements of existing prompting methods, such as In-Context Learning and Chain-of-Thought for Large Language Models (LLMs), they still face challenges related to various biases.",
+      "title": "Causal Prompting: Debiasing Large Language Model Prompting Based on Front-Door Adjustment",
+      "year": 2025,
+      "date": "2025-04-11",
+      "url": "https://doi.org/10.1609/aaai.v39i24.34777",
+      "authors": "Congzhi Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E141",
+      "text": "The size expansion comes with a distinct capability called in-context learning (ICL), which represents a special form of prompting and allows the models to be utilized through the presentation of demonstration examples without modifications to the model parameters.",
+      "title": "Privacy Preserving Prompt Engineering: A Survey",
+      "year": 2025,
+      "date": "2025-04-18",
+      "url": "https://doi.org/10.1145/3729219",
+      "authors": "Kennedy Edemacu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E142",
+      "text": "In this paper, we evaluate GPT-4 using three prompt engineering strategies-basic prompting, in-context learning, and taskspecific prompting-and compare it against 17 fine-tuned models across three code-related tasks: code summarization, generation, and translation.",
+      "title": "Prompt Engineering or Fine-Tuning: An Empirical Assessment of LLMs for Code",
+      "year": 2025,
+      "date": "2025-04-28",
+      "url": "https://doi.org/10.1109/msr66628.2025.00082",
+      "authors": "Jiho Shin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E143",
+      "text": "On the other hand, language models' in-context learning (ICL) shows different inductive biases and deductive reasoning capabilities.",
+      "title": "On the generalization of language models from in-context learning and finetuning: a controlled study",
+      "year": 2025,
+      "date": "2025-05-01",
+      "url": "https://doi.org/10.48550/arxiv.2505.00661",
+      "authors": "Andrew K. Lampinen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E144",
+      "text": "Four in-context learning methods are introduced to utilize the natural language processing and inference capabilities of LLMs for producing task plans in BT format, reducing manual effort while ensuring robustness and comprehensibility.",
+      "title": "LLM-as-BT-Planner: Leveraging LLMs for Behavior Tree Generation in Robot Task Planning",
+      "year": 2025,
+      "date": "2025-05-19",
+      "url": "https://doi.org/10.1109/icra55743.2025.11128454",
+      "authors": "Jicong Ao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E145",
+      "text": "Towards Multimodal In-context Learning for Vision and Language Models",
+      "title": "Towards Multimodal In-context Learning for Vision and Language Models",
+      "year": 2025,
+      "date": "2025-05-20",
+      "url": "https://doi.org/10.1007/978-3-031-93806-1_19",
+      "authors": "Sivan Doveh et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E146",
+      "text": "Large language models are often used to answer queries grounded in large text corpora (e.g. codebases, legal documents, or chat histories) by placing the entire corpus in the context window and leveraging in-context learning (ICL).",
+      "title": "Cartridges: Lightweight and general-purpose long context representations via self-study",
+      "year": 2025,
+      "date": "2025-06-06",
+      "url": "https://doi.org/10.48550/arxiv.2506.06266",
+      "authors": "Sabri Eyuboglu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E147",
+      "text": "Key methodological aspects-such as domain-specific data acquisition, large-scale pre-training, supervised fine-tuning, prompt engineering, and in-context learning-are explored in the context of healthcare use cases.",
+      "title": "Large Language Models in Healthcare and Medical Applications: A Review",
+      "year": 2025,
+      "date": "2025-06-10",
+      "url": "https://doi.org/10.3390/bioengineering12060631",
+      "authors": "Subhankar Maity et al.",
+      "fromTitle": false,
+      "field": "Medicine",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E148",
+      "text": "To address this problem, we show that in-context learning (ICL) can significantly enhance LMMs’ generalization.",
+      "title": "On the Out-Of-Distribution Generalization of Large Multimodal Models",
+      "year": 2025,
+      "date": "2025-06-10",
+      "url": "https://doi.org/10.1109/cvpr52734.2025.00965",
+      "authors": "Xingxuan Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E149",
+      "text": "This paper reviews LLM based monitoring and diagnostics methodologies, categorizing them into in-context learning, fine tuning, retrieval augmented generation, multimodal learning, and time series approaches, analyzing advances in diagnostics and decision support.",
+      "title": "Large Models for Machine Monitoring and Fault Diagnostics: Opportunities, Challenges and Future Direction",
+      "year": 2025,
+      "date": "2025-06-20",
+      "url": "https://doi.org/10.37965/jdmd.2025.832",
+      "authors": "Xuefeng Chen et al.",
+      "fromTitle": false,
+      "field": "Engineering",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E150",
+      "text": "To bridge the gap, we propose CTINexus, a novel framework leveraging optimized in-context learning (ICL) of large language models (LLMs) for data-efficient CTI knowledge extraction and high-quality cybersecurity knowledge graph (CSKG) construction.",
+      "title": "CTINexus: Automatic Cyber Threat Intelligence Knowledge Graph Construction Using Large Language Models",
+      "year": 2025,
+      "date": "2025-06-30",
+      "url": "https://doi.org/10.1109/eurosp63326.2025.00057",
+      "authors": "Yutong Cheng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E151",
+      "text": "It has been argued that this capability, known as in-context learning (ICL), is a cornerstone of Transformers' success, yet questions about the necessary sample complexity, pretraining task diversity, and context length for successful ICL remain unresolved.",
+      "title": "Asymptotic theory of in-context learning by linear attention",
+      "year": 2025,
+      "date": "2025-07-09",
+      "url": "https://doi.org/10.1073/pnas.2502599122",
+      "authors": "Yue M. Lu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E152",
+      "text": "We argue through theoretical analysis and experimentation that this simple mechanism may help explain why LLMs demonstrate capabilities of in-context learning, beyond what is captured during training.",
+      "title": "Learning without training: The implicit dynamics of in-context learning",
+      "year": 2025,
+      "date": "2025-07-21",
+      "url": "https://doi.org/10.48550/arxiv.2507.16003",
+      "authors": "Benoît Dherin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E153",
+      "text": "Using In-Context Learning (ICL) and Chain-of-Thought (CoT) prompting, it generates explicit reasoning chains processed separately to improve truthfulness.",
+      "title": "Knowledge graph-extended retrieval augmented generation for question answering",
+      "year": 2025,
+      "date": "2025-11-01",
+      "url": "https://doi.org/10.1007/s10489-025-06885-5",
+      "authors": "Jasper Linders et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E154",
+      "text": "Large language models (LLMs) with billions of parameters exhibit in-context learning abilities, enabling few-shot learning on tasks that the model was not specifically trained for.",
+      "title": "Multi-Step Reasoning with Large Language Models, a Survey",
+      "year": 2025,
+      "date": "2025-11-05",
+      "url": "https://doi.org/10.1145/3774896",
+      "authors": "Aske Plaat et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E155",
+      "text": "We introduce ThetaEvolve, an open-source framework that simplifies and extends AlphaEvolve to efficiently scale both in-context learning and Reinforcement Learning (RL) at test time, allowing models to continually learn from their experiences in improving open optimization problems.",
+      "title": "ThetaEvolve: Test-time Learning on Open Problems",
+      "year": 2025,
+      "date": "2025-11-28",
+      "url": "https://doi.org/10.48550/arxiv.2511.23473",
+      "authors": "Yiping Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E156",
+      "text": "SDFT leverages in-context learning by using a demonstration-conditioned model as its own teacher, generating on-policy training signals that preserve prior capabilities while acquiring new skills.",
+      "title": "Self-Distillation Enables Continual Learning",
+      "year": 2026,
+      "date": "2026-01-27",
+      "url": "https://doi.org/10.48550/arxiv.2601.19897",
+      "authors": "Idan Shenfeld et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E157",
+      "text": "This goes far beyond long-context tasks that primarily test retrieval or reading comprehension, and in-context learning tasks, where models learn simple task patterns via instructions and demonstrations.",
+      "title": "CL-bench: A Benchmark for Context Learning",
+      "year": 2026,
+      "date": "2026-02-03",
+      "url": "https://doi.org/10.48550/arxiv.2602.03587",
+      "authors": "Shihan Dou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E158",
+      "text": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data.",
+      "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model",
+      "year": 2026,
+      "date": "2026-02-11",
+      "url": "https://doi.org/10.48550/arxiv.2602.11139",
+      "authors": "Jingang Qu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E159",
+      "text": "Large language models (LLMs) can perform accurate classification with zero or few examples through in-context learning (ICL), allowing the model to observe query-relevant examples at inference time and eliminating the need for additional weight updates to generalize beyond its original training data.",
+      "title": "Bayesian Optimization of Catalysis with In-Context Learning",
+      "year": 2026,
+      "date": "2026-04-14",
+      "url": "https://doi.org/10.1021/acscentsci.5c02418",
+      "authors": "Mayk Caldas Ramos et al.",
+      "fromTitle": false,
+      "field": "Materials Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E160",
+      "text": "This survey systematically reviews recent advancements in LLM techniques across four key dimensions: (1) pre-training methodologies, which establish core model capabilities through large-scale self-supervised training, architectural innovations, and data curation strategies; (2) post-training techniques, including supervised fine-tuning and reinforcement learning, which adapt foundational models to downstream tasks and enhance their alignment an…",
+      "title": "A Survey of Large Language Models",
+      "year": 2026,
+      "date": "2026-05-09",
+      "url": "https://doi.org/10.1007/s11704-026-60308-3",
+      "authors": "Wayne Xin Zhao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 10,
+      "sense": "unclear"
     }
-   ]
-  },
-  {
-   "start": 2022,
-   "end": 2023,
-   "label": "Mechanism and theory studies",
-   "meaning": "In-context learning became an object of explanation, studied as implicit Bayesian inference, induction heads, implicit gradient descent, or task vectors in transformers.",
-   "evidence": [
+  ],
+  "total": 6281,
+  "model": "claude-opus-5-5",
+  "generated": "2026-11-17",
+  "lang": "en",
+  "meaning": "",
+  "focus": "In machine learning, in-context learning (ICL) is a model's ability to perform a new task by conditioning on examples or instructions in its input prompt, with no parameter updates.",
+  "otherSenses": [
     {
-     "id": "E8",
-     "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
-     "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2111.02080",
-     "authors": "Sang Michael Xie et al.",
-     "fromTitle": false
+      "label": "L2 vocabulary context learning",
+      "meaning": "Second-language learners acquiring word meanings from surrounding context.",
+      "evidence": [
+        {
+          "id": "E1",
+          "text": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
+          "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
+          "year": 1990,
+          "date": "1990-01-01",
+          "url": "https://doi.org/10.5070/b5.36657",
+          "authors": "Raymond Devenney",
+          "fromTitle": true,
+          "field": "Psychology",
+          "inSet": 0,
+          "sense": "S4"
+        },
+        {
+          "id": "E2",
+          "text": "Such faith in context learning has not always received experimental support, however, nor is it commonly shared by L2 learners.",
+          "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency",
+          "year": 1996,
+          "date": "1996-01-01",
+          "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x",
+          "authors": "Peter Prince",
+          "fromTitle": false,
+          "field": "Psychology",
+          "inSet": 0,
+          "sense": "S4"
+        }
+      ]
     },
     {
-     "id": "E22",
-     "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).",
-     "title": "In-context Learning and Induction Heads",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2209.11895",
-     "authors": "Catherine Olsson et al.",
-     "fromTitle": false
+      "label": "Educational in-context support",
+      "meaning": "Learning support or constructivist learning embedded in authentic course or task contexts.",
+      "evidence": [
+        {
+          "id": "E3",
+          "text": "The study documented the design, implementation and evaluation - from both the students' and teacher's perspectives - of an in-context learning support program for first year students, using both quantitative and qualitative methodologies.The program was based on a theoretical framework which integrated cognitive, behavioural and social learning perspectives and focussed on increasing students' repertoire of learning strategies, promoting their …",
+          "title": "Design, implementation and evaluation of an in-context learning support program for first year education students and its impact on educational outcomes.",
+          "year": 1998,
+          "date": "1998-01-01",
+          "url": "https://openalex.org/W2295722042",
+          "authors": "de la Harpe et al.",
+          "fromTitle": false,
+          "field": "Psychology",
+          "inSet": 0,
+          "sense": "S5"
+        },
+        {
+          "id": "E5",
+          "text": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students",
+          "title": "Helping future teachers to be effective learners: Providing in context learning support for first year teacher education students",
+          "year": 1999,
+          "date": "1999-11-01",
+          "url": "https://doi.org/10.14221/ajte.1999v24n2.3",
+          "authors": "Barbara de la Harpe et al.",
+          "fromTitle": true,
+          "field": "Psychology",
+          "inSet": 0,
+          "sense": "S5"
+        },
+        {
+          "id": "E6",
+          "text": "The first concentrates on the instructional design approach which focuses on the definition of specific outcome objectives, design of materials and procedures that are targeted on these objectives, and assessments that determine if learners have attained the desired objectives – adopted by the main stream of adaptive educational hypermedia systems, and the constructivist approach which focuses on in-context learning organized around authentic ta…",
+          "title": "Learning activities and aids in adaptive learning environments",
+          "year": 2005,
+          "date": "2005-01-01",
+          "url": "https://openalex.org/W2109391286",
+          "authors": "Kyparisia A. Papanikolaou et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S5"
+        }
+      ]
     },
     {
-     "id": "E25",
-     "text": "Neural sequence models, especially transformers, exhibit a remarkable capacity for in-context learning.",
-     "title": "What learning algorithm is in-context learning? Investigations with linear models",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2211.15661",
-     "authors": "Ekin Akyürek et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E26",
-     "text": "At present, the mechanisms of in-context learning in Transformers are not well understood and remain mostly an intuition.",
-     "title": "Transformers learn in-context by gradient descent",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2212.07677",
-     "authors": "Johannes von Oswald et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E40",
-     "text": "Large pretrained language models have shown surprising in-context learning (ICL) ability.With a few demonstration input-label pairs, they can predict the label for an unseen input without parameter updates.Despite the great success in performance, its working mechanism still remains an open question.In this paper, we explain language models as metaoptimizers and understand in-context learning as implicit finetuning.Theoretically, we figure out t…",
-     "title": "Why Can GPT Learn In-Context? Language Models Secretly Perform Gradient Descent as Meta-Optimizers",
-     "year": 2023,
-     "url": "https://doi.org/10.18653/v1/2023.findings-acl.247",
-     "authors": "Damai Dai et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E38",
-     "text": "In-context learning (ICL) in Large Language Models (LLMs) has emerged as a powerful new learning paradigm.However, its underlying mechanism is still not well understood.In particular, it is challenging to map it to the \"standard\" machine learning framework, where one uses a training set S to find a best-fitting function f (x) in some hypothesis class.Here we make progress on this problem by showing that the functions learned by ICL often have a …",
-     "title": "In-Context Learning Creates Task Vectors",
-     "year": 2023,
-     "url": "https://doi.org/10.18653/v1/2023.findings-emnlp.624",
-     "authors": "Roee Hendel et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E43",
-     "text": "Neural sequence models based on the transformer architecture have demonstrated remarkable \\emph{in-context learning} (ICL) abilities, where they can perform new tasks when prompted with training and test examples, without any parameter update to the model.",
-     "title": "Transformers as Statisticians: Provable In-Context Learning with In-Context Algorithm Selection",
-     "year": 2023,
-     "url": "https://doi.org/10.52202/075280-2498",
-     "authors": "Yu Bai et al.",
-     "fromTitle": false
+      "label": "Neuroscience context learning",
+      "meaning": "Animals learning associations with environmental contexts, linked to the hippocampus.",
+      "evidence": [
+        {
+          "id": "E4",
+          "text": "The two effects also differ in their dependence on the hippocampus, a brain structure that has long been implicated in context learning.",
+          "title": "DISSOCIATIONS OF TWO EFFECTS OF CONTEXT",
+          "year": 1999,
+          "date": "1999-01-01",
+          "url": "https://openalex.org/W2188718251",
+          "authors": "Mark E. Bouton et al.",
+          "fromTitle": false,
+          "field": "Neuroscience",
+          "inSet": 0,
+          "sense": "S6"
+        }
+      ]
     }
-   ]
-  },
-  {
-   "start": 2023,
-   "end": 2026,
-   "label": "General capability across modalities",
-   "meaning": "A standard prompting technique and generic foundation-model capability applied to speech, vision, tabular data, genomics, robotics and many applied domains.",
-   "evidence": [
+  ],
+  "senses": [
     {
-     "id": "E56",
-     "text": "Vall-E emerges in-context learning capabilities and can be used to synthesize high-quality personalized speech with only a 3-second enrolled recording of an unseen speaker as an acoustic prompt.",
-     "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2301.02111",
-     "authors": "Chengyi Wang et al.",
-     "fromTitle": false
+      "key": "S1",
+      "label": "LLM in-context learning",
+      "definition": "A language model performs a task by conditioning on demonstrations or instructions in its prompt, without gradient updates; used both as a prompting technique and as a capability studied mechanistically.",
+      "related": true
     },
     {
-     "id": "E52",
-     "text": "In this paper, the main focus is on an emergent ability in large vision models, known as in-context learning, which allows inference on unseen tasks by conditioning on in-context examples (a.k.a.~prompt) without updating the model parameters.",
-     "title": "What Makes Good Examples for Visual In-Context Learning?",
-     "year": 2023,
-     "url": "https://doi.org/10.52202/075280-0780",
-     "authors": "Yuanhan Zhang et al.",
-     "fromTitle": false
+      "key": "S2",
+      "label": "Cross-modal/non-text ICL",
+      "definition": "The same prompt-conditioned learning applied to vision, speech, multimodal, tabular, time-series or genomic models.",
+      "related": true
     },
     {
-     "id": "E70",
-     "text": "We explore what longer context enables - including the first use of in-context learning in genomics.",
-     "title": "HyenaDNA: Long-Range Genomic Sequence Modeling at Single Nucleotide Resolution",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2306.15794",
-     "authors": "Nguyen, Eric et al.",
-     "fromTitle": false
+      "key": "S3",
+      "label": "Meta-/few-shot learning",
+      "definition": "Learning to adapt to new tasks from only a few labeled examples, which ICL was framed as an instance of.",
+      "related": true
     },
     {
-     "id": "E85",
-     "text": "A Survey on In-context Learning",
-     "title": "A Survey on In-context Learning",
-     "year": 2024,
-     "url": "https://doi.org/10.18653/v1/2024.emnlp-main.64",
-     "authors": "Qingxiu Dong et al.",
-     "fromTitle": true
+      "key": "S4",
+      "label": "L2 vocabulary context learning",
+      "definition": "Second-language learners acquiring word meanings from surrounding context.",
+      "related": false
     },
     {
-     "id": "E113",
-     "text": "We continue with multimodal hallucination and extended techniques, including multimodal in-context learning, multimodal chain of thought and LLM-aided visual reasoning.",
-     "title": "A survey on multimodal large language models",
-     "year": 2024,
-     "url": "https://doi.org/10.1093/nsr/nwae403",
-     "authors": "Shukang Yin et al.",
-     "fromTitle": false
+      "key": "S5",
+      "label": "Educational in-context support",
+      "definition": "Learning support or constructivist learning embedded in authentic course or task contexts.",
+      "related": false
     },
     {
-     "id": "E122",
-     "text": "Since the seminal work of TabPFN, research on tabular foundation models (TFMs) based on in-context learning (ICL) has challenged long-standing paradigms in machine learning.",
-     "title": "Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models",
-     "year": 2025,
-     "url": "https://doi.org/10.52202/085713-0535",
-     "authors": "Xiyuan Zhang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E158",
-     "text": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data.",
-     "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2602.11139",
-     "authors": "Jingang Qu et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E141",
-     "text": "The size expansion comes with a distinct capability called in-context learning (ICL), which represents a special form of prompting and allows the models to be utilized through the presentation of demonstration examples without modifications to the model parameters.",
-     "title": "Privacy Preserving Prompt Engineering: A Survey",
-     "year": 2025,
-     "url": "https://doi.org/10.1145/3729219",
-     "authors": "Kennedy Edemacu et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E159",
-     "text": "Large language models (LLMs) can perform accurate classification with zero or few examples through in-context learning (ICL), allowing the model to observe query-relevant examples at inference time and eliminating the need for additional weight updates to generalize beyond its original training data.",
-     "title": "Bayesian Optimization of Catalysis with In-Context Learning",
-     "year": 2026,
-     "url": "https://doi.org/10.1021/acscentsci.5c02418",
-     "authors": "Mayk Caldas Ramos et al.",
-     "fromTitle": false
+      "key": "S6",
+      "label": "Neuroscience context learning",
+      "definition": "Animals learning associations with environmental contexts, linked to the hippocampus.",
+      "related": false
     }
-   ]
-  }
- ],
- "milestones": [
-  {
-   "year": 1990,
-   "kind": "origin",
-   "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students' Vocabulary in Context Learning",
-   "why": "Earliest evidence use, referring to learning vocabulary from context in second-language education.",
-   "url": "https://doi.org/10.5070/b5.36657",
-   "workTitle": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
-   "authors": "Raymond Devenney",
-   "link": "in-sample",
-   "evidence": [
+  ],
+  "evidenceCount": 160,
+  "eras": [
     {
-     "id": "E1",
-     "text": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
-     "title": "The Comparative Effectiveness of Word Lists and Video-Graphic Cues on University Level ESL Students’ Vocabulary in Context Learning",
-     "year": 1990,
-     "url": "https://doi.org/10.5070/b5.36657",
-     "authors": "Raymond Devenney",
-     "fromTitle": true
-    }
-   ]
-  },
-  {
-   "year": 1996,
-   "kind": "critique",
-   "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency",
-   "why": "Questioned faith in context learning for vocabulary, noting weak experimental support.",
-   "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x",
-   "workTitle": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency",
-   "authors": "Peter Prince",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E2",
-     "text": "Such faith in context learning has not always received experimental support, however, nor is it commonly shared by L2 learners.",
-     "title": "Second Language Vocabulary Learning: The Role of Context versus Translations as a Function of Proficiency",
-     "year": 1996,
-     "url": "https://doi.org/10.1111/j.1540-4781.1996.tb05468.x",
-     "authors": "Peter Prince",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2021,
-   "kind": "redefined",
-   "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
-   "why": "Defines the term as GPT-3's ability to learn a task from prompt examples and offers a theoretical explanation, marking the new machine-learning meaning.",
-   "url": "https://doi.org/10.48550/arxiv.2111.02080",
-   "workTitle": "An Explanation of In-context Learning as Implicit Bayesian Inference",
-   "authors": "Sang Michael Xie et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E8",
-     "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
-     "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2111.02080",
-     "authors": "Sang Michael Xie et al.",
-     "fromTitle": false
+      "start": 2021,
+      "end": 2021,
+      "label": "GPT-3's surprising capability",
+      "meaning": "ICL named the surprising ability of large language models like GPT-3 to learn a task from input-output examples in the prompt, framed as a form of few-shot or meta-learning.",
+      "evidence": [
+        {
+          "id": "E7",
+          "text": "We introduce MetaICL (Meta-training for In-Context Learning), a new meta-training framework for few-shot learning where a pretrained language model is tuned to do in-context learning on a large set of training tasks.",
+          "title": "MetaICL: Learning to Learn In Context",
+          "year": 2021,
+          "date": "2021-10-29",
+          "url": "https://doi.org/10.48550/arxiv.2110.15943",
+          "authors": "Sewon Min et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 11,
+          "sense": "S1"
+        },
+        {
+          "id": "E8",
+          "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
+          "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
+          "year": 2021,
+          "date": "2021-11-03",
+          "url": "https://doi.org/10.48550/arxiv.2111.02080",
+          "authors": "Sang Michael Xie et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 25,
+          "sense": "S1"
+        },
+        {
+          "id": "E9",
+          "text": "For example, thanks to scaling, GPT-3 was able to achieve strong results on in-context learning tasks.",
+          "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts",
+          "year": 2021,
+          "date": "2021-12-13",
+          "url": "https://doi.org/10.48550/arxiv.2112.06905",
+          "authors": "Nan Du et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S1"
+        }
+      ]
     },
     {
-     "id": "E9",
-     "text": "For example, thanks to scaling, GPT-3 was able to achieve strong results on in-context learning tasks.",
-     "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2112.06905",
-     "authors": "Nan Du et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2021,
-   "kind": "applied",
-   "title": "MetaICL: Learning to Learn In Context",
-   "why": "Turned in-context learning into a training target by meta-training models to do it.",
-   "url": "https://doi.org/10.48550/arxiv.2110.15943",
-   "workTitle": "MetaICL: Learning to Learn In Context",
-   "authors": "Sewon Min et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E7",
-     "text": "We introduce MetaICL (Meta-training for In-Context Learning), a new meta-training framework for few-shot learning where a pretrained language model is tuned to do in-context learning on a large set of training tasks.",
-     "title": "MetaICL: Learning to Learn In Context",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2110.15943",
-     "authors": "Sewon Min et al.",
-     "fromTitle": false
+      "start": 2022,
+      "end": 2022,
+      "label": "Paradigm, selection and mechanism",
+      "meaning": "ICL became a recognized NLP paradigm: researchers studied how to choose demonstrations, compared it with fine-tuning, and probed why transformers can do it (induction heads, gradient descent, function classes).",
+      "evidence": [
+        {
+          "id": "E10",
+          "text": "Large language models (LMs) are able to incontext learn-perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs.However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance.In this paper, we show that ground truth demonstrations are in fact not required-randomly replacing labels in th…",
+          "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759",
+          "authors": "Sewon Min et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 41,
+          "sense": "S1"
+        },
+        {
+          "id": "E11",
+          "text": "Few-shot in-context learning (ICL) enables pre-trained language models to perform a previously-unseen task without any gradient-based training by feeding a small number of training examples as part of the input.",
+          "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.52202/068431-0142",
+          "authors": "Haokun Liu et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S1"
+        },
+        {
+          "id": "E12",
+          "text": "In-context learning is a recent paradigm in natural language understanding, where a large pretrained language model (LM) observes a test instance and a few training examples as its input, and directly decodes the output without any update to its parameters.However, performance has been shown to strongly depend on the selected training examples (termed prompts).In this work, we propose an efficient method for retrieving prompts for in-context lea…",
+          "title": "Learning To Retrieve Prompts for In-Context Learning",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.18653/v1/2022.naacl-main.191",
+          "authors": "Ohad Rubin et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 28,
+          "sense": "S1"
+        },
+        {
+          "id": "E13",
+          "text": "In-context learning refers to the ability of a model to condition on a prompt sequence consisting of in-context examples (input-output pairs corresponding to some task) along with a new query input, and generate the corresponding output.",
+          "title": "What Can Transformers Learn In-Context? a Case Study of Simple Function Classes",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.52202/068431-2217",
+          "authors": "Shivam Garg et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 18,
+          "sense": "S1"
+        },
+        {
+          "id": "E14",
+          "text": "With a handful of demonstration examples, large-scale language models show strong capability to perform various tasks by in-context learning from these examples, without any finetuning.We demonstrate that in-context learning performance can be highly unstable across samples of examples, indicating the idiosyncrasies of how language models acquire information.We formulate example selection for in-context learning as a sequential decision problem,…",
+          "title": "Active Example Selection for In-Context Learning",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.18653/v1/2022.emnlp-main.622",
+          "authors": "Yiming Zhang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 9,
+          "sense": "S1"
+        },
+        {
+          "id": "E21",
+          "text": "Large language models can perform in-context learning, where they learn a new task from a few task demonstrations, without any parameter updates.",
+          "title": "Selective Annotation Makes Language Models Better Few-Shot Learners",
+          "year": 2022,
+          "date": "2022-09-05",
+          "url": "https://doi.org/10.48550/arxiv.2209.01975",
+          "authors": "Hongjin Su et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 9,
+          "sense": "S1"
+        },
+        {
+          "id": "E22",
+          "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).",
+          "title": "In-context Learning and Induction Heads",
+          "year": 2022,
+          "date": "2022-09-24",
+          "url": "https://doi.org/10.48550/arxiv.2209.11895",
+          "authors": "Catherine Olsson et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S1"
+        },
+        {
+          "id": "E25",
+          "text": "Neural sequence models, especially transformers, exhibit a remarkable capacity for in-context learning.",
+          "title": "What learning algorithm is in-context learning? Investigations with linear models",
+          "year": 2022,
+          "date": "2022-11-28",
+          "url": "https://doi.org/10.48550/arxiv.2211.15661",
+          "authors": "Ekin Akyürek et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S1"
+        },
+        {
+          "id": "E26",
+          "text": "At present, the mechanisms of in-context learning in Transformers are not well understood and remain mostly an intuition.",
+          "title": "Transformers learn in-context by gradient descent",
+          "year": 2022,
+          "date": "2022-12-15",
+          "url": "https://doi.org/10.48550/arxiv.2212.07677",
+          "authors": "Johannes von Oswald et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S1"
+        }
+      ]
     },
     {
-     "id": "E17",
-     "text": "The goal of meta-learning is to learn to adapt to a new task with only a few labeled examples.Inspired by the recent progress in large language models, we propose in-context tuning (ICT), which recasts task adaptation and prediction as a simple sequence prediction problem: to form the input sequence, we concatenate the task instruction, labeled in-context examples, and the target input to predict; to metatrain the model to learn from in-context …",
-     "title": "Meta-learning via Language Model In-context Tuning",
-     "year": 2022,
-     "url": "https://doi.org/10.18653/v1/2022.acl-long.53",
-     "authors": "Yanda Chen et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2022,
-   "kind": "popularized",
-   "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
-   "why": "Highly cited study that probed what demonstrations contribute, finding correct labels are not always required.",
-   "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759",
-   "workTitle": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
-   "authors": "Sewon Min et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E10",
-     "text": "Large language models (LMs) are able to incontext learn-perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs.However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance.In this paper, we show that ground truth demonstrations are in fact not required-randomly replacing labels in th…",
-     "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
-     "year": 2022,
-     "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759",
-     "authors": "Sewon Min et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2022,
-   "kind": "redefined",
-   "title": "In-context Learning and Induction Heads",
-   "why": "Gave a mechanistic, loss-based definition tied to induction heads in transformers.",
-   "url": "https://doi.org/10.48550/arxiv.2209.11895",
-   "workTitle": "In-context Learning and Induction Heads",
-   "authors": "Catherine Olsson et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E22",
-     "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).",
-     "title": "In-context Learning and Induction Heads",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2209.11895",
-     "authors": "Catherine Olsson et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2022,
-   "kind": "critique",
-   "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
-   "why": "Argued that parameter-efficient fine-tuning outperforms in-context learning in cost and accuracy.",
-   "url": "https://doi.org/10.52202/068431-0142",
-   "workTitle": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
-   "authors": "Haokun Liu et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E11",
-     "text": "Few-shot in-context learning (ICL) enables pre-trained language models to perform a previously-unseen task without any gradient-based training by feeding a small number of training examples as part of the input.",
-     "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
-     "year": 2022,
-     "url": "https://doi.org/10.52202/068431-0142",
-     "authors": "Haokun Liu et al.",
-     "fromTitle": false
+      "start": 2023,
+      "end": 2024,
+      "label": "Survey and multimodal spread",
+      "meaning": "ICL was surveyed as a new paradigm and extended beyond text to vision, speech, multimodal and tabular models, while mechanistic theory continued.",
+      "evidence": [
+        {
+          "id": "E28",
+          "text": "With the increasing capabilities of large language models (LLMs), in-context learning (ICL) has emerged as a new paradigm for natural language processing (NLP), where LLMs make predictions based on contexts augmented with a few examples.",
+          "title": "A Survey on In-context Learning",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.48550/arxiv.2301.00234",
+          "authors": "Qingxiu Dong et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 30,
+          "sense": "S1"
+        },
+        {
+          "id": "E38",
+          "text": "In-context learning (ICL) in Large Language Models (LLMs) has emerged as a powerful new learning paradigm.However, its underlying mechanism is still not well understood.In particular, it is challenging to map it to the \"standard\" machine learning framework, where one uses a training set S to find a best-fitting function f (x) in some hypothesis class.Here we make progress on this problem by showing that the functions learned by ICL often have a …",
+          "title": "In-Context Learning Creates Task Vectors",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.18653/v1/2023.findings-emnlp.624",
+          "authors": "Roee Hendel et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 7,
+          "sense": "S1"
+        },
+        {
+          "id": "E40",
+          "text": "Large pretrained language models have shown surprising in-context learning (ICL) ability.With a few demonstration input-label pairs, they can predict the label for an unseen input without parameter updates.Despite the great success in performance, its working mechanism still remains an open question.In this paper, we explain language models as metaoptimizers and understand in-context learning as implicit finetuning.Theoretically, we figure out t…",
+          "title": "Why Can GPT Learn In-Context? Language Models Secretly Perform Gradient Descent as Meta-Optimizers",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.18653/v1/2023.findings-acl.247",
+          "authors": "Damai Dai et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S1"
+        },
+        {
+          "id": "E52",
+          "text": "In this paper, the main focus is on an emergent ability in large vision models, known as in-context learning, which allows inference on unseen tasks by conditioning on in-context examples (a.k.a.~prompt) without updating the model parameters.",
+          "title": "What Makes Good Examples for Visual In-Context Learning?",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.52202/075280-0780",
+          "authors": "Yuanhan Zhang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 4,
+          "sense": "S2"
+        },
+        {
+          "id": "E56",
+          "text": "Vall-E emerges in-context learning capabilities and can be used to synthesize high-quality personalized speech with only a 3-second enrolled recording of an unseen speaker as an acoustic prompt.",
+          "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
+          "year": 2023,
+          "date": "2023-01-05",
+          "url": "https://doi.org/10.48550/arxiv.2301.02111",
+          "authors": "Chengyi Wang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S2"
+        },
+        {
+          "id": "E66",
+          "text": "In-context learning, as a new paradigm in NLP, allows the model to rapidly adapt to various tasks with only a handful of prompts and examples.",
+          "title": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning",
+          "year": 2023,
+          "date": "2023-06-01",
+          "url": "https://doi.org/10.1109/cvpr52729.2023.00660",
+          "authors": "Xinlong Wang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 6,
+          "sense": "S2"
+        },
+        {
+          "id": "E85",
+          "text": "A Survey on In-context Learning",
+          "title": "A Survey on In-context Learning",
+          "year": 2024,
+          "date": "2024-01-01",
+          "url": "https://doi.org/10.18653/v1/2024.emnlp-main.64",
+          "authors": "Qingxiu Dong et al.",
+          "fromTitle": true,
+          "field": "Computer Science",
+          "inSet": 7,
+          "sense": "S1"
+        },
+        {
+          "id": "E87",
+          "text": "In Large Visual Language Models (LVLMs), the efficacy of In-Context Learning (ICL) remains limited by challenges in cross-modal interactions and representation disparities.To overcome these challenges, we introduce a novel Visual In-Context Learning (VICL) method comprising Visual Demonstration Retrieval, Intent-Oriented Image Summarization, and Intent-Oriented Demonstration Composition.Our approach retrieves images via \"Retrieval & Rerank\" para…",
+          "title": "Visual In-Context Learning for Large Vision-Language Models",
+          "year": 2024,
+          "date": "2024-01-01",
+          "url": "https://doi.org/10.18653/v1/2024.findings-acl.940",
+          "authors": "Yucheng Zhou et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S2"
+        },
+        {
+          "id": "E105",
+          "text": "In this work, we demonstrate that the task-agnostic in-context learning capabilities of large multimodal models can be significantly enhanced by effective scaling-up.",
+          "title": "Generative Multimodal Models are In-Context Learners",
+          "year": 2024,
+          "date": "2024-06-16",
+          "url": "https://doi.org/10.1109/cvpr52733.2024.01365",
+          "authors": "Quan Sun et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 3,
+          "sense": "S2"
+        },
+        {
+          "id": "E113",
+          "text": "We continue with multimodal hallucination and extended techniques, including multimodal in-context learning, multimodal chain of thought and LLM-aided visual reasoning.",
+          "title": "A survey on multimodal large language models",
+          "year": 2024,
+          "date": "2024-11-11",
+          "url": "https://doi.org/10.1093/nsr/nwae403",
+          "authors": "Shukang Yin et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 1,
+          "sense": "S2"
+        }
+      ]
     },
     {
-     "id": "E16",
-     "text": "Large pre-trained language models (PLMs) such as GPT-3 have shown strong in-context learning capabilities, which are highly appealing for domains such as biomedicine that feature high and diverse demands of language technologies but also high data annotation costs.In this paper, we present the first systematic and comprehensive study to compare the few-shot performance of GPT-3 in-context learning with fine-tuning smaller (i.e., BERT-sized) PLMs…",
-     "title": "Thinking about GPT-3 In-Context Learning for Biomedical IE? Think Again",
-     "year": 2022,
-     "url": "https://doi.org/10.18653/v1/2022.findings-emnlp.329",
-     "authors": "Bernal Jiménez Gutiérrez et al.",
-     "fromTitle": false
+      "start": 2025,
+      "end": 2026,
+      "label": "Standard prompting toolkit",
+      "meaning": "ICL is routinely listed alongside chain-of-thought, RAG and fine-tuning as a basic strategy for applying LLMs across domains, and it underpins tabular foundation models.",
+      "evidence": [
+        {
+          "id": "E128",
+          "text": "To address these challenges, previous research explored in-context learning (ICL) and retrieval-augmented generation (RAG) as strategies to guide the LLM generative process with task-specific prompt examples.",
+          "title": "Exploring Parameter-Efficient Fine-Tuning Techniques for Code Generation with Large Language Models",
+          "year": 2025,
+          "date": "2025-01-22",
+          "url": "https://doi.org/10.1145/3714461",
+          "authors": "Martin Weyssow et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E137",
+          "text": "In particular, this work first introduces LLM fundamentals and compares different prompting techniques such as in-context learning, chain-of-thought, and self-refinement.",
+          "title": "Large Language Models for Wireless Networks: An Overview from the Prompt Engineering Perspective",
+          "year": 2025,
+          "date": "2025-03-17",
+          "url": "https://doi.org/10.1109/mwc.001.2400384",
+          "authors": "Hao Zhou et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E142",
+          "text": "In this paper, we evaluate GPT-4 using three prompt engineering strategies-basic prompting, in-context learning, and taskspecific prompting-and compare it against 17 fine-tuned models across three code-related tasks: code summarization, generation, and translation.",
+          "title": "Prompt Engineering or Fine-Tuning: An Empirical Assessment of LLMs for Code",
+          "year": 2025,
+          "date": "2025-04-28",
+          "url": "https://doi.org/10.1109/msr66628.2025.00082",
+          "authors": "Jiho Shin et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E147",
+          "text": "Key methodological aspects-such as domain-specific data acquisition, large-scale pre-training, supervised fine-tuning, prompt engineering, and in-context learning-are explored in the context of healthcare use cases.",
+          "title": "Large Language Models in Healthcare and Medical Applications: A Review",
+          "year": 2025,
+          "date": "2025-06-10",
+          "url": "https://doi.org/10.3390/bioengineering12060631",
+          "authors": "Subhankar Maity et al.",
+          "fromTitle": false,
+          "field": "Medicine",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E149",
+          "text": "This paper reviews LLM based monitoring and diagnostics methodologies, categorizing them into in-context learning, fine tuning, retrieval augmented generation, multimodal learning, and time series approaches, analyzing advances in diagnostics and decision support.",
+          "title": "Large Models for Machine Monitoring and Fault Diagnostics: Opportunities, Challenges and Future Direction",
+          "year": 2025,
+          "date": "2025-06-20",
+          "url": "https://doi.org/10.37965/jdmd.2025.832",
+          "authors": "Xuefeng Chen et al.",
+          "fromTitle": false,
+          "field": "Engineering",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E141",
+          "text": "The size expansion comes with a distinct capability called in-context learning (ICL), which represents a special form of prompting and allows the models to be utilized through the presentation of demonstration examples without modifications to the model parameters.",
+          "title": "Privacy Preserving Prompt Engineering: A Survey",
+          "year": 2025,
+          "date": "2025-04-18",
+          "url": "https://doi.org/10.1145/3729219",
+          "authors": "Kennedy Edemacu et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E122",
+          "text": "Since the seminal work of TabPFN, research on tabular foundation models (TFMs) based on in-context learning (ICL) has challenged long-standing paradigms in machine learning.",
+          "title": "Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models",
+          "year": 2025,
+          "date": "2025-01-01",
+          "url": "https://doi.org/10.52202/085713-0535",
+          "authors": "Xiyuan Zhang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S2"
+        },
+        {
+          "id": "E158",
+          "text": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data.",
+          "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model",
+          "year": 2026,
+          "date": "2026-02-11",
+          "url": "https://doi.org/10.48550/arxiv.2602.11139",
+          "authors": "Jingang Qu et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S2"
+        },
+        {
+          "id": "E159",
+          "text": "Large language models (LLMs) can perform accurate classification with zero or few examples through in-context learning (ICL), allowing the model to observe query-relevant examples at inference time and eliminating the need for additional weight updates to generalize beyond its original training data.",
+          "title": "Bayesian Optimization of Catalysis with In-Context Learning",
+          "year": 2026,
+          "date": "2026-04-14",
+          "url": "https://doi.org/10.1021/acscentsci.5c02418",
+          "authors": "Mayk Caldas Ramos et al.",
+          "fromTitle": false,
+          "field": "Materials Science",
+          "inSet": 1,
+          "sense": "S1"
+        }
+      ]
     }
-   ]
-  },
-  {
-   "year": 2022,
-   "kind": "applied",
-   "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
-   "why": "Extended in-context learning to tabular prediction, seeding later tabular foundation models.",
-   "url": "https://doi.org/10.48550/arxiv.2207.01848",
-   "workTitle": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
-   "authors": "Noah Hollmann et al.",
-   "link": "in-sample",
-   "evidence": [
+  ],
+  "milestones": [
     {
-     "id": "E20",
-     "text": "TabPFN performs in-context learning (ICL), it learns to make predictions using sequences of labeled examples (x, f(x)) given in the input, without requiring further parameter updates.",
-     "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2207.01848",
-     "authors": "Noah Hollmann et al.",
-     "fromTitle": false
+      "year": 2021,
+      "kind": "ancestor",
+      "title": "Few-shot learning and meta-learning",
+      "why": "ICL was framed as a few-shot learning ability, and models were meta-trained for it, tying it to the earlier meta-learning idea.",
+      "url": "https://doi.org/10.1109/iccv48922.2021.00893",
+      "date": "2021-10-01",
+      "workTitle": "Meta-Baseline: Exploring Simple Meta-Learning for Few-Shot Learning",
+      "authors": "Yinbo Chen et al.",
+      "link": "resolved",
+      "evidence": [
+        {
+          "id": "E7",
+          "text": "We introduce MetaICL (Meta-training for In-Context Learning), a new meta-training framework for few-shot learning where a pretrained language model is tuned to do in-context learning on a large set of training tasks.",
+          "title": "MetaICL: Learning to Learn In Context",
+          "year": 2021,
+          "date": "2021-10-29",
+          "url": "https://doi.org/10.48550/arxiv.2110.15943",
+          "authors": "Sewon Min et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 11,
+          "sense": "S1"
+        },
+        {
+          "id": "E17",
+          "text": "The goal of meta-learning is to learn to adapt to a new task with only a few labeled examples.Inspired by the recent progress in large language models, we propose in-context tuning (ICT), which recasts task adaptation and prediction as a simple sequence prediction problem: to form the input sequence, we concatenate the task instruction, labeled in-context examples, and the target input to predict; to metatrain the model to learn from in-context …",
+          "title": "Meta-learning via Language Model In-context Tuning",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.18653/v1/2022.acl-long.53",
+          "authors": "Yanda Chen et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 9,
+          "sense": "S3"
+        }
+      ],
+      "checks": {
+        "inSense": false,
+        "coinage": false
+      },
+      "shift": ""
     },
     {
-     "id": "E122",
-     "text": "Since the seminal work of TabPFN, research on tabular foundation models (TFMs) based on in-context learning (ICL) has challenged long-standing paradigms in machine learning.",
-     "title": "Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models",
-     "year": 2025,
-     "url": "https://doi.org/10.52202/085713-0535",
-     "authors": "Xiyuan Zhang et al.",
-     "fromTitle": false
+      "year": 2021,
+      "kind": "origin",
+      "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
+      "why": "This is the earliest evidence that defines ICL as GPT-3's ability to learn a task by conditioning on prompt examples.",
+      "url": "https://doi.org/10.48550/arxiv.2111.02080",
+      "date": "2021-11-03",
+      "workTitle": "An Explanation of In-context Learning as Implicit Bayesian Inference",
+      "authors": "Sang Michael Xie et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E8",
+          "text": "Large language models (LMs) such as GPT-3 have the surprising ability to do in-context learning, where the model learns to do a downstream task simply by conditioning on a prompt consisting of input-output examples.",
+          "title": "An Explanation of In-context Learning as Implicit Bayesian Inference",
+          "year": 2021,
+          "date": "2021-11-03",
+          "url": "https://doi.org/10.48550/arxiv.2111.02080",
+          "authors": "Sang Michael Xie et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 25,
+          "sense": "S1"
+        },
+        {
+          "id": "E9",
+          "text": "For example, thanks to scaling, GPT-3 was able to achieve strong results on in-context learning tasks.",
+          "title": "GLaM: Efficient Scaling of Language Models with Mixture-of-Experts",
+          "year": 2021,
+          "date": "2021-12-13",
+          "url": "https://doi.org/10.48550/arxiv.2112.06905",
+          "authors": "Nan Du et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": ""
     },
     {
-     "id": "E158",
-     "text": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data.",
-     "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2602.11139",
-     "authors": "Jingang Qu et al.",
-     "fromTitle": false
+      "year": 2022,
+      "kind": "critique",
+      "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
+      "why": "It showed that ground-truth labels in demonstrations are not required, challenging the assumption that ICL learns the input-label mapping.",
+      "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759",
+      "date": "2022-01-01",
+      "workTitle": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
+      "authors": "Sewon Min et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E10",
+          "text": "Large language models (LMs) are able to incontext learn-perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs.However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance.In this paper, we show that ground truth demonstrations are in fact not required-randomly replacing labels in th…",
+          "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.18653/v1/2022.emnlp-main.759",
+          "authors": "Sewon Min et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 41,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": ""
+    },
+    {
+      "year": 2022,
+      "kind": "critique",
+      "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
+      "why": "It argued that parameter-efficient fine-tuning beats ICL on both accuracy and cost.",
+      "url": "https://doi.org/10.52202/068431-0142",
+      "date": "2022-01-01",
+      "workTitle": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
+      "authors": "Haokun Liu et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E11",
+          "text": "Few-shot in-context learning (ICL) enables pre-trained language models to perform a previously-unseen task without any gradient-based training by feeding a small number of training examples as part of the input.",
+          "title": "Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than In-Context Learning",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.52202/068431-0142",
+          "authors": "Haokun Liu et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S1"
+        },
+        {
+          "id": "E47",
+          "text": "Few-shot fine-tuning and in-context learning are two alternative strategies for task adaptation of pre-trained language models.Recently, in-context learning has gained popularity over fine-tuning due to its simplicity and improved out-of-domain generalization, and because extensive evidence shows that fine-tuned models pick up on spurious correlations.Unfortunately, previous comparisons of the two approaches were done using models of different s…",
+          "title": "Few-shot Fine-tuning vs. In-context Learning: A Fair Comparison and Evaluation",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.18653/v1/2023.findings-acl.779",
+          "authors": "Marius Mosbach et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 4,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": ""
+    },
+    {
+      "year": 2022,
+      "kind": "redefined",
+      "title": "In-context Learning and Induction Heads",
+      "why": "It recast ICL broadly as decreasing loss at later token positions and tied it to a specific attention mechanism.",
+      "url": "https://doi.org/10.48550/arxiv.2209.11895",
+      "date": "2022-09-24",
+      "workTitle": "In-context Learning and Induction Heads",
+      "authors": "Catherine Olsson et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E22",
+          "text": "In this work, we present preliminary and indirect evidence for a hypothesis that induction heads might constitute the mechanism for the majority of all \"in-context learning\" in large transformer models (i.e. decreasing loss at increasing token indices).",
+          "title": "In-context Learning and Induction Heads",
+          "year": 2022,
+          "date": "2022-09-24",
+          "url": "https://doi.org/10.48550/arxiv.2209.11895",
+          "authors": "Catherine Olsson et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "broadening"
+    },
+    {
+      "year": 2022,
+      "kind": "redefined",
+      "title": "Transformers learn in-context by gradient descent",
+      "why": "It reframed ICL as implicit learning algorithms, such as gradient descent, running inside transformers, a framing that later works followed.",
+      "url": "https://doi.org/10.48550/arxiv.2212.07677",
+      "date": "2022-12-15",
+      "workTitle": "Transformers learn in-context by gradient descent",
+      "authors": "Johannes von Oswald et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E26",
+          "text": "At present, the mechanisms of in-context learning in Transformers are not well understood and remain mostly an intuition.",
+          "title": "Transformers learn in-context by gradient descent",
+          "year": 2022,
+          "date": "2022-12-15",
+          "url": "https://doi.org/10.48550/arxiv.2212.07677",
+          "authors": "Johannes von Oswald et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S1"
+        },
+        {
+          "id": "E25",
+          "text": "Neural sequence models, especially transformers, exhibit a remarkable capacity for in-context learning.",
+          "title": "What learning algorithm is in-context learning? Investigations with linear models",
+          "year": 2022,
+          "date": "2022-11-28",
+          "url": "https://doi.org/10.48550/arxiv.2211.15661",
+          "authors": "Ekin Akyürek et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S1"
+        },
+        {
+          "id": "E13",
+          "text": "In-context learning refers to the ability of a model to condition on a prompt sequence consisting of in-context examples (input-output pairs corresponding to some task) along with a new query input, and generate the corresponding output.",
+          "title": "What Can Transformers Learn In-Context? a Case Study of Simple Function Classes",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.52202/068431-2217",
+          "authors": "Shivam Garg et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 18,
+          "sense": "S1"
+        },
+        {
+          "id": "E40",
+          "text": "Large pretrained language models have shown surprising in-context learning (ICL) ability.With a few demonstration input-label pairs, they can predict the label for an unseen input without parameter updates.Despite the great success in performance, its working mechanism still remains an open question.In this paper, we explain language models as metaoptimizers and understand in-context learning as implicit finetuning.Theoretically, we figure out t…",
+          "title": "Why Can GPT Learn In-Context? Language Models Secretly Perform Gradient Descent as Meta-Optimizers",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.18653/v1/2023.findings-acl.247",
+          "authors": "Damai Dai et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S1"
+        },
+        {
+          "id": "E42",
+          "text": "Transformers learn to implement preconditioned gradient descent for in-context learning",
+          "title": "Transformers learn to implement preconditioned gradient descent for in-context learning",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.52202/075280-1977",
+          "authors": "Kwangjun Ahn et al.",
+          "fromTitle": true,
+          "field": "Computer Science",
+          "inSet": 4,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "metaphor"
+    },
+    {
+      "year": 2022,
+      "kind": "applied",
+      "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
+      "why": "It brought ICL to tabular prediction, which later produced tabular foundation models.",
+      "url": "https://doi.org/10.48550/arxiv.2207.01848",
+      "date": "2022-07-05",
+      "workTitle": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
+      "authors": "Noah Hollmann et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E20",
+          "text": "TabPFN performs in-context learning (ICL), it learns to make predictions using sequences of labeled examples (x, f(x)) given in the input, without requiring further parameter updates.",
+          "title": "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second",
+          "year": 2022,
+          "date": "2022-07-05",
+          "url": "https://doi.org/10.48550/arxiv.2207.01848",
+          "authors": "Noah Hollmann et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 6,
+          "sense": "S2"
+        },
+        {
+          "id": "E122",
+          "text": "Since the seminal work of TabPFN, research on tabular foundation models (TFMs) based on in-context learning (ICL) has challenged long-standing paradigms in machine learning.",
+          "title": "Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models",
+          "year": 2025,
+          "date": "2025-01-01",
+          "url": "https://doi.org/10.52202/085713-0535",
+          "authors": "Xiyuan Zhang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S2"
+        },
+        {
+          "id": "E158",
+          "text": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data.",
+          "title": "TabICLv2: A better, faster, scalable, and open tabular foundation model",
+          "year": 2026,
+          "date": "2026-02-11",
+          "url": "https://doi.org/10.48550/arxiv.2602.11139",
+          "authors": "Jingang Qu et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S2"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "new field"
+    },
+    {
+      "year": 2023,
+      "kind": "popularized",
+      "title": "A Survey on In-context Learning",
+      "why": "This highly cited survey consolidated ICL as a new paradigm for NLP.",
+      "url": "https://doi.org/10.48550/arxiv.2301.00234",
+      "date": "2023-01-01",
+      "workTitle": "A Survey on In-context Learning",
+      "authors": "Qingxiu Dong et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E28",
+          "text": "With the increasing capabilities of large language models (LLMs), in-context learning (ICL) has emerged as a new paradigm for natural language processing (NLP), where LLMs make predictions based on contexts augmented with a few examples.",
+          "title": "A Survey on In-context Learning",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.48550/arxiv.2301.00234",
+          "authors": "Qingxiu Dong et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 30,
+          "sense": "S1"
+        },
+        {
+          "id": "E85",
+          "text": "A Survey on In-context Learning",
+          "title": "A Survey on In-context Learning",
+          "year": 2024,
+          "date": "2024-01-01",
+          "url": "https://doi.org/10.18653/v1/2024.emnlp-main.64",
+          "authors": "Qingxiu Dong et al.",
+          "fromTitle": true,
+          "field": "Computer Science",
+          "inSet": 7,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": ""
+    },
+    {
+      "year": 2023,
+      "kind": "applied",
+      "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
+      "why": "It extended ICL to speech synthesis, where a short acoustic prompt serves as the context.",
+      "url": "https://doi.org/10.48550/arxiv.2301.02111",
+      "date": "2023-01-05",
+      "workTitle": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
+      "authors": "Chengyi Wang et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E56",
+          "text": "Vall-E emerges in-context learning capabilities and can be used to synthesize high-quality personalized speech with only a 3-second enrolled recording of an unseen speaker as an acoustic prompt.",
+          "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
+          "year": 2023,
+          "date": "2023-01-05",
+          "url": "https://doi.org/10.48550/arxiv.2301.02111",
+          "authors": "Chengyi Wang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S2"
+        },
+        {
+          "id": "E60",
+          "text": "VALL-E X inherits strong in-context learning capabilities and can be applied for zero-shot cross-lingual text-to-speech synthesis and zero-shot speech-to-speech translation tasks.",
+          "title": "Speak Foreign Languages with Your Own Voice: Cross-Lingual Neural Codec Language Modeling",
+          "year": 2023,
+          "date": "2023-03-07",
+          "url": "https://doi.org/10.48550/arxiv.2303.03926",
+          "authors": "Ziqiang Zhang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 4,
+          "sense": "S2"
+        },
+        {
+          "id": "E103",
+          "text": "Seed-TTS serves as a foundation model for speech generation and excels in speech in-context learning, achieving performance in speaker similarity and naturalness that matches ground truth human speech in both objective and subjective evaluations.",
+          "title": "Seed-TTS: A Family of High-Quality Versatile Speech Generation Models",
+          "year": 2024,
+          "date": "2024-06-04",
+          "url": "https://doi.org/10.48550/arxiv.2406.02430",
+          "authors": "Philip Anastassiou et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 1,
+          "sense": "S2"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "new field"
+    },
+    {
+      "year": 2023,
+      "kind": "applied",
+      "title": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning",
+      "why": "It carried the NLP ICL paradigm over to vision tasks.",
+      "url": "https://doi.org/10.1109/cvpr52729.2023.00660",
+      "date": "2023-06-01",
+      "workTitle": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning",
+      "authors": "Xinlong Wang et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E66",
+          "text": "In-context learning, as a new paradigm in NLP, allows the model to rapidly adapt to various tasks with only a handful of prompts and examples.",
+          "title": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning",
+          "year": 2023,
+          "date": "2023-06-01",
+          "url": "https://doi.org/10.1109/cvpr52729.2023.00660",
+          "authors": "Xinlong Wang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 6,
+          "sense": "S2"
+        },
+        {
+          "id": "E52",
+          "text": "In this paper, the main focus is on an emergent ability in large vision models, known as in-context learning, which allows inference on unseen tasks by conditioning on in-context examples (a.k.a.~prompt) without updating the model parameters.",
+          "title": "What Makes Good Examples for Visual In-Context Learning?",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.52202/075280-0780",
+          "authors": "Yuanhan Zhang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 4,
+          "sense": "S2"
+        },
+        {
+          "id": "E77",
+          "text": "We unify various segmentation tasks into a generalist in-context learning framework that accommodates different kinds of segmentation data by transforming them into the same format of images.",
+          "title": "SegGPT: Towards Segmenting Everything In Context",
+          "year": 2023,
+          "date": "2023-10-01",
+          "url": "https://doi.org/10.1109/iccv51070.2023.00110",
+          "authors": "Xinlong Wang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 5,
+          "sense": "S2"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "new field"
     }
-   ]
-  },
-  {
-   "year": 2022,
-   "kind": "popularized",
-   "title": "A Survey on In-context Learning",
-   "why": "Consolidated in-context learning as a new NLP paradigm in a heavily cited survey.",
-   "url": "https://doi.org/10.48550/arxiv.2301.00234",
-   "workTitle": "A Survey on In-context Learning",
-   "authors": "Qingxiu Dong et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E28",
-     "text": "With the increasing capabilities of large language models (LLMs), in-context learning (ICL) has emerged as a new paradigm for natural language processing (NLP), where LLMs make predictions based on contexts augmented with a few examples.",
-     "title": "A Survey on In-context Learning",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2301.00234",
-     "authors": "Qingxiu Dong et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E85",
-     "text": "A Survey on In-context Learning",
-     "title": "A Survey on In-context Learning",
-     "year": 2024,
-     "url": "https://doi.org/10.18653/v1/2024.emnlp-main.64",
-     "authors": "Qingxiu Dong et al.",
-     "fromTitle": true
-    }
-   ]
-  },
-  {
-   "year": 2023,
-   "kind": "applied",
-   "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
-   "why": "Brought the in-context learning framing to speech synthesis from short acoustic prompts.",
-   "url": "https://doi.org/10.48550/arxiv.2301.02111",
-   "workTitle": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
-   "authors": "Chengyi Wang et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E56",
-     "text": "Vall-E emerges in-context learning capabilities and can be used to synthesize high-quality personalized speech with only a 3-second enrolled recording of an unseen speaker as an acoustic prompt.",
-     "title": "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2301.02111",
-     "authors": "Chengyi Wang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E60",
-     "text": "VALL-E X inherits strong in-context learning capabilities and can be applied for zero-shot cross-lingual text-to-speech synthesis and zero-shot speech-to-speech translation tasks.",
-     "title": "Speak Foreign Languages with Your Own Voice: Cross-Lingual Neural Codec Language Modeling",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2303.03926",
-     "authors": "Ziqiang Zhang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E103",
-     "text": "Seed-TTS serves as a foundation model for speech generation and excels in speech in-context learning, achieving performance in speaker similarity and naturalness that matches ground truth human speech in both objective and subjective evaluations.",
-     "title": "Seed-TTS: A Family of High-Quality Versatile Speech Generation Models",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2406.02430",
-     "authors": "Philip Anastassiou et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2023,
-   "kind": "applied",
-   "title": "What Makes Good Examples for Visual In-Context Learning?",
-   "why": "Carried the concept to large vision models conditioned on image examples.",
-   "url": "https://doi.org/10.52202/075280-0780",
-   "workTitle": "What Makes Good Examples for Visual In-Context Learning?",
-   "authors": "Yuanhan Zhang et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E52",
-     "text": "In this paper, the main focus is on an emergent ability in large vision models, known as in-context learning, which allows inference on unseen tasks by conditioning on in-context examples (a.k.a.~prompt) without updating the model parameters.",
-     "title": "What Makes Good Examples for Visual In-Context Learning?",
-     "year": 2023,
-     "url": "https://doi.org/10.52202/075280-0780",
-     "authors": "Yuanhan Zhang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E66",
-     "text": "In-context learning, as a new paradigm in NLP, allows the model to rapidly adapt to various tasks with only a handful of prompts and examples.",
-     "title": "Images Speak in Images: A Generalist Painter for In-Context Visual Learning",
-     "year": 2023,
-     "url": "https://doi.org/10.1109/cvpr52729.2023.00660",
-     "authors": "Xinlong Wang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E77",
-     "text": "We unify various segmentation tasks into a generalist in-context learning framework that accommodates different kinds of segmentation data by transforming them into the same format of images.",
-     "title": "SegGPT: Towards Segmenting Everything In Context",
-     "year": 2023,
-     "url": "https://doi.org/10.1109/iccv51070.2023.00110",
-     "authors": "Xinlong Wang et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2024,
-   "kind": "critique",
-   "title": "Are Emergent Abilities in Large Language Models just In-Context Learning?",
-   "why": "Questioned whether claimed emergent abilities reduce to in-context learning.",
-   "url": "https://doi.org/10.18653/v1/2024.acl-long.279",
-   "workTitle": "Are Emergent Abilities in Large Language Models just In-Context Learning?",
-   "authors": "Sheng Fu Lu et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E88",
-     "text": "Are Emergent Abilities in Large Language Models just In-Context Learning?",
-     "title": "Are Emergent Abilities in Large Language Models just In-Context Learning?",
-     "year": 2024,
-     "url": "https://doi.org/10.18653/v1/2024.acl-long.279",
-     "authors": "Sheng Fu Lu et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E134",
-     "text": "These emergent abilities, ranging from advanced reasoning and in-context learning to coding and problem-solving, have sparked an intense scientific debate: Are they truly emergent, or do they simply depend on external factors, such as training dynamics, the type of problems, or the chosen metric?",
-     "title": "Emergent Abilities in Large Language Models: A Survey",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2503.05788",
-     "authors": "Leonardo Berti et al.",
-     "fromTitle": false
-    }
-   ]
-  }
- ]
+  ],
+  "totalsAsOf": "2026-11-17"
 }

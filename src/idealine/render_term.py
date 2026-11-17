@@ -22,7 +22,8 @@ def to_data(t: TermTimeline) -> dict:
             e = by_id.get(i)
             if e:
                 out.append({"id": i, "text": e.text, "title": e.work.title, "year": e.work.year, "date": e.work.date,
-                            "url": e.work.url, "authors": e.work.short_authors, "fromTitle": e.from_title})
+                            "url": e.work.url, "authors": e.work.short_authors, "fromTitle": e.from_title,
+                            "field": e.work.field_name, "inSet": e.work.in_set, "sense": e.sense})
         return out
 
     return {
@@ -32,6 +33,12 @@ def to_data(t: TermTimeline) -> dict:
         "counts": [[y, c] for y, c in t.counts.items()],
         "quarters": [[k, c] for k, c in t.quarters],
         "undated": [[y, c] for y, c in t.undated],
+        # Every year from the first to the last count, so gap years have a total too.
+        "totals": [[y, t.totals[y]] for y in range(min(t.counts), max(t.counts) + 1) if y in t.totals] if t.counts else [],
+        "totalsAsOf": t.totals_asof if t.totals else "",
+        "roots": t.roots,
+        # Every quoted sentence, for the evidence lane under the chart.
+        "quotes": ev([e.eid for e in t.evidence]),
         "total": t.total,
         "model": t.model,
         "generated": t.generated,
@@ -39,6 +46,7 @@ def to_data(t: TermTimeline) -> dict:
         "meaning": t.meaning,
         "focus": t.focus,
         "otherSenses": [{"label": s.label, "meaning": s.meaning, "evidence": ev(s.evidence)} for s in t.other_senses],
+        "senses": [{"key": s.key, "label": s.label, "definition": s.meaning, "related": s.related} for s in t.senses],
         "evidenceCount": len(t.evidence),
         "eras": [{"start": e.start_year, "end": e.end_year, "label": e.label, "meaning": e.meaning,
                   "evidence": ev(e.evidence)} for e in t.eras],
@@ -49,6 +57,8 @@ def to_data(t: TermTimeline) -> dict:
             "workTitle": m.work.title if m.work else None,
             "authors": m.work.short_authors if m.work else None,
             "link": m.link_status, "evidence": ev(m.evidence),
+            "checks": {"inSense": m.in_sense, "coinage": m.coinage} if m.in_sense is not None or m.coinage is not None else None,
+            "shift": m.shift,
         } for m in t.milestones],
     }
 
@@ -120,6 +130,40 @@ blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line
 blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
 blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.headline{margin:-6px 0 12px;font-size:.95rem;color:var(--ink-soft)}
+.headline:empty{display:none}
+.tlbar{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 8px}
+.tlseg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.tlseg button{font:inherit;font-size:.78rem;padding:3px 10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.tlseg button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+.lanekey{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px}
+.lanekey i{border-radius:1px;width:4px}
+.mslist{list-style:none;margin:10px 0 0;padding:0}
+.mslist button{display:block;width:100%;text-align:left;font:inherit;font-size:.88rem;padding:6px 8px;border:0;border-radius:8px;background:transparent;color:var(--fg);cursor:pointer}
+.mslist button.sel,.mslist button:hover{background:var(--era1)}
+.mslist b{display:inline-block;min-width:1.4em;color:var(--accent)}
+.checks{list-style:none;padding:0;margin:4px 0 10px;font-size:.88rem}
+.checks li.ok{color:var(--coined)}.checks li.no{color:var(--critique)}
+.shift,.caveat{font-size:.88rem;color:var(--muted);margin:4px 0 10px}
+.prov{font-size:.78rem;color:var(--muted);margin-top:8px}
+.era .mix{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:10px 0 4px;background:var(--line)}
+.era .mix span{display:block;height:100%}
+.era .small{font-size:.8rem;margin:2px 0}
+.era .badge{display:inline-block;font-size:.74rem;padding:1px 7px;border-radius:999px;margin:2px 4px 0 0;border:1px solid var(--line)}
+.era .badge.new{color:var(--coined)}.era .badge.faded{color:var(--muted)}
+.era .words{font-size:.84rem;margin-top:8px}
+.era .words.thin{opacity:.6}
+.era .words .nw{font-weight:600;color:var(--fg)}
+.era .muted,.mixnote{color:var(--muted)}
+.mixnote{grid-column:1/-1;font-size:.8rem;margin:0}
+.qtick:hover rect:first-child{opacity:.6}
+.roots:empty{display:none}
+.roots{margin-top:22px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.roots h3{margin:0 0 8px;font-size:1rem}
+.roots ul{margin:8px 0;padding-left:18px;font-size:.9rem}
+.roots li{margin:0 0 4px}
+.roots .muted{color:var(--muted)}.roots .small{font-size:.8rem;margin:6px 0 0}
+.roots svg text{fill:var(--muted)}
 .senses:empty{display:none}
 .senses{margin:4px 0 14px;padding:12px 16px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--panel);font-size:.92rem}
 .senses p{margin:0 0 6px}
@@ -157,6 +201,7 @@ PAGE_TEXT = {
     "en": {
         "tagline": "where did this idea come from?",
         "meta": "{total} papers in OpenAlex use this term ({span}). ",
+        "asof": " Data as of {date}.",
         "how_model": "Proposed by <code>{model}</code> from {n} quoted sentences only; every milestone shows its quotes so you can check it.",
         "how_none": "No model was used: milestones are the earliest and most-cited papers that use the term.",
         "hint": "Click a dot to see the quotes behind it. Scroll sideways for earlier years.",
@@ -169,6 +214,7 @@ PAGE_TEXT = {
     "zh": {
         "tagline": "这个概念从哪里来？",
         "meta": "OpenAlex 中有 {total} 篇论文使用这个词（{span}）。",
+        "asof": "数据截至 {date}。",
         "how_model": "时期和里程碑由 <code>{model}</code> 仅根据 {n} 条原句生成；每个里程碑都附有原句，方便核对。",
         "how_none": "未使用模型：里程碑是使用这个词的最早和被引最多的论文。",
         "hint": "点击圆点查看背后的原文句子。左右滑动可以看更早的年份。",
@@ -191,6 +237,15 @@ def page_lang(d: dict) -> str:
 
 def html_from_data(d: dict) -> str:
     """Render from the saved JSON, so a page can be re-rendered without new API calls."""
+    if not d.get("kindChecks"):  # how often a separate check agreed with each milestone type
+        try:
+            d = {**d, "kindChecks": json.loads((resources.files("idealine") / "web" / "kind-checks.json").read_text(encoding="utf-8"))["kinds"]}
+        except (FileNotFoundError, ValueError, KeyError):
+            pass
+    if not d.get("totals"):  # older data: add the shipped per-year totals for the share view
+        from .term import load_totals, totals_asof
+        tot, ys = load_totals(), [y for y, _ in d.get("counts", [])]
+        d = {**d, "totals": [[y, tot[y]] for y in range(min(ys), max(ys) + 1) if y in tot] if ys else [], "totalsAsOf": totals_asof()}
     data = json.dumps(d, ensure_ascii=False).replace("<", "\\u003c")
     e = html.escape
     lang = page_lang(d)
@@ -212,7 +267,8 @@ def html_from_data(d: dict) -> str:
 <div class="brand"><a href="{REPO_URL}">idealine</a> · {T["tagline"]}</div>
 <h1>{e(d['term'])}</h1>
 <p class="summary">{e(d.get('summary') or '')}</p>
-<p class="meta">{T["meta"].format(total=f"{d['total']:,}", span=span)}{how}</p>
+<p class="meta">{T["meta"].format(total=f"{d['total']:,}", span=span)}{how}{T["asof"].format(date=e(d.get("generated") or ""))}</p>
+<p class="headline" data-part="headline"></p>
 <div class="senses" data-part="senses"></div>
 <div class="card">
   <div class="hint">{T["hint"]}</div>
@@ -221,6 +277,7 @@ def html_from_data(d: dict) -> str:
   <div class="detail" data-part="detail" aria-live="polite"></div>
 </div>
 <div class="eras" data-part="eras"></div>
+<div class="roots" data-part="roots"></div>
 <details><summary>{T["details"]}</summary>
 <p>{T["details_body"].format(generated=e(d["generated"]))}</p>
 </details>

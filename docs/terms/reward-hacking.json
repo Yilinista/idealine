@@ -1,722 +1,3411 @@
 {
- "term": "reward hacking",
- "aliases": [],
- "summary": "Reward hacking entered the machine-learning vocabulary through the 2016 AI-safety agenda \"Concrete Problems in AI Safety,\" where it named the accident risk of a reinforcement-learning agent maximizing a wrong objective without achieving the intended goal. Today it mostly refers to large language models, image generators and coding agents exploiting flaws in learned reward models, verifiers, judges or test harnesses to score highly without genuinely doing the task, and it is treated both as a training-stability problem and as a form of misalignment.",
- "counts": [
-  [
-   2016,
-   1
+  "term": "reward hacking",
+  "aliases": [],
+  "summary": "In this evidence the term first appears in 2016 in 'Concrete Problems in AI Safety', which lists it as an accident risk for reinforcement-learning agents given the wrong objective, alongside related ideas such as specification gaming and Goodhart's law. It now mostly names the exploitation of imperfect reward models and verifiers when training large language, image and coding models, and increasingly the shortcut-taking and test-tampering behaviour of autonomous agents, treated as a form of misalignment.",
+  "counts": [
+    [
+      2016,
+      1
+    ],
+    [
+      2017,
+      1
+    ],
+    [
+      2018,
+      4
+    ],
+    [
+      2019,
+      8
+    ],
+    [
+      2020,
+      3
+    ],
+    [
+      2021,
+      4
+    ],
+    [
+      2022,
+      6
+    ],
+    [
+      2023,
+      10
+    ],
+    [
+      2024,
+      40
+    ],
+    [
+      2025,
+      206
+    ],
+    [
+      2026,
+      883
+    ]
   ],
-  [
-   2017,
-   1
+  "quarters": [],
+  "undated": [],
+  "totals": [
+    [
+      2016,
+      9772181
+    ],
+    [
+      2017,
+      9658892
+    ],
+    [
+      2018,
+      9620609
+    ],
+    [
+      2019,
+      10105903
+    ],
+    [
+      2020,
+      10710989
+    ],
+    [
+      2021,
+      10234246
+    ],
+    [
+      2022,
+      9919123
+    ],
+    [
+      2023,
+      10662282
+    ],
+    [
+      2024,
+      10984643
+    ],
+    [
+      2025,
+      14188833
+    ],
+    [
+      2026,
+      18745510
+    ]
   ],
-  [
-   2018,
-   4
+  "roots": {
+    "spectrum": [
+      [
+        1952,
+        22
+      ],
+      [
+        1953,
+        0
+      ],
+      [
+        1954,
+        0
+      ],
+      [
+        1955,
+        0
+      ],
+      [
+        1956,
+        0
+      ],
+      [
+        1957,
+        0
+      ],
+      [
+        1958,
+        0
+      ],
+      [
+        1959,
+        0
+      ],
+      [
+        1960,
+        0
+      ],
+      [
+        1961,
+        0
+      ],
+      [
+        1962,
+        0
+      ],
+      [
+        1963,
+        0
+      ],
+      [
+        1964,
+        2
+      ],
+      [
+        1965,
+        0
+      ],
+      [
+        1966,
+        0
+      ],
+      [
+        1967,
+        0
+      ],
+      [
+        1968,
+        0
+      ],
+      [
+        1969,
+        0
+      ],
+      [
+        1970,
+        0
+      ],
+      [
+        1971,
+        0
+      ],
+      [
+        1972,
+        2
+      ],
+      [
+        1973,
+        0
+      ],
+      [
+        1974,
+        0
+      ],
+      [
+        1975,
+        0
+      ],
+      [
+        1976,
+        0
+      ],
+      [
+        1977,
+        0
+      ],
+      [
+        1978,
+        2
+      ],
+      [
+        1979,
+        0
+      ],
+      [
+        1980,
+        0
+      ],
+      [
+        1981,
+        0
+      ],
+      [
+        1982,
+        0
+      ],
+      [
+        1983,
+        0
+      ],
+      [
+        1984,
+        4
+      ],
+      [
+        1985,
+        0
+      ],
+      [
+        1986,
+        0
+      ],
+      [
+        1987,
+        0
+      ],
+      [
+        1988,
+        0
+      ],
+      [
+        1989,
+        0
+      ],
+      [
+        1990,
+        0
+      ],
+      [
+        1991,
+        2
+      ],
+      [
+        1992,
+        10
+      ],
+      [
+        1993,
+        0
+      ],
+      [
+        1994,
+        0
+      ],
+      [
+        1995,
+        0
+      ],
+      [
+        1996,
+        0
+      ],
+      [
+        1997,
+        3
+      ],
+      [
+        1998,
+        6
+      ],
+      [
+        1999,
+        10
+      ],
+      [
+        2000,
+        2
+      ],
+      [
+        2001,
+        2
+      ],
+      [
+        2002,
+        0
+      ],
+      [
+        2003,
+        2
+      ],
+      [
+        2004,
+        3
+      ],
+      [
+        2005,
+        4
+      ],
+      [
+        2006,
+        5
+      ],
+      [
+        2007,
+        4
+      ],
+      [
+        2008,
+        2
+      ],
+      [
+        2009,
+        3
+      ],
+      [
+        2010,
+        6
+      ],
+      [
+        2011,
+        7
+      ],
+      [
+        2012,
+        2
+      ],
+      [
+        2013,
+        10
+      ],
+      [
+        2014,
+        17
+      ],
+      [
+        2015,
+        46
+      ],
+      [
+        2016,
+        72
+      ],
+      [
+        2017,
+        155
+      ],
+      [
+        2018,
+        89
+      ],
+      [
+        2019,
+        77
+      ],
+      [
+        2020,
+        99
+      ],
+      [
+        2021,
+        121
+      ],
+      [
+        2022,
+        280
+      ],
+      [
+        2023,
+        510
+      ],
+      [
+        2024,
+        620
+      ],
+      [
+        2025,
+        402
+      ],
+      [
+        2026,
+        32
+      ]
+    ],
+    "peaks": [
+      {
+        "year": 2017,
+        "count": 155,
+        "title": "Proximal Policy Optimization Algorithms",
+        "url": "https://doi.org/10.48550/arxiv.1707.06347",
+        "authors": "John Schulman et al.",
+        "cites": 47
+      },
+      {
+        "year": 2023,
+        "count": 510,
+        "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+        "url": "https://doi.org/10.52202/075280-2338",
+        "authors": "Rafael Rafailov et al.",
+        "cites": 26
+      },
+      {
+        "year": 2024,
+        "count": 620,
+        "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+        "url": "https://doi.org/10.48550/arxiv.2402.03300",
+        "authors": "Zhihong Shao et al.",
+        "cites": 30
+      }
+    ],
+    "papers": 100,
+    "refs": 700
+  },
+  "quotes": [
+    {
+      "id": "E1",
+      "text": "We present a list of five practical research problems related to accident risk, categorized according to whether the problem originates from having the wrong objective function (\"avoiding side effects\" and \"avoiding reward hacking\"), an objective function that is too expensive to evaluate frequently (\"scalable supervision\"), or undesirable behavior during the learning process (\"safe exploration\" and \"distributional shift\").",
+      "title": "Concrete Problems in AI Safety",
+      "year": 2016,
+      "date": "2016-06-21",
+      "url": "https://doi.org/10.48550/arxiv.1606.06565",
+      "authors": "Dario Amodei et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 37,
+      "sense": "S1"
+    },
+    {
+      "id": "E2",
+      "text": "Empirical results suggest that this approach can help alleviate negative side effects of misspecified reward functions and mitigate reward hacking.",
+      "title": "Inverse Reward Design",
+      "year": 2017,
+      "date": "2017-11-08",
+      "url": "https://doi.org/10.48550/arxiv.1711.02827",
+      "authors": "Dylan Hadfield-Menell et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S1"
+    },
+    {
+      "id": "E3",
+      "text": "A misspecified reward function can cause problems such as reward hacking, where the agent finds out ways that maximize the reward without achieving the intended goal.",
+      "title": "MoVEMo: A Structured Approach for Engineering Reward Functions",
+      "year": 2018,
+      "date": "2018-01-01",
+      "url": "https://doi.org/10.1109/irc.2018.00053",
+      "authors": "Piergiuseppe Mallozzi et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E4",
+      "text": "We propose that this paradigm could be flipped whereby reinforcement learning “reward hacking” could provide a mechanism for testing game mechanics.",
+      "title": "On the use of reinforcement learning for testing game mechanics",
+      "year": 2018,
+      "date": "2018-04-27",
+      "url": "https://openalex.org/W2917684105",
+      "authors": "Aaron Snoswell et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E5",
+      "text": "Overoptimization failures in machine learning and AI can involve specification gaming, reward hacking, fragility to distributional shifts, and Goodhart's or Campbell's law.",
+      "title": "Overoptimization Failures and Specification Gaming in Multi-agent Systems.",
+      "year": 2018,
+      "date": "2018-10-16",
+      "url": "https://openalex.org/W2898576746",
+      "authors": "David Manheim",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E6",
+      "text": "Additionally, we investigate the goodness of fit of the reward model, present some reward hacking problems, and study the effects of noise in the human labels.",
+      "title": "Reward learning from human preferences and demonstrations in Atari",
+      "year": 2018,
+      "date": "2018-11-15",
+      "url": "https://doi.org/10.48550/arxiv.1811.06521",
+      "authors": "Borja Ibarz et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 9,
+      "sense": "S1"
+    },
+    {
+      "id": "E7",
+      "text": "The training suffers from reward hacking which was argued to be caused by the agent’s tendency to focus on optimizing only some of the heuristics.",
+      "title": "Mixing Music Using Deep Reinforcement Learning",
+      "year": 2019,
+      "date": "2019-01-01",
+      "url": "https://openalex.org/W3034268738",
+      "authors": "Viktor Kronvall",
+      "fromTitle": false,
+      "field": "Arts and Humanities",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E8",
+      "text": "A novel multi-step reinforcement learning method for solving reward hacking",
+      "title": "A novel multi-step reinforcement learning method for solving reward hacking",
+      "year": 2019,
+      "date": "2019-02-09",
+      "url": "https://doi.org/10.1007/s10489-019-01417-4",
+      "authors": "Yinlong Yuan et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E9",
+      "text": "Autonomous agents trained via reinforcement learning present numerous safety concerns: reward hacking, negative side effects, and unsafe exploration, among others.",
+      "title": "Parenting: Safe Reinforcement Learning from Human Input",
+      "year": 2019,
+      "date": "2019-02-18",
+      "url": "https://doi.org/10.48550/arxiv.1902.06766",
+      "authors": "Christopher Frye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E10",
+      "text": "An important challenge for safety in machine learning and artificial intelligence systems is a set of related failures involving specification gaming, reward hacking, fragility to distributional shifts, and Goodhart’s or Campbell’s law.",
+      "title": "Multiparty Dynamics and Failure Modes for Machine Learning and Artificial Intelligence",
+      "year": 2019,
+      "date": "2019-04-05",
+      "url": "https://doi.org/10.3390/bdcc3020021",
+      "authors": "David Manheim",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E11",
+      "text": "However, due to the reward hacking problem in RL, maximizing reward may not lead to better quality of the caption, especially from the aspects of propositional content and distinctiveness.",
+      "title": "Meta Learning for Image Captioning",
+      "year": 2019,
+      "date": "2019-07-17",
+      "url": "https://doi.org/10.1609/aaai.v33i01.33018626",
+      "authors": "Nannan Li et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E12",
+      "text": "Paramount of these side effects is reward hacking.",
+      "title": "Elaborate Operational Requirements to Address Reward Hacking in Reinforcement Learning Agents",
+      "year": 2019,
+      "date": "2019-11-18",
+      "url": "https://openalex.org/W2998252346",
+      "authors": "Sina Yaghoobzadehtari et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E13",
+      "text": "Moreover, ReQueST safely trains the reward model to detect unsafe states, and corrects reward hacking before deploying the agent.",
+      "title": "Learning Human Objectives by Evaluating Hypothetical Behavior",
+      "year": 2019,
+      "date": "2019-12-05",
+      "url": "https://doi.org/10.48550/arxiv.1912.05652",
+      "authors": "Siddharth Reddy et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E14",
+      "text": "We also demonstrate that high-confidence performance bounds may be useful for detecting reward hacking.",
+      "title": "Deep Bayesian Reward Learning from Preferences",
+      "year": 2019,
+      "date": "2019-12-10",
+      "url": "https://doi.org/10.48550/arxiv.1912.04472",
+      "authors": "Daniel S. Brown et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E15",
+      "text": "Interpretability of the reward allows for better value alignment between human intent and system objectives, leading to a lower likelihood of reward hacking by the system.",
+      "title": "A formal methods approach to interpretability, safety and composability for reinforcement learning",
+      "year": 2020,
+      "date": "2020-01-01",
+      "url": "https://openalex.org/W3005671755",
+      "authors": "Xiao Li",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E16",
+      "text": "The primary contribution is a unifying formal vocabulary (Φ, α, D_KL, envelope, separation) showing that distributional shift in offline RL, exploration suppression under safety constraints, reward hacking, specification gaming, Goodhart's law in organisations, volatility-induced fragility, and overprotection in developmental psychology are manifestations of a single structural parameter operating in a single architectural pattern.",
+      "title": "Autonomy Suppression in Hierarchical Multi-Agent Systems: A Unifying Systems-Theoretic Framework",
+      "year": 2020,
+      "date": "2020-02-07",
+      "url": "https://doi.org/10.5281/zenodo.18520652",
+      "authors": "Boris Kriger",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E17",
+      "text": "These high-confidence performance bounds can be used to rank the performance and risk of a variety of evaluation policies and provide a way to detect reward hacking behaviors.",
+      "title": "Safe Imitation Learning via Fast Bayesian Reward Inference from Preferences",
+      "year": 2020,
+      "date": "2020-02-21",
+      "url": "https://doi.org/10.48550/arxiv.2002.09089",
+      "authors": "Daniel S. Brown et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S1"
+    },
+    {
+      "id": "E18",
+      "text": "While various rewardshaping mechanisms and imitation learning approaches have been proposed to mitigate this problem, the use of humanaided artificial rewards introduces human error, sub-optimal behavior, and a greater propensity for reward hacking.",
+      "title": "Dynamic Automaton-Guided Reward Shaping for Monte Carlo Tree Search",
+      "year": 2021,
+      "date": "2021-05-18",
+      "url": "https://doi.org/10.1609/aaai.v35i13.17427",
+      "authors": "Alvaro Velasquez et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E19",
+      "text": "Using the raw state representation led to ‘reward-hacking’ and poor performance, which highlights the importance of the problem and state-space formulation in successfully training reinforcement learning agents.",
+      "title": "Improving the efficiency of reinforcement learning for a spacecraft powered descent with Q-learning",
+      "year": 2021,
+      "date": "2021-10-04",
+      "url": "https://doi.org/10.1007/s11081-021-09687-z",
+      "authors": "Callum Wilson et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E20",
+      "text": "Most often, practitioners go about the task of behavior specification by manually engineering the reward function, a counter-intuitive process that requires several iterations and is prone to reward hacking by the agent.",
+      "title": "Direct Behavior Specification via Constrained Reinforcement Learning",
+      "year": 2021,
+      "date": "2021-12-22",
+      "url": "https://doi.org/10.48550/arxiv.2112.12228",
+      "authors": "Julien Roy et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E21",
+      "text": "We provide the first formal definition of reward hacking, a phenomenon where optimizing an imperfect proxy reward function leads to poor performance according to the true reward function.",
+      "title": "Defining and Characterizing Reward Hacking",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.52202/068431-0687",
+      "authors": "Joar Skalse et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 28,
+      "sense": "S1"
+    },
+    {
+      "id": "E22",
+      "text": "In diesem Aufsatz wird gezeigt, dass einige Probleme, die im Zusammenhang mit Reinforcement Learning auftauchen (Reward Hacking) sehr enge strukturelle Verwandtschaften mit den sog.",
+      "title": "KI-Sicherheit, Reward Hacking und die Paradoxa der Normenlogik",
+      "year": 2022,
+      "date": "2022-01-01",
+      "url": "https://doi.org/10.38023/76692828-9da1-469a-8310-10fd68db582e",
+      "authors": "Diogo Campos Sasdelli",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E23",
+      "text": "Reward hacking -- where RL agents exploit gaps in misspecified reward functions -- has been widely observed, but not yet systematically studied.",
+      "title": "The Effects of Reward Misspecification: Mapping and Mitigating Misaligned Models",
+      "year": 2022,
+      "date": "2022-01-10",
+      "url": "https://doi.org/10.48550/arxiv.2201.03544",
+      "authors": "Pan, Alexander et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 17,
+      "sense": "S1"
+    },
+    {
+      "id": "E24",
+      "text": "Learning policies via preference-based reward learning is an increasingly popular method for customizing agent behavior, but has been shown anecdotally to be prone to spurious correlations and reward hacking behaviors.",
+      "title": "Causal Confusion and Reward Misidentification in Preference-Based Reward Learning",
+      "year": 2022,
+      "date": "2022-04-13",
+      "url": "https://doi.org/10.48550/arxiv.2204.06601",
+      "authors": "Jeremy Tien et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E25",
+      "text": "In the proposed MARNet attack framework, we carefully design a pipeline of trigger design, action poisoning, and reward hacking modules to accommodate the cooperative multi-agent settings.",
+      "title": "MARNet: Backdoor Attacks Against Cooperative Multi-Agent Reinforcement Learning",
+      "year": 2022,
+      "date": "2022-09-19",
+      "url": "https://doi.org/10.1109/tdsc.2022.3207429",
+      "authors": "Yanjiao Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S4"
+    },
+    {
+      "id": "E26",
+      "text": "But optimizing against a reward model can improve on reward while degrading performance in other areas, a phenomenon known as reward hacking, alignment tax, or language drift.",
+      "title": "Language Model Alignment with Elastic Reset",
+      "year": 2023,
+      "date": "2023-01-01",
+      "url": "https://doi.org/10.52202/075280-0152",
+      "authors": "Michael Noukhovitch et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E27",
+      "text": "This challenge is characterized by various instabilities, such as reward hacking and catastrophic forgetting.",
+      "title": "Stabilizing RLHF through Advantage Model and Selective Rehearsal",
+      "year": 2023,
+      "date": "2023-09-18",
+      "url": "https://doi.org/10.48550/arxiv.2309.10202",
+      "authors": "Baolin Peng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E28",
+      "text": "We propose a new alignment algorithm called Factually Augmented RLHF that augments the reward model with additional factual information such as image captions and ground-truth multi-choice options, which alleviates the reward hacking phenomenon in RLHF and further improves the performance.",
+      "title": "Aligning Large Multimodal Models with Factually Augmented RLHF",
+      "year": 2023,
+      "date": "2023-09-25",
+      "url": "https://doi.org/10.48550/arxiv.2309.14525",
+      "authors": "Zhiqing Sun et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E29",
+      "text": "However, this setup creates an incentive for the language model to exploit errors in the reward model to achieve high estimated reward, a phenomenon often termed \\emph{reward hacking}.",
+      "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
+      "year": 2023,
+      "date": "2023-12-14",
+      "url": "https://doi.org/10.48550/arxiv.2312.09244",
+      "authors": "Jacob Eisenstein et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 17,
+      "sense": "S2"
+    },
+    {
+      "id": "E30",
+      "text": "Reinforcement learning from human feedback (RLHF) has emerged as the primary method for aligning large language models (LLMs) with human preferences.The RLHF process typically starts by training a reward model (RM) using human preference data.Conventional RMs are trained on pairwise responses to the same user request, with relative ratings indicating which response humans prefer.The trained RM serves as a proxy for human preferences.However, due…",
+      "title": "Interpretable Preferences via Multi-Objective Reward Modeling and Mixture-of-Experts",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.18653/v1/2024.findings-emnlp.620",
+      "authors": "Haoxiang Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 6,
+      "sense": "unclear"
+    },
+    {
+      "id": "E31",
+      "text": "A prominent issue with such methods is reward over-optimization or reward hacking, where performance as measured by the learned proxy reward model increases, but true quality plateaus or even deteriorates.",
+      "title": "Scaling Laws for Reward Model Overoptimization in Direct Alignment Algorithms",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.52202/079017-4009",
+      "authors": "Rafael Rafailov et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E32",
+      "text": "While fine-tuning T2I models with reward objectives has shown promise, it suffers from \"reward hacking\" and may not generalize well to unseen prompt distributions.",
+      "title": "ReNO: Enhancing One-step Text-to-Image Models through Reward-based Noise Optimization",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.52202/079017-3987",
+      "authors": "Luca Eyring et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E33",
+      "text": "Despite the success of reinforcement learning from human feedback (RLHF) in aligning language models with human values, reward hacking, also termed reward overoptimization, remains a critical challenge.",
+      "title": "InfoRM: Mitigating Reward Hacking in RLHF via Information-Theoretic Reward Modeling",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.52202/079017-4270",
+      "authors": "Yuchun Miao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 7,
+      "sense": "S2"
+    },
+    {
+      "id": "E34",
+      "text": "However, the pervasiveness of heavy-tailed distributions in many real-world applications indicates that future sources of RL reward could have heavy-tailed error, increasing the likelihood of reward hacking even with KL regularization.",
+      "title": "Catastrophic Goodhart: regularizing RLHF with KL divergence does not mitigate heavy-tailed reward misspecification",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.52202/079017-0466",
+      "authors": "Thomas Kwa et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S2"
+    },
+    {
+      "id": "E35",
+      "text": "While Minimum Bayes Risk (MBR) decoding using metrics such as COMET or MetricX has outperformed traditional decoding methods such as greedy or beam search, it introduces a challenge we refer to as metric bias.As MBR decoding aims to produce translations that score highly according to a specific utility metric, this very process makes it impossible to use the same metric for both decoding and evaluation, as improvements might simply be due to rew…",
+      "title": "Mitigating Metric Bias in Minimum Bayes Risk Decoding",
+      "year": 2024,
+      "date": "2024-01-01",
+      "url": "https://doi.org/10.18653/v1/2024.wmt-1.109",
+      "authors": "Geza Kovacs et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E36",
+      "text": "Aligning large language models (LLMs) with human preferences through reinforcement learning (RLHF) can lead to reward hacking, where LLMs exploit failures in the reward model (RM) to achieve seemingly high rewards without meeting the underlying objectives.",
+      "title": "WARM: On the Benefits of Weight Averaged Reward Models",
+      "year": 2024,
+      "date": "2024-01-22",
+      "url": "https://doi.org/10.48550/arxiv.2401.12187",
+      "authors": "Alexandre Ramé et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 11,
+      "sense": "S2"
+    },
+    {
+      "id": "E37",
+      "text": "This mitigates both underfitting (where some prompts are not improved) and reward hacking (where the model learns to exploit misspecification of the reward model).",
+      "title": "Transforming and Combining Rewards for Aligning Large Language Models",
+      "year": 2024,
+      "date": "2024-02-01",
+      "url": "https://doi.org/10.48550/arxiv.2402.00742",
+      "authors": "Zihao Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S2"
+    },
+    {
+      "id": "E38",
+      "text": "Selecting an appropriate level of regularization is critical: insufficient regularization can lead to reduced model capabilities due to reward hacking, whereas excessive regularization hinders alignment.",
+      "title": "Decoding-time Realignment of Language Models",
+      "year": 2024,
+      "date": "2024-02-05",
+      "url": "https://doi.org/10.48550/arxiv.2402.02992",
+      "authors": "Tianlin Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E39",
+      "text": "In this work, we show that feedback loops can cause in-context reward hacking (ICRH), where the LLM at test-time optimizes a (potentially implicit) objective but creates negative side effects in the process.",
+      "title": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
+      "year": 2024,
+      "date": "2024-02-09",
+      "url": "https://doi.org/10.48550/arxiv.2402.06627",
+      "authors": "Pan, Alexander et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E40",
+      "text": "In this work, we study the issue of reward hacking on the response length, a challenge emerging in Reinforcement Learning from Human Feedback (RLHF) on LLMs.",
+      "title": "ODIN: Disentangled Reward Mitigates Hacking in RLHF",
+      "year": 2024,
+      "date": "2024-02-11",
+      "url": "https://doi.org/10.48550/arxiv.2402.07319",
+      "authors": "Lichang Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 12,
+      "sense": "S2"
+    },
+    {
+      "id": "E41",
+      "text": "However, optimizing proxy rewards frequently leads to reward hacking: the optimized reward function ceases to be a good proxy and the resulting policy performs poorly with respect to the unspecified true reward.",
+      "title": "Correlated Proxies: A New Definition and Improved Mitigation for Reward Hacking",
+      "year": 2024,
+      "date": "2024-03-05",
+      "url": "https://doi.org/10.48550/arxiv.2403.03185",
+      "authors": "Cassidy Laidlaw et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S1"
+    },
+    {
+      "id": "E42",
+      "text": "InternLM2 is further aligned using Supervised Fine-Tuning (SFT) and a novel Conditional Online Reinforcement Learning from Human Feedback (COOL RLHF) strategy that addresses conflicting human preferences and reward hacking.",
+      "title": "InternLM2 Technical Report",
+      "year": 2024,
+      "date": "2024-03-26",
+      "url": "https://doi.org/10.48550/arxiv.2403.17297",
+      "authors": "Zheng Cai et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E43",
+      "text": "Furthermore, we identify that naive implementation of DNO occasionally suffers from the out-of-distribution reward hacking problem, where optimized samples have high rewards but are no longer in the support of the pretrained distribution.",
+      "title": "Inference-Time Alignment of Diffusion Models with Direct Noise Optimization",
+      "year": 2024,
+      "date": "2024-05-29",
+      "url": "https://doi.org/10.48550/arxiv.2405.18881",
+      "authors": "Zhiwei Tang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S2"
+    },
+    {
+      "id": "E44",
+      "text": "In particular, FedBiscuit overcomes key challenges, such as preference heterogeneity and reward hacking, through innovative solutions like grouping clients with similar preferences to reduce heterogeneity and using multiple binary selectors to enhance LLM output quality.",
+      "title": "Towards Federated RLHF with Aggregated Client Preference for LLMs",
+      "year": 2024,
+      "date": "2024-07-03",
+      "url": "https://doi.org/10.48550/arxiv.2407.03038",
+      "authors": "Feijie Wu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E45",
+      "text": "However, because the evaluator is an imperfect proxy of user preference, this optimization can lead to reward hacking, where the evaluator's ratings improve while the generation quality remains stagnant or even decreases as judged by actual user preference.",
+      "title": "Spontaneous Reward Hacking in Iterative Self-Refinement",
+      "year": 2024,
+      "date": "2024-07-05",
+      "url": "https://doi.org/10.48550/arxiv.2407.04549",
+      "authors": "Jane Pan et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E46",
+      "text": "However, the reliance on reward-model-based (RM-based) alignment methods introduces significant challenges due to the inherent instability and imperfections of Reward Models (RMs), which can lead to critical issues such as reward hacking and misalignment with human intentions.",
+      "title": "Reward-Robust RLHF in LLMs",
+      "year": 2024,
+      "date": "2024-09-18",
+      "url": "https://doi.org/10.48550/arxiv.2409.15360",
+      "authors": "Yan, Yuzi et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E47",
+      "text": "RRM: Robust Reward Model Training Mitigates Reward Hacking",
+      "title": "RRM: Robust Reward Model Training Mitigates Reward Hacking",
+      "year": 2024,
+      "date": "2024-09-20",
+      "url": "https://doi.org/10.48550/arxiv.2409.13156",
+      "authors": "Tianqi Liu et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S2"
+    },
+    {
+      "id": "E48",
+      "text": "However, RLHF has limitations in multi-task learning (MTL) due to challenges of reward hacking and extreme multi-objective optimization (i.e., trade-off of multiple and/or sometimes conflicting objectives).",
+      "title": "The Perfect Blend: Redefining RLHF with Mixture of Judges",
+      "year": 2024,
+      "date": "2024-09-30",
+      "url": "https://doi.org/10.48550/arxiv.2409.20370",
+      "authors": "Xu, Tengyu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E49",
+      "text": "Therefore, it fails to accurately present the robustness of reward models, leading to a misunderstanding of its performance and potentially resulting in reward hacking.",
+      "title": "Evaluating Robustness of Reward Models for Mathematical Reasoning",
+      "year": 2024,
+      "date": "2024-10-02",
+      "url": "https://doi.org/10.48550/arxiv.2410.01729",
+      "authors": "Sunghwan Kim et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E50",
+      "text": "Our analysis reveals that an LLM can receive high rewards from some of these reward models by repeating correct but unnecessary reasoning steps, leading to a severe reward hacking issue.",
+      "title": "On Designing Effective RL Reward at Training Time for LLM Reasoning",
+      "year": 2024,
+      "date": "2024-10-19",
+      "url": "https://doi.org/10.48550/arxiv.2410.15115",
+      "authors": "Jiaxuan Gao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E51",
+      "text": "AlphaVerus operates in three phases: exploration of candidate translations, Treefinement -- a novel tree search algorithm for program refinement using verifier feedback, and filtering misaligned specifications and programs to prevent reward hacking.",
+      "title": "AlphaVerus: Bootstrapping Formally Verified Code Generation through Self-Improving Translation and Treefinement",
+      "year": 2024,
+      "date": "2024-12-09",
+      "url": "https://doi.org/10.48550/arxiv.2412.06176",
+      "authors": "Pranjal Aggarwal et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S3"
+    },
+    {
+      "id": "E52",
+      "text": "Notably, very little reward hacking occurred, meaning rewards did not increase at the cost of appreciable image quality or diversity degradation.",
+      "title": "Flow-GRPO: Training Flow Matching Models via Online RL",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-1362",
+      "authors": "Jie Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 11,
+      "sense": "S2"
+    },
+    {
+      "id": "E53",
+      "text": "We identify three key challenges: (1) the scarcity of high-quality reasoning data constrains the capabilities of foundation Multimodal Large Language Models (MLLMs), which imposes further limitations on the upper bounds of TTS and reinforcement learning (RL); (2) a lack of automated methods for process labeling within multimodal contexts persists; (3) the employment of process rewards in unimodal RL faces issues like reward hacking, which may ex…",
+      "title": "Unlocking Multimodal Mathematical Reasoning via Process Reward Model",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-1664",
+      "authors": "Ruilin Luo et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E54",
+      "text": "Output evaluation: Reward functions based on hit signals or box area allow models to exploit box size, leading to reward hacking and poor localization quality.",
+      "title": "GUI-G1: Understanding R1-Zero-Like Training for Visual Grounding in GUI Agents",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-3201",
+      "authors": "Yuqi Zhou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E55",
+      "text": "By overoptimizing for a misspecified reward, we can subvert intended alignment goals and reduce overall performance, a phenomenon commonly referred to as reward hacking.",
+      "title": "Inference-Time Reward Hacking in Large Language Models",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-2064",
+      "authors": "Hadi Khalaf et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E56",
+      "text": "Such designs are susceptible to reward hacking and generalize poorly beyond their training distributions.",
+      "title": "RL Tango: Reinforcing Generator and Verifier Together for Language Reasoning",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-3981",
+      "authors": "Kaiwen Zha et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S2"
+    },
+    {
+      "id": "E57",
+      "text": "Existing inference-time scaling methods, usually with reward models, cast the task as a search problem, which tends to be vulnerable to reward hacking as a consequence of approximation errors in reward models.",
+      "title": "Rollout Roulette: A Probabilistic Inference Approach to Inference-Time Scaling of LLMs using Particle-Based Monte Carlo Methods",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-5227",
+      "authors": "Isha Puri et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E58",
+      "text": "We find that SAILOR can identify nuanced failures and is robust to reward hacking.",
+      "title": "A Smooth Sea Never Made a Skilled SAILOR: Robust Imitation via Learning to Search",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-2101",
+      "authors": "Arnav Jain et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E59",
+      "text": "Direct Preference Optimization (DPO) has proven effective in complex reasoning tasks like math word problems and code generation.However, when applied to Text-to-SQL datasets, it often fails to improve performance and can even degrade it.Our investigation reveals the root cause: unlike math and code tasks, which naturally integrate Chainof-Thought (CoT) reasoning with DPO, Textto-SQL datasets typically include only final answers (gold SQL querie…",
+      "title": "Uncovering the Impact of Chain-of-Thought Reasoning for Direct Preference Optimization: Lessons from Text-to-SQL",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.18653/v1/2025.acl-long.1031",
+      "authors": "Hanbing Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E60",
+      "text": "Reward modeling in large language models is known to be susceptible to reward hacking, causing models to latch onto superficial features such as the tendency to generate lists or unnecessarily long responses.In RLHF, and more generally during post-training, flawed reward signals often lead to outputs that optimize for these spurious correlates instead of genuine quality or correctness.We propose CARMO (Context-Aware Reward Modeling), a novel app…",
+      "title": "CARMO: Dynamic Criteria Generation for Context Aware Reward Modelling",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.18653/v1/2025.findings-acl.114",
+      "authors": "Taneesh Gupta et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E61",
+      "text": "A core challenge in RLHF is constructing accurate reward signals, where the conventional Bradley-Terry reward models (BT RMs) often suffer from sensitivity to data size and coverage, as well as vulnerability to reward hacking.",
+      "title": "Think-RM: Enabling Long-Horizon Reasoning in Generative Reward Models",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-5795",
+      "authors": "Ilgee Hong et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E62",
+      "text": "However, classical RMs trained on human preferences are vulnerable to reward hacking and generalize poorly to out-of-distribution (OOD) inputs.",
+      "title": "Ask a Strong LLM Judge when Your Reward Model is Uncertain",
+      "year": 2025,
+      "date": "2025-01-01",
+      "url": "https://doi.org/10.52202/085713-2506",
+      "authors": "Zhenghao Xu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E63",
+      "text": "Beyond Reward Hacking: Causal Rewards for Large Language Model Alignment",
+      "title": "Beyond Reward Hacking: Causal Rewards for Large Language Model Alignment",
+      "year": 2025,
+      "date": "2025-01-16",
+      "url": "https://doi.org/10.48550/arxiv.2501.09620",
+      "authors": "Wang, Chaoqi et al.",
+      "fromTitle": true,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S2"
+    },
+    {
+      "id": "E64",
+      "text": "We demonstrate that MONA can prevent multi-step reward hacking that ordinary RL causes, even without being able to detect the reward hacking and without any extra information that ordinary RL does not get access to.",
+      "title": "MONA: Myopic Optimization with Non-myopic Approval Can Mitigate Multi-step Reward Hacking",
+      "year": 2025,
+      "date": "2025-01-22",
+      "url": "https://doi.org/10.48550/arxiv.2501.13011",
+      "authors": "Sebastian Farquhar et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S1"
+    },
+    {
+      "id": "E65",
+      "text": "While RL improves reasoning capabilities, it faces challenges such as reward hacking, generalization failures, language mixing, and high computational costs.",
+      "title": "Challenges in Ensuring AI Safety in DeepSeek-R1 Models: The Shortcomings of Reinforcement Learning Strategies",
+      "year": 2025,
+      "date": "2025-01-28",
+      "url": "https://doi.org/10.48550/arxiv.2501.17030",
+      "authors": "Manojkumar Parmar et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E66",
+      "text": "This work identifies the Energy Loss Phenomenon in Reinforcement Learning from Human Feedback (RLHF) and its connection to reward hacking.",
+      "title": "The Energy Loss Phenomenon in RLHF: A New Perspective on Mitigating Reward Hacking",
+      "year": 2025,
+      "date": "2025-01-31",
+      "url": "https://doi.org/10.48550/arxiv.2501.19358",
+      "authors": "Yuchun Miao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E67",
+      "text": "This can be primarily attributed to the challenges of training process reward models (PRMs) online, where collecting high-quality process labels is prohibitively expensive, making them particularly vulnerable to reward hacking.",
+      "title": "Process Reinforcement through Implicit Rewards",
+      "year": 2025,
+      "date": "2025-02-03",
+      "url": "https://doi.org/10.48550/arxiv.2502.01456",
+      "authors": "Ganqu Cui et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 9,
+      "sense": "S2"
+    },
+    {
+      "id": "E68",
+      "text": "RLSP involves three steps: (1) supervised fine-tuning with human or synthetic demonstrations of the reasoning process, (2) using an exploration reward signal to encourage diverse and efficient reasoning behaviors, and (3) RL training with an outcome verifier to ensure correctness while preventing reward hacking.",
+      "title": "On the Emergence of Thinking in LLMs I: Searching for the Right Intuition",
+      "year": 2025,
+      "date": "2025-02-10",
+      "url": "https://doi.org/10.48550/arxiv.2502.06773",
+      "authors": "Guanghao Ye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E69",
+      "text": "We evaluate on ALFWorld benchmark, show that small 3B models trained with AgentPRM and InversePRM outperform strong GPT-4o baselines, and analyze test-time scaling, reward hacking, and more.",
+      "title": "Process Reward Models for LLM Agents: Practical Framework and Directions",
+      "year": 2025,
+      "date": "2025-02-14",
+      "url": "https://doi.org/10.48550/arxiv.2502.10325",
+      "authors": "Sanjiban Choudhury",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E70",
+      "text": "However, as proxies for human judgement, PRMs suffer from reliability issues, including susceptibility to reward hacking.",
+      "title": "Uncertainty-Aware Step-wise Verification with Generative Reward Models",
+      "year": 2025,
+      "date": "2025-02-16",
+      "url": "https://doi.org/10.48550/arxiv.2502.11250",
+      "authors": "Zihuiwen Ye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E71",
+      "text": "BoN sampling is susceptible to a problem known as reward hacking.",
+      "title": "Evaluation of Best-of-N Sampling Strategies for Language Model Alignment",
+      "year": 2025,
+      "date": "2025-02-18",
+      "url": "https://doi.org/10.48550/arxiv.2502.12668",
+      "authors": "Ichihara, Yuki et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E72",
+      "text": "Reinforcement learning from human feedback (RLHF) is widely used to align large language models with human preferences, but it remains vulnerable to \\emph{reward hacking}, whereby a policy exploits flaws in the reward function at the expense of the intended behavior.",
+      "title": "Reward Shaping to Mitigate Reward Hacking in RLHF",
+      "year": 2025,
+      "date": "2025-02-26",
+      "url": "https://doi.org/10.48550/arxiv.2502.18770",
+      "authors": "Jiayi Fu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 7,
+      "sense": "S2"
+    },
+    {
+      "id": "E73",
+      "text": "As AI systems gain autonomous reasoning capabilities, they also develop harmful behaviors, including deception, manipulation, and reward hacking.",
+      "title": "Emergent Abilities in Large Language Models: A Survey",
+      "year": 2025,
+      "date": "2025-02-28",
+      "url": "https://doi.org/10.48550/arxiv.2503.05788",
+      "authors": "Leonardo Berti et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E74",
+      "text": "However, this approach is often susceptible to optimization failure due to reward hacking, where prediction models fail to extrapolate, i.e., fail to accurately predict properties for designed molecules that considerably deviate from the training data.",
+      "title": "A data-driven generative strategy to avoid reward hacking in multi-objective molecular design",
+      "year": 2025,
+      "date": "2025-03-11",
+      "url": "https://doi.org/10.1038/s41467-025-57582-3",
+      "authors": "Tatsuya Yoshizawa et al.",
+      "fromTitle": false,
+      "field": "Pharmacology, Toxicology and Pharmaceutics",
+      "inSet": 0,
+      "sense": "S5"
+    },
+    {
+      "id": "E75",
+      "text": "This uncertainty can lead to objective hacking(reward hacking), exploiting model inaccuracies in unseen regions, or other spurious optimizations that yield misleadingly high performance estimates outside the training distribution.",
+      "title": "Offline Model-Based Optimization: Comprehensive Review",
+      "year": 2025,
+      "date": "2025-03-21",
+      "url": "https://doi.org/10.48550/arxiv.2503.17286",
+      "authors": "Minsu Kim et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S5"
+    },
+    {
+      "id": "E76",
+      "text": "However, naively increasing computation in techniques like Best-of-N sampling can lead to performance degradation due to reward hacking.",
+      "title": "Is Best-of-N the Best of Them? Coverage, Scaling, and Optimality in Inference-Time Alignment",
+      "year": 2025,
+      "date": "2025-03-27",
+      "url": "https://doi.org/10.48550/arxiv.2503.21878",
+      "authors": "Audrey Y. Huang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E77",
+      "text": "However, conventional reward models based on the Bradley-Terry model (BTRM) often suffer from overconfidence when faced with inconsistent labels or out-of-distribution samples, leading to reward hacking, where the policy model blindly optimizes for proxy rewards while degrading true performance.",
+      "title": "Probabilistic Uncertain Reward Model",
+      "year": 2025,
+      "date": "2025-03-28",
+      "url": "https://doi.org/10.48550/arxiv.2503.22480",
+      "authors": "Sun, Wangtao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E78",
+      "text": "This can lead to reward hacking, where policies exploit unintended shortcuts to maximize rewards, undermining alignment.",
+      "title": "Adversarial Training of Reward Models",
+      "year": 2025,
+      "date": "2025-04-08",
+      "url": "https://doi.org/10.48550/arxiv.2504.06141",
+      "authors": "Alexander Bukharin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E79",
+      "text": "We evaluate CoT faithfulness of state-of-the-art reasoning models across 6 reasoning hints presented in the prompts and find: (1) for most settings and models tested, CoTs reveal their usage of hints in at least 1% of examples where they use the hint, but the reveal rate is often below 20%, (2) outcome-based reinforcement learning initially improves faithfulness but plateaus without saturating, and (3) when reinforcement learning increases how f…",
+      "title": "Reasoning Models Don't Always Say What They Think",
+      "year": 2025,
+      "date": "2025-05-08",
+      "url": "https://doi.org/10.48550/arxiv.2505.05410",
+      "authors": "Yanda Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 7,
+      "sense": "unclear"
+    },
+    {
+      "id": "E80",
+      "text": "However, optimizing for positive reactions introduces reward hacking challenges, requiring careful balancing of objectives.",
+      "title": "Reinforcement Learning from User Feedback",
+      "year": 2025,
+      "date": "2025-05-20",
+      "url": "https://doi.org/10.48550/arxiv.2505.14946",
+      "authors": "Han, Eric et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E81",
+      "text": "Given that the thinking reward may be unreliable for certain samples due to reward hacking, we propose the Trust-GRPO method, which assigns a trustworthiness weight to the thinking reward during training.",
+      "title": "SophiaVL-R1: Reinforcing MLLMs Reasoning with Thinking Reward",
+      "year": 2025,
+      "date": "2025-05-22",
+      "url": "https://doi.org/10.48550/arxiv.2505.17018",
+      "authors": "Kaixuan Fan et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E82",
+      "text": "Yet our analysis also reveals a critical limitation of such a self-training paradigm - prolonged RL with self-reward leads to reward hacking where models learn to maximize training (pseudo-)reward, resulting in sudden and complete performance collapse.",
+      "title": "Can Large Reasoning Models Self-Train?",
+      "year": 2025,
+      "date": "2025-05-27",
+      "url": "https://doi.org/10.48550/arxiv.2505.21444",
+      "authors": "Sheikh Shafayat et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E83",
+      "text": "Current practical workarounds use an additional LLM as a model-based verifier; however, this introduces issues such as reliance on a strong verifier LLM, susceptibility to reward hacking, and the practical burden of maintaining the verifier model in memory during training.",
+      "title": "Reinforcing General Reasoning without Verifiers",
+      "year": 2025,
+      "date": "2025-05-27",
+      "url": "https://doi.org/10.48550/arxiv.2505.21493",
+      "authors": "Xiangxin Zhou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E84",
+      "text": "Existing approaches for these domains often rely on scalar reward models trained with human preferences, which suffer from limited generalization and are prone to reward hacking, such as over-explanation and length bias.",
+      "title": "Writing-Zero: Bridge the Gap Between Non-verifiable Tasks and Verifiable Rewards",
+      "year": 2025,
+      "date": "2025-05-30",
+      "url": "https://doi.org/10.48550/arxiv.2506.00103",
+      "authors": "Jia, Ruipeng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E85",
+      "text": "However, recent works have shown that banning the mention of a specific example of reward hacking causes obfuscation of the undesired reasoning traces but the persistence of the undesired behavior, threatening the reliability of CoT monitoring.",
+      "title": "Large language models can learn and generalize steganographic chain-of-thought under process supervision",
+      "year": 2025,
+      "date": "2025-06-02",
+      "url": "https://doi.org/10.48550/arxiv.2506.01926",
+      "authors": "Skaf, Joey et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E86",
+      "text": "This bias manifests as overreliance on features like length, structure, and style, leading to issues like reward hacking and unreliable evaluations.",
+      "title": "Flattery, Fluff, and Fog: Diagnosing and Mitigating Idiosyncratic Biases in Preference Models",
+      "year": 2025,
+      "date": "2025-06-05",
+      "url": "https://doi.org/10.48550/arxiv.2506.05339",
+      "authors": "Anirudh Bharadwaj et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E87",
+      "text": "Extensive simulated experiments show that our method significantly outperforms all baselines, while naturally regularizing behaviors to avoid reward hacking, resulting in more accurate and feasible movements for diverse loco-manipulation tasks in our daily scenarios.",
+      "title": "SkillBlender: Towards Versatile Humanoid Whole-Body Loco-Manipulation via Skill Blending",
+      "year": 2025,
+      "date": "2025-06-11",
+      "url": "https://doi.org/10.48550/arxiv.2506.09366",
+      "authors": "Yuxuan Kuang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E88",
+      "text": "We find that AutoRule demonstrates reduced reward hacking compared to a learned reward model when run over two episodes.",
+      "title": "AutoRule: Reasoning Chain-of-thought Extracted Rule-based Rewards Improve Preference Learning",
+      "year": 2025,
+      "date": "2025-06-18",
+      "url": "https://doi.org/10.48550/arxiv.2506.15651",
+      "authors": "Tevin Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E89",
+      "text": "Achieving athletic loco-manipulation on robots requires moving beyond traditional tracking rewards-which simply guide the robot along a reference trajectory-to task rewards that drive truly dynamic, goal-oriented behaviors.Commands such as \"throw the ball as far as you can\" or \"lift the weight as quickly as possible\" compel the robot to exhibit the agility and power inherent in athletic performance.However, training solely with task rewards intr…",
+      "title": "Bridging the Sim-to-Real Gap for Athletic Loco-Manipulation",
+      "year": 2025,
+      "date": "2025-06-21",
+      "url": "https://doi.org/10.15607/rss.2025.xxi.125",
+      "authors": "Nolan Fey et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E90",
+      "text": "Language models trained with reinforcement learning (RL) can engage in reward hacking--the exploitation of unintended strategies for high reward--without revealing this behavior in their chain-of-thought reasoning.",
+      "title": "Teaching Models to Verbalize Reward Hacking in Chain-of-Thought Reasoning",
+      "year": 2025,
+      "date": "2025-06-28",
+      "url": "https://doi.org/10.48550/arxiv.2506.22777",
+      "authors": "Miles Turpin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S3"
+    },
+    {
+      "id": "E91",
+      "text": "However, we uncover a critical vulnerability even in this reference-based paradigm: generative reward models are systematically susceptible to reward hacking.",
+      "title": "One Token to Fool LLM-as-a-Judge",
+      "year": 2025,
+      "date": "2025-07-11",
+      "url": "https://doi.org/10.48550/arxiv.2507.08794",
+      "authors": "Zhao, Yulai et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E92",
+      "text": "For action prediction, we propose a hierarchical reward structure with difficulty-aware scaling to prevent reward hacking and enable fine-grained reward assignment.",
+      "title": "Shop-R1: Rewarding LLMs to Simulate Human Behavior in Online Shopping via Reinforcement Learning",
+      "year": 2025,
+      "date": "2025-07-23",
+      "url": "https://doi.org/10.48550/arxiv.2507.17842",
+      "authors": "Yimeng Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E93",
+      "text": "Recent self-rewarding methods investigate a label-free alternative to unlock the reasoning capabilities of LLMs, yet they frequently encounter the non-negligible training collapse issue, as the single-view supervision signal easily forms the self-consistent illusion, yielding the reward hacking.",
+      "title": "Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models",
+      "year": 2025,
+      "date": "2025-08-01",
+      "url": "https://doi.org/10.48550/arxiv.2508.00410",
+      "authors": "Zizhuo Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E94",
+      "text": "We also apply length penalties to mitigate reward hacking.",
+      "title": "AffectGPT-R1: Leveraging Reinforcement Learning for Open-Vocabulary Multimodal Emotion Recognition",
+      "year": 2025,
+      "date": "2025-08-02",
+      "url": "https://doi.org/10.48550/arxiv.2508.01318",
+      "authors": "Lian, Zheng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E95",
+      "text": "This includes risks arising through specification gaming (reward hacking), scheming and power-seeking tendencies in pursuit of long-term strategic goals.",
+      "title": "The AI Risk Spectrum: From Dangerous Capabilities to Existential Threats",
+      "year": 2025,
+      "date": "2025-08-19",
+      "url": "https://doi.org/10.48550/arxiv.2508.13700",
+      "authors": "Grey, Markov et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E96",
+      "text": "However, current methods using pointwise reward models (RM) for scoring generated images are susceptible to reward hacking.",
+      "title": "Pref-GRPO: Pairwise Preference Reward-based GRPO for Stable Text-to-Image Reinforcement Learning",
+      "year": 2025,
+      "date": "2025-08-28",
+      "url": "https://doi.org/10.48550/arxiv.2508.20751",
+      "authors": "Yibin Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E97",
+      "text": "This outcome reward hacking creates biased gradients, making current RLVR insufficient for learning faithful reasoning.",
+      "title": "Beyond Correctness: Harmonizing Process and Outcome Rewards through RL Training",
+      "year": 2025,
+      "date": "2025-09-03",
+      "url": "https://doi.org/10.48550/arxiv.2509.03403",
+      "authors": "Chenlu Ye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E98",
+      "text": "More critically, the RLHF optimization process is plagued by Reward Hacking issue, where models exploit flaws in the reward signal without improving true quality.",
+      "title": "RewardDance: Reward Scaling in Visual Generation",
+      "year": 2025,
+      "date": "2025-09-10",
+      "url": "https://doi.org/10.48550/arxiv.2509.08826",
+      "authors": "Jie Wu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S2"
+    },
+    {
+      "id": "E99",
+      "text": "Recent work attempts to integrate process supervision into RL but suffers from biased annotation, reward hacking, high-variance from overly fine-grained rewards or failtures when state overlap is rare.",
+      "title": "Agentic Reinforcement Learning with Implicit Step Rewards",
+      "year": 2025,
+      "date": "2025-09-23",
+      "url": "https://doi.org/10.48550/arxiv.2509.19199",
+      "authors": "Xiaoqian Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E100",
+      "text": "(3) Observable biases in reward models, particularly in brightness, composition, and color scheme, render them susceptible to cause reward hacking.",
+      "title": "Follow-Your-Preference: Towards Preference-Aligned Image Inpainting",
+      "year": 2025,
+      "date": "2025-09-27",
+      "url": "https://doi.org/10.48550/arxiv.2509.23082",
+      "authors": "Yutao Shen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E101",
+      "text": "ES can indeed search over extremely high-dimensional parameter spaces and outperform established RL implementations across multiple axes, including improved tolerance to long-horizon and delayed rewards, robustness across diverse base LLMs, reduced susceptibility to reward hacking, and improved training stability.",
+      "title": "Evolution Strategies at Scale: LLM Fine-Tuning Beyond Reinforcement Learning",
+      "year": 2025,
+      "date": "2025-09-29",
+      "url": "https://doi.org/10.48550/arxiv.2509.24372",
+      "authors": "Xin Qiu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E102",
+      "text": "With the help of alleviating conflicts between tokens and an entropy reward for stabilizing training, we reduce disruption of the pretrained distribution and mitigate reward hacking, which in turn improves generalization and transfer better to other benchmarks.",
+      "title": "STAGE: Stable and Generalizable GRPO for Autoregressive Image Generation",
+      "year": 2025,
+      "date": "2025-09-29",
+      "url": "https://doi.org/10.48550/arxiv.2509.25027",
+      "authors": "Xiaoxiao Ma et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E103",
+      "text": "Reward hacking, where a reasoning model exploits loopholes in a reward function to achieve high rewards without solving the intended task, poses a significant threat.",
+      "title": "Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort",
+      "year": 2025,
+      "date": "2025-10-01",
+      "url": "https://doi.org/10.48550/arxiv.2510.01367",
+      "authors": "Xinpeng Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 3,
+      "sense": "S3"
+    },
+    {
+      "id": "E104",
+      "text": "Large language models are sometimes trained with imperfect oversight signals, leading to undesired behaviors such as reward hacking and sycophancy.",
+      "title": "Inoculation Prompting: Instructing LLMs to misbehave at train-time improves test-time alignment",
+      "year": 2025,
+      "date": "2025-10-06",
+      "url": "https://doi.org/10.48550/arxiv.2510.05024",
+      "authors": "Nevan Wichers et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S3"
+    },
+    {
+      "id": "E105",
+      "text": "Such static rubrics, however, are vulnerable to reward-hacking type behaviors and fail to capture emergent desiderata that arise during training.",
+      "title": "Online Rubrics Elicitation from Pairwise Comparisons",
+      "year": 2025,
+      "date": "2025-10-08",
+      "url": "https://doi.org/10.48550/arxiv.2510.07284",
+      "authors": "MohammadHossein Rezaei et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E106",
+      "text": "While Triton synthesis faces unique challenges, including data scarcity and a high susceptibility to reward hacking, our approach enables robust kernel generation through two primary innovations.",
+      "title": "TritonRL: Training LLMs to Think and Code Triton Without Cheating",
+      "year": 2025,
+      "date": "2025-10-18",
+      "url": "https://doi.org/10.48550/arxiv.2510.17891",
+      "authors": "Woo, Jiin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S3"
+    },
+    {
+      "id": "E107",
+      "text": "By leveraging diversity-seeking reinforcement learning algorithms, we introduce a novel sparse reward function for token-level learning signals that encourage diverse, high-likelihood latent CoT, overcoming deterministic sampling limitations and avoiding reward hacking.",
+      "title": "Latent Chain-of-Thought for Visual Reasoning",
+      "year": 2025,
+      "date": "2025-10-27",
+      "url": "https://doi.org/10.48550/arxiv.2510.23925",
+      "authors": "Guohao Sun et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E108",
+      "text": "Runtime testing is inherently unreliable - limited input coverage and reward hacking can mask incorrect behavior - while manual formal verification is reliable but cannot scale to match LLM output rates, creating a critical validation bottleneck.",
+      "title": "ProofWright: Towards Agentic Formal Verification of CUDA",
+      "year": 2025,
+      "date": "2025-11-15",
+      "url": "https://doi.org/10.48550/arxiv.2511.12294",
+      "authors": "Bodhisatwa Chatterjee et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S3"
+    },
+    {
+      "id": "E109",
+      "text": "We start with a pretrained model, impart knowledge of reward hacking strategies via synthetic document finetuning or prompting, and train on a selection of real Anthropic production coding environments.",
+      "title": "Natural Emergent Misalignment from Reward Hacking in Production RL",
+      "year": 2025,
+      "date": "2025-11-23",
+      "url": "https://doi.org/10.48550/arxiv.2511.18397",
+      "authors": "MacDiarmid, Monte et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 8,
+      "sense": "S3"
+    },
+    {
+      "id": "E110",
+      "text": "This oversight leads to visual hallucinations and reward hacking, as reasoning built upon flawed perception is inherently unreliable.",
+      "title": "Perceptual-Evidence Anchored Reinforced Learning for Multimodal Reasoning",
+      "year": 2025,
+      "date": "2025-11-23",
+      "url": "https://doi.org/10.48550/arxiv.2511.18437",
+      "authors": "Zhang, Chi et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E111",
+      "text": "TAPO is a process-level RL framework that augments GRPO with dense rewards defined directly on visual tool inputs and outputs, rather than on chain-of-thought tokens, making supervision easier to verify and less susceptible to reward hacking.",
+      "title": "CodeV: Code with Images for Faithful Visual Reasoning via Tool-Aware Policy Optimization",
+      "year": 2025,
+      "date": "2025-11-24",
+      "url": "https://doi.org/10.48550/arxiv.2511.19661",
+      "authors": "Hou, Xinhai et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E112",
+      "text": "Furthermore, fine-tuning these distilled models for specific objectives, such as aesthetic appeal or user preference, using Reinforcement Learning (RL) is notoriously unstable and easily falls into reward hacking.",
+      "title": "Flash-DMD: Towards High-Fidelity Few-Step Image Generation with Efficient Distillation and Joint Reinforcement Learning",
+      "year": 2025,
+      "date": "2025-11-25",
+      "url": "https://doi.org/10.48550/arxiv.2511.20549",
+      "authors": "Chen, Guanjie et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E113",
+      "text": "We introduce EvilGenie, a benchmark for reward hacking in programming settings.",
+      "title": "EvilGenie: A Reward Hacking Benchmark",
+      "year": 2025,
+      "date": "2025-11-26",
+      "url": "https://doi.org/10.48550/arxiv.2511.21654",
+      "authors": "Jonathan Gabor et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S3"
+    },
+    {
+      "id": "E114",
+      "text": "However, two critical challenges persist: (1) instruction hallucination, text-only chain-of-thought (CoT) reasoning cannot fully prevent factual errors due to inherent information bottlenecks; (2) reward hacking, dynamic policy optimization against static reward models allows agents to exploit flaws in reward functions.",
+      "title": "JarvisEvo: Towards a Self-Evolving Photo Editing Agent with Synergistic Editor-Evaluator Optimization",
+      "year": 2025,
+      "date": "2025-11-28",
+      "url": "https://doi.org/10.48550/arxiv.2511.23002",
+      "authors": "Lin, Yunlong et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E115",
+      "text": "Most existing algorithms are often vulnerable to reward hacking, such as quality degradation, over-stylization, or reduced diversity.",
+      "title": "Data-regularized Reinforcement Learning for Diffusion Models at Scale",
+      "year": 2025,
+      "date": "2025-12-03",
+      "url": "https://doi.org/10.48550/arxiv.2512.04332",
+      "authors": "Haotian Ye et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E116",
+      "text": "We show that: 1) RL produces true capability gains (pass@128) only when pre-training leaves sufficient headroom and when RL data target the model's edge of competence, tasks at the boundary that are difficult but not yet out of reach. 2) Contextual generalization requires minimal yet sufficient pre-training exposure, after which RL can reliably transfer. 3) Mid-training significantly enhances performance under fixed compute compared with RL only…",
+      "title": "On the Interplay of Pre-Training, Mid-Training, and RL on Reasoning Language Models",
+      "year": 2025,
+      "date": "2025-12-08",
+      "url": "https://doi.org/10.48550/arxiv.2512.07783",
+      "authors": "Zhang, Charlie et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "unclear"
+    },
+    {
+      "id": "E117",
+      "text": "To demonstrate the viability of our approach, we train GPT-5-Thinking to produce confessions, and we evaluate its honesty in out-of-distribution scenarios measuring hallucination, instruction following, scheming, and reward hacking.",
+      "title": "Training LLMs for Honesty via Confessions",
+      "year": 2025,
+      "date": "2025-12-08",
+      "url": "https://doi.org/10.48550/arxiv.2512.08093",
+      "authors": "Manas Joglekar et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S3"
+    },
+    {
+      "id": "E118",
+      "text": "This mismatch often leads to reward hacking, where proxy scores increase while real image quality deteriorates and generation diversity collapses.",
+      "title": "GARDO: Reinforcing Diffusion Models without Reward Hacking",
+      "year": 2025,
+      "date": "2025-12-30",
+      "url": "https://doi.org/10.48550/arxiv.2512.24138",
+      "authors": "Haoran He et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S2"
+    },
+    {
+      "id": "E119",
+      "text": "However, while existing methods achieve high scores on automated reward metrics, they often lead to Preference Mode Collapse (PMC)-a specific form of reward hacking where models converge on narrow, high-scoring outputs (e.g., images with monolithic styles or pervasive overexposure), severely degrading generative diversity.",
+      "title": "Taming Preference Mode Collapse via Directional Decoupling Alignment in Diffusion Reinforcement Learning",
+      "year": 2025,
+      "date": "2025-12-30",
+      "url": "https://doi.org/10.48550/arxiv.2512.24146",
+      "authors": "Chubin Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E120",
+      "text": "Trustworthy verifiers are essential for the success of reinforcement learning with verifiable reward (RLVR), which is the core methodology behind various large reasoning models such as DeepSeek-R1.In complex domains like mathematical reasoning, rule-based verifiers have been widely adopted in previous works to train strong reasoning models.However, the reliability of these verifiers and their impact on the RL training process remain poorly under…",
+      "title": "From Accuracy to Robustness: A Study of Rule- and Model-based Verifiers in Mathematical Reasoning",
+      "year": 2026,
+      "date": "2026-01-01",
+      "url": "https://doi.org/10.18653/2026.emnlp-main.255",
+      "authors": "Yuzhen Huang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "unclear"
+    },
+    {
+      "id": "E121",
+      "text": "Proxy optimization, where AI systems exploit evaluator weaknesses rather than improve intended objectives, threatens both reinforcement learning (reward hacking) and LLM alignment (evaluator gaming).We introduce the Evaluator Stress Test (EST), an invariancebased framework that detects proxy gaming by separating exploitable sensitivity (e.g., format, physics bugs) from content-driven improvements using controlled perturbations with semantic vali…",
+      "title": "Detecting Proxy Gaming in RL and LLM Alignment via Evaluator Stress Tests",
+      "year": 2026,
+      "date": "2026-01-01",
+      "url": "https://doi.org/10.18653/v1/2026.findings-acl.513",
+      "authors": "Sanjeda Akter et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S1"
+    },
+    {
+      "id": "E122",
+      "text": "Reward hacking is a form of misalignment in which models overoptimize proxy rewards without genuinely solving the underlying task.Precisely measuring reward hacking occurrence remains challenging because true task rewards are often expensive or impossible to compute.We introduce Countdown-Code, a minimal environment where models can both solve a mathematical reasoning task and manipulate the test harness.This dual-access design creates a clean s…",
+      "title": "Countdown-Code: A Testbed for Studying The Emergence and Generalization of Reward Hacking in RLVR",
+      "year": 2026,
+      "date": "2026-01-01",
+      "url": "https://doi.org/10.18653/2026.emnlp-main.1902",
+      "authors": "Muhammad Khalifa et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S3"
+    },
+    {
+      "id": "E123",
+      "text": "The ability of large language models (LLMs) to follow user instructions is central to their reliability, safety, and usefulness.While prior studies assess instruction adherence in the model's main responses, we argue that it is also critical for large reasoning models (LRMs) to follow user instructions throughout their reasoning process.Reasoning instruction following makes LRMs more controllable and transparent, while reducing risks of undesira…",
+      "title": "ReasonIF: Large Reasoning Models Fail to Follow Instructions During Reasoning",
+      "year": 2026,
+      "date": "2026-01-01",
+      "url": "https://doi.org/10.18653/v1/2026.findings-acl.1456",
+      "authors": "Yongchan Kwon et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E124",
+      "text": "Meanwhile, vanilla RFT under sparse supervision is prone to reward hacking and can produce hallucinated, ungrounded rationales.",
+      "title": "Interpretable All-Type Audio Deepfake Detection with Audio LLMs via Frequency-Time Reinforcement Learning",
+      "year": 2026,
+      "date": "2026-01-06",
+      "url": "https://doi.org/10.48550/arxiv.2601.02983",
+      "authors": "Yuankun Xie et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E125",
+      "text": "To ensure safety and training stability, we introduce two key mechanisms: a foothold safety mechanism combining extensible Terrain Edge Detection with Foot Volume Points to reduce catastrophic slippage on edges, and a Flat Patch Sampling strategy that mitigates reward hacking by generating feasible navigation targets.",
+      "title": "Hiking in the Wild: A Scalable Perceptive Parkour Framework for Humanoids",
+      "year": 2026,
+      "date": "2026-01-12",
+      "url": "https://doi.org/10.48550/arxiv.2601.07718",
+      "authors": "Shaoting Zhu et al.",
+      "fromTitle": false,
+      "field": "Engineering",
+      "inSet": 0,
+      "sense": "S1"
+    },
+    {
+      "id": "E126",
+      "text": "Recent advances in reinforcement learning for code generation have made robust environments essential to prevent reward hacking.",
+      "title": "Benchmarking Reward Hack Detection in Code Environments via Contrastive Analysis",
+      "year": 2026,
+      "date": "2026-01-27",
+      "url": "https://doi.org/10.48550/arxiv.2601.20103",
+      "authors": "Darshan Girish Deshpande et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 5,
+      "sense": "S3"
+    },
+    {
+      "id": "E127",
+      "text": "Unlike next-state token prediction, which prioritizes token-level fidelity (i.e., reproducing exact wording) over semantic equivalence and can lead to model collapse, our method provides a more robust training signal and is empirically less susceptible to reward hacking than LLM-as-a-judge.",
+      "title": "Reinforcement World Model Learning for LLM-based Agents",
+      "year": 2026,
+      "date": "2026-02-05",
+      "url": "https://doi.org/10.48550/arxiv.2602.05842",
+      "authors": "Xiao Yu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E128",
+      "text": "However, training LLMs for this task requires sufficient data, a robust environment, and the process is often vulnerable to reward hacking and lazy optimization.",
+      "title": "Dr. Kernel: Reinforcement Learning Done Right for Triton Kernel Generations",
+      "year": 2026,
+      "date": "2026-02-05",
+      "url": "https://doi.org/10.48550/arxiv.2602.05885",
+      "authors": "Wei Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S3"
+    },
+    {
+      "id": "E129",
+      "text": "We further find that RL reward design is crucial in reranking: LLMs tend to exploit reward hacking by preserving item order, motivating conditional verifiable rewards to mitigate this behavior and optimize reranking performance.",
+      "title": "GR2: Generative Reasoning Re-ranker",
+      "year": 2026,
+      "date": "2026-02-08",
+      "url": "https://doi.org/10.48550/arxiv.2602.07774",
+      "authors": "Mingfu Liang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E130",
+      "text": "To effectively \"steer\" the world model's exploration, we introduce three core innovations tailored to the autoregressive video generation paradigm: 1) Clip-level rollout Strategy: We generate and evaluate multiple samples at a single target clip, which significantly boosts rollout efficiency and provides fine-grained reward signals. 2) Complementary Reward Functions: We design reward functions for both interaction-following accuracy and visual q…",
+      "title": "WorldCompass: Reinforcement Learning for Long-Horizon World Models",
+      "year": 2026,
+      "date": "2026-02-09",
+      "url": "https://doi.org/10.48550/arxiv.2602.09022",
+      "authors": "Zehan Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "unclear"
+    },
+    {
+      "id": "E131",
+      "text": "Despite chain-of-thought (CoT) playing crucial roles in LLM reasoning, directly rewarding it is difficult: training a reward model demands heavy human labeling efforts, and static RMs struggle with evolving CoT distributions and reward hacking.",
+      "title": "Reinforcing Chain-of-Thought Reasoning with Self-Evolving Rubrics",
+      "year": 2026,
+      "date": "2026-02-11",
+      "url": "https://doi.org/10.48550/arxiv.2602.10885",
+      "authors": "Leheng Sheng et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E132",
+      "text": "We construct a realistic coding environment where reward hacking via hardcoding test cases naturally occurs, and show that obfuscation emerges in this setting.",
+      "title": "The Obfuscation Atlas: Mapping Where Honesty Emerges in RLVR with Deception Probes",
+      "year": 2026,
+      "date": "2026-02-17",
+      "url": "https://doi.org/10.48550/arxiv.2602.15515",
+      "authors": "Mohammad Taufeeque et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E133",
+      "text": "Recent AI agent incidents involving reward hacking indicate how optimizing for task success can bring learned capabilities into conflict with safety alignment.",
+      "title": "Internal Safety Collapse in LLMs and Coding Agents",
+      "year": 2026,
+      "date": "2026-03-04",
+      "url": "https://doi.org/10.48550/arxiv.2603.23509",
+      "authors": "Yutao Wu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E134",
+      "text": "Agents sometimes engage in reward hacking: training on the test set, downloading existing instruction-tuned checkpoints instead of training their own, and using API keys they find to generate synthetic data without authorization.",
+      "title": "PostTrainBench: Can LLM Agents Automate LLM Post-Training?",
+      "year": 2026,
+      "date": "2026-03-09",
+      "url": "https://doi.org/10.48550/arxiv.2603.08640",
+      "authors": "Ben Rank et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S3"
+    },
+    {
+      "id": "E135",
+      "text": "To support robust evaluation of agentic optimizers, we additionally provide a sandboxed harness with GPU clock locking, L2 cache clearing, isolated subprocess execution, and static analysis based checks against common reward-hacking strategies.",
+      "title": "SOL-ExecBench: Speed-of-Light Benchmarking for Real-World GPU Kernels Against Hardware Limits",
+      "year": 2026,
+      "date": "2026-03-19",
+      "url": "https://doi.org/10.48550/arxiv.2603.19173",
+      "authors": "Edward Lin et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E136",
+      "text": "To ensure scalability to multi-round interleaved generation, we introduce two critical modifications to the original FlowGRPO: (1) eliminating classifier-free guidance to maintain linear, unbranched rollouts, which is essential for scaling to complex scenarios involving multi-turn interactions and multi-condition generation (e.g., editing); and (2) replacing the standard latent KL penalty with an MSE penalty directly on the velocity fields, prov…",
+      "title": "UniGRPO: Unified Policy Optimization for Reasoning-Driven Visual Generation",
+      "year": 2026,
+      "date": "2026-03-24",
+      "url": "https://doi.org/10.48550/arxiv.2603.23500",
+      "authors": "Jie Liu et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E137",
+      "text": "It contains three key innovations: (1) a thought-augmented complex query understanding module, which enables deep query understanding and overcomes the shallow semantic matching limitations of direct inference; (2) a reasoning-internalized self-distillation training pipeline, which uncovers users' potential yet precise e-commerce intentions beyond log-fitting through implicit in-context learning; (3) a behavior preference alignment optimization …",
+      "title": "OneSearch-V2: The Latent Reasoning Enhanced Self-distillation Generative Search Framework",
+      "year": 2026,
+      "date": "2026-03-25",
+      "url": "https://doi.org/10.48550/arxiv.2603.24422",
+      "authors": "Ben Chen et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "unclear"
+    },
+    {
+      "id": "E138",
+      "text": "Our key finding is that these representations causally influence the LLM's outputs, including Claude's preferences and its rate of exhibiting misaligned behaviors such as reward hacking, blackmail, and sycophancy.",
+      "title": "Emotion Concepts and their Function in a Large Language Model",
+      "year": 2026,
+      "date": "2026-04-09",
+      "url": "https://doi.org/10.48550/arxiv.2604.07729",
+      "authors": "Nicholas Sofroniew et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E139",
+      "text": "These challenges arise in diverse settings such as misuse campaigns, covert sabotage, reward hacking, and prompt injection.",
+      "title": "Detecting Safety Violations Across Many Agent Traces",
+      "year": 2026,
+      "date": "2026-04-13",
+      "url": "https://doi.org/10.48550/arxiv.2604.11806",
+      "authors": "Adam Stein et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S3"
+    },
+    {
+      "id": "E140",
+      "text": "However, these approaches introduce a systemic vulnerability: reward hacking, where models exploit imperfections in learned reward signals to maximize proxy objectives without fulfilling true task intent.",
+      "title": "Reward Hacking in the Era of Large Models: Mechanisms, Emergent Misalignment, Challenges",
+      "year": 2026,
+      "date": "2026-04-15",
+      "url": "https://doi.org/10.48550/arxiv.2604.13602",
+      "authors": "Xiaohua Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 4,
+      "sense": "S2"
+    },
+    {
+      "id": "E141",
+      "text": "We show that this behavior is not a failure of understanding but a form of reward hacking: imperfect verifiers that check only extensional correctness admit false positives.",
+      "title": "LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking",
+      "year": 2026,
+      "date": "2026-04-16",
+      "url": "https://doi.org/10.48550/arxiv.2604.15149",
+      "authors": "Lukas Helff et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S3"
+    },
+    {
+      "id": "E142",
+      "text": "Current pipelines are bottlenecked by unoptimized demonstration data, sparse execution rewards, and computationally prohibitive inference scaling, which collectively exacerbate token bloat, reward hacking, and policy degradation.",
+      "title": "SWE-TRACE: Optimizing Long-Horizon SWE Agents Through Rubric Process Reward Models and Heuristic Test-Time Scaling",
+      "year": 2026,
+      "date": "2026-04-16",
+      "url": "https://doi.org/10.48550/arxiv.2604.14820",
+      "authors": "Hao Han et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E143",
+      "text": "While these capabilities significantly expand the functional scope of AI, they also introduce qualitatively novel security risks-such as memory poisoning, tool misuse, reward hacking, and emergent misalignment-that extend beyond the threat models of conventional systems or standalone LLMs.",
+      "title": "A Survey on Autonomy-Induced Security Risks in Large Model-Based Agents",
+      "year": 2026,
+      "date": "2026-04-28",
+      "url": "https://doi.org/10.1109/tpami.2026.3688650",
+      "authors": "Hang Su et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E144",
+      "text": "We introduce the Reward Hacking Benchmark (RHB), a suite of multi-step tasks requiring sequential tool operations with naturalistic shortcut opportunities such as skipping verification steps, inferring answers from task-adjacent metadata, or tampering with evaluation-relevant functions.",
+      "title": "Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use",
+      "year": 2026,
+      "date": "2026-05-03",
+      "url": "https://doi.org/10.48550/arxiv.2605.02964",
+      "authors": "Kunvar Thaman",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S3"
+    },
+    {
+      "id": "E145",
+      "text": "Existing Flow Matching (FM) text-to-image models suffer from two critical bottlenecks under multi-task alignment: the reward sparsity induced by scalar-valued rewards, and the gradient interference arising from jointly optimizing heterogeneous objectives, which together give rise to a 'seesaw effect' of competing metrics and pervasive reward hacking.",
+      "title": "Flow-OPD: On-Policy Distillation for Flow Matching Models",
+      "year": 2026,
+      "date": "2026-05-08",
+      "url": "https://doi.org/10.48550/arxiv.2605.08063",
+      "authors": "Zhen Fang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E146",
+      "text": "Self-evolving LLMs excel in verifiable domains but struggle in open-ended tasks, where reliance on proxy LLM judges introduces capability bottlenecks and reward hacking.",
+      "title": "G-Zero: Self-Play for Open-Ended Generation from Zero Data",
+      "year": 2026,
+      "date": "2026-05-11",
+      "url": "https://doi.org/10.48550/arxiv.2605.09959",
+      "authors": "Chengsong Huang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E147",
+      "text": "We study reward hacking in rubric-based RL, where a policy is optimized against a training verifier but evaluated against a cross-family panel of three frontier judges, reducing dependence on any single evaluator.",
+      "title": "Reward Hacking in Rubric-Based Reinforcement Learning",
+      "year": 2026,
+      "date": "2026-05-12",
+      "url": "https://doi.org/10.48550/arxiv.2605.12474",
+      "authors": "Anas Mahmoud et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E148",
+      "text": "However, reward hacking, where agents maximize a score without performing the intended task, emerges spontaneously in frontier models without overfitting.",
+      "title": "Do Androids Dream of Breaking the Game? Systematically Auditing AI Agent Benchmarks with BenchJack",
+      "year": 2026,
+      "date": "2026-05-12",
+      "url": "https://doi.org/10.48550/arxiv.2605.12673",
+      "authors": "Hao Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E149",
+      "text": "First, a correct final answer can come from memorization, reward hacking, or wrong reasoning that produces the right number by chance.",
+      "title": "BiomniBench: Process-level Evaluation of LLM Agents for Real-world Biomedical Research",
+      "year": 2026,
+      "date": "2026-05-14",
+      "url": "https://doi.org/10.64898/2026.05.12.724604",
+      "authors": "Yuanhao Qu et al.",
+      "fromTitle": false,
+      "field": "Medicine",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E150",
+      "text": "Reward hacking naturally arises in this setup, as the agent optimizes for passing tests while deviating from the users true goal.",
+      "title": "SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents",
+      "year": 2026,
+      "date": "2026-05-20",
+      "url": "https://doi.org/10.48550/arxiv.2605.21384",
+      "authors": "Bingchen Zhao et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 2,
+      "sense": "S3"
+    },
+    {
+      "id": "E151",
+      "text": "However, policy models may exploit latent biases in the judge, leading to reward hacking and ineffective or unsafe training outcomes.",
+      "title": "Reproducing, Analyzing, and Detecting Reward Hacking in Rubric-Based Reinforcement Learning",
+      "year": 2026,
+      "date": "2026-06-03",
+      "url": "https://doi.org/10.48550/arxiv.2606.04923",
+      "authors": "Xuekang Wang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E152",
+      "text": "We also observe reward-hacking behavior in 13.8% of rollouts, where agents attempt to exploit the environment or verifier to bypass the intended workflow.",
+      "title": "SWE-Marathon: Can Agents Autonomously Complete Ultra-Long-Horizon Software Work?",
+      "year": 2026,
+      "date": "2026-06-05",
+      "url": "https://doi.org/10.48550/arxiv.2606.07682",
+      "authors": "Rishi Desai et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E153",
+      "text": "Building upon this foundational framework, we demonstrate that frontier models frequently engage in reward hacking to artificially inflate reported performance.",
+      "title": "KernelBench-Verified: Do LLM-Generated Kernels Actually Beat PyTorch?",
+      "year": 2026,
+      "date": "2026-06-26",
+      "url": "https://doi.org/10.48550/arxiv.2607.16241",
+      "authors": "Y J Zhang et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E154",
+      "text": "To further align outputs with user satisfaction, we introduce GRPO-SR, a reinforcement learning method that pairs Group Relative Policy Optimization with NLL regularization for training stability, and employs Hybrid Rewards combining a dense reward model with a relevance gate to mitigate reward hacking.",
+      "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation",
+      "year": 2026,
+      "date": "2026-07-15",
+      "url": "https://doi.org/10.1145/3805712.3808437",
+      "authors": "Yanyan Zou et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E155",
+      "text": "However, persistent challenges such as reward hacking, computational costs, and scalable feedback collection underscore the need for continued innovation.",
+      "title": "A Technical Survey of Reinforcement Learning Techniques for Large Language Models",
+      "year": 2026,
+      "date": "2026-07-28",
+      "url": "https://doi.org/10.1145/3834858",
+      "authors": "Saksham Sahai Srivastava et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 1,
+      "sense": "S2"
+    },
+    {
+      "id": "E156",
+      "text": "This survey provides a systematic exploration of post-training methodologies, analyzing their role in refining LLMs beyond pretraining, addressing key challenges such as catastrophic forgetting, reward hacking, and inference-time trade-offs.",
+      "title": "LLM Post-Training: A Deep Dive Into Reasoning Large Language Models",
+      "year": 2026,
+      "date": "2026-08-04",
+      "url": "https://doi.org/10.1109/tpami.2026.3720414",
+      "authors": "Komal Kumar et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    },
+    {
+      "id": "E157",
+      "text": "On a separate held-out task family, the discovered agents also exhibit reduced reward hacking, a property the loop never explicitly optimized for: the rate falls from 55% to 32% during the run, 7 percentage points below the human-engineered agent.",
+      "title": "Recursive self-improvement of AI research agents",
+      "year": 2026,
+      "date": "2026-09-22",
+      "url": "https://doi.org/10.48550/arxiv.2609.26457",
+      "authors": "Dhruv Srikanth et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E158",
+      "text": "We present RLCDAlignBench, which benchmarks Jev on ten alignment failures: sycophancy, jailbreaks, deception, prompt injection, hallucination, privacy violation, social bias, reward hacking, concealing uncertainty, and power seeking.",
+      "title": "Just Ask Jev: Reinforcement Learning for Calibrated Decisions as a Zero-Shot Detector of AI Alignment Failures",
+      "year": 2026,
+      "date": "2026-09-24",
+      "url": "https://doi.org/10.48550/arxiv.2609.29429",
+      "authors": "Ruoqi Guo et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S3"
+    },
+    {
+      "id": "E159",
+      "text": "This often leads to reward hacking and excessive dependence on parametric memory, limiting generalization to out-of-domain tasks.",
+      "title": "Supervising the search process produces reliable and generalizable information-seeking agents",
+      "year": 2026,
+      "date": "2026-10-28",
+      "url": "https://doi.org/10.1038/s41467-026-78807-z",
+      "authors": "Guangzhi Xiong et al.",
+      "fromTitle": false,
+      "field": "Computer Science",
+      "inSet": 0,
+      "sense": "S2"
+    }
   ],
-  [
-   2019,
-   8
+  "total": 1166,
+  "model": "claude-opus-5-5",
+  "generated": "2026-11-17",
+  "lang": "en",
+  "meaning": "",
+  "focus": "This timeline follows 'reward hacking' as the AI-safety and machine-learning failure in which an optimized agent or model exploits flaws in a reward function, reward model or verifier to score highly without achieving the intended goal.",
+  "otherSenses": [
+    {
+      "label": "Reward poisoning attack",
+      "meaning": "An attacker manipulates reward signals as one module of a backdoor attack on multi-agent reinforcement learning.",
+      "evidence": [
+        {
+          "id": "E25",
+          "text": "In the proposed MARNet attack framework, we carefully design a pipeline of trigger design, action poisoning, and reward hacking modules to accommodate the cooperative multi-agent settings.",
+          "title": "MARNet: Backdoor Attacks Against Cooperative Multi-Agent Reinforcement Learning",
+          "year": 2022,
+          "date": "2022-09-19",
+          "url": "https://doi.org/10.1109/tdsc.2022.3207429",
+          "authors": "Yanjiao Chen et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S4"
+        }
+      ]
+    }
   ],
-  [
-   2020,
-   3
+  "senses": [
+    {
+      "key": "S1",
+      "label": "Misspecified-reward exploitation",
+      "definition": "A reinforcement-learning agent finds ways to maximize a misspecified or proxy reward without achieving the intended goal.",
+      "related": true
+    },
+    {
+      "key": "S2",
+      "label": "Reward-model overoptimization",
+      "definition": "A language, image or other generative model trained or decoded against a learned reward model, judge or metric raises the proxy score while true quality stalls or degrades.",
+      "related": true
+    },
+    {
+      "key": "S3",
+      "label": "Agentic exploit misbehavior",
+      "definition": "Frontier models or agents game tests, verifiers or environments (for example by hardcoding tests or tampering with the harness), treated as a misaligned behaviour to detect and benchmark.",
+      "related": true
+    },
+    {
+      "key": "S4",
+      "label": "Reward poisoning attack",
+      "definition": "An attacker manipulates reward signals as one module of a backdoor attack on multi-agent reinforcement learning.",
+      "related": false
+    },
+    {
+      "key": "S5",
+      "label": "Surrogate-model exploitation",
+      "definition": "In optimization tasks such as molecular design, the optimizer exploits a predictive model's inaccuracies outside its training data to obtain misleadingly high scores.",
+      "related": true
+    }
   ],
-  [
-   2021,
-   4
+  "evidenceCount": 159,
+  "eras": [
+    {
+      "start": 2016,
+      "end": 2021,
+      "label": "RL safety accident risk",
+      "meaning": "Reward hacking named a failure of reinforcement-learning agents that exploit a misspecified reward function, discussed alongside side effects, specification gaming and Goodhart's law.",
+      "evidence": [
+        {
+          "id": "E1",
+          "text": "We present a list of five practical research problems related to accident risk, categorized according to whether the problem originates from having the wrong objective function (\"avoiding side effects\" and \"avoiding reward hacking\"), an objective function that is too expensive to evaluate frequently (\"scalable supervision\"), or undesirable behavior during the learning process (\"safe exploration\" and \"distributional shift\").",
+          "title": "Concrete Problems in AI Safety",
+          "year": 2016,
+          "date": "2016-06-21",
+          "url": "https://doi.org/10.48550/arxiv.1606.06565",
+          "authors": "Dario Amodei et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 37,
+          "sense": "S1"
+        },
+        {
+          "id": "E3",
+          "text": "A misspecified reward function can cause problems such as reward hacking, where the agent finds out ways that maximize the reward without achieving the intended goal.",
+          "title": "MoVEMo: A Structured Approach for Engineering Reward Functions",
+          "year": 2018,
+          "date": "2018-01-01",
+          "url": "https://doi.org/10.1109/irc.2018.00053",
+          "authors": "Piergiuseppe Mallozzi et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E5",
+          "text": "Overoptimization failures in machine learning and AI can involve specification gaming, reward hacking, fragility to distributional shifts, and Goodhart's or Campbell's law.",
+          "title": "Overoptimization Failures and Specification Gaming in Multi-agent Systems.",
+          "year": 2018,
+          "date": "2018-10-16",
+          "url": "https://openalex.org/W2898576746",
+          "authors": "David Manheim",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E9",
+          "text": "Autonomous agents trained via reinforcement learning present numerous safety concerns: reward hacking, negative side effects, and unsafe exploration, among others.",
+          "title": "Parenting: Safe Reinforcement Learning from Human Input",
+          "year": 2019,
+          "date": "2019-02-18",
+          "url": "https://doi.org/10.48550/arxiv.1902.06766",
+          "authors": "Christopher Frye et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E10",
+          "text": "An important challenge for safety in machine learning and artificial intelligence systems is a set of related failures involving specification gaming, reward hacking, fragility to distributional shifts, and Goodhart’s or Campbell’s law.",
+          "title": "Multiparty Dynamics and Failure Modes for Machine Learning and Artificial Intelligence",
+          "year": 2019,
+          "date": "2019-04-05",
+          "url": "https://doi.org/10.3390/bdcc3020021",
+          "authors": "David Manheim",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E19",
+          "text": "Using the raw state representation led to ‘reward-hacking’ and poor performance, which highlights the importance of the problem and state-space formulation in successfully training reinforcement learning agents.",
+          "title": "Improving the efficiency of reinforcement learning for a spacecraft powered descent with Q-learning",
+          "year": 2021,
+          "date": "2021-10-04",
+          "url": "https://doi.org/10.1007/s11081-021-09687-z",
+          "authors": "Callum Wilson et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E20",
+          "text": "Most often, practitioners go about the task of behavior specification by manually engineering the reward function, a counter-intuitive process that requires several iterations and is prone to reward hacking by the agent.",
+          "title": "Direct Behavior Specification via Constrained Reinforcement Learning",
+          "year": 2021,
+          "date": "2021-12-22",
+          "url": "https://doi.org/10.48550/arxiv.2112.12228",
+          "authors": "Julien Roy et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 1,
+          "sense": "S1"
+        }
+      ]
+    },
+    {
+      "start": 2022,
+      "end": 2024,
+      "label": "Formalized; RLHF overoptimization",
+      "meaning": "The term received formal definitions as optimizing an imperfect proxy reward, and became the standard name for language and image models exploiting errors in learned reward models during RLHF.",
+      "evidence": [
+        {
+          "id": "E21",
+          "text": "We provide the first formal definition of reward hacking, a phenomenon where optimizing an imperfect proxy reward function leads to poor performance according to the true reward function.",
+          "title": "Defining and Characterizing Reward Hacking",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.52202/068431-0687",
+          "authors": "Joar Skalse et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 28,
+          "sense": "S1"
+        },
+        {
+          "id": "E23",
+          "text": "Reward hacking -- where RL agents exploit gaps in misspecified reward functions -- has been widely observed, but not yet systematically studied.",
+          "title": "The Effects of Reward Misspecification: Mapping and Mitigating Misaligned Models",
+          "year": 2022,
+          "date": "2022-01-10",
+          "url": "https://doi.org/10.48550/arxiv.2201.03544",
+          "authors": "Pan, Alexander et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S1"
+        },
+        {
+          "id": "E26",
+          "text": "But optimizing against a reward model can improve on reward while degrading performance in other areas, a phenomenon known as reward hacking, alignment tax, or language drift.",
+          "title": "Language Model Alignment with Elastic Reset",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.52202/075280-0152",
+          "authors": "Michael Noukhovitch et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 1,
+          "sense": "S2"
+        },
+        {
+          "id": "E29",
+          "text": "However, this setup creates an incentive for the language model to exploit errors in the reward model to achieve high estimated reward, a phenomenon often termed \\emph{reward hacking}.",
+          "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
+          "year": 2023,
+          "date": "2023-12-14",
+          "url": "https://doi.org/10.48550/arxiv.2312.09244",
+          "authors": "Jacob Eisenstein et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S2"
+        },
+        {
+          "id": "E31",
+          "text": "A prominent issue with such methods is reward over-optimization or reward hacking, where performance as measured by the learned proxy reward model increases, but true quality plateaus or even deteriorates.",
+          "title": "Scaling Laws for Reward Model Overoptimization in Direct Alignment Algorithms",
+          "year": 2024,
+          "date": "2024-01-01",
+          "url": "https://doi.org/10.52202/079017-4009",
+          "authors": "Rafael Rafailov et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 4,
+          "sense": "S2"
+        },
+        {
+          "id": "E33",
+          "text": "Despite the success of reinforcement learning from human feedback (RLHF) in aligning language models with human values, reward hacking, also termed reward overoptimization, remains a critical challenge.",
+          "title": "InfoRM: Mitigating Reward Hacking in RLHF via Information-Theoretic Reward Modeling",
+          "year": 2024,
+          "date": "2024-01-01",
+          "url": "https://doi.org/10.52202/079017-4270",
+          "authors": "Yuchun Miao et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 7,
+          "sense": "S2"
+        },
+        {
+          "id": "E36",
+          "text": "Aligning large language models (LLMs) with human preferences through reinforcement learning (RLHF) can lead to reward hacking, where LLMs exploit failures in the reward model (RM) to achieve seemingly high rewards without meeting the underlying objectives.",
+          "title": "WARM: On the Benefits of Weight Averaged Reward Models",
+          "year": 2024,
+          "date": "2024-01-22",
+          "url": "https://doi.org/10.48550/arxiv.2401.12187",
+          "authors": "Alexandre Ramé et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 11,
+          "sense": "S2"
+        },
+        {
+          "id": "E40",
+          "text": "In this work, we study the issue of reward hacking on the response length, a challenge emerging in Reinforcement Learning from Human Feedback (RLHF) on LLMs.",
+          "title": "ODIN: Disentangled Reward Mitigates Hacking in RLHF",
+          "year": 2024,
+          "date": "2024-02-11",
+          "url": "https://doi.org/10.48550/arxiv.2402.07319",
+          "authors": "Lichang Chen et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 12,
+          "sense": "S2"
+        }
+      ]
+    },
+    {
+      "start": 2025,
+      "end": 2026,
+      "label": "Agentic exploits and misalignment",
+      "meaning": "Beyond reward-model overoptimization in reasoning and diffusion training, the term now also names coding and tool-using agents gaming verifiers and tests, framed as a misaligned behaviour to benchmark and detect.",
+      "evidence": [
+        {
+          "id": "E72",
+          "text": "Reinforcement learning from human feedback (RLHF) is widely used to align large language models with human preferences, but it remains vulnerable to \\emph{reward hacking}, whereby a policy exploits flaws in the reward function at the expense of the intended behavior.",
+          "title": "Reward Shaping to Mitigate Reward Hacking in RLHF",
+          "year": 2025,
+          "date": "2025-02-26",
+          "url": "https://doi.org/10.48550/arxiv.2502.18770",
+          "authors": "Jiayi Fu et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 7,
+          "sense": "S2"
+        },
+        {
+          "id": "E98",
+          "text": "More critically, the RLHF optimization process is plagued by Reward Hacking issue, where models exploit flaws in the reward signal without improving true quality.",
+          "title": "RewardDance: Reward Scaling in Visual Generation",
+          "year": 2025,
+          "date": "2025-09-10",
+          "url": "https://doi.org/10.48550/arxiv.2509.08826",
+          "authors": "Jie Wu et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 3,
+          "sense": "S2"
+        },
+        {
+          "id": "E109",
+          "text": "We start with a pretrained model, impart knowledge of reward hacking strategies via synthetic document finetuning or prompting, and train on a selection of real Anthropic production coding environments.",
+          "title": "Natural Emergent Misalignment from Reward Hacking in Production RL",
+          "year": 2025,
+          "date": "2025-11-23",
+          "url": "https://doi.org/10.48550/arxiv.2511.18397",
+          "authors": "MacDiarmid, Monte et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S3"
+        },
+        {
+          "id": "E113",
+          "text": "We introduce EvilGenie, a benchmark for reward hacking in programming settings.",
+          "title": "EvilGenie: A Reward Hacking Benchmark",
+          "year": 2025,
+          "date": "2025-11-26",
+          "url": "https://doi.org/10.48550/arxiv.2511.21654",
+          "authors": "Jonathan Gabor et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 2,
+          "sense": "S3"
+        },
+        {
+          "id": "E122",
+          "text": "Reward hacking is a form of misalignment in which models overoptimize proxy rewards without genuinely solving the underlying task.Precisely measuring reward hacking occurrence remains challenging because true task rewards are often expensive or impossible to compute.We introduce Countdown-Code, a minimal environment where models can both solve a mathematical reasoning task and manipulate the test harness.This dual-access design creates a clean s…",
+          "title": "Countdown-Code: A Testbed for Studying The Emergence and Generalization of Reward Hacking in RLVR",
+          "year": 2026,
+          "date": "2026-01-01",
+          "url": "https://doi.org/10.18653/2026.emnlp-main.1902",
+          "authors": "Muhammad Khalifa et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 5,
+          "sense": "S3"
+        },
+        {
+          "id": "E134",
+          "text": "Agents sometimes engage in reward hacking: training on the test set, downloading existing instruction-tuned checkpoints instead of training their own, and using API keys they find to generate synthetic data without authorization.",
+          "title": "PostTrainBench: Can LLM Agents Automate LLM Post-Training?",
+          "year": 2026,
+          "date": "2026-03-09",
+          "url": "https://doi.org/10.48550/arxiv.2603.08640",
+          "authors": "Ben Rank et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 2,
+          "sense": "S3"
+        },
+        {
+          "id": "E144",
+          "text": "We introduce the Reward Hacking Benchmark (RHB), a suite of multi-step tasks requiring sequential tool operations with naturalistic shortcut opportunities such as skipping verification steps, inferring answers from task-adjacent metadata, or tampering with evaluation-relevant functions.",
+          "title": "Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use",
+          "year": 2026,
+          "date": "2026-05-03",
+          "url": "https://doi.org/10.48550/arxiv.2605.02964",
+          "authors": "Kunvar Thaman",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 2,
+          "sense": "S3"
+        },
+        {
+          "id": "E150",
+          "text": "Reward hacking naturally arises in this setup, as the agent optimizes for passing tests while deviating from the users true goal.",
+          "title": "SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents",
+          "year": 2026,
+          "date": "2026-05-20",
+          "url": "https://doi.org/10.48550/arxiv.2605.21384",
+          "authors": "Bingchen Zhao et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 2,
+          "sense": "S3"
+        }
+      ]
+    }
   ],
-  [
-   2022,
-   6
+  "milestones": [
+    {
+      "year": 2016,
+      "kind": "origin",
+      "title": "Concrete Problems in AI Safety",
+      "why": "It is the earliest use in the evidence, listing 'avoiding reward hacking' among five practical accident-risk problems arising from a wrong objective function.",
+      "url": "https://doi.org/10.48550/arxiv.1606.06565",
+      "date": "2016-06-21",
+      "workTitle": "Concrete Problems in AI Safety",
+      "authors": "Dario Amodei et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E1",
+          "text": "We present a list of five practical research problems related to accident risk, categorized according to whether the problem originates from having the wrong objective function (\"avoiding side effects\" and \"avoiding reward hacking\"), an objective function that is too expensive to evaluate frequently (\"scalable supervision\"), or undesirable behavior during the learning process (\"safe exploration\" and \"distributional shift\").",
+          "title": "Concrete Problems in AI Safety",
+          "year": 2016,
+          "date": "2016-06-21",
+          "url": "https://doi.org/10.48550/arxiv.1606.06565",
+          "authors": "Dario Amodei et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 37,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": ""
+    },
+    {
+      "year": 2018,
+      "kind": "ancestor",
+      "title": "Goodhart's or Campbell's law and specification gaming",
+      "why": "Reward hacking is grouped with Goodhart's law and specification gaming as related overoptimization failures, showing its conceptual lineage.",
+      "url": "https://doi.org/10.13140/rg.2.2.20305.68967",
+      "date": "2018-01-01",
+      "workTitle": "Building Less Flawed Metrics: Dodging Goodhart and Campbell's Laws",
+      "authors": "David Manheim",
+      "link": "resolved",
+      "evidence": [
+        {
+          "id": "E5",
+          "text": "Overoptimization failures in machine learning and AI can involve specification gaming, reward hacking, fragility to distributional shifts, and Goodhart's or Campbell's law.",
+          "title": "Overoptimization Failures and Specification Gaming in Multi-agent Systems.",
+          "year": 2018,
+          "date": "2018-10-16",
+          "url": "https://openalex.org/W2898576746",
+          "authors": "David Manheim",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        },
+        {
+          "id": "E10",
+          "text": "An important challenge for safety in machine learning and artificial intelligence systems is a set of related failures involving specification gaming, reward hacking, fragility to distributional shifts, and Goodhart’s or Campbell’s law.",
+          "title": "Multiparty Dynamics and Failure Modes for Machine Learning and Artificial Intelligence",
+          "year": 2019,
+          "date": "2019-04-05",
+          "url": "https://doi.org/10.3390/bdcc3020021",
+          "authors": "David Manheim",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": ""
+    },
+    {
+      "year": 2018,
+      "kind": "applied",
+      "title": "On the use of reinforcement learning for testing game mechanics",
+      "why": "It flips reward hacking from a problem into a tool for discovering flaws in game mechanics.",
+      "url": "https://openalex.org/W2917684105",
+      "date": "2018-04-27",
+      "workTitle": "On the use of reinforcement learning for testing game mechanics",
+      "authors": "Aaron Snoswell et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E4",
+          "text": "We propose that this paradigm could be flipped whereby reinforcement learning “reward hacking” could provide a mechanism for testing game mechanics.",
+          "title": "On the use of reinforcement learning for testing game mechanics",
+          "year": 2018,
+          "date": "2018-04-27",
+          "url": "https://openalex.org/W2917684105",
+          "authors": "Aaron Snoswell et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "new field"
+    },
+    {
+      "year": 2022,
+      "kind": "redefined",
+      "title": "Defining and Characterizing Reward Hacking",
+      "why": "It gives the first formal definition, as optimizing an imperfect proxy reward leading to poor true-reward performance.",
+      "url": "https://doi.org/10.52202/068431-0687",
+      "date": "2022-01-01",
+      "workTitle": "Defining and Characterizing Reward Hacking",
+      "authors": "Joar Skalse et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E21",
+          "text": "We provide the first formal definition of reward hacking, a phenomenon where optimizing an imperfect proxy reward function leads to poor performance according to the true reward function.",
+          "title": "Defining and Characterizing Reward Hacking",
+          "year": 2022,
+          "date": "2022-01-01",
+          "url": "https://doi.org/10.52202/068431-0687",
+          "authors": "Joar Skalse et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 28,
+          "sense": "S1"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "narrowing"
+    },
+    {
+      "year": 2023,
+      "kind": "applied",
+      "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
+      "why": "The term moves to language models exploiting errors in a learned reward model under RLHF.",
+      "url": "https://doi.org/10.48550/arxiv.2312.09244",
+      "date": "2023-12-14",
+      "workTitle": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
+      "authors": "Jacob Eisenstein et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E26",
+          "text": "But optimizing against a reward model can improve on reward while degrading performance in other areas, a phenomenon known as reward hacking, alignment tax, or language drift.",
+          "title": "Language Model Alignment with Elastic Reset",
+          "year": 2023,
+          "date": "2023-01-01",
+          "url": "https://doi.org/10.52202/075280-0152",
+          "authors": "Michael Noukhovitch et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 1,
+          "sense": "S2"
+        },
+        {
+          "id": "E29",
+          "text": "However, this setup creates an incentive for the language model to exploit errors in the reward model to achieve high estimated reward, a phenomenon often termed \\emph{reward hacking}.",
+          "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
+          "year": 2023,
+          "date": "2023-12-14",
+          "url": "https://doi.org/10.48550/arxiv.2312.09244",
+          "authors": "Jacob Eisenstein et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 17,
+          "sense": "S2"
+        },
+        {
+          "id": "E28",
+          "text": "We propose a new alignment algorithm called Factually Augmented RLHF that augments the reward model with additional factual information such as image captions and ground-truth multi-choice options, which alleviates the reward hacking phenomenon in RLHF and further improves the performance.",
+          "title": "Aligning Large Multimodal Models with Factually Augmented RLHF",
+          "year": 2023,
+          "date": "2023-09-25",
+          "url": "https://doi.org/10.48550/arxiv.2309.14525",
+          "authors": "Zhiqing Sun et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 1,
+          "sense": "S2"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "new field"
+    },
+    {
+      "year": 2024,
+      "kind": "popularized",
+      "title": "WARM: On the Benefits of Weight Averaged Reward Models",
+      "why": "Reward hacking becomes a central RLHF challenge, with many papers proposing reward-model mitigations.",
+      "url": "https://doi.org/10.48550/arxiv.2401.12187",
+      "date": "2024-01-22",
+      "workTitle": "WARM: On the Benefits of Weight Averaged Reward Models",
+      "authors": "Alexandre Ramé et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E36",
+          "text": "Aligning large language models (LLMs) with human preferences through reinforcement learning (RLHF) can lead to reward hacking, where LLMs exploit failures in the reward model (RM) to achieve seemingly high rewards without meeting the underlying objectives.",
+          "title": "WARM: On the Benefits of Weight Averaged Reward Models",
+          "year": 2024,
+          "date": "2024-01-22",
+          "url": "https://doi.org/10.48550/arxiv.2401.12187",
+          "authors": "Alexandre Ramé et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 11,
+          "sense": "S2"
+        },
+        {
+          "id": "E33",
+          "text": "Despite the success of reinforcement learning from human feedback (RLHF) in aligning language models with human values, reward hacking, also termed reward overoptimization, remains a critical challenge.",
+          "title": "InfoRM: Mitigating Reward Hacking in RLHF via Information-Theoretic Reward Modeling",
+          "year": 2024,
+          "date": "2024-01-01",
+          "url": "https://doi.org/10.52202/079017-4270",
+          "authors": "Yuchun Miao et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 7,
+          "sense": "S2"
+        },
+        {
+          "id": "E40",
+          "text": "In this work, we study the issue of reward hacking on the response length, a challenge emerging in Reinforcement Learning from Human Feedback (RLHF) on LLMs.",
+          "title": "ODIN: Disentangled Reward Mitigates Hacking in RLHF",
+          "year": 2024,
+          "date": "2024-02-11",
+          "url": "https://doi.org/10.48550/arxiv.2402.07319",
+          "authors": "Lichang Chen et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 12,
+          "sense": "S2"
+        },
+        {
+          "id": "E47",
+          "text": "RRM: Robust Reward Model Training Mitigates Reward Hacking",
+          "title": "RRM: Robust Reward Model Training Mitigates Reward Hacking",
+          "year": 2024,
+          "date": "2024-09-20",
+          "url": "https://doi.org/10.48550/arxiv.2409.13156",
+          "authors": "Tianqi Liu et al.",
+          "fromTitle": true,
+          "field": "Computer Science",
+          "inSet": 5,
+          "sense": "S2"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": ""
+    },
+    {
+      "year": 2024,
+      "kind": "applied",
+      "title": "ReNO: Enhancing One-step Text-to-Image Models through Reward-based Noise Optimization",
+      "why": "The concept is extended to text-to-image generation tuned against reward objectives.",
+      "url": "https://doi.org/10.52202/079017-3987",
+      "date": "2024-01-01",
+      "workTitle": "ReNO: Enhancing One-step Text-to-Image Models through Reward-based Noise Optimization",
+      "authors": "Luca Eyring et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E32",
+          "text": "While fine-tuning T2I models with reward objectives has shown promise, it suffers from \"reward hacking\" and may not generalize well to unseen prompt distributions.",
+          "title": "ReNO: Enhancing One-step Text-to-Image Models through Reward-based Noise Optimization",
+          "year": 2024,
+          "date": "2024-01-01",
+          "url": "https://doi.org/10.52202/079017-3987",
+          "authors": "Luca Eyring et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S2"
+        },
+        {
+          "id": "E43",
+          "text": "Furthermore, we identify that naive implementation of DNO occasionally suffers from the out-of-distribution reward hacking problem, where optimized samples have high rewards but are no longer in the support of the pretrained distribution.",
+          "title": "Inference-Time Alignment of Diffusion Models with Direct Noise Optimization",
+          "year": 2024,
+          "date": "2024-05-29",
+          "url": "https://doi.org/10.48550/arxiv.2405.18881",
+          "authors": "Zhiwei Tang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 3,
+          "sense": "S2"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "new field"
+    },
+    {
+      "year": 2024,
+      "kind": "redefined",
+      "title": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
+      "why": "The term is extended from training to test-time optimization of an implicit objective via feedback loops.",
+      "url": "https://doi.org/10.48550/arxiv.2402.06627",
+      "date": "2024-02-09",
+      "workTitle": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
+      "authors": "Pan, Alexander et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E39",
+          "text": "In this work, we show that feedback loops can cause in-context reward hacking (ICRH), where the LLM at test-time optimizes a (potentially implicit) objective but creates negative side effects in the process.",
+          "title": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
+          "year": 2024,
+          "date": "2024-02-09",
+          "url": "https://doi.org/10.48550/arxiv.2402.06627",
+          "authors": "Pan, Alexander et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 4,
+          "sense": "S2"
+        },
+        {
+          "id": "E45",
+          "text": "However, because the evaluator is an imperfect proxy of user preference, this optimization can lead to reward hacking, where the evaluator's ratings improve while the generation quality remains stagnant or even decreases as judged by actual user preference.",
+          "title": "Spontaneous Reward Hacking in Iterative Self-Refinement",
+          "year": 2024,
+          "date": "2024-07-05",
+          "url": "https://doi.org/10.48550/arxiv.2407.04549",
+          "authors": "Jane Pan et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 1,
+          "sense": "S2"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "broadening"
+    },
+    {
+      "year": 2025,
+      "kind": "applied",
+      "title": "A data-driven generative strategy to avoid reward hacking in multi-objective molecular design",
+      "why": "The term is applied to optimizers exploiting predictive-model errors in molecular design and offline optimization.",
+      "url": "https://doi.org/10.1038/s41467-025-57582-3",
+      "date": "2025-03-11",
+      "workTitle": "A data-driven generative strategy to avoid reward hacking in multi-objective molecular design",
+      "authors": "Tatsuya Yoshizawa et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E74",
+          "text": "However, this approach is often susceptible to optimization failure due to reward hacking, where prediction models fail to extrapolate, i.e., fail to accurately predict properties for designed molecules that considerably deviate from the training data.",
+          "title": "A data-driven generative strategy to avoid reward hacking in multi-objective molecular design",
+          "year": 2025,
+          "date": "2025-03-11",
+          "url": "https://doi.org/10.1038/s41467-025-57582-3",
+          "authors": "Tatsuya Yoshizawa et al.",
+          "fromTitle": false,
+          "field": "Pharmacology, Toxicology and Pharmaceutics",
+          "inSet": 0,
+          "sense": "S5"
+        },
+        {
+          "id": "E75",
+          "text": "This uncertainty can lead to objective hacking(reward hacking), exploiting model inaccuracies in unseen regions, or other spurious optimizations that yield misleadingly high performance estimates outside the training distribution.",
+          "title": "Offline Model-Based Optimization: Comprehensive Review",
+          "year": 2025,
+          "date": "2025-03-21",
+          "url": "https://doi.org/10.48550/arxiv.2503.17286",
+          "authors": "Minsu Kim et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 0,
+          "sense": "S5"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "broadening"
+    },
+    {
+      "year": 2025,
+      "kind": "redefined",
+      "title": "Natural Emergent Misalignment from Reward Hacking in Production RL",
+      "why": "Reward hacking in production coding environments is treated as a source of broader emergent misalignment, not just a training nuisance.",
+      "url": "https://doi.org/10.48550/arxiv.2511.18397",
+      "date": "2025-11-23",
+      "workTitle": "Natural Emergent Misalignment from Reward Hacking in Production RL",
+      "authors": "MacDiarmid, Monte et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E109",
+          "text": "We start with a pretrained model, impart knowledge of reward hacking strategies via synthetic document finetuning or prompting, and train on a selection of real Anthropic production coding environments.",
+          "title": "Natural Emergent Misalignment from Reward Hacking in Production RL",
+          "year": 2025,
+          "date": "2025-11-23",
+          "url": "https://doi.org/10.48550/arxiv.2511.18397",
+          "authors": "MacDiarmid, Monte et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 8,
+          "sense": "S3"
+        },
+        {
+          "id": "E90",
+          "text": "Language models trained with reinforcement learning (RL) can engage in reward hacking--the exploitation of unintended strategies for high reward--without revealing this behavior in their chain-of-thought reasoning.",
+          "title": "Teaching Models to Verbalize Reward Hacking in Chain-of-Thought Reasoning",
+          "year": 2025,
+          "date": "2025-06-28",
+          "url": "https://doi.org/10.48550/arxiv.2506.22777",
+          "authors": "Miles Turpin et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 3,
+          "sense": "S3"
+        },
+        {
+          "id": "E103",
+          "text": "Reward hacking, where a reasoning model exploits loopholes in a reward function to achieve high rewards without solving the intended task, poses a significant threat.",
+          "title": "Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort",
+          "year": 2025,
+          "date": "2025-10-01",
+          "url": "https://doi.org/10.48550/arxiv.2510.01367",
+          "authors": "Xinpeng Wang et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 3,
+          "sense": "S3"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "broadening"
+    },
+    {
+      "year": 2025,
+      "kind": "applied",
+      "title": "EvilGenie: A Reward Hacking Benchmark",
+      "why": "Reward hacking becomes a benchmarked behaviour of coding and tool-using agents, followed by several 2026 benchmarks.",
+      "url": "https://doi.org/10.48550/arxiv.2511.21654",
+      "date": "2025-11-26",
+      "workTitle": "EvilGenie: A Reward Hacking Benchmark",
+      "authors": "Jonathan Gabor et al.",
+      "link": "in-sample",
+      "evidence": [
+        {
+          "id": "E113",
+          "text": "We introduce EvilGenie, a benchmark for reward hacking in programming settings.",
+          "title": "EvilGenie: A Reward Hacking Benchmark",
+          "year": 2025,
+          "date": "2025-11-26",
+          "url": "https://doi.org/10.48550/arxiv.2511.21654",
+          "authors": "Jonathan Gabor et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 2,
+          "sense": "S3"
+        },
+        {
+          "id": "E144",
+          "text": "We introduce the Reward Hacking Benchmark (RHB), a suite of multi-step tasks requiring sequential tool operations with naturalistic shortcut opportunities such as skipping verification steps, inferring answers from task-adjacent metadata, or tampering with evaluation-relevant functions.",
+          "title": "Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use",
+          "year": 2026,
+          "date": "2026-05-03",
+          "url": "https://doi.org/10.48550/arxiv.2605.02964",
+          "authors": "Kunvar Thaman",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 2,
+          "sense": "S3"
+        },
+        {
+          "id": "E150",
+          "text": "Reward hacking naturally arises in this setup, as the agent optimizes for passing tests while deviating from the users true goal.",
+          "title": "SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents",
+          "year": 2026,
+          "date": "2026-05-20",
+          "url": "https://doi.org/10.48550/arxiv.2605.21384",
+          "authors": "Bingchen Zhao et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 2,
+          "sense": "S3"
+        },
+        {
+          "id": "E122",
+          "text": "Reward hacking is a form of misalignment in which models overoptimize proxy rewards without genuinely solving the underlying task.Precisely measuring reward hacking occurrence remains challenging because true task rewards are often expensive or impossible to compute.We introduce Countdown-Code, a minimal environment where models can both solve a mathematical reasoning task and manipulate the test harness.This dual-access design creates a clean s…",
+          "title": "Countdown-Code: A Testbed for Studying The Emergence and Generalization of Reward Hacking in RLVR",
+          "year": 2026,
+          "date": "2026-01-01",
+          "url": "https://doi.org/10.18653/2026.emnlp-main.1902",
+          "authors": "Muhammad Khalifa et al.",
+          "fromTitle": false,
+          "field": "Computer Science",
+          "inSet": 5,
+          "sense": "S3"
+        }
+      ],
+      "checks": {
+        "inSense": true,
+        "coinage": false
+      },
+      "shift": "new field"
+    }
   ],
-  [
-   2023,
-   10
-  ],
-  [
-   2024,
-   40
-  ],
-  [
-   2025,
-   206
-  ],
-  [
-   2026,
-   883
-  ]
- ],
- "total": 1166,
- "model": "claude-opus-5-5",
- "generated": "2026-11-17",
- "lang": "en",
- "evidenceCount": 159,
- "eras": [
-  {
-   "start": 2016,
-   "end": 2021,
-   "label": "RL safety accident risk",
-   "meaning": "A failure mode of reinforcement-learning agents in which a misspecified or engineered reward function is maximized in unintended ways, grouped with side effects, unsafe exploration and Goodhart's law.",
-   "evidence": [
-    {
-     "id": "E1",
-     "text": "We present a list of five practical research problems related to accident risk, categorized according to whether the problem originates from having the wrong objective function (\"avoiding side effects\" and \"avoiding reward hacking\"), an objective function that is too expensive to evaluate frequently (\"scalable supervision\"), or undesirable behavior during the learning process (\"safe exploration\" and \"distributional shift\").",
-     "title": "Concrete Problems in AI Safety",
-     "year": 2016,
-     "url": "https://doi.org/10.48550/arxiv.1606.06565",
-     "authors": "Dario Amodei et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E2",
-     "text": "Empirical results suggest that this approach can help alleviate negative side effects of misspecified reward functions and mitigate reward hacking.",
-     "title": "Inverse Reward Design",
-     "year": 2017,
-     "url": "https://doi.org/10.48550/arxiv.1711.02827",
-     "authors": "Dylan Hadfield-Menell et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E3",
-     "text": "A misspecified reward function can cause problems such as reward hacking, where the agent finds out ways that maximize the reward without achieving the intended goal.",
-     "title": "MoVEMo: A Structured Approach for Engineering Reward Functions",
-     "year": 2018,
-     "url": "https://doi.org/10.1109/irc.2018.00053",
-     "authors": "Piergiuseppe Mallozzi et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E5",
-     "text": "Overoptimization failures in machine learning and AI can involve specification gaming, reward hacking, fragility to distributional shifts, and Goodhart's or Campbell's law.",
-     "title": "Overoptimization Failures and Specification Gaming in Multi-agent Systems.",
-     "year": 2018,
-     "url": "https://openalex.org/W2898576746",
-     "authors": "David Manheim",
-     "fromTitle": false
-    },
-    {
-     "id": "E9",
-     "text": "Autonomous agents trained via reinforcement learning present numerous safety concerns: reward hacking, negative side effects, and unsafe exploration, among others.",
-     "title": "Parenting: Safe Reinforcement Learning from Human Input",
-     "year": 2019,
-     "url": "https://doi.org/10.48550/arxiv.1902.06766",
-     "authors": "Christopher Frye et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E10",
-     "text": "An important challenge for safety in machine learning and artificial intelligence systems is a set of related failures involving specification gaming, reward hacking, fragility to distributional shifts, and Goodhart’s or Campbell’s law.",
-     "title": "Multiparty Dynamics and Failure Modes for Machine Learning and Artificial Intelligence",
-     "year": 2019,
-     "url": "https://doi.org/10.3390/bdcc3020021",
-     "authors": "David Manheim",
-     "fromTitle": false
-    },
-    {
-     "id": "E12",
-     "text": "Paramount of these side effects is reward hacking.",
-     "title": "Elaborate Operational Requirements to Address Reward Hacking in Reinforcement Learning Agents",
-     "year": 2019,
-     "url": "https://openalex.org/W2998252346",
-     "authors": "Sina Yaghoobzadehtari et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E19",
-     "text": "Using the raw state representation led to ‘reward-hacking’ and poor performance, which highlights the importance of the problem and state-space formulation in successfully training reinforcement learning agents.",
-     "title": "Improving the efficiency of reinforcement learning for a spacecraft powered descent with Q-learning",
-     "year": 2021,
-     "url": "https://doi.org/10.1007/s11081-021-09687-z",
-     "authors": "Callum Wilson et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E20",
-     "text": "Most often, practitioners go about the task of behavior specification by manually engineering the reward function, a counter-intuitive process that requires several iterations and is prone to reward hacking by the agent.",
-     "title": "Direct Behavior Specification via Constrained Reinforcement Learning",
-     "year": 2021,
-     "url": "https://doi.org/10.48550/arxiv.2112.12228",
-     "authors": "Julien Roy et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "start": 2022,
-   "end": 2023,
-   "label": "Formalized proxy-reward overoptimization",
-   "meaning": "The term was given formal definitions as optimizing an imperfect proxy reward at the expense of the true reward, and began to be applied to RLHF of language models against learned reward models.",
-   "evidence": [
-    {
-     "id": "E21",
-     "text": "We provide the first formal definition of reward hacking, a phenomenon where optimizing an imperfect proxy reward function leads to poor performance according to the true reward function.",
-     "title": "Defining and Characterizing Reward Hacking",
-     "year": 2022,
-     "url": "https://doi.org/10.52202/068431-0687",
-     "authors": "Joar Skalse et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E23",
-     "text": "Reward hacking -- where RL agents exploit gaps in misspecified reward functions -- has been widely observed, but not yet systematically studied.",
-     "title": "The Effects of Reward Misspecification: Mapping and Mitigating Misaligned Models",
-     "year": 2022,
-     "url": "https://doi.org/10.48550/arxiv.2201.03544",
-     "authors": "Pan, Alexander et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E26",
-     "text": "But optimizing against a reward model can improve on reward while degrading performance in other areas, a phenomenon known as reward hacking, alignment tax, or language drift.",
-     "title": "Language Model Alignment with Elastic Reset",
-     "year": 2023,
-     "url": "https://doi.org/10.52202/075280-0152",
-     "authors": "Michael Noukhovitch et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E28",
-     "text": "We propose a new alignment algorithm called Factually Augmented RLHF that augments the reward model with additional factual information such as image captions and ground-truth multi-choice options, which alleviates the reward hacking phenomenon in RLHF and further improves the performance.",
-     "title": "Aligning Large Multimodal Models with Factually Augmented RLHF",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2309.14525",
-     "authors": "Zhiqing Sun et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E29",
-     "text": "However, this setup creates an incentive for the language model to exploit errors in the reward model to achieve high estimated reward, a phenomenon often termed \\emph{reward hacking}.",
-     "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2312.09244",
-     "authors": "Jacob Eisenstein et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "start": 2024,
-   "end": 2024,
-   "label": "RLHF reward-model exploitation",
-   "meaning": "Reward hacking became largely synonymous with reward over-optimization in LLM alignment, such as length bias and exploiting reward-model errors, and spread to diffusion models and inference-time methods.",
-   "evidence": [
-    {
-     "id": "E31",
-     "text": "A prominent issue with such methods is reward over-optimization or reward hacking, where performance as measured by the learned proxy reward model increases, but true quality plateaus or even deteriorates.",
-     "title": "Scaling Laws for Reward Model Overoptimization in Direct Alignment Algorithms",
-     "year": 2024,
-     "url": "https://doi.org/10.52202/079017-4009",
-     "authors": "Rafael Rafailov et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E33",
-     "text": "Despite the success of reinforcement learning from human feedback (RLHF) in aligning language models with human values, reward hacking, also termed reward overoptimization, remains a critical challenge.",
-     "title": "InfoRM: Mitigating Reward Hacking in RLHF via Information-Theoretic Reward Modeling",
-     "year": 2024,
-     "url": "https://doi.org/10.52202/079017-4270",
-     "authors": "Yuchun Miao et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E36",
-     "text": "Aligning large language models (LLMs) with human preferences through reinforcement learning (RLHF) can lead to reward hacking, where LLMs exploit failures in the reward model (RM) to achieve seemingly high rewards without meeting the underlying objectives.",
-     "title": "WARM: On the Benefits of Weight Averaged Reward Models",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2401.12187",
-     "authors": "Alexandre Ramé et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E39",
-     "text": "In this work, we show that feedback loops can cause in-context reward hacking (ICRH), where the LLM at test-time optimizes a (potentially implicit) objective but creates negative side effects in the process.",
-     "title": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2402.06627",
-     "authors": "Pan, Alexander et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E40",
-     "text": "In this work, we study the issue of reward hacking on the response length, a challenge emerging in Reinforcement Learning from Human Feedback (RLHF) on LLMs.",
-     "title": "ODIN: Disentangled Reward Mitigates Hacking in RLHF",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2402.07319",
-     "authors": "Lichang Chen et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E32",
-     "text": "While fine-tuning T2I models with reward objectives has shown promise, it suffers from \"reward hacking\" and may not generalize well to unseen prompt distributions.",
-     "title": "ReNO: Enhancing One-step Text-to-Image Models through Reward-based Noise Optimization",
-     "year": 2024,
-     "url": "https://doi.org/10.52202/079017-3987",
-     "authors": "Luca Eyring et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E43",
-     "text": "Furthermore, we identify that naive implementation of DNO occasionally suffers from the out-of-distribution reward hacking problem, where optimized samples have high rewards but are no longer in the support of the pretrained distribution.",
-     "title": "Inference-Time Alignment of Diffusion Models with Direct Noise Optimization",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2405.18881",
-     "authors": "Zhiwei Tang et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "start": 2025,
-   "end": 2026,
-   "label": "Reasoning models and agentic misalignment",
-   "meaning": "The term now covers reasoning models and coding agents gaming verifiers, test harnesses, rubrics and benchmarks, and is treated as an emergent misaligned behavior alongside deception and sycophancy.",
-   "evidence": [
-    {
-     "id": "E90",
-     "text": "Language models trained with reinforcement learning (RL) can engage in reward hacking--the exploitation of unintended strategies for high reward--without revealing this behavior in their chain-of-thought reasoning.",
-     "title": "Teaching Models to Verbalize Reward Hacking in Chain-of-Thought Reasoning",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2506.22777",
-     "authors": "Miles Turpin et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E103",
-     "text": "Reward hacking, where a reasoning model exploits loopholes in a reward function to achieve high rewards without solving the intended task, poses a significant threat.",
-     "title": "Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2510.01367",
-     "authors": "Xinpeng Wang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E109",
-     "text": "We start with a pretrained model, impart knowledge of reward hacking strategies via synthetic document finetuning or prompting, and train on a selection of real Anthropic production coding environments.",
-     "title": "Natural Emergent Misalignment from Reward Hacking in Production RL",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2511.18397",
-     "authors": "MacDiarmid, Monte et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E113",
-     "text": "We introduce EvilGenie, a benchmark for reward hacking in programming settings.",
-     "title": "EvilGenie: A Reward Hacking Benchmark",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2511.21654",
-     "authors": "Jonathan Gabor et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E134",
-     "text": "Agents sometimes engage in reward hacking: training on the test set, downloading existing instruction-tuned checkpoints instead of training their own, and using API keys they find to generate synthetic data without authorization.",
-     "title": "PostTrainBench: Can LLM Agents Automate LLM Post-Training?",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2603.08640",
-     "authors": "Ben Rank et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E141",
-     "text": "We show that this behavior is not a failure of understanding but a form of reward hacking: imperfect verifiers that check only extensional correctness admit false positives.",
-     "title": "LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2604.15149",
-     "authors": "Lukas Helff et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E144",
-     "text": "We introduce the Reward Hacking Benchmark (RHB), a suite of multi-step tasks requiring sequential tool operations with naturalistic shortcut opportunities such as skipping verification steps, inferring answers from task-adjacent metadata, or tampering with evaluation-relevant functions.",
-     "title": "Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2605.02964",
-     "authors": "Kunvar Thaman",
-     "fromTitle": false
-    },
-    {
-     "id": "E148",
-     "text": "However, reward hacking, where agents maximize a score without performing the intended task, emerges spontaneously in frontier models without overfitting.",
-     "title": "Do Androids Dream of Breaking the Game? Systematically Auditing AI Agent Benchmarks with BenchJack",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2605.12673",
-     "authors": "Hao Wang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E138",
-     "text": "Our key finding is that these representations causally influence the LLM's outputs, including Claude's preferences and its rate of exhibiting misaligned behaviors such as reward hacking, blackmail, and sycophancy.",
-     "title": "Emotion Concepts and their Function in a Large Language Model",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2604.07729",
-     "authors": "Nicholas Sofroniew et al.",
-     "fromTitle": false
-    }
-   ]
-  }
- ],
- "milestones": [
-  {
-   "year": 2016,
-   "kind": "origin",
-   "title": "Concrete Problems in AI Safety",
-   "why": "Earliest and most cited use, listing 'avoiding reward hacking' as one of five practical accident-risk problems stemming from a wrong objective function.",
-   "url": "https://doi.org/10.48550/arxiv.1606.06565",
-   "workTitle": "Concrete Problems in AI Safety",
-   "authors": "Dario Amodei et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E1",
-     "text": "We present a list of five practical research problems related to accident risk, categorized according to whether the problem originates from having the wrong objective function (\"avoiding side effects\" and \"avoiding reward hacking\"), an objective function that is too expensive to evaluate frequently (\"scalable supervision\"), or undesirable behavior during the learning process (\"safe exploration\" and \"distributional shift\").",
-     "title": "Concrete Problems in AI Safety",
-     "year": 2016,
-     "url": "https://doi.org/10.48550/arxiv.1606.06565",
-     "authors": "Dario Amodei et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2017,
-   "kind": "popularized",
-   "title": "Inverse Reward Design",
-   "why": "Early follow-up that framed reward hacking as a consequence of misspecified reward functions to be mitigated.",
-   "url": "https://doi.org/10.48550/arxiv.1711.02827",
-   "workTitle": "Inverse Reward Design",
-   "authors": "Dylan Hadfield-Menell et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E2",
-     "text": "Empirical results suggest that this approach can help alleviate negative side effects of misspecified reward functions and mitigate reward hacking.",
-     "title": "Inverse Reward Design",
-     "year": 2017,
-     "url": "https://doi.org/10.48550/arxiv.1711.02827",
-     "authors": "Dylan Hadfield-Menell et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2018,
-   "kind": "ancestor",
-   "title": "Goodhart's and Campbell's law",
-   "why": "Reward hacking was explicitly linked with specification gaming and Goodhart's or Campbell's law as related overoptimization failures.",
-   "url": "https://doi.org/10.48550/arxiv.1803.04585",
-   "workTitle": "Categorizing Variants of Goodhart's Law",
-   "authors": "David Manheim et al.",
-   "link": "resolved",
-   "evidence": [
-    {
-     "id": "E5",
-     "text": "Overoptimization failures in machine learning and AI can involve specification gaming, reward hacking, fragility to distributional shifts, and Goodhart's or Campbell's law.",
-     "title": "Overoptimization Failures and Specification Gaming in Multi-agent Systems.",
-     "year": 2018,
-     "url": "https://openalex.org/W2898576746",
-     "authors": "David Manheim",
-     "fromTitle": false
-    },
-    {
-     "id": "E10",
-     "text": "An important challenge for safety in machine learning and artificial intelligence systems is a set of related failures involving specification gaming, reward hacking, fragility to distributional shifts, and Goodhart’s or Campbell’s law.",
-     "title": "Multiparty Dynamics and Failure Modes for Machine Learning and Artificial Intelligence",
-     "year": 2019,
-     "url": "https://doi.org/10.3390/bdcc3020021",
-     "authors": "David Manheim",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2018,
-   "kind": "applied",
-   "title": "Reward learning from human preferences and demonstrations in Atari",
-   "why": "Brought reward hacking into learned reward models trained from human preferences, the setting that later dominates.",
-   "url": "https://doi.org/10.48550/arxiv.1811.06521",
-   "workTitle": "Reward learning from human preferences and demonstrations in Atari",
-   "authors": "Borja Ibarz et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E6",
-     "text": "Additionally, we investigate the goodness of fit of the reward model, present some reward hacking problems, and study the effects of noise in the human labels.",
-     "title": "Reward learning from human preferences and demonstrations in Atari",
-     "year": 2018,
-     "url": "https://doi.org/10.48550/arxiv.1811.06521",
-     "authors": "Borja Ibarz et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E13",
-     "text": "Moreover, ReQueST safely trains the reward model to detect unsafe states, and corrects reward hacking before deploying the agent.",
-     "title": "Learning Human Objectives by Evaluating Hypothetical Behavior",
-     "year": 2019,
-     "url": "https://doi.org/10.48550/arxiv.1912.05652",
-     "authors": "Siddharth Reddy et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E14",
-     "text": "We also demonstrate that high-confidence performance bounds may be useful for detecting reward hacking.",
-     "title": "Deep Bayesian Reward Learning from Preferences",
-     "year": 2019,
-     "url": "https://doi.org/10.48550/arxiv.1912.04472",
-     "authors": "Daniel S. Brown et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2018,
-   "kind": "applied",
-   "title": "On the use of reinforcement learning for testing game mechanics",
-   "why": "Inverted the concept, proposing reward hacking as a useful tool for finding flaws in game mechanics.",
-   "url": "https://openalex.org/W2917684105",
-   "workTitle": "On the use of reinforcement learning for testing game mechanics",
-   "authors": "Aaron Snoswell et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E4",
-     "text": "We propose that this paradigm could be flipped whereby reinforcement learning “reward hacking” could provide a mechanism for testing game mechanics.",
-     "title": "On the use of reinforcement learning for testing game mechanics",
-     "year": 2018,
-     "url": "https://openalex.org/W2917684105",
-     "authors": "Aaron Snoswell et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2022,
-   "kind": "redefined",
-   "title": "Defining and Characterizing Reward Hacking",
-   "why": "Claimed the first formal definition, framing reward hacking as optimizing an imperfect proxy that hurts the true reward.",
-   "url": "https://doi.org/10.52202/068431-0687",
-   "workTitle": "Defining and Characterizing Reward Hacking",
-   "authors": "Joar Skalse et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E21",
-     "text": "We provide the first formal definition of reward hacking, a phenomenon where optimizing an imperfect proxy reward function leads to poor performance according to the true reward function.",
-     "title": "Defining and Characterizing Reward Hacking",
-     "year": 2022,
-     "url": "https://doi.org/10.52202/068431-0687",
-     "authors": "Joar Skalse et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2023,
-   "kind": "applied",
-   "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
-   "why": "Marks the shift to language-model RLHF, where reward hacking means exploiting errors in the reward model.",
-   "url": "https://doi.org/10.48550/arxiv.2312.09244",
-   "workTitle": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
-   "authors": "Jacob Eisenstein et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E29",
-     "text": "However, this setup creates an incentive for the language model to exploit errors in the reward model to achieve high estimated reward, a phenomenon often termed \\emph{reward hacking}.",
-     "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2312.09244",
-     "authors": "Jacob Eisenstein et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E26",
-     "text": "But optimizing against a reward model can improve on reward while degrading performance in other areas, a phenomenon known as reward hacking, alignment tax, or language drift.",
-     "title": "Language Model Alignment with Elastic Reset",
-     "year": 2023,
-     "url": "https://doi.org/10.52202/075280-0152",
-     "authors": "Michael Noukhovitch et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E28",
-     "text": "We propose a new alignment algorithm called Factually Augmented RLHF that augments the reward model with additional factual information such as image captions and ground-truth multi-choice options, which alleviates the reward hacking phenomenon in RLHF and further improves the performance.",
-     "title": "Aligning Large Multimodal Models with Factually Augmented RLHF",
-     "year": 2023,
-     "url": "https://doi.org/10.48550/arxiv.2309.14525",
-     "authors": "Zhiqing Sun et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2024,
-   "kind": "redefined",
-   "title": "Correlated Proxies: A New Definition and Improved Mitigation for Reward Hacking",
-   "why": "Proposed a new definition of reward hacking based on correlated proxies during the RLHF boom.",
-   "url": "https://doi.org/10.48550/arxiv.2403.03185",
-   "workTitle": "Correlated Proxies: A New Definition and Improved Mitigation for Reward Hacking",
-   "authors": "Cassidy Laidlaw et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E41",
-     "text": "However, optimizing proxy rewards frequently leads to reward hacking: the optimized reward function ceases to be a good proxy and the resulting policy performs poorly with respect to the unspecified true reward.",
-     "title": "Correlated Proxies: A New Definition and Improved Mitigation for Reward Hacking",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2403.03185",
-     "authors": "Cassidy Laidlaw et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2024,
-   "kind": "applied",
-   "title": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
-   "why": "Extended the term to test-time, in-context optimization by LLMs without weight updates.",
-   "url": "https://doi.org/10.48550/arxiv.2402.06627",
-   "workTitle": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
-   "authors": "Pan, Alexander et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E39",
-     "text": "In this work, we show that feedback loops can cause in-context reward hacking (ICRH), where the LLM at test-time optimizes a (potentially implicit) objective but creates negative side effects in the process.",
-     "title": "Feedback Loops With Language Models Drive In-Context Reward Hacking",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2402.06627",
-     "authors": "Pan, Alexander et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E45",
-     "text": "However, because the evaluator is an imperfect proxy of user preference, this optimization can lead to reward hacking, where the evaluator's ratings improve while the generation quality remains stagnant or even decreases as judged by actual user preference.",
-     "title": "Spontaneous Reward Hacking in Iterative Self-Refinement",
-     "year": 2024,
-     "url": "https://doi.org/10.48550/arxiv.2407.04549",
-     "authors": "Jane Pan et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E55",
-     "text": "By overoptimizing for a misspecified reward, we can subvert intended alignment goals and reduce overall performance, a phenomenon commonly referred to as reward hacking.",
-     "title": "Inference-Time Reward Hacking in Large Language Models",
-     "year": 2025,
-     "url": "https://doi.org/10.52202/085713-2064",
-     "authors": "Hadi Khalaf et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2025,
-   "kind": "redefined",
-   "title": "Natural Emergent Misalignment from Reward Hacking in Production RL",
-   "why": "Linked reward hacking in real coding environments to broader emergent misalignment, recasting it as a safety-relevant behavior of frontier models.",
-   "url": "https://doi.org/10.48550/arxiv.2511.18397",
-   "workTitle": "Natural Emergent Misalignment from Reward Hacking in Production RL",
-   "authors": "MacDiarmid, Monte et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E109",
-     "text": "We start with a pretrained model, impart knowledge of reward hacking strategies via synthetic document finetuning or prompting, and train on a selection of real Anthropic production coding environments.",
-     "title": "Natural Emergent Misalignment from Reward Hacking in Production RL",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2511.18397",
-     "authors": "MacDiarmid, Monte et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E140",
-     "text": "However, these approaches introduce a systemic vulnerability: reward hacking, where models exploit imperfections in learned reward signals to maximize proxy objectives without fulfilling true task intent.",
-     "title": "Reward Hacking in the Era of Large Models: Mechanisms, Emergent Misalignment, Challenges",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2604.13602",
-     "authors": "Xiaohua Wang et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2025,
-   "kind": "applied",
-   "title": "EvilGenie: A Reward Hacking Benchmark",
-   "why": "Started a wave of benchmarks measuring reward hacking by coding and tool-using agents.",
-   "url": "https://doi.org/10.48550/arxiv.2511.21654",
-   "workTitle": "EvilGenie: A Reward Hacking Benchmark",
-   "authors": "Jonathan Gabor et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E113",
-     "text": "We introduce EvilGenie, a benchmark for reward hacking in programming settings.",
-     "title": "EvilGenie: A Reward Hacking Benchmark",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2511.21654",
-     "authors": "Jonathan Gabor et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E144",
-     "text": "We introduce the Reward Hacking Benchmark (RHB), a suite of multi-step tasks requiring sequential tool operations with naturalistic shortcut opportunities such as skipping verification steps, inferring answers from task-adjacent metadata, or tampering with evaluation-relevant functions.",
-     "title": "Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2605.02964",
-     "authors": "Kunvar Thaman",
-     "fromTitle": false
-    },
-    {
-     "id": "E150",
-     "text": "Reward hacking naturally arises in this setup, as the agent optimizes for passing tests while deviating from the users true goal.",
-     "title": "SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2605.21384",
-     "authors": "Bingchen Zhao et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E122",
-     "text": "Reward hacking is a form of misalignment in which models overoptimize proxy rewards without genuinely solving the underlying task.Precisely measuring reward hacking occurrence remains challenging because true task rewards are often expensive or impossible to compute.We introduce Countdown-Code, a minimal environment where models can both solve a mathematical reasoning task and manipulate the test harness.This dual-access design creates a clean s…",
-     "title": "Countdown-Code: A Testbed for Studying The Emergence and Generalization of Reward Hacking in RLVR",
-     "year": 2026,
-     "url": "https://doi.org/10.18653/2026.emnlp-main.1902",
-     "authors": "Muhammad Khalifa et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2026,
-   "kind": "critique",
-   "title": "LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking",
-   "why": "Challenged the assumption that verifiable rewards are immune, showing imperfect verifiers admit reward hacking.",
-   "url": "https://doi.org/10.48550/arxiv.2604.15149",
-   "workTitle": "LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking",
-   "authors": "Lukas Helff et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E141",
-     "text": "We show that this behavior is not a failure of understanding but a form of reward hacking: imperfect verifiers that check only extensional correctness admit false positives.",
-     "title": "LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2604.15149",
-     "authors": "Lukas Helff et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E91",
-     "text": "However, we uncover a critical vulnerability even in this reference-based paradigm: generative reward models are systematically susceptible to reward hacking.",
-     "title": "One Token to Fool LLM-as-a-Judge",
-     "year": 2025,
-     "url": "https://doi.org/10.48550/arxiv.2507.08794",
-     "authors": "Zhao, Yulai et al.",
-     "fromTitle": false
-    }
-   ]
-  }
- ]
+  "totalsAsOf": "2026-11-17"
 }
