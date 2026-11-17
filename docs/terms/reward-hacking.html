@@ -38,6 +38,15 @@ blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line
 blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
 blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.senses:empty{display:none}
+.senses{margin:4px 0 14px;padding:12px 16px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--panel);font-size:.92rem}
+.senses p{margin:0 0 6px}
+.senses details{margin-top:6px}
+.senses summary{cursor:pointer;color:var(--accent);font-weight:600}
+.senses ul{margin:8px 0 0;padding-left:18px}
+.senses li{margin:0 0 8px}
+.senses .muted{color:var(--muted)}
+.senses li q{display:block;color:var(--muted);font-size:.86rem;margin-top:2px}
 .eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
 .era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
@@ -53,6 +62,7 @@ footer a{color:inherit}
 <h1>reward hacking</h1>
 <p class="summary">Reward hacking entered the machine-learning vocabulary through the 2016 AI-safety agenda &quot;Concrete Problems in AI Safety,&quot; where it named the accident risk of a reinforcement-learning agent maximizing a wrong objective without achieving the intended goal. Today it mostly refers to large language models, image generators and coding agents exploiting flaws in learned reward models, verifiers, judges or test harnesses to score highly without genuinely doing the task, and it is treated both as a training-stability problem and as a form of misalignment.</p>
 <p class="meta">1,166 papers in OpenAlex use this term (2016–2026). Proposed by <code>claude-opus-5-5</code> from 159 quoted sentences only; every milestone shows its quotes so you can check it.</p>
+<div class="senses" data-part="senses"></div>
 <div class="card">
   <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
   <div class="scroller"><div data-part="chart"></div></div>
@@ -98,6 +108,11 @@ footer a{color:inherit}
     legendDashed: 'dashed = no link found',
     legendBars: 'bars = papers per year',
     legendBarsQ: 'bars = papers per year; recent years by quarter',
+    follows: 'This timeline follows:',
+    otherSenses: n => `The same words also mean ${n === 1 ? 'one unrelated thing' : n + ' unrelated things'} in these papers. Left out of eras and milestones; the bars still count them.`,
+    otherSensesShow: 'Show the other meanings',
+    quotesN: n => `${n} quote${n === 1 ? '' : 's'}`,
+    wrongSense: '',
     quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
     undated: n => `${n} dated only by year, not in any quarter`,
   };
@@ -260,6 +275,19 @@ footer a{color:inherit}
     if (legend) {
       legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
         `<span>${esc(L.legendDashed)}</span><span>${esc((D.quarters || []).length ? L.legendBarsQ : L.legendBars)}</span>`;
+    }
+    // Which meaning the timeline follows, and the unrelated meanings left out.
+    const senses = part('senses');
+    if (senses) {
+      const other = D.otherSenses || [];
+      senses.innerHTML = D.focus && other.length
+        ? `<p><b>${esc(L.follows)}</b> ${esc(D.focus)}</p><p>${esc(L.otherSenses(other.length))}</p>` +
+          `<details><summary>${esc(L.otherSensesShow)}</summary><ul>${other.map(s => {
+            const q = (s.evidence || [])[0];
+            return `<li><b>${esc(s.label)}</b> · ${esc(s.meaning)} <span class="muted">(${esc(L.quotesN((s.evidence || []).length))})</span>` +
+              (q ? `<q>${mark(q.text)} — ${esc(q.title)}, ${esc(q.year)}</q>` : '') + '</li>';
+          }).join('')}</ul>${L.wrongSense && document.getElementById('meaning') ? `<p class="muted">${esc(L.wrongSense)}</p>` : ''}</details>`
+        : '';
     }
     const eras = part('eras');
     if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');

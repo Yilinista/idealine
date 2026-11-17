@@ -343,3 +343,22 @@ def test_quarter_counts_skip_future_and_split_year_only_dates():
     assert any("from_publication_date:2025-01-02,to_publication_date:2025-03-31" in f for f in seen)
     assert any("from_publication_date:2025-10-01,to_publication_date:2025-12-31" in f for f in seen)
     assert len(seen) == 8
+
+
+def test_other_senses_are_kept_apart_and_need_evidence():
+    from idealine.openalex import Work
+    from idealine.term import Evidence
+
+    ev = [Evidence("E1", "a super agent for sports", Work("a", "A", 2009, None, "https://x", 1)),
+          Evidence("E2", "an AI super agent", Work("b", "B", 2026, None, "https://x", 1))]
+    t = TermTimeline("super agent", [], {2009: 1, 2026: 1}, ev, meaning="AI agents")
+    assert "Meaning the reader has in mind: AI agents" in build_prompt(t)
+    apply_analysis(t, {"focus": "AI agents that use tools", "summary": "s", "eras": [], "milestones": [],
+                       "other_senses": [{"label": "Sports agent", "meaning": "m", "evidence": ["E1"]},
+                                        {"label": "No proof", "meaning": "m", "evidence": ["E9"]}]}, None)
+    assert t.focus == "AI agents that use tools"
+    assert [s.label for s in t.other_senses] == ["Sports agent"]
+    from idealine.render_term import to_data
+    d = to_data(t)
+    assert d["otherSenses"][0]["evidence"][0]["text"] == "a super agent for sports"
+    assert d["meaning"] == "AI agents"

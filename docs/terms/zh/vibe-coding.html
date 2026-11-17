@@ -38,6 +38,15 @@ blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line
 blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
 blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.senses:empty{display:none}
+.senses{margin:4px 0 14px;padding:12px 16px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--panel);font-size:.92rem}
+.senses p{margin:0 0 6px}
+.senses details{margin-top:6px}
+.senses summary{cursor:pointer;color:var(--accent);font-weight:600}
+.senses ul{margin:8px 0 0;padding-left:18px}
+.senses li{margin:0 0 8px}
+.senses .muted{color:var(--muted)}
+.senses li q{display:block;color:var(--muted);font-size:.86rem;margin-top:2px}
 .eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
 .era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
@@ -53,6 +62,7 @@ footer a{color:inherit}
 <h1>vibe coding</h1>
 <p class="summary">“vibe coding”一词据证据所述由 Andrej Karpathy 于2025年2月提出，用来指开发者用自然语言向大语言模型描述意图、主要由AI生成代码的编程方式；标注为2019、2020年的两条记录提到了AI时代的语境，很可能是年份错误。如今它主要指以对话和意图驱动、常借助自主编码智能体、较少逐行审查代码的软件开发方式，并已扩展到教育、医疗等领域，同时在安全性、可维护性和验证方面受到大量批评。</p>
 <p class="meta">OpenAlex 中有 906 篇论文使用这个词（2019–2026）。时期和里程碑由 <code>claude-opus-5-5</code> 仅根据 158 条原句生成；每个里程碑都附有原句，方便核对。</p>
+<div class="senses" data-part="senses"></div>
 <div class="card">
   <div class="hint">点击圆点查看背后的原文句子。左右滑动可以看更早的年份。</div>
   <div class="scroller"><div data-part="chart"></div></div>
@@ -90,6 +100,7 @@ footer a{color:inherit}
       freeLine: 'Free: usage curve + key papers. For eras and milestones,', addKey: 'add your own model key',
       optsSummary: 'Options and model key',
       aliasesLabel: 'Other spellings (optional, comma-separated)', aliasesPh: 'e.g. mixture-of-experts, MoE layer',
+      meaningLabel: 'Which meaning? (optional; used with a model key)', meaningPh: 'e.g. AI agents that plan and use tools on their own',
       providerLabel: 'Model', providerNone: 'No model (free: usage curve + key papers)',
       keyLabel: 'API key', modelLabel: 'Model ID', remember: 'Remember my keys on this device (not on a shared computer)',
       getKey: p => `Get a ${p} key`,
@@ -138,6 +149,11 @@ footer a{color:inherit}
       // timeline
       legendDashed: 'dashed = no link found', legendBars: 'bars = papers per year',
       legendBarsQ: 'bars = papers per year; recent years by quarter',
+      follows: 'This timeline follows:',
+      otherSenses: n => `The same words also mean ${n === 1 ? 'one unrelated thing' : n + ' unrelated things'} in these papers. Left out of eras and milestones; the bars still count them.`,
+      otherSensesShow: 'Show the other meanings',
+      quotesN: n => `${n} quote${n === 1 ? '' : 's'}`,
+      wrongSense: 'Meant another one? Describe it under “Options and model key” → “Which meaning?”, then trace again.',
       quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
       undated: n => `${n} dated only by year, not in any quarter`,
       papers: n => `${n} papers`, yearPapers: (y, n) => `${y}: ${n} papers`, timelineOf: term => `Timeline of ${term}`,
@@ -157,6 +173,7 @@ footer a{color:inherit}
       freeLine: '免费：使用曲线 + 关键论文。想看时期划分和里程碑，', addKey: '填入你自己的模型 key',
       optsSummary: '选项与模型 key',
       aliasesLabel: '其他写法（可选，用逗号分隔）', aliasesPh: '例如 mixture-of-experts, MoE layer',
+      meaningLabel: '你指的是哪个意思？（可选，配合模型 key 使用）', meaningPh: '例如：能自己规划、调用工具的 AI 智能体',
       providerLabel: '模型', providerNone: '不用模型（免费：使用曲线 + 关键论文）',
       keyLabel: 'API key', modelLabel: '模型 ID', remember: '在这台设备上记住我的 key（公共电脑请勿勾选）',
       getKey: p => `获取 ${p} key`,
@@ -203,7 +220,11 @@ footer a{color:inherit}
       pressTrace: '点“追溯”用你的 key 运行。',
       wentWrong: m => '出错了：' + m,
       legendDashed: '虚线 = 没找到链接', legendBars: '柱子 = 每年论文数',
-      legendBarsQ: '柱子 = 每年论文数，近几年按季度', quarterPapers: (y, q, n) => `${y} 年第 ${q} 季度：${n} 篇`,
+      legendBarsQ: '柱子 = 每年论文数，近几年按季度',
+      follows: '这条时间线跟踪的意思：',
+      otherSenses: n => `这些论文里，同一个词还有 ${n} 种不相干的意思。它们没放进时期和里程碑，但柱子里的论文数仍包括它们。`,
+      otherSensesShow: '看看其他意思', quotesN: n => `${n} 句原文`,
+      wrongSense: '不是你想要的意思？在“选项与模型 key”→“你指的是哪个意思？”里写一句描述，再追溯一次。', quarterPapers: (y, q, n) => `${y} 年第 ${q} 季度：${n} 篇`,
       undated: n => `其中 ${n} 篇只标了年份，没算进任何季度`,
       papers: n => `${n} 篇`, yearPapers: (y, n) => `${y} 年：${n} 篇`, timelineOf: term => `${term} 的时间线`,
       inSample: '链接的论文本身就用到了这个词。',
@@ -304,6 +325,11 @@ footer a{color:inherit}
     legendDashed: 'dashed = no link found',
     legendBars: 'bars = papers per year',
     legendBarsQ: 'bars = papers per year; recent years by quarter',
+    follows: 'This timeline follows:',
+    otherSenses: n => `The same words also mean ${n === 1 ? 'one unrelated thing' : n + ' unrelated things'} in these papers. Left out of eras and milestones; the bars still count them.`,
+    otherSensesShow: 'Show the other meanings',
+    quotesN: n => `${n} quote${n === 1 ? '' : 's'}`,
+    wrongSense: '',
     quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
     undated: n => `${n} dated only by year, not in any quarter`,
   };
@@ -466,6 +492,19 @@ footer a{color:inherit}
     if (legend) {
       legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
         `<span>${esc(L.legendDashed)}</span><span>${esc((D.quarters || []).length ? L.legendBarsQ : L.legendBars)}</span>`;
+    }
+    // Which meaning the timeline follows, and the unrelated meanings left out.
+    const senses = part('senses');
+    if (senses) {
+      const other = D.otherSenses || [];
+      senses.innerHTML = D.focus && other.length
+        ? `<p><b>${esc(L.follows)}</b> ${esc(D.focus)}</p><p>${esc(L.otherSenses(other.length))}</p>` +
+          `<details><summary>${esc(L.otherSensesShow)}</summary><ul>${other.map(s => {
+            const q = (s.evidence || [])[0];
+            return `<li><b>${esc(s.label)}</b> · ${esc(s.meaning)} <span class="muted">(${esc(L.quotesN((s.evidence || []).length))})</span>` +
+              (q ? `<q>${mark(q.text)} — ${esc(q.title)}, ${esc(q.year)}</q>` : '') + '</li>';
+          }).join('')}</ul>${L.wrongSense && document.getElementById('meaning') ? `<p class="muted">${esc(L.wrongSense)}</p>` : ''}</details>`
+        : '';
     }
     const eras = part('eras');
     if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');

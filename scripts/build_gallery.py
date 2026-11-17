@@ -124,7 +124,7 @@ nav a:hover{color:var(--fg)}
 #status{margin:10px 0 0;font-size:.95rem;color:var(--muted)}
 #status:empty{display:none}
 #result .progress{margin:16px 0 0}
-#result.pending .summary,#result.pending .meta,#result.pending .card,#result.pending .eras,#result.pending #r-actions{display:none}
+#result.pending .summary,#result.pending .meta,#result.pending .card,#result.pending .eras,#result.pending .senses,#result.pending #r-actions{display:none}
 .suggest{margin-top:14px}
 .suggest p{margin:0 0 8px;color:var(--muted);font-size:.9rem}
 .suggest .chip{margin:0 6px 6px 0}
@@ -195,6 +195,7 @@ TRACE_FORM = """
     <p class="privacy" id="privacy"></p>
     <div class="row">
       <div><label for="aliases" data-i18n="aliasesLabel">Other spellings (optional, comma-separated)</label><input id="aliases" maxlength="200" data-i18n-ph="aliasesPh" placeholder="e.g. mixture-of-experts, MoE layer"></div>
+      <div><label for="meaning" data-i18n="meaningLabel">Which meaning? (optional; used with a model key)</label><input id="meaning" maxlength="200" data-i18n-ph="meaningPh" placeholder="e.g. AI agents that plan and use tools on their own"></div>
     </div>
     <div class="row">
       <div><label for="oakey" data-i18n="oakeyLabel">OpenAlex key (optional, free; use it if OpenAlex says the daily budget is used up)</label><input id="oakey" type="password" spellcheck="false" autocomplete="off"></div>
@@ -216,6 +217,7 @@ RESULT = """
   <div id="r-suggest" class="suggest" hidden></div>
   <p class="summary" id="r-summary"></p>
   <p class="meta" id="r-meta"></p>
+  <div class="senses" data-part="senses"></div>
   <div class="card">
     <div class="hint" data-i18n="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
     <div class="scroller"><div data-part="chart"></div></div>

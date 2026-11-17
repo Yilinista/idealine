@@ -36,6 +36,9 @@ def to_data(t: TermTimeline) -> dict:
         "model": t.model,
         "generated": t.generated,
         "lang": t.lang,
+        "meaning": t.meaning,
+        "focus": t.focus,
+        "otherSenses": [{"label": s.label, "meaning": s.meaning, "evidence": ev(s.evidence)} for s in t.other_senses],
         "evidenceCount": len(t.evidence),
         "eras": [{"start": e.start_year, "end": e.end_year, "label": e.label, "meaning": e.meaning,
                   "evidence": ev(e.evidence)} for e in t.eras],
@@ -57,6 +60,11 @@ def to_markdown(t: TermTimeline) -> str:
         out += [t.summary, ""]
     span = f"{min(t.counts)}–{max(t.counts)}" if t.counts else "n/a"
     out += [f"{t.total} papers in OpenAlex use this term ({span}); {len(t.evidence)} sentences read.", ""]
+    if t.focus and t.other_senses:
+        out += [f"Follows: {t.focus}", "", "## Same words, other meanings (left out)", ""]
+        for s in t.other_senses:
+            out.append(f"- **{s.label}**: {s.meaning} ({len(s.evidence)} quotes)")
+        out.append("")
     if t.eras:
         out += ["## Eras", ""]
         for e in t.eras:
@@ -112,6 +120,15 @@ blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line
 blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
 blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.senses:empty{display:none}
+.senses{margin:4px 0 14px;padding:12px 16px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--panel);font-size:.92rem}
+.senses p{margin:0 0 6px}
+.senses details{margin-top:6px}
+.senses summary{cursor:pointer;color:var(--accent);font-weight:600}
+.senses ul{margin:8px 0 0;padding-left:18px}
+.senses li{margin:0 0 8px}
+.senses .muted{color:var(--muted)}
+.senses li q{display:block;color:var(--muted);font-size:.86rem;margin-top:2px}
 .eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
 .era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
@@ -196,6 +213,7 @@ def html_from_data(d: dict) -> str:
 <h1>{e(d['term'])}</h1>
 <p class="summary">{e(d.get('summary') or '')}</p>
 <p class="meta">{T["meta"].format(total=f"{d['total']:,}", span=span)}{how}</p>
+<div class="senses" data-part="senses"></div>
 <div class="card">
   <div class="hint">{T["hint"]}</div>
   <div class="scroller"><div data-part="chart"></div></div>

@@ -34,6 +34,14 @@ class Evidence:
 
 
 @dataclass
+class Sense:
+    """An unrelated meaning of the same words, kept out of the eras and milestones."""
+    label: str
+    meaning: str
+    evidence: list[str]
+
+
+@dataclass
 class Era:
     start_year: int
     end_year: int
@@ -67,6 +75,9 @@ class TermTimeline:
     model: str | None = None
     generated: str = field(default_factory=lambda: date.today().isoformat())
     lang: str = "en"  # language the model wrote its labels in
+    meaning: str = ""  # the reader's own description of the meaning they want traced
+    focus: str = ""  # the meaning the timeline follows, as the model names it
+    other_senses: list[Sense] = field(default_factory=list)
 
     @property
     def total(self) -> int:
@@ -242,9 +253,21 @@ term came from and how its meaning changed, using only the evidence given.
 You get: the term, its number of papers per year, and numbered sentences (E1, E2,
 ...) from papers that use it, each with year, title, and citation count.
 
+The same words often name unrelated things: a sports "super agent" and a software
+"super agent" share a name, not a history. First pick the meaning to follow: the one
+the reader describes under "Meaning the reader has in mind", if given; otherwise the
+meaning most common in the newest papers. Eras, milestones, and the summary follow
+only that meaning, plus earlier ideas the evidence shows it grew out of (as
+ancestor). Meanings that merely share the words go in other_senses, never in eras or
+milestones.
+
 Return:
+- focus: one sentence naming the meaning this timeline follows.
 - summary: two plain sentences a newcomer can read: where the term came from and
   what it mostly means now.
+- other_senses: unrelated meanings of the same words found in the evidence (empty if
+  all evidence shares one meaning). For each: a 1-4 word label, one sentence on what
+  it means, and the IDs of sentences that show it.
 - eras: 2 to 5 consecutive periods in which the term was used in a recognizably
   different way. For each: start_year, end_year, a 2-5 word label, one sentence on
   what the term meant then, and the IDs of sentences that show it.
@@ -269,7 +292,21 @@ fine to leave gaps. Prefer fewer, well-supported items."""
 OUTPUT_SCHEMA = {
     "type": "object",
     "properties": {
+        "focus": {"type": "string"},
         "summary": {"type": "string"},
+        "other_senses": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "label": {"type": "string"},
+                    "meaning": {"type": "string"},
+                    "evidence": {"type": "array", "items": {"type": "string"}},
+                },
+                "required": ["label", "meaning", "evidence"],
+                "additionalProperties": False,
+            },
+        },
         "eras": {
             "type": "array",
             "items": {
@@ -302,7 +339,7 @@ OUTPUT_SCHEMA = {
             },
         },
     },
-    "required": ["summary", "eras", "milestones"],
+    "required": ["focus", "summary", "other_senses", "eras", "milestones"],
     "additionalProperties": False,
 }
 
@@ -314,7 +351,7 @@ class AnalyzeError(RuntimeError):
 # Extra instruction so the model writes its labels in the reader's language.
 # Paper titles and quotes stay in their original language.
 OUTPUT_LANG = {
-    "zh": "Write the summary, era labels, era meanings, and every milestone \"why\" in Simplified Chinese. "
+    "zh": "Write the focus, summary, era labels, era meanings, other-sense labels and meanings, and every milestone \"why\" in Simplified Chinese. "
     "Keep milestone titles as the work titles in their original language, and keep evidence IDs unchanged.",
 }
 
@@ -323,6 +360,7 @@ def build_prompt(t: TermTimeline, lang: str = "en") -> str:
     counts = ", ".join(f"{y}: {c}" for y, c in t.counts.items())
     lines = [
         f"Term: {t.term}" + (f" (also: {', '.join(t.aliases)})" if t.aliases else ""),
+        *([f"Meaning the reader has in mind: {t.meaning}"] if t.meaning else []),
         f"Papers per year: {counts}",
         *([f"Papers per quarter (papers dated only by year left out): {', '.join(f'{k}: {c}' for k, c in t.quarters)}"] if t.quarters else []),
         "",
@@ -366,6 +404,11 @@ def apply_analysis(t: TermTimeline, data: dict, resolver: OpenAlexClient | None)
 
     data = data if isinstance(data, dict) else {}
     t.summary = text(data.get("summary"))
+    t.focus = text(data.get("focus"))
+    t.other_senses = []
+    for s in (data.get("other_senses") or [])[:6] if isinstance(data.get("other_senses"), list) else []:
+        if isinstance(s, dict) and valid(s.get("evidence")) and text(s.get("label")):
+            t.other_senses.append(Sense(text(s.get("label")), text(s.get("meaning")), valid(s.get("evidence"))))
     t.eras = []
     for e in data.get("eras") or []:
         if not isinstance(e, dict):

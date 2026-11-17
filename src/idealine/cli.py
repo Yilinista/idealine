@@ -53,6 +53,7 @@ def term_parser() -> argparse.ArgumentParser:
     p.add_argument("term", help='The term, spelled out, e.g. "recursive self-improvement".')
     p.add_argument("--alias", action="append", default=[], help="Another spelling to include (repeatable).")
     p.add_argument("--effort", default="medium", choices=["low", "medium", "high"], help="Model effort (default medium).")
+    p.add_argument("--meaning", default="", help='Which meaning to follow when the words have several, e.g. "AI agents that use tools".')
     p.add_argument("--lang", default="en", choices=["en", "zh"], help="Language of the summary, eras and notes (default en; zh = Simplified Chinese).")
     _common(p)
     return p
@@ -93,6 +94,7 @@ def run_term(argv: list[str], oa: OpenAlexClient | None, llm_client) -> int:
     try:
         log(f'Searching OpenAlex for "{args.term}"...')
         t = harvest(oa, args.term, args.alias)
+        t.meaning = (args.meaning or "").strip()
     except OpenAlexError as err:
         log(f"Error: {err}")
         return 2

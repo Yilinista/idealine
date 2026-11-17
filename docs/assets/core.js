@@ -274,6 +274,7 @@
   function buildPrompt(t, outputLang) {
     const lines = [
       `Term: ${t.term}` + (t.aliases.length ? ` (also: ${t.aliases.join(', ')})` : ''),
+      ...(t.meaning ? [`Meaning the reader has in mind: ${t.meaning}`] : []),
       `Papers per year: ${t.counts.map(([y, c]) => `${y}: ${c}`).join(', ')}`,
       ...((t.quarters || []).length ? [`Papers per quarter (papers dated only by year left out): ${t.quarters.map(([k, c]) => `${k}: ${c}`).join(', ')}`] : []),
       '',
@@ -306,6 +307,12 @@
     const valid = ids => (Array.isArray(ids) ? ids.filter(i => typeof i === 'string' && byId.has(i)) : []);
     data = data && typeof data === 'object' ? data : {};
     t.summary = str(data.summary);
+    t.focus = str(data.focus);
+    t.otherSenses = [];
+    for (const s of (Array.isArray(data.other_senses) ? data.other_senses : []).slice(0, 6)) {
+      const ev = valid(s && s.evidence);
+      if (ev.length && str(s.label)) t.otherSenses.push({ label: str(s.label), meaning: str(s.meaning), evidence: ev });
+    }
     t.eras = [];
     for (const e of Array.isArray(data.eras) ? data.eras : []) {
       const ev = valid(e && e.evidence), s = int(e && e.start_year), en = int(e && e.end_year);
@@ -377,6 +384,9 @@
       model: t.model,
       generated: t.generated,
       lang: t.lang === 'zh' ? 'zh' : 'en',
+      meaning: t.meaning || '',
+      focus: t.focus || '',
+      otherSenses: (t.otherSenses || []).map(s => ({ label: s.label, meaning: s.meaning, evidence: ev(s.evidence) })),
       evidenceCount: t.evidence.length,
       eras: t.eras.map(e => ({ start: e.start, end: e.end, label: e.label, meaning: e.meaning, evidence: ev(e.evidence) })),
       milestones: t.milestones.map(m => ({

@@ -233,7 +233,7 @@
       b.type = 'button';
       b.className = 'chip';
       b.textContent = t;
-      b.addEventListener('click', () => { $('term').value = t; $('aliases').value = ''; $('trace-form').requestSubmit(); });
+      b.addEventListener('click', () => { $('term').value = t; $('aliases').value = ''; $('meaning').value = ''; $('trace-form').requestSubmit(); });
       box.appendChild(b);
     });
   }
@@ -258,6 +258,7 @@
   document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
     $('term').value = c.textContent;
     $('aliases').value = '';
+    $('meaning').value = '';
     $('trace-form').requestSubmit();
   }));
 
@@ -266,12 +267,15 @@
     if (busy) return;
     const term = $('term').value.replace(/\s+/g, ' ').trim();
     const aliases = parseAliases($('aliases').value).filter(a => a.toLowerCase() !== term.toLowerCase());
+    const providerId0 = providerSel.value;
+    // The meaning hint only reaches a model; without one it changes nothing.
+    const meaning = providerId0 === 'none' ? '' : $('meaning').value.replace(/\s+/g, ' ').trim().slice(0, 200);
     const providerId = providerSel.value, key = keyIn.value.trim(), model = modelIn.value.trim();
     if (term.length < 2) return formMsg(() => tx().needTerm, true);
     formMsg(null);
     const live = forceLive;
     forceLive = false;
-    if (!live && !aliases.length && READY[term.toLowerCase()]) {
+    if (!live && !aliases.length && !meaning && READY[term.toLowerCase()]) {
       busy = true;
       pending(term);
       status('');
@@ -281,7 +285,7 @@
       if (d) {
         lastData = d;
         show(d, true, 'ready');
-        setUrl(term, aliases);
+        setUrl(term, aliases, meaning);
         return;
       }
     }
@@ -308,6 +312,7 @@
     try {
       const oa = new C.OpenAlex({ apiKey: oaKey, log: step });
       const t = await C.harvest(oa, term, aliases, { onStep: step });
+      t.meaning = meaning;
       if (!t.counts.length || !t.evidence.length) {
         // OpenAlex is mostly English: a Chinese/Japanese/Korean term usually finds nothing.
         const cjk = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(term);
@@ -340,7 +345,7 @@
       progress.finish();
       show(lastData, false, 'result');
       status(acronymHint ? () => tx().acronym : '');
-      setUrl(term, aliases);
+      setUrl(term, aliases, meaning);
     } catch (e) {
       const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
       if (known && /OpenAlex key/.test(e.message)) $('opts').open = true;
@@ -366,9 +371,10 @@
 
   // kind: 'example' (ready-made), 'interim' (free view while the model reads), 'result'.
   let shownKind = 'example';
-  function setUrl(term, aliases) {
+  function setUrl(term, aliases, meaning) {
     const u = new URL(location.href);
     u.searchParams.set('term', term);
+    if (meaning) u.searchParams.set('meaning', meaning); else u.searchParams.delete('meaning');
     if (aliases.length) u.searchParams.set('alias', aliases.join(', ')); else u.searchParams.delete('alias');
     u.hash = '';
     history.replaceState(null, '', u);
@@ -430,6 +436,7 @@
 <h1>${e(d.term)}</h1>
 <p class="summary">${e(d.summary)}</p>
 <p class="meta">${fill(PT.meta, { total: d.total.toLocaleString('en-US'), span })}${how}</p>
+<div class="senses" data-part="senses"></div>
 <div class="card">
   <div class="hint">${PT.hint}</div>
   <div class="scroller"><div data-part="chart"></div></div>
@@ -467,10 +474,11 @@ ${call}</script>
     if (location.hash) history.replaceState(null, '', location.pathname + location.search);
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
-    if ($('aliases').value) $('opts').open = true;
+    $('meaning').value = (params.get('meaning') || '').slice(0, 200);
+    if ($('aliases').value || $('meaning').value) $('opts').open = true;
     // Start after load, so the browser's own jump to a #fragment cannot pull the page away.
     const go = () => setTimeout(() => {
-      if (providerSel.value === 'none' || READY[$('term').value.toLowerCase()]) $('trace-form').requestSubmit();
+      if (providerSel.value === 'none' || (READY[$('term').value.toLowerCase()] && !$('meaning').value)) $('trace-form').requestSubmit();
       else formMsg(() => tx().pressTrace);
     }, 0);
     if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });

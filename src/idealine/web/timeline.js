@@ -30,6 +30,11 @@
     legendDashed: 'dashed = no link found',
     legendBars: 'bars = papers per year',
     legendBarsQ: 'bars = papers per year; recent years by quarter',
+    follows: 'This timeline follows:',
+    otherSenses: n => `The same words also mean ${n === 1 ? 'one unrelated thing' : n + ' unrelated things'} in these papers. Left out of eras and milestones; the bars still count them.`,
+    otherSensesShow: 'Show the other meanings',
+    quotesN: n => `${n} quote${n === 1 ? '' : 's'}`,
+    wrongSense: '',
     quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
     undated: n => `${n} dated only by year, not in any quarter`,
   };
@@ -192,6 +197,19 @@
     if (legend) {
       legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
         `<span>${esc(L.legendDashed)}</span><span>${esc((D.quarters || []).length ? L.legendBarsQ : L.legendBars)}</span>`;
+    }
+    // Which meaning the timeline follows, and the unrelated meanings left out.
+    const senses = part('senses');
+    if (senses) {
+      const other = D.otherSenses || [];
+      senses.innerHTML = D.focus && other.length
+        ? `<p><b>${esc(L.follows)}</b> ${esc(D.focus)}</p><p>${esc(L.otherSenses(other.length))}</p>` +
+          `<details><summary>${esc(L.otherSensesShow)}</summary><ul>${other.map(s => {
+            const q = (s.evidence || [])[0];
+            return `<li><b>${esc(s.label)}</b> · ${esc(s.meaning)} <span class="muted">(${esc(L.quotesN((s.evidence || []).length))})</span>` +
+              (q ? `<q>${mark(q.text)} — ${esc(q.title)}, ${esc(q.year)}</q>` : '') + '</li>';
+          }).join('')}</ul>${L.wrongSense && document.getElementById('meaning') ? `<p class="muted">${esc(L.wrongSense)}</p>` : ''}</details>`
+        : '';
     }
     const eras = part('eras');
     if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');

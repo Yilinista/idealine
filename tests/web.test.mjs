@@ -343,3 +343,16 @@ test('harvest without an OpenAlex key makes no quarter requests', async () => {
   assert.deepEqual(t.quarters, []);
   assert.ok(calls.every(c => !/from_publication_date/.test(new URL(c.url).searchParams.get('filter') || '')));
 });
+
+test('other senses: meaning goes into the prompt; senses need valid evidence', async () => {
+  const t = { term: 'super agent', aliases: [], meaning: 'AI agents', counts: [[2026, 2]], quarters: [], evidence: [
+    { eid: 'E1', text: 'a super agent for sports', work: { title: 'A', year: 2009 } },
+    { eid: 'E2', text: 'an AI super agent', work: { title: 'B', year: 2026 } }] };
+  assert.match(C.buildPrompt(t), /Meaning the reader has in mind: AI agents/);
+  await C.applyAnalysis(t, { focus: 'AI agents that use tools', summary: 's', eras: [], milestones: [],
+    other_senses: [{ label: 'Sports agent', meaning: 'm', evidence: ['E1'] }, { label: 'No proof', meaning: 'm', evidence: ['E9'] }, 'junk'] }, null);
+  assert.equal(t.focus, 'AI agents that use tools');
+  assert.deepEqual(t.otherSenses.map(s => s.label), ['Sports agent']);
+  const d = C.toData(t);
+  assert.equal(d.otherSenses[0].evidence[0].text, 'a super agent for sports');
+});
