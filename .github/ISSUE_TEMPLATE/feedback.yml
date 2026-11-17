@@ -1,0 +1,52 @@
+name: Feedback on a term
+description: You tried a term and something was off, confusing, or useful. Two minutes is plenty.
+title: "Feedback: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying idealine. Short answers are fine. Every report and what it changed goes into [FEEDBACK.md](https://github.com/Yilinista/idealine/blob/main/FEEDBACK.md).
+  - type: input
+    id: term
+    attributes:
+      label: Which term did you trace?
+      placeholder: e.g. vibe coding
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of feedback?
+      options:
+        - A date or "earliest found" looks wrong
+        - A milestone, era or meaning label looks wrong
+        - Papers I expected are missing
+        - Hard to use or confusing
+        - Something broke (error, blank page, stuck)
+        - It was useful / an idea for next
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened, and what did you expect?
+      description: If you know an earlier or better source, paste its link.
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Did you use a model key?
+      options:
+        - "No (free view)"
+        - "Yes: Claude"
+        - "Yes: OpenAI"
+        - "Yes: Gemini"
+        - "Yes: OpenRouter"
+        - "Not sure"
+  - type: input
+    id: field
+    attributes:
+      label: Your field (optional)
+      placeholder: e.g. NLP, psychology, biology

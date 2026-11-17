@@ -1167,7 +1167,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
         checks = `<p class="shift">${esc(L.shiftOf(m.shift))}</p>`;
       }
       const caveat = kind === 'origin'
-        ? `<p class="caveat">${esc(L.earliestCaveat)} <a href="${esc(ISSUES)}?title=${encodeURIComponent('Earlier use of "' + D.term + '"')}" target="_blank" rel="noopener noreferrer">${esc(L.earlierUse)}</a></p>` : '';
+        ? `<p class="caveat">${esc(L.earliestCaveat)} <a href="${esc(ISSUES)}?template=feedback.yml&title=${encodeURIComponent('Earlier use of "' + D.term + '"')}&term=${encodeURIComponent(D.term)}" target="_blank" rel="noopener noreferrer">${esc(L.earlierUse)}</a></p>` : '';
       detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kindName(kind))}</div><h2>${title}</h2>` +
         `<p class="why">${esc(L.msg(m.why))}</p>${checks}${caveat}${quotesHtml}<div class="status">${status}</div><div class="prov">${esc(prov((m.evidence || []).length))}</div>`;
     }

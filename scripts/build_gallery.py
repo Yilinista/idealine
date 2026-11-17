@@ -303,7 +303,7 @@ def main() -> None:
 <section class="cli">
   <h2 data-i18n="cliH">Prefer the command line?</h2>
   <pre>uvx --from git+{REPO_URL} idealine "mixture of experts" --alias "mixture-of-experts"</pre>
-  <p><a href="{REPO_URL}/issues/new" data-i18n="feedback">Something wrong or missing? Open an issue on GitHub.</a></p>
+  <p><a href="{REPO_URL}/issues/new?template=feedback.yml" data-i18n="feedback">Something wrong or missing? Open an issue on GitHub.</a></p>
 </section>
 <footer><span data-i18n="footer">Eras and milestones come from a language model that may cite only the quoted sentences, and can be wrong; the quotes are the evidence.</span> <a href="https://openalex.org">OpenAlex</a> · <a href="{REPO_URL}">GitHub</a> (MIT)</footer>
 </main>

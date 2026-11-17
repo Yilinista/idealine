@@ -130,7 +130,7 @@ idealine claim "Compute-optimal models should scale data and parameters equally"
 ## Feedback
 
 I am looking for the first users. Try a term you care about and
-[open an issue](https://github.com/Yilinista/idealine/issues): what was useful, what was
+[leave feedback](https://github.com/Yilinista/idealine/issues/new?template=feedback.yml) (a short form): what was useful, what was
 wrong, which term you want next. Changes made from feedback are logged in [FEEDBACK.md](FEEDBACK.md).
 
 ## Development
