@@ -10,7 +10,7 @@ import json
 from importlib import resources
 from pathlib import Path
 
-from idealine.render_term import CSS, REPO_URL, TIMELINE_JS
+from idealine.render_term import CSS, PAGE_TEXT, REPO_URL, TIMELINE_JS
 from idealine.term import OUTPUT_LANG, OUTPUT_SCHEMA, SYSTEM_PROMPT
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
@@ -130,7 +130,8 @@ nav a:hover{color:var(--fg)}
 
 def spec_json() -> str:
     """Prompt, schema, and page assets shared with the web app (one source of truth)."""
-    spec = {"system": SYSTEM_PROMPT, "schema": OUTPUT_SCHEMA, "css": CSS, "timelineJs": TIMELINE_JS, "siteUrl": SITE_URL, "outputLang": OUTPUT_LANG}
+    spec = {"system": SYSTEM_PROMPT, "schema": OUTPUT_SCHEMA, "css": CSS, "timelineJs": TIMELINE_JS, "siteUrl": SITE_URL, "outputLang": OUTPUT_LANG,
+            "pageText": PAGE_TEXT, "i18nJs": (resources.files("idealine") / "web" / "i18n.js").read_text(encoding="utf-8")}
     return json.dumps(spec, ensure_ascii=False).replace("<", "\\u003c")
 
 
@@ -160,10 +161,7 @@ TRACE_FORM = """
         <div><label for="key" data-i18n="keyLabel">API key</label><input id="key" type="password" spellcheck="false" autocomplete="off"></div>
         <div><label for="model" data-i18n="modelLabel">Model ID</label><input id="model" spellcheck="false"></div>
       </div>
-      <div class="actions">
-        <label class="check"><input type="checkbox" id="remember"> <span data-i18n="remember">Remember my keys on this device (not on a shared computer)</span></label>
-        <a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a>
-      </div>
+      <div class="actions"><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
     </div>
     <p class="privacy" id="privacy"></p>
     <div class="row">
@@ -172,7 +170,10 @@ TRACE_FORM = """
     <div class="row">
       <div><label for="oakey" data-i18n="oakeyLabel">OpenAlex key (optional, free; use it if OpenAlex says the daily budget is used up)</label><input id="oakey" type="password" spellcheck="false" autocomplete="off"></div>
     </div>
-    <button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button>
+    <div class="actions">
+      <label class="check"><input type="checkbox" id="remember"> <span data-i18n="remember">Remember my keys on this device (not on a shared computer)</span></label>
+      <button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button>
+    </div>
   </details>
 </form>
 <div id="status" role="status" aria-live="polite"></div>

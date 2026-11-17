@@ -331,6 +331,7 @@
       total: t.counts.reduce((n, [, c]) => n + c, 0),
       model: t.model,
       generated: t.generated,
+      lang: t.lang === 'zh' ? 'zh' : 'en',
       evidenceCount: t.evidence.length,
       eras: t.eras.map(e => ({ start: e.start, end: e.end, label: e.label, meaning: e.meaning, evidence: ev(e.evidence) })),
       milestones: t.milestones.map(m => ({

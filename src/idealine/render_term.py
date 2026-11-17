@@ -33,6 +33,7 @@ def to_data(t: TermTimeline) -> dict:
         "total": t.total,
         "model": t.model,
         "generated": t.generated,
+        "lang": t.lang,
         "evidenceCount": len(t.evidence),
         "eras": [{"start": e.start_year, "end": e.end_year, "label": e.label, "meaning": e.meaning,
                   "evidence": ev(e.evidence)} for e in t.eras],
@@ -162,6 +163,9 @@ _HAN = re.compile(r"[\u4e00-\u9fff]")
 
 
 def page_lang(d: dict) -> str:
+    if d.get("lang") in PAGE_TEXT:
+        return d["lang"]
+    # Older JSON has no "lang": guess from the summary.
     return "zh" if _HAN.search(d.get("summary") or "") else "en"
 
 

@@ -10,6 +10,7 @@ Every piece of user feedback, and what it changed. Newest first.
 
 | Date | Finding | What changed |
 |---|---|---|
+| 2026-11-17 | Yilin tried a Chinese term (许愿式编程, "vibe coding") and got "no papers"; the Chinese placeholder even suggested a Chinese term. | OpenAlex is mostly English. The placeholder now asks for an English term, and a CJK term with no results gets a tip to use the English term. |
 | 2026-11-17 | Yilin (trying the site): the design is not good-looking, and an English-only page is tiring to use. | Redesigned the home page (search first, example chips, settings folded away, example timeline, card sparklines, dark mode) and added a Chinese interface; in Chinese the model writes its summary and notes in Chinese. Regenerated the example timeline with exact search, in English and Chinese. |
 | 2026-11-17 | Real-data test of 16 terms (with an OpenAlex key): OpenAlex stems phrase searches, so *agentic* counted every "agent" paper (4,054,790). | Switched to `title_and_abstract.search.exact` (43,485 for *agentic*) and search singular/plural variants automatically (*world model* + *world models*). |
 | 2026-11-17 | Same test: some early records are misdated in OpenAlex (a CRISPR-Cas9 paper dated 1800; *vibe coding* papers dated 2019–2020), and free mode showed them as the origin. | Records from before the term's onset (3 papers or 1% of all) are flagged "date may be wrong"; free-mode origins come from the onset on; the model prompt warns about anachronistic dates. |

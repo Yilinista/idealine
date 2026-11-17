@@ -70,7 +70,7 @@
     keyIn.placeholder = p.keyHint;
     const saved = store.get(KEY_PREFIX + id);
     keyIn.value = saved || '';
-    remember.checked = !!saved;
+    remember.checked = !!saved || !!store.get('idealine.openalexKey');
   }
   providerSel.value = store.get('idealine.provider') || 'none';
   if (!P.PROVIDERS[providerSel.value] && providerSel.value !== 'none') providerSel.value = 'none';
@@ -88,6 +88,7 @@
     status(() => tx().forgotten);
   });
   $('oakey').value = store.get('idealine.openalexKey') || '';
+  if ($('oakey').value) remember.checked = true;
   $('open-opts').addEventListener('click', () => {
     const d = $('opts');
     d.open = true;
@@ -132,7 +133,8 @@
       store.set('idealine.model.' + providerId, model);
     }
     const oaKey = $('oakey').value.trim();
-    if (oaKey && remember.checked) store.set('idealine.openalexKey', oaKey); else store.del('idealine.openalexKey');
+    if (oaKey && remember.checked) store.set('idealine.openalexKey', oaKey);
+    else if (!oaKey || providerId !== 'none') store.del('idealine.openalexKey');
 
     busy = true;
     $('go').disabled = true;
@@ -142,7 +144,11 @@
       const oa = new C.OpenAlex({ apiKey: oaKey, log: m => status(m) });
       const t = await C.harvest(oa, term, aliases, { onStep: status });
       if (!t.counts.length || !t.evidence.length) {
-        throw new C.IdealineError(I.T[runLang].noPapers(term));
+        // OpenAlex is mostly English: a Chinese/Japanese/Korean term usually finds nothing.
+        const cjk = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(term);
+        const err = new C.IdealineError(I.T.en[cjk ? 'noPapersCjk' : 'noPapers'](term));
+        err.local = () => tx()[cjk ? 'noPapersCjk' : 'noPapers'](term);
+        throw err;
       }
       if (providerId === 'none') {
         C.baseline(t);
@@ -152,6 +158,7 @@
         const prompt = C.buildPrompt(t, (SPEC.outputLang || {})[runLang]);
         const data = await P.callModel(providerId, { key, model, system: SPEC.system, prompt, schema: SPEC.schema });
         t.model = model;
+        t.lang = runLang;
         await C.applyAnalysis(t, data, oa, status);
         if (!t.milestones.length) {
           throw new C.IdealineError(I.T.en.noMilestones);
@@ -168,7 +175,8 @@
       const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
       if (known && /OpenAlex key/.test(e.message)) $('opts').open = true;
       const m = e && e.message ? e.message : String(e);
-      if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones, true);
+      if (e && e.local) status(e.local, true);
+      else if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones, true);
       else status(known ? m : (() => tx().wentWrong(m)), true);
     } finally {
       busy = false;
@@ -208,31 +216,39 @@
     const d = lastData, e = escHtml;
     const years = d.counts.map(c => c[0]);
     const span = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : 'n/a';
-    const how = d.model ? `Proposed by <code>${e(d.model)}</code> from ${d.evidenceCount} quoted sentences only; every milestone shows its quotes so you can check it.`
-      : 'No model was used: milestones are the earliest and most-cited papers that use the term.';
+    const pl = d.lang === 'zh' ? 'zh' : 'en', PT = SPEC.pageText[pl];
+    const fill = (tpl, vals) => tpl.replace(/\{(\w+)\}/g, (_, k) => (k in vals ? vals[k] : ''));
+    const how = d.model ? fill(PT.how_model, { model: e(d.model), n: d.evidenceCount }) : PT.how_none;
     const data = JSON.stringify(d).replace(/</g, '\\u003c');
-    const lib = SPEC.timelineJs.replace(/<\/script/gi, '<\\/script');
+    const noEnd = js => js.replace(/<\/script/gi, '<\\/script');
+    const lib = pl === 'zh' ? noEnd(SPEC.i18nJs) + '\n' + noEnd(SPEC.timelineJs) : noEnd(SPEC.timelineJs);
+    const call = pl === 'zh'
+      ? "renderTimeline(JSON.parse(document.getElementById('data').textContent), document, Object.assign({kinds: IdealineI18n.KINDS.zh}, IdealineI18n.T.zh));"
+      : "renderTimeline(JSON.parse(document.getElementById('data').textContent));";
     const page = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="${pl === 'zh' ? 'zh-CN' : 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${e(d.term)} · idealine</title>
 <style>${SPEC.css}</style></head>
 <body><main>
-<div class="brand"><a href="${e(SPEC.siteUrl)}">idealine</a> · where did this idea come from?</div>
+<div class="brand"><a href="${e(SPEC.siteUrl)}">idealine</a> · ${PT.tagline}</div>
 <h1>${e(d.term)}</h1>
 <p class="summary">${e(d.summary)}</p>
-<p class="meta">${d.total.toLocaleString('en-US')} papers in OpenAlex use this term (${span}). ${how}</p>
+<p class="meta">${fill(PT.meta, { total: d.total.toLocaleString('en-US'), span })}${how}</p>
 <div class="card">
-  <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
+  <div class="hint">${PT.hint}</div>
   <div class="scroller"><div data-part="chart"></div></div>
   <div class="legend" data-part="legend"></div>
   <div class="detail" data-part="detail" aria-live="polite"></div>
 </div>
 <div class="eras" data-part="eras"></div>
-<footer>Made with <a href="${e(SPEC.siteUrl)}">idealine</a> from <a href="https://openalex.org">OpenAlex</a> data. Generated ${e(d.generated)}. Labels can be wrong; the quotes are the evidence.</footer>
+<details><summary>${PT.details}</summary>
+<p>${fill(PT.details_body, { generated: e(d.generated) })}</p>
+</details>
+<footer>${fill(PT.footer, { repo: e(SPEC.siteUrl), site: e(SPEC.siteUrl) })}</footer>
 </main>
 <script type="application/json" id="data">${data}</script>
 <script>${lib}
-renderTimeline(JSON.parse(document.getElementById('data').textContent));</script>
+${call}</script>
 </body></html>
 `;
     download(slug(d.term) + '.html', page, 'text/html');

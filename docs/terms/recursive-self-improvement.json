@@ -71,6 +71,7 @@
  "total": 707,
  "model": "claude-opus-5-5",
  "generated": "2026-11-17",
+ "lang": "en",
  "evidenceCount": 156,
  "eras": [
   {

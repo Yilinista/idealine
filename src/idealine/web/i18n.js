@@ -43,6 +43,7 @@
       needKey: short => `Paste your ${short} key, or pick “No model” for the free view.`,
       asking: (short, model, n) => `Asking ${short} (${model}) to read ${n} sentences. This can take a minute…`,
       noPapers: term => `No paper titles or abstracts in OpenAlex use “${term}”. Try another spelling or add one under “Other spellings”.`,
+      noPapersCjk: term => `No paper titles or abstracts in OpenAlex use “${term}”. Most papers there are in English, so try the English term (for example “vibe coding”).`,
       noMilestones: 'The model returned no milestones backed by the quoted sentences. Try again, or try another model.',
       acronym: 'Tip: acronyms often match other fields; the spelled-out term usually gives a cleaner timeline.',
       pressTrace: 'Press Trace to run it with your key.',
@@ -59,7 +60,7 @@
       langToggle: 'EN', langToggleTitle: '切换到英文',
       heroTitle: '这个概念从哪里来？',
       heroSub: '输入任意术语，看它何时出现、谁推动了它、含义如何变化。每一步都附上论文原句作证据。',
-      termPh: '试试 “world model” 或 “注意力机制”', termLabel: '术语', go: '追溯',
+      termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '追溯',
       freeLine: '免费：使用曲线 + 关键论文。想看时期划分和里程碑，', addKey: '填入你自己的模型 key',
       optsSummary: '选项与模型 key',
       aliasesLabel: '其他写法（可选，用逗号分隔）', aliasesPh: '例如 mixture-of-experts, MoE layer',
@@ -87,6 +88,7 @@
       needKey: short => `请粘贴你的 ${short} key，或者选“不用模型”使用免费模式。`,
       asking: (short, model, n) => `正在请 ${short}（${model}）阅读 ${n} 条句子，可能需要一分钟……`,
       noPapers: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。换个写法，或在“其他写法”里补充。`,
+      noPapersCjk: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。那里的论文大多是英文，请输入英文术语（例如 “vibe coding”）。`,
       noMilestones: '模型没有给出有原句支撑的里程碑。请重试，或换一个模型。',
       acronym: '提示：缩写常会匹配到其他领域，写全称通常更准确。',
       pressTrace: '点“追溯”用你的 key 运行。',
@@ -114,20 +116,31 @@
     [/^Could not reach OpenAlex/, () => '连不上 OpenAlex，请检查网络后重试。'],
     [/^OpenAlex error (\d+)\.$/, m => `OpenAlex 出错（${m[1]}）。`],
     [/^OpenAlex kept failing/, () => 'OpenAlex 一直失败，请过一分钟再试。'],
-    [/^(.+?) rejected the key \((\d+)\)\./, m => `${m[1]} 拒绝了这个 key（${m[2]}）。请确认 key 完整且有效。`],
-    [/^(.+?) does not know that model \(404\)/, m => `${m[1]} 不认识这个模型（404），请检查模型 ID。`],
-    [/^(.+?) says you hit a rate or spending limit \(429\)/, m => `${m[1]} 提示你触发了速率或额度上限（429）。请稍后再试，或检查账户余额。`],
-    [/^(.+?) refused the request \(400\)\.(.*)$/, m => `${m[1]} 拒绝了这次请求（400）。${m[2].replace(/ ?Some models do not support.*$/, '')} 部分模型不支持结构化 JSON 输出或这些设置，可以试试默认模型。`],
+    [/^(.+?) rejected the key \((\d+)\)\. Check that you pasted the whole key and that it is active\.(.*)$/s, m => `${m[1]} 拒绝了这个 key（${m[2]}）。请确认 key 完整且有效。${detail(m[3])}`],
+    [/^(.+?) does not know that model \(404\)\. Check the model ID\.(.*)$/s, m => `${m[1]} 不认识这个模型（404），请检查模型 ID。${detail(m[2])}`],
+    [/^(.+?) says you hit a rate or spending limit \(429\)\. Wait a bit or check your account's billing\.(.*)$/s, m => `${m[1]} 提示你触发了速率或额度上限（429）。请稍后再试，或检查账户余额。${detail(m[2])}`],
+    [/^(.+?) refused the request \(400\)\.(.*?)(?: ?Some models do not support[^]*)?$/s, m => `${m[1]} 拒绝了这次请求（400）。${detail(m[2])} 部分模型不支持结构化 JSON 输出或这些设置，可以试试默认模型。`],
+    [/^(.+?) error (\d+)\.(.*)$/s, m => `${m[1]} 出错（${m[2]}）。${detail(m[3])}`],
+    [/^Google stopped the answer \((.+)\)\.$/, m => `Google 中止了回答（${m[1]}）。`],
+    [/^Unknown provider\.$/, () => '未知的模型提供方。'],
+    [/^Paste your API key first\.$/, () => '请先粘贴你的 API key。'],
+    [/^Type a model ID\.$/, () => '请填写模型 ID。'],
     [/^Could not reach (.+?)\. /, m => `连不上 ${m[1]}，请检查网络（或广告拦截插件）后重试。`],
     [/^(.+?) returned an empty answer/, m => `${m[1]} 返回了空答案，请重试。`],
     [/^(.+?) returned text that is not valid JSON/, m => `${m[1]} 返回的内容不是有效的 JSON，请重试或换个模型。`],
     [/^The model declined this request\.$/, () => '模型拒绝了这个请求。'],
     [/^The answer was cut off/, () => '回答被截断了（超出最大 token），请重试。'],
     [/^(.+?)'s content filter blocked the answer\.$/, m => `${m[1]} 的内容过滤拦截了回答。`],
-    [/^(.+?) reported an error(.*)$/, m => `${m[1]} 报错${m[2] ? '：' + m[2].replace(/^[:.]\s*/, '') : '。'}`],
-    [/^(.+?) returned no answer/, m => `${m[1]} 没有返回答案。`],
+    [/^(.+?) reported an error(.*)$/s, m => { const d = m[2].replace(/^[:.]\s*/, '').trim(); return `${m[1]} 报错${d ? '：' + d : '。'}`; }],
+    [/^(.+?) returned no answer(?: \(blocked: (.+?)\))?\.$/, m => `${m[1]} 没有返回答案${m[2] ? `（被拦截：${m[2]}）` : ''}。`],
     [/^That Gemini model ID has characters/, () => '这个 Gemini 模型 ID 含有不该有的字符。'],
   ];
+
+  // Provider's own error text (kept in its original language), appended after the translation.
+  function detail(s) {
+    const d = String(s || '').trim();
+    return d ? ' ' + d : '';
+  }
 
   function detectLang(stored, navLang) {
     if (stored === 'en' || stored === 'zh') return stored;

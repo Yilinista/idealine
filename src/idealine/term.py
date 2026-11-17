@@ -64,6 +64,7 @@ class TermTimeline:
     summary: str = ""
     model: str | None = None
     generated: str = field(default_factory=lambda: date.today().isoformat())
+    lang: str = "en"  # language the model wrote its labels in
 
     @property
     def total(self) -> int:
@@ -390,6 +391,7 @@ def analyze(
 ) -> TermTimeline:
     if not t.evidence:
         raise AnalyzeError("No sentences use this term, so there is nothing to analyze.")
+    t.lang = lang if lang in OUTPUT_LANG else "en"
     if client is None:
         import anthropic
 
