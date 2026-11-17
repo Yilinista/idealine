@@ -35,9 +35,9 @@
     const lb = $('lang');
     lb.textContent = T.langToggle;
     lb.title = T.langToggleTitle;
-    $('r-tag').textContent = lastData ? T.resultTag : T.exampleTag;
     syncProvider();
-    if (shown) show(shown === exampleFor(otherLang()) ? exampleFor(lang) : shown, false);
+    progress.relabel();
+    if (shown) show(shownKind === 'example' ? exampleFor(lang) : shown, false, shownKind);
     if (lastStatus) status(lastStatus.key ? lastStatus.key() : lastStatus.msg, lastStatus.isError);
   }
   $('lang').addEventListener('click', () => {
@@ -95,6 +95,38 @@
     if (providerSel.value === 'none') providerSel.focus(); else keyIn.focus();
   });
 
+  // --- progress: a step list with a running clock, so a slow run never looks stuck ---
+  const STEPS_FREE = ['count', 'early', 'cited', 'recent'];
+  const STEPS_MODEL = ['count', 'early', 'cited', 'recent', 'model', 'links'];
+  const STEP_OF = [[/^Counting papers/, 'count'], [/^Reading the earliest/, 'early'], [/^Reading the most-cited/, 'cited'], [/^Reading recent/, 'recent'], [/^Looking up/, 'links']];
+  const progress = (() => {
+    const box = $('progress');
+    let steps = [], active = -1, t0 = 0, timer = null, labelFns = {};
+    const label = k => (labelFns[k] ? labelFns[k]() : tx()['step_' + k]);
+    function render() {
+      box.textContent = '';
+      steps.forEach((k, i) => {
+        const li = document.createElement('li');
+        li.className = i < active ? 'done' : i === active ? 'active' : '';
+        li.textContent = label(k);
+        if (i === active) {
+          const s = document.createElement('span');
+          s.className = 'clock';
+          s.textContent = tx().seconds(Math.round((Date.now() - t0) / 1000));
+          li.appendChild(s);
+        }
+        box.appendChild(li);
+      });
+    }
+    return {
+      start(list) { steps = list; active = 0; t0 = Date.now(); labelFns = {}; box.hidden = false; clearInterval(timer); timer = setInterval(render, 1000); render(); },
+      go(key, fn) { const i = steps.indexOf(key); if (fn) labelFns[key] = fn; if (i > active) { active = i; t0 = Date.now(); } render(); },
+      from(msg) { for (const [re, k] of STEP_OF) if (re.test(msg)) { this.go(k); return true; } return false; },
+      finish() { clearInterval(timer); timer = null; steps = []; active = -1; box.hidden = true; box.textContent = ''; },
+      relabel() { if (steps.length) render(); },
+    };
+  })();
+
   // --- run --------------------------------------------------------------------
   // msg: a string (translated if known) or a function returning text in the current language.
   function status(msg, isError) {
@@ -140,9 +172,13 @@
     $('go').disabled = true;
     const acronymHint = /^[A-Z0-9]{2,5}$/.test(term) && !aliases.length;
     const runLang = lang;
+    let interim = null;
+    progress.start(providerId === 'none' ? STEPS_FREE : STEPS_MODEL);
+    // Known steps go to the step list; anything else (retries, waits) to the status line.
+    const step = m => { if (progress.from(m)) status(''); else status(m); };
     try {
-      const oa = new C.OpenAlex({ apiKey: oaKey, log: m => status(m) });
-      const t = await C.harvest(oa, term, aliases, { onStep: status });
+      const oa = new C.OpenAlex({ apiKey: oaKey, log: step });
+      const t = await C.harvest(oa, term, aliases, { onStep: step });
       if (!t.counts.length || !t.evidence.length) {
         // OpenAlex is mostly English: a Chinese/Japanese/Korean term usually finds nothing.
         const cjk = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(term);
@@ -154,18 +190,26 @@
         C.baseline(t);
       } else {
         const p = P.PROVIDERS[providerId];
-        status(() => tx().asking(p.short, model, t.evidence.length));
+        // Show the free view right away so there is something to read while the model works.
+        const pre = structuredClone(t);
+        C.baseline(pre);
+        interim = C.toData(pre);
+        show(interim, false, 'interim'); // stay put: the step list stays in view above it
+        progress.go('model', () => tx().stepModelN(p.short, t.evidence.length));
+        status('');
         const prompt = C.buildPrompt(t, (SPEC.outputLang || {})[runLang]);
         const data = await P.callModel(providerId, { key, model, system: SPEC.system, prompt, schema: SPEC.schema });
         t.model = model;
         t.lang = runLang;
-        await C.applyAnalysis(t, data, oa, status);
+        progress.go('links');
+        await C.applyAnalysis(t, data, oa, step);
         if (!t.milestones.length) {
           throw new C.IdealineError(I.T.en.noMilestones);
         }
       }
       lastData = C.toData(t);
-      show(lastData, true);
+      progress.finish();
+      show(lastData, true, 'result');
       status(acronymHint ? () => tx().acronym : '');
       const u = new URL(location.href);
       u.searchParams.set('term', term);
@@ -175,22 +219,30 @@
       const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
       if (known && /OpenAlex key/.test(e.message)) $('opts').open = true;
       const m = e && e.message ? e.message : String(e);
-      if (e && e.local) status(e.local, true);
-      else if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones, true);
-      else status(known ? m : (() => tx().wentWrong(m)), true);
+      progress.finish();
+      // If the model step failed, keep the free view as the result.
+      if (interim) { lastData = interim; show(interim, false, 'result'); }
+      const kept = interim ? () => ' ' + tx().keptFree : () => '';
+      if (e && e.local) status(() => e.local() + kept(), true);
+      else if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones + kept(), true);
+      else if (known) status(() => I.trMessage(lang, m) + kept(), true);
+      else status(() => tx().wentWrong(m) + kept(), true);
     } finally {
       busy = false;
       $('go').disabled = false;
     }
   });
 
-  function show(d, scroll) {
+  // kind: 'example' (ready-made), 'interim' (free view while the model reads), 'result'.
+  let shownKind = 'example';
+  function show(d, scroll, kind) {
     shown = d;
+    shownKind = kind || 'example';
     $('result').hidden = false;
     const T = tx();
-    const isExample = !lastData || d !== lastData;
-    $('r-tag').textContent = isExample ? T.exampleTag : T.resultTag;
-    $('r-actions').hidden = isExample;
+    $('r-tag').textContent = { example: T.exampleTag, interim: T.interimTag, result: T.resultTag }[shownKind];
+    $('r-tag').classList.toggle('pulse', shownKind === 'interim');
+    $('r-actions').hidden = shownKind !== 'result';
     $('r-term').textContent = d.term;
     $('r-summary').textContent = d.summary || '';
     const years = d.counts.map(c => c[0]);

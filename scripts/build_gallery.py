@@ -99,6 +99,18 @@ nav a:hover{color:var(--fg)}
 .opts a{color:var(--accent)}
 .actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .linkbtn{font:inherit;font-size:.82rem;background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+.progress{list-style:none;max-width:640px;margin:18px auto 0;padding:12px 18px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-size:.9rem}
+.progress li{position:relative;padding:3px 0 3px 26px;color:var(--muted)}
+.progress li::before{content:"";position:absolute;left:4px;top:.55em;width:10px;height:10px;border-radius:50%;border:2px solid var(--line)}
+.progress li.done{color:var(--fg)}
+.progress li.done::before{content:"✓";border:0;width:auto;height:auto;top:3px;left:3px;color:var(--origin);font-weight:700}
+.progress li.active{color:var(--fg);font-weight:600}
+.progress li.active::before{border-color:var(--accent);border-top-color:transparent;animation:spin .8s linear infinite}
+.progress .clock{font-weight:400;color:var(--muted)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tag.pulse{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.progress li.active::before,.tag.pulse{animation:none}}
 #status{min-height:1.5em;margin:14px auto 0;max-width:640px;font-size:.9rem;color:var(--muted)}
 #status.error{color:var(--critique)}
 #result{margin-top:44px;scroll-margin-top:16px}
@@ -176,6 +188,7 @@ TRACE_FORM = """
     </div>
   </details>
 </form>
+<ol id="progress" class="progress" hidden></ol>
 <div id="status" role="status" aria-live="polite"></div>
 """
 

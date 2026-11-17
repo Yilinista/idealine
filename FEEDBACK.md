@@ -4,7 +4,7 @@ Every piece of user feedback, and what it changed. Newest first.
 
 | Date | Who (handle or "classmate") | Where | What they said | What changed | Commit / issue |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-11-17 | Yilin (author, using the live site) | chat | After pressing Trace the page looks stuck; show some intermediate steps. | Added a step list with a running clock; with a model key, the free view (usage curve + key papers) appears as soon as OpenAlex answers, then is replaced by the model's timeline; if the model fails, the free view stays. | (next commit) |
 
 ## Pre-launch findings (my own testing)
 
