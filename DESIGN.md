@@ -50,9 +50,10 @@ newsletter readers. The "whoa" is a term they use daily turning out to have a
 | SCoT, ShiCo, DRIFT (research tools) | Word-sense change from embeddings | Need corpus setup and NLP background; show clusters, not readable history |
 | Scite, ResearchRabbit, Litmaps, Gallant Lab toolkit | Citation stance / literature maps | About papers, not about a term's meaning over time |
 
-**Fastest path to something people use?** A static gallery of prebuilt timelines for
-hot AI terms on GitHub Pages: zero install, zero key, shareable link. The CLI is for
-people who want their own term; issues are the request channel.
+**Fastest path to something people use?** One static page on GitHub Pages: type any term and
+get a timeline right there (free mode needs no key; eras and milestones use the visitor's own
+model key), plus a gallery of prebuilt timelines with shareable links. The CLI is for people who
+want files or automation.
 
 **10x version?** Bring your own corpus (newsletters, a lab's papers, Chinese sources),
 compare two terms on one axis, and alerts when a term's meaning shifts. Not in v1.
@@ -69,7 +70,12 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
 
 - **A. Static gallery + CLI (chosen).** Effort S–M, low risk, no server, no costs for visitors.
 - **B. Hosted web app with live search.** Best UX for custom terms, but needs a backend,
-  rate limiting, and pays model costs for strangers. Revisit if users ask for custom terms often.
+  rate limiting, and pays model costs for strangers.
+- **B'. Static web app, bring your own key (added 2026-11-17, now the front door).** Same page as
+  the gallery: the browser calls OpenAlex and the visitor's chosen model provider (Anthropic,
+  OpenAI, Gemini, OpenRouter) directly with the visitor's own key. Gets B's UX with A's
+  no-server, no-cost setup. Also replaced a planned "request a term by GitHub issue" bot, which
+  would have spent my key on strangers' requests and needed a daily cap.
 - **C. Chatbot plugin / skill.** Easy to build, but output lives in a chat, is not
   shareable, and it is unclear whether it counts as a launched product.
 
@@ -90,6 +96,18 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
 
 `--no-llm` skips step 2: milestones are the earliest and most-cited works.
 
+## Browser app (bring your own key)
+
+- Same pipeline as the CLI, ported to `src/idealine/web/core.js`; the prompt and JSON schema are
+  injected from `term.py` at build time, so the two cannot drift.
+- `providers.js` makes one structured-output call per provider (Anthropic `output_config.format`,
+  OpenAI/OpenRouter strict `response_format`, Gemini `responseJsonSchema`). Whatever comes back
+  is still checked against the evidence IDs in code.
+- Key safety: no server; key in memory unless the visitor opts in to localStorage; never in URLs.
+  A Content-Security-Policy limits scripts to the site's own files and network calls to OpenAlex
+  and the four providers. All paper text and model output is escaped or set as text; links must
+  be http(s).
+
 ## Known limits
 
 - Only title/abstract text. Books and pre-2000 essays without abstracts appear only if
@@ -105,6 +123,6 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
 
 ## Next steps
 
-1. Publish the repo and gallery (GitHub Pages).
+1. Publish the repo and site (GitHub Pages).
 2. Classmates first, then Show HN / X / Reddit (see `LAUNCH.md`).
 3. Add requested terms; fix what users trip on.

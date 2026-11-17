@@ -75,14 +75,22 @@ class TermTimeline:
 
 # --- harvest -------------------------------------------------------------------
 
+_NO_SPACE_SCRIPT = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\u0e00-\u0e7f]")
+
+
 def term_pattern(term: str, aliases: list[str]) -> re.Pattern:
-    """Case-insensitive match that treats spaces and hyphens alike."""
+    """Case-insensitive match that treats spaces and hyphens alike.
+
+    A phrase must start at a word start ("art" must not match "smart"), except in
+    scripts written without spaces (Chinese, Japanese, Thai). Same rule as web/core.js.
+    """
     parts = []
     for phrase in [term, *aliases]:
-        words = [re.escape(w) for w in re.split(r"[\s\-]+", phrase.strip()) if w]
-        if words:
-            parts.append(r"[\s\-]+".join(words))
-    return re.compile(r"\b(?:" + "|".join(parts) + r")", re.IGNORECASE)
+        raw = [w for w in re.split(r"[\s\-]+", phrase.strip()) if w]
+        if raw:
+            body = r"[\s\-]+".join(re.escape(w) for w in raw)
+            parts.append(body if _NO_SPACE_SCRIPT.match(raw[0]) else r"(?<!\w)" + body)
+    return re.compile(r"(?:" + "|".join(parts) + r")", re.IGNORECASE)
 
 
 _SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z\"'(\[])")
@@ -245,29 +253,50 @@ def apply_analysis(t: TermTimeline, data: dict, resolver: OpenAlexClient | None)
     """Keep only evidence-backed items and attach links. Mutates and returns t."""
     by_id = t.evidence_by_id()
 
-    def valid(ids: list[str]) -> list[str]:
-        return [i for i in ids if i in by_id]
+    def valid(ids: Any) -> list[str]:
+        return [i for i in ids if isinstance(i, str) and i in by_id] if isinstance(ids, list) else []
 
-    t.summary = (data.get("summary") or "").strip()
+    def text(v: Any) -> str:
+        return v.strip() if isinstance(v, str) else ""
+
+    # Model years are untrusted: keep them in a sane window (same rule as the web app).
+    last_year = max([date.today().year, *t.counts]) + 1
+
+    def year(v: Any) -> int | None:
+        try:
+            y = int(v)
+        except (TypeError, ValueError):
+            return None
+        return y if 1000 <= y <= last_year else None
+
+    data = data if isinstance(data, dict) else {}
+    t.summary = text(data.get("summary"))
     t.eras = []
     for e in data.get("eras") or []:
-        ev = valid(e.get("evidence") or [])
-        if ev and e.get("start_year") and e.get("end_year"):
-            t.eras.append(Era(int(e["start_year"]), int(e["end_year"]), e["label"].strip(), e["meaning"].strip(), ev))
+        if not isinstance(e, dict):
+            continue
+        ev, start, end = valid(e.get("evidence")), year(e.get("start_year")), year(e.get("end_year"))
+        if ev and start and end and start <= end:
+            t.eras.append(Era(start, end, text(e.get("label")), text(e.get("meaning")), ev))
     t.eras.sort(key=lambda e: e.start_year)
 
     t.milestones = []
     for m in data.get("milestones") or []:
-        ev = valid(m.get("evidence") or [])
-        if not ev or m.get("kind") not in MILESTONE_KINDS or not m.get("year"):
+        if not isinstance(m, dict):
             continue
-        ms = Milestone(int(m["year"]), m["kind"], m["title"].strip(), m["why"].strip(), ev)
-        ref = m.get("work_ref") or ""
+        ev, y = valid(m.get("evidence")), year(m.get("year"))
+        if not ev or m.get("kind") not in MILESTONE_KINDS or not y:
+            continue
+        ms = Milestone(y, m["kind"], text(m.get("title")), text(m.get("why")), ev)
+        ref = m.get("work_ref") if isinstance(m.get("work_ref"), str) else ""
         if ref in by_id:
             ms.work = by_id[ref].work
             ms.link_status = "in-sample"
-        elif resolver is not None:
-            found = resolver.find_work(ms.title, ms.year)
+        elif resolver is not None and ms.title:
+            try:
+                found = resolver.find_work(ms.title, ms.year)
+            except Exception:  # lookups are optional; keep the milestone unlinked
+                found = None
             if found and found.year and abs(found.year - ms.year) <= 1 and _title_overlap(found.title, ms.title) >= 0.4:
                 ms.work = found
                 ms.link_status = "resolved"
@@ -313,7 +342,10 @@ def baseline(t: TermTimeline) -> TermTimeline:
     early = [e for e in t.evidence if not (e.work.work_id in seen or seen.add(e.work.work_id))][:3]
     for e in early:
         t.milestones.append(Milestone(e.work.year or 0, "origin", e.work.title, "One of the earliest uses found.", [e.eid], e.work, "in-sample"))
-    top = sorted({e.work.work_id: e for e in t.evidence}.values(), key=lambda e: -e.work.cited_by)
+    first: dict[str, Evidence] = {}
+    for e in t.evidence:
+        first.setdefault(e.work.work_id, e)
+    top = sorted(first.values(), key=lambda e: -e.work.cited_by)
     for e in top[:5]:
         if e.work.work_id in {m.work.work_id for m in t.milestones if m.work}:
             continue

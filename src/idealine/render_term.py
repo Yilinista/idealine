@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import html
 import json
+from importlib import resources
 
 from .term import TermTimeline
 
 REPO_URL = "https://github.com/Yilinista/idealine"
+SITE_URL = "https://yilinista.github.io/idealine/"
 
 
 def to_data(t: TermTimeline) -> dict:
@@ -116,106 +118,12 @@ footer{margin-top:36px;color:var(--muted);font-size:.82rem}
 footer a{color:inherit}
 """
 
-JS = r"""
-const D = JSON.parse(document.getElementById('data').textContent);
-const KINDS = ['ancestor','origin','coined','popularized','redefined','applied','critique'];
-const NS = 'http://www.w3.org/2000/svg';
-const css = n => getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();
-const el = (tag, attrs={}, parent) => { const e=document.createElementNS(NS,tag); for (const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; };
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const termRe = new RegExp('(' + [D.term, ...D.aliases].map(p => p.split(/[\s-]+/).map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('[\\s-]+')).join('|') + ')', 'ig');
-const mark = s => esc(s).replace(termRe, '<mark>$1</mark>');
+def _web(name: str) -> str:
+    return (resources.files("idealine") / "web" / name).read_text(encoding="utf-8")
 
-function build() {
-  const counts = new Map(D.counts);
-  const years = [...counts.keys(), ...D.milestones.map(m=>m.year), ...D.eras.flatMap(e=>[e.start,e.end])].filter(Boolean);
-  if (!years.length) return;
-  const nowYear = Math.max(...years), minYear = Math.min(...years);
-  const left = 40, labelRoom = 230;
-  const avail = Math.max(600, document.getElementById('chart').parentElement.clientWidth || 900);
-  // Each year gets width by how much happens in it: milestone years and busy years
-  // are wide, quiet years are thin. A century of rare use stays a short strip.
-  const peakC = Math.max(1, ...counts.values()), msYears = new Set(D.milestones.map(m => m.year));
-  const raw = y => (msYears.has(y) ? 30 : 0) + 34 * Math.sqrt((counts.get(y) || 0) / peakC) + ((counts.get(y) || 0) / peakC > 0.002 ? 6 : 2);
-  let total = 0; for (let y = minYear; y <= nowYear; y++) total += raw(y);
-  const scale = Math.max(1, Math.min(2.2, (avail - left - labelRoom) / total));
-  const WY = y => raw(y) * scale, pos = new Map(); let acc = left;
-  for (let y = minYear; y <= nowYear; y++) { pos.set(y, acc + WY(y) / 2); acc += WY(y); }
-  const X = y => pos.get(Math.max(minYear, Math.min(nowYear, y)));
 
-  // Lay out milestone labels in lanes so they do not overlap.
-  const lanes = [], laneH = 36, axisPad = 26;
-  const ms = D.milestones.map((m, i) => {
-    const label = (m.title.length > 34 ? m.title.slice(0, 33) + '…' : m.title);
-    const w = [...`${m.year} · ${label}`].reduce((s, c) => s + (/[A-Z]/.test(c) ? 8 : 6.3), 0) + 22, x = X(m.year);
-    let lane = 0; while ((lanes[lane] ?? -1e9) > x - 6) lane++;
-    lanes[lane] = x + w; return {...m, i, label, x, lane};
-  });
-  const nLanes = Math.max(1, lanes.length);
-  const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
-  const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
-  const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
-  const svg = el('svg', {width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Timeline of ${D.term}`});
-
-  // Era bands; labels alternate between two rows and are cut to fit, so overlapping eras stay readable.
-  D.eras.forEach((e, k) => {
-    const xa = X(e.start) - WY(e.start)/2, xb = X(e.end) + WY(e.end)/2, row = k % 2;
-    el('rect', {x: xa, y: row * 16, width: Math.max(4, xb - xa), height: axisY - row * 16, fill: css(k % 2 ? 'era2' : 'era1'), rx: 6}, svg);
-    const next = D.eras[k + 2], room = (next ? X(next.start) - WY(next.start)/2 : W) - xa - 12;
-    const maxChars = Math.max(8, Math.floor(room / 6.6));
-    const label = e.label.length > maxChars ? e.label.slice(0, maxChars - 1) + '…' : e.label;
-    const t = el('text', {x: xa + 8, y: 15 + row * 16, 'font-weight': 600, 'font-size': 11}, svg); t.textContent = label;
-    el('title', {}, t).textContent = `${e.start}–${e.end}: ${e.label}`;
-  });
-
-  const maxC = Math.max(1, ...counts.values());
-  for (const [y, c] of counts) {
-    const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
-    const r = el('rect', {x: X(y) - WY(y)*0.34, y: axisY + 6, width: Math.max(1.5, WY(y)*0.68), height: h, fill: css('bar'), rx: 2}, svg);
-    el('title', {}, r).textContent = `${y}: ${c} papers`;
-  }
-  el('line', {x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2}, svg);
-  const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
-  // Year labels: never closer than 36px; the newest year always gets one.
-  let last = 1e9;
-  [...tickYears].sort((a,b)=>b-a).forEach(y => {
-    if (last - X(y) < 36) return;
-    const t = el('text', {x: X(y), y: axisY + barH + 26, 'text-anchor': 'middle', class: 'muted'}, svg); t.textContent = y; last = X(y);
-  });
-  const peak = [...counts].sort((a,b)=>b[1]-a[1])[0];
-  if (peak) { const t = el('text', {x: X(peak[0]) + WY(peak[0])*0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5}, svg); t.textContent = `${peak[1]} papers`; }
-
-  ms.forEach(m => {
-    const y = axisY - axisPad - m.lane * laneH;
-    const g = el('g', {class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${m.kind}: ${m.title}`}, svg);
-    el('rect', {x: m.x - 10, y: y - 12, width: m.label.length * 6.3 + 70, height: 24, fill: 'transparent'}, g);
-    el('line', {x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : ''}, g);
-    el('circle', {cx: m.x, cy: y, r: 7, fill: css(m.kind)}, g);
-    const t = el('text', {x: m.x + 11, y: y + 4}, g); t.textContent = `${m.year} · ${m.label}`;
-    g.addEventListener('click', () => select(m.i));
-    g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(m.i); } });
-    m.g = g;
-  });
-  document.getElementById('chart').appendChild(svg);
-  window._ms = ms;
-}
-
-function select(i) {
-  const m = D.milestones[i]; if (!m) return;
-  (window._ms || []).forEach(x => x.g.classList.toggle('sel', x.i === i));
-  const title = m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.title)}</a>` : esc(m.title);
-  const status = {'in-sample': 'Linked paper uses the term itself.', 'resolved': `Named in the quotes; matched to “${esc(m.workTitle)}” in OpenAlex. Check the match.`, 'unresolved': 'Named in the quotes but not found in OpenAlex, so there is no link.'}[m.link];
-  const quotes = m.evidence.map(e => `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? 'Title of ' : ''}<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a> · ${esc(e.authors)}, ${e.year}</cite></blockquote>`).join('');
-  document.getElementById('detail').innerHTML =
-    `<div class="kind" style="color:var(--${m.kind})">${m.year} · ${esc(m.kind)}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
-}
-
-build();
-document.getElementById('legend').innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${k}</span>`).join('') + '<span>dashed = no link found</span><span>bars = papers per year</span>';
-document.getElementById('eras').innerHTML = D.eras.map(e => `<div class="era"><b>${e.start}–${e.end}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');
-select(0);
-const sc = document.querySelector('.scroller'); if (sc) sc.scrollLeft = sc.scrollWidth;
-"""
+TIMELINE_JS = _web("timeline.js")
+JS = TIMELINE_JS + "\nrenderTimeline(JSON.parse(document.getElementById('data').textContent));\n"
 
 
 def to_html(t: TermTimeline) -> str:
@@ -224,7 +132,7 @@ def to_html(t: TermTimeline) -> str:
 
 def html_from_data(d: dict) -> str:
     """Render from the saved JSON, so a page can be re-rendered without new API calls."""
-    data = json.dumps(d, ensure_ascii=False).replace("</", "<\\/")
+    data = json.dumps(d, ensure_ascii=False).replace("<", "\\u003c")
     e = html.escape
     years = [y for y, _ in d["counts"]]
     span = f"{min(years)}–{max(years)}" if years else "n/a"
@@ -246,15 +154,15 @@ def html_from_data(d: dict) -> str:
 <p class="meta">{d['total']:,} papers in OpenAlex use this term ({span}). {how}</p>
 <div class="card">
   <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
-  <div class="scroller"><div id="chart"></div></div>
-  <div class="legend" id="legend"></div>
-  <div class="detail" id="detail" aria-live="polite"></div>
+  <div class="scroller"><div data-part="chart"></div></div>
+  <div class="legend" data-part="legend"></div>
+  <div class="detail" data-part="detail" aria-live="polite"></div>
 </div>
-<div class="eras" id="eras"></div>
+<div class="eras" data-part="eras"></div>
 <details><summary>How this was made and what it can miss</summary>
 <p>Counts and papers come from <a href="https://openalex.org">OpenAlex</a>, searching titles and abstracts for the exact phrase. Sentences come from abstracts, so works without an abstract (often older books and essays) only appear if the newer papers name them. Labels are generated and can be wrong; the quotes are the evidence. Generated {e(d['generated'])}.</p>
 </details>
-<footer>Made with <a href="{REPO_URL}">idealine</a>. Want another term? <a href="{REPO_URL}/issues/new?title=Term+request:+">Request it</a>.</footer>
+<footer>Made with <a href="{REPO_URL}">idealine</a>. Want another term? <a href="{SITE_URL}">Trace it yourself</a>.</footer>
 </main>
 <script type="application/json" id="data">{data}</script>
 <script>{JS}</script>

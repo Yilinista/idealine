@@ -10,6 +10,7 @@ Every piece of user feedback, and what it changed. Newest first.
 
 | Date | Finding | What changed |
 |---|---|---|
+| 2026-11-17 | Yilin (first reviewer): a gallery that only shows terms I picked is not something people can really use; let visitors bring their own key, not only Anthropic (e.g. OpenAI). | Built the browser app: type any term on the site, choose Anthropic, OpenAI, Gemini, or OpenRouter, paste your own key. Dropped the planned issue-request bot. |
 | 2026-11-17 | OpenAlex returned "free daily budget used up" after ~2 terms of testing (shared per IP, resets midnight UTC). Strangers on a shared network would hit this too. | Cut requests per term from ~20 to 4, fail fast with a clear message instead of retrying, and support an optional free `OPENALEX_API_KEY`. |
 | 2026-11-17 | *chain-of-thought* has scattered uses back to 1914, so an even year axis spent most of its width on empty decades. | Year widths now follow activity; 1914–2026 fits on one screen and the 2021–26 shift is readable. |
 | 2026-11-17 | Claim mode on real data: 45 of 47 labeled sentences were plain "mentions". Random citing sentences rarely test a claim, so the timeline felt empty. But those sentences often *name* the key follow-up papers ("a replication attempt (Besiroglu et al., 2024) found…"). | Pivoted the main product to term timelines, where the model builds milestones from what many sentences name. Claim mode kept as a secondary command. |

@@ -117,9 +117,10 @@ class OpenAlexClient:
             if resp.status_code == 429:
                 retry_after = resp.headers.get("retry-after", "")
                 if retry_after.isdigit() and int(retry_after) > 120:
-                    hours = int(retry_after) / 3600
+                    secs = int(retry_after)
+                    wait = f"{secs / 3600:.0f} h" if secs >= 5400 else f"{max(1, round(secs / 60))} min"
                     raise OpenAlexError(
-                        f"OpenAlex's free daily budget for your network is used up (resets in about {hours:.0f} h, "
+                        f"OpenAlex's free daily budget for your network is used up (resets in about {wait}, "
                         "at midnight UTC). Get a free key at https://help.openalex.org/api/authentication/ "
                         "and set OPENALEX_API_KEY, or try again later. Already-fetched terms are cached."
                     )

@@ -8,9 +8,26 @@ interactive timeline: when it first appeared, who shaped it, how its meaning shi
 and how many papers used it each year. Every step shows the sentence it is based on,
 with a link to the paper.
 
-**[Browse the gallery →](https://yilinista.github.io/idealine/)**
+**[Open idealine →](https://yilinista.github.io/idealine/)**
 
-## Quick start
+## Use it in the browser
+
+Open the site, type a term, press **Trace**. Nothing to install.
+
+- **Free mode (no key):** the usage curve plus the earliest and most-cited papers.
+- **With your own model key:** eras and milestones. Pick Claude (Anthropic), OpenAI, Gemini,
+  or OpenRouter, paste your key, and the page calls that provider straight from your browser.
+  One request per term, roughly 15–25k input tokens, billed to your account.
+
+**About your key:** the site is static (GitHub Pages) and has no server, so the key goes only
+from your browser to the provider you picked. It stays in the tab unless you tick
+"Remember my key on this device" (then it sits in this browser's localStorage until you press
+"Forget saved keys"). Anyone who can open your browser's devtools could read a remembered key,
+so do not tick it on a shared computer. A spending limit on your provider account is a good idea.
+
+You can download each result as a self-contained HTML page or as JSON.
+
+## Use it from the command line
 
 You need [uv](https://docs.astral.sh/uv/getting-started/installation/) (one install command).
 
@@ -27,17 +44,15 @@ export ANTHROPIC_API_KEY=...
 uvx --from git+https://github.com/Yilinista/idealine idealine "mixture of experts" --alias "mixture-of-experts"
 ```
 
-It asks before calling the API (one request per term).
-
-**3. Open the HTML file** it writes (`mixture-of-experts.html`). The page is self-contained,
-so you can share it or put it on any static host.
+It asks before calling the API (one request per term), then writes `mixture-of-experts.html`,
+`.md`, and `.json`. The page is self-contained, so you can share it or put it on any static host.
 
 Tips:
 - OpenAlex gives everyone on a network a small free daily budget (each term uses 4–16
   requests). If you hit it, get a [free OpenAlex key](https://help.openalex.org/api/authentication/)
-  and `export OPENALEX_API_KEY=...`. Fetched data is cached, so reruns are free.
+  (in the browser: "More options"; on the command line: `export OPENALEX_API_KEY=...`).
 - Spell terms out. Acronyms like "RSI" also match finance and medicine.
-- Add other spellings with `--alias` (repeatable).
+- Add other spellings (`--alias`, or the "Other spellings" box).
 - It works for any field OpenAlex covers, not only AI.
 
 ## How it works
@@ -45,7 +60,7 @@ Tips:
 1. **Harvest:** [OpenAlex](https://openalex.org) (free, no key) gives papers per year that use
    the exact phrase in the title or abstract, plus the earliest and most-cited papers of
    each year. idealine keeps the abstract sentences that use the term.
-2. **Analyze:** Claude reads only those sentences and proposes eras and milestones. Every item
+2. **Analyze:** the model (Claude by default on the command line; your choice in the browser) reads only those sentences and proposes eras and milestones. Every item
    must cite sentence IDs; anything without evidence is dropped.
 3. **Resolve:** works that the sentences name but that were not sampled (e.g. "Good, 1965") are
    looked up in OpenAlex. Unmatched ones are drawn dashed.
@@ -93,8 +108,10 @@ wrong, which term you want next. Changes made from feedback are logged in [FEEDB
 ```bash
 git clone https://github.com/Yilinista/idealine && cd idealine
 uv sync
-uv run pytest                          # offline, no API calls
-uv run python scripts/build_gallery.py # rebuild docs/index.html from docs/terms/*.json
+uv run pytest                          # Python tests, offline
+node --test tests/web.test.mjs         # browser-code tests, offline (Node 20+)
+uv run python scripts/build_gallery.py # rebuild docs/ (site + gallery) from src/idealine/web and docs/terms/*.json
+python3 -m http.server -d docs 8000    # preview the site at http://localhost:8000
 ```
 
 ## License

@@ -237,3 +237,36 @@ def test_cli_term_unknown_phrase(tmp_path):
     http = httpx.Client(base_url=BASE_URL, transport=httpx.MockTransport(empty))
     oa = OpenAlexClient(http=http, sleep=lambda s: None, log=lambda m: None)
     assert main(["zzqx flurb", "--no-llm", "--out", str(tmp_path)], oa=oa) == 1
+
+
+def test_apply_analysis_tolerates_loose_model_json():
+    from idealine.openalex import Work
+    from idealine.term import Evidence, TermTimeline, apply_analysis
+
+    w = Work("W1", "Paper", 2020, "2020-01-01", "https://x", 3)
+    t = TermTimeline("x", [], {2020: 5}, [Evidence("E1", "x here", w)])
+
+    class Boom:
+        def find_work(self, *a):
+            raise RuntimeError("network")
+
+    apply_analysis(t, {
+        "summary": None,
+        "eras": [{"start_year": "1990s", "end_year": 2000, "label": "a", "meaning": "b", "evidence": ["E1"]},
+                 {"start_year": 2019, "end_year": 2020, "label": None, "meaning": "m", "evidence": ["E1"]},
+                 "junk"],
+        "milestones": [{"year": 2020, "kind": "origin", "title": "t", "why": None, "evidence": ["E1"], "work_ref": []},
+                       {"year": 2_000_000_000, "kind": "origin", "title": "huge", "why": "", "evidence": ["E1"], "work_ref": "E1"}],
+    }, Boom())
+    assert [(e.start_year, e.label) for e in t.eras] == [(2019, "")]
+    assert [(m.year, m.link_status, m.why) for m in t.milestones] == [(2020, "unresolved", "")]
+
+
+def test_inline_json_escapes_every_angle_bracket():
+    from idealine.render_term import html_from_data
+
+    d = {"term": "x", "aliases": [], "summary": "<!--<script>", "counts": [[2020, 1]], "total": 1, "model": None,
+         "generated": "2026-11-17", "evidenceCount": 0, "eras": [], "milestones": []}
+    page = html_from_data(d)
+    data = page.split('id="data">', 1)[1].split("</script>", 1)[0]
+    assert "<" not in data
