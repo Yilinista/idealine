@@ -18,7 +18,7 @@
       note: 'Reading note', earlier: 'An earlier sampled use', different: 'Another sampled use', recent: 'A recent sampled use',
       dateWarning: 'Sparse early record — check the date', futureWarning: 'Date is after this snapshot — check the source',
       year: 'Year', allYears: 'All years', meaning: 'Suggested meaning', allMeanings: 'All meanings',
-      period: 'Period', meaningShort: 'Meaning', otherMeanings: 'Other meanings', otherTip: 'Meanings that only share the words', all: 'All', decade: d => `${d}s`, earlier: y => `${y} and earlier`, newestShort: 'Newest', oldestShort: 'Oldest',
+      period: 'Period', meaningShort: 'Meaning', otherMeanings: 'Other meanings', otherTip: 'Meanings that only share the words', all: 'All', decade: d => `${d}s`, andEarlier: y => `${y} and earlier`, newestShort: 'Newest', oldestShort: 'Oldest',
       sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', more: 'Show more passages',
       shown: (n, total) => `${n} of ${total} passages`, matches: n => `${n} passages in the sample`,
       none: 'No passages match these filters. Try another year or meaning.',
@@ -47,7 +47,7 @@
       earlier: '样本中较早的用法', different: '另一种样本用法', recent: '样本中较新的用法',
       dateWarning: '稀疏早期记录，请核对日期', futureWarning: '日期晚于数据快照，请核对来源',
       year: '年份', allYears: '所有年份', meaning: '建议词义', allMeanings: '所有词义', sort: '排序',
-      period: '年代', meaningShort: '词义', otherMeanings: '其他意思', otherTip: '只是同名、与本时间线无关的意思', all: '全部', decade: d => `${d} 年代`, earlier: y => `${y} 年及以前`, newestShort: '最新', oldestShort: '最早',
+      period: '年代', meaningShort: '词义', otherMeanings: '其他意思', otherTip: '只是同名、与本时间线无关的意思', all: '全部', decade: d => `${d} 年代`, andEarlier: y => `${y} 年及以前`, newestShort: '最新', oldestShort: '最早',
       newest: '从新到旧', oldest: '从旧到新', more: '显示更多原文',
       shown: (n, total) => `已显示 ${n} / ${total} 段原文`, matches: n => `样本包含 ${n} 段原文`,
       none: '没有符合筛选条件的原文。请换一个年份或词义。',
@@ -149,7 +149,7 @@
         const hi = Math.min(d + 9, cut - 1);
         out.push({ v: `${d}-${hi}`, label: hi === d + 9 ? T.decade(d) : d === hi ? `${d}` : `${d}–${hi}` });
       }
-      if (rest.length) out.push({ v: `0-${rest[0] + 9}`, label: T.earlier(rest[0] + 9) });
+      if (rest.length) out.push({ v: `0-${rest[0] + 9}`, label: T.andEarlier(rest[0] + 9) });
     }
     if (quotes.some(q => !q.year)) out.push({ v: 'unknown', label: T.unknownYear });
     return out.map(b => ({ ...b, n: n(b.v) })).filter(b => b.n);

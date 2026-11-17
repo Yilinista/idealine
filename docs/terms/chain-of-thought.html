@@ -40,6 +40,8 @@ blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
 .headline{margin:-6px 0 12px;font-size:.95rem;color:var(--ink-soft)}
 .headline:empty{display:none}
+.headline .dnote{display:block;margin-top:4px;font-size:.85rem}
+.headline .dnote a{color:inherit;text-decoration:underline}
 .tlbar{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 8px}
 .tlseg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
 .tlseg button{font:inherit;font-size:.78rem;padding:3px 10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
@@ -339,6 +341,10 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 #tester-msg{font-size:.78rem}
 #tester-msg:empty{display:none}
 .slist>.srow[hidden]:first-child+.srow{border-top:0}
+
+/* Notes under the headline: names, left-out records */
+.headline .dnote{display:block;margin-top:4px;font-size:.85rem;color:var(--ink-soft)}
+.headline .dnote a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style></head>
 <body>
 <a class="skip-link" href="#reading">Skip to sources</a>
@@ -470,6 +476,15 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       words: 'Common words', newWords: 'new', simLatest: v => `similarity to the latest era: ${v}`,
       provCounted: 'Counted from OpenAlex; no model.', provModel: (model, n, date) => `Labelled by ${model} from ${n} quote${n === 1 ? '' : 's'} (${date}).`,
       earliestCaveat: 'Earliest paper found in OpenAlex (titles and abstracts only). Preprints, blogs and talks often come earlier.', earlierUse: 'Know an earlier use?',
+      entityNote: (label, kind, date) => `${label} is ${kind === 'organization' ? 'an organization' : 'software'}, started ${date}: this timeline shows how papers write about it, not where an idea came from.`,
+      hiddenNamed: (n, y, label, date) => `Left out: ${n.toLocaleString('en-US')} paper${n === 1 ? '' : 's'} dated before ${y}, well before ${label} existed (${date}); the dates are wrong, or the words mean something else.`,
+      hiddenAsked: (n, y) => `Showing papers from ${y} on; ${n.toLocaleString('en-US')} earlier paper${n === 1 ? ' is' : 's are'} left out.`,
+      olderUse: (n, label, date) => `${n.toLocaleString('en-US')} papers used these words before ${label} existed (${date}), in another sense; they are included.`,
+      showAll: 'Show all years',
+      noPapersSince: (term, y, n) => `No papers from ${y} on use “${term}”; ${n.toLocaleString('en-US')} earlier paper${n === 1 ? ' was' : 's were'} left out.`,
+      onlySince: y => `Show only papers from ${y} on`,
+      misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites' : 'they cite'} later work).`,
+      misdatedEg: (y, c) => `E.g. dated ${y}, cites a ${c} paper:`,
       checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
       shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
       checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
@@ -579,6 +594,15 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       words: '常见词', newWords: '新出现', simLatest: v => `与最近时期的相似度：${v}`,
       provCounted: '由 OpenAlex 计数得出，未使用模型。', provModel: (model, n, date) => `由 ${model} 根据 ${n} 句原文标注（${date}）。`,
       earliestCaveat: '这是在 OpenAlex（只查标题和摘要）里找到的最早论文。预印本、博客和演讲往往更早。', earlierUse: '知道更早的用法？',
+      entityNote: (label, kind, date) => `${label} 是一个${kind === 'organization' ? '机构' : '软件'}，始于 ${date}：这条时间线展示的是论文怎么写到它，而不是一个想法从哪里来。`,
+      hiddenNamed: (n, y, label, date) => `已排除 ${n.toLocaleString('en-US')} 篇标注在 ${y} 年之前的论文：远早于 ${label} 出现（${date}），年份标错了，或者是同词不同义。`,
+      hiddenAsked: (n, y) => `只显示 ${y} 年起的论文；更早的 ${n.toLocaleString('en-US')} 篇未计入。`,
+      olderUse: (n, label, date) => `在 ${label} 出现（${date}）之前，已有 ${n.toLocaleString('en-US')} 篇论文用过这几个词，是另一种意思；这些也算在内。`,
+      showAll: '显示全部年份',
+      noPapersSince: (term, y, n) => `${y} 年起没有论文用到“${term}”；更早的 ${n.toLocaleString('en-US')} 篇未计入。`,
+      onlySince: y => `只看 ${y} 年起的论文`,
+      misdated: n => `已排除 ${n} 篇年份标错的早期论文（引用了比自己更晚发表的文献）。`,
+      misdatedEg: (y, c) => `例如标注为 ${y} 年，却引用了 ${c} 年的论文：`,
       checkExact: '原文里有这个完整词组', checkSense: '用的是这个意思', checkCoin: '把这个名字当作新提出的',
       shiftOf: s => `变化类型：${({ broadening: '范围变宽', narrowing: '范围变窄', metaphor: '比喻用法', 'new field': '进入新领域' })[s] || s}`,
       checksNote: 'n/m = 另一轮 AI 抽查 7 条现成时间线时，这类标签 m 个里有 n 个被认为标得对（不是对本页的检查）',
@@ -669,6 +693,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
   const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
   const NS = 'http://www.w3.org/2000/svg';
   const ISSUES = 'https://github.com/Yilinista/idealine/issues/new';
+  const SITE = 'https://yilinista.github.io/idealine/';
   // Categorical colours for the evidence lane and the sense mix; grey = unknown/unclear.
   const PALETTE = ['#4c6ef5', '#e8590c', '#2b8a3e', '#ae3ec9', '#c92a2a', '#1098ad', '#f59f00', '#5c7cfa'];
   const GREY = '#adb5bd', OTHER = '#868e96';
@@ -881,6 +906,14 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     provModel: (model, n, date) => `Labelled by ${model} from ${n} quote${n === 1 ? '' : 's'} (${date}).`,
     earliestCaveat: 'Earliest paper found in OpenAlex (titles and abstracts only). Preprints, blogs and talks often come earlier.',
     earlierUse: 'Know an earlier use?',
+    entityNote: (label, kind, date) => `${label} is ${kind === 'organization' ? 'an organization' : 'software'}, started ${date}: this timeline shows how papers write about it, not where an idea came from.`,
+    hiddenNamed: (n, y, label, date) => `Left out: ${n.toLocaleString('en-US')} paper${n === 1 ? '' : 's'} dated before ${y}, well before ${label} existed (${date}); the dates are wrong, or the words mean something else.`,
+    hiddenAsked: (n, y) => `Showing papers from ${y} on; ${n.toLocaleString('en-US')} earlier paper${n === 1 ? ' is' : 's are'} left out.`,
+    olderUse: (n, label, date) => `${n.toLocaleString('en-US')} papers used these words before ${label} existed (${date}), in another sense; they are included.`,
+    showAll: 'Show all years',
+    onlySince: y => `Show only papers from ${y} on`,
+    misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites' : 'they cite'} later work).`,
+    misdatedEg: (y, c) => `E.g. dated ${y}, cites a ${c} paper:`,
     checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
     shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
     checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
@@ -890,6 +923,28 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     rootsCites: n => `cited by ${n} of these papers`,
     rootsBtn: n => `Find roots (about ${n} OpenAlex requests)`,
   };
+
+  // Notes under the headline (HTML, escaped here): the name the term stands for, records
+  // left out, and a link to the narrower search when the words had an older meaning.
+  function scopeNotes(D, L) {
+    const out = [], e = D.entity, h = D.hiddenBefore, o = D.olderUse, bad = D.misdated || [];
+    const link = (u, t) => (safeUrl(u) ? `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t)}</a>` : esc(t));
+    if (e) out.push(esc(L.entityNote(e.label, e.kind, e.date)) + ' ' + link(e.url, 'Wikidata'));
+    // Links rerun the search on the site (this page itself when it is the app).
+    const app = global.document && global.document.getElementById && global.document.getElementById('trace-form');
+    const base = app && global.location && /^https?:$/.test(global.location.protocol) ? global.location.origin + global.location.pathname : SITE;
+    const rerun = since => `${base}?term=${encodeURIComponent(D.term)}` + ((D.aliases || []).length ? '&alias=' + encodeURIComponent(D.aliases.join(', ')) : '') +
+      (D.meaning ? '&meaning=' + encodeURIComponent(D.meaning) : '') + `&since=${since}`;
+    if (h) {
+      out.push(esc(h.named && e ? L.hiddenNamed(h.n, h.year, e.label, e.date) : L.hiddenAsked(h.n, h.year)) + ` <a href="${esc(rerun('all'))}">${esc(L.showAll)}</a>`);
+    }
+    if (o && e) out.push(esc(L.olderUse(o.n, e.label, e.date)) + ` <a href="${esc(rerun(o.year))}">${esc(L.onlySince(o.year))}</a>`);
+    if (bad.length) {
+      const w = bad[0];
+      out.push(esc(L.misdated(bad.length)) + ' ' + esc(L.misdatedEg(w.year, w.cites)) + ' ' + link(w.url, w.title));
+    }
+    return out;
+  }
 
   // --- renderer ---------------------------------------------------------------------
 
@@ -1245,6 +1300,9 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
         const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
         headline.textContent = L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
       } else headline.textContent = '';
+      // Names and left-out records: say what the counts leave out, and why.
+      const notes = scopeNotes(D, L);
+      if (notes.length) headline.insertAdjacentHTML('beforeend', notes.map(n => `<span class="dnote">${n}</span>`).join(''));
     }
 
     renderBar();
@@ -1355,7 +1413,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
   }
 
   global.renderTimeline = renderTimeline;
-  const helpers = { onsetYear, awakening, takeoff, mainRun, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf };
+  const helpers = { onsetYear, awakening, takeoff, mainRun, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf, scopeNotes, LABELS_EN };
   global.IdealineTimeline = helpers;
   if (typeof module !== 'undefined' && module.exports) module.exports = Object.assign({ renderTimeline }, helpers);
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -1379,7 +1437,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       note: 'Reading note', earlier: 'An earlier sampled use', different: 'Another sampled use', recent: 'A recent sampled use',
       dateWarning: 'Sparse early record — check the date', futureWarning: 'Date is after this snapshot — check the source',
       year: 'Year', allYears: 'All years', meaning: 'Suggested meaning', allMeanings: 'All meanings',
-      period: 'Period', meaningShort: 'Meaning', otherMeanings: 'Other meanings', otherTip: 'Meanings that only share the words', all: 'All', decade: d => `${d}s`, earlier: y => `${y} and earlier`, newestShort: 'Newest', oldestShort: 'Oldest',
+      period: 'Period', meaningShort: 'Meaning', otherMeanings: 'Other meanings', otherTip: 'Meanings that only share the words', all: 'All', decade: d => `${d}s`, andEarlier: y => `${y} and earlier`, newestShort: 'Newest', oldestShort: 'Oldest',
       sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', more: 'Show more passages',
       shown: (n, total) => `${n} of ${total} passages`, matches: n => `${n} passages in the sample`,
       none: 'No passages match these filters. Try another year or meaning.',
@@ -1408,7 +1466,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       earlier: '样本中较早的用法', different: '另一种样本用法', recent: '样本中较新的用法',
       dateWarning: '稀疏早期记录，请核对日期', futureWarning: '日期晚于数据快照，请核对来源',
       year: '年份', allYears: '所有年份', meaning: '建议词义', allMeanings: '所有词义', sort: '排序',
-      period: '年代', meaningShort: '词义', otherMeanings: '其他意思', otherTip: '只是同名、与本时间线无关的意思', all: '全部', decade: d => `${d} 年代`, earlier: y => `${y} 年及以前`, newestShort: '最新', oldestShort: '最早',
+      period: '年代', meaningShort: '词义', otherMeanings: '其他意思', otherTip: '只是同名、与本时间线无关的意思', all: '全部', decade: d => `${d} 年代`, andEarlier: y => `${y} 年及以前`, newestShort: '最新', oldestShort: '最早',
       newest: '从新到旧', oldest: '从旧到新', more: '显示更多原文',
       shown: (n, total) => `已显示 ${n} / ${total} 段原文`, matches: n => `样本包含 ${n} 段原文`,
       none: '没有符合筛选条件的原文。请换一个年份或词义。',
@@ -1510,7 +1568,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
         const hi = Math.min(d + 9, cut - 1);
         out.push({ v: `${d}-${hi}`, label: hi === d + 9 ? T.decade(d) : d === hi ? `${d}` : `${d}–${hi}` });
       }
-      if (rest.length) out.push({ v: `0-${rest[0] + 9}`, label: T.earlier(rest[0] + 9) });
+      if (rest.length) out.push({ v: `0-${rest[0] + 9}`, label: T.andEarlier(rest[0] + 9) });
     }
     if (quotes.some(q => !q.year)) out.push({ v: 'unknown', label: T.unknownYear });
     return out.map(b => ({ ...b, n: n(b.v) })).filter(b => b.n);

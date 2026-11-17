@@ -9,6 +9,7 @@
   const KINDS = ['ancestor', 'origin', 'coined', 'popularized', 'redefined', 'applied', 'critique'];
   const NS = 'http://www.w3.org/2000/svg';
   const ISSUES = 'https://github.com/Yilinista/idealine/issues/new';
+  const SITE = 'https://yilinista.github.io/idealine/';
   // Categorical colours for the evidence lane and the sense mix; grey = unknown/unclear.
   const PALETTE = ['#4c6ef5', '#e8590c', '#2b8a3e', '#ae3ec9', '#c92a2a', '#1098ad', '#f59f00', '#5c7cfa'];
   const GREY = '#adb5bd', OTHER = '#868e96';
@@ -221,6 +222,14 @@
     provModel: (model, n, date) => `Labelled by ${model} from ${n} quote${n === 1 ? '' : 's'} (${date}).`,
     earliestCaveat: 'Earliest paper found in OpenAlex (titles and abstracts only). Preprints, blogs and talks often come earlier.',
     earlierUse: 'Know an earlier use?',
+    entityNote: (label, kind, date) => `${label} is ${kind === 'organization' ? 'an organization' : 'software'}, started ${date}: this timeline shows how papers write about it, not where an idea came from.`,
+    hiddenNamed: (n, y, label, date) => `Left out: ${n.toLocaleString('en-US')} paper${n === 1 ? '' : 's'} dated before ${y}, well before ${label} existed (${date}); the dates are wrong, or the words mean something else.`,
+    hiddenAsked: (n, y) => `Showing papers from ${y} on; ${n.toLocaleString('en-US')} earlier paper${n === 1 ? ' is' : 's are'} left out.`,
+    olderUse: (n, label, date) => `${n.toLocaleString('en-US')} papers used these words before ${label} existed (${date}), in another sense; they are included.`,
+    showAll: 'Show all years',
+    onlySince: y => `Show only papers from ${y} on`,
+    misdated: n => `Left out: ${n} early paper${n === 1 ? '' : 's'} with a wrong date (${n === 1 ? 'it cites' : 'they cite'} later work).`,
+    misdatedEg: (y, c) => `E.g. dated ${y}, cites a ${c} paper:`,
     checkExact: 'a quote has the exact phrase', checkSense: 'uses it in this meaning', checkCoin: 'presents the name as new',
     shiftOf: s => `kind of change: ${({ broadening: 'broader', narrowing: 'narrower', metaphor: 'metaphor', 'new field': 'new field' })[s] || s}`,
     checksNote: 'n/m = a separate AI check of 7 ready-made timelines agreed with that label type n of m times (not a check of this page)',
@@ -230,6 +239,28 @@
     rootsCites: n => `cited by ${n} of these papers`,
     rootsBtn: n => `Find roots (about ${n} OpenAlex requests)`,
   };
+
+  // Notes under the headline (HTML, escaped here): the name the term stands for, records
+  // left out, and a link to the narrower search when the words had an older meaning.
+  function scopeNotes(D, L) {
+    const out = [], e = D.entity, h = D.hiddenBefore, o = D.olderUse, bad = D.misdated || [];
+    const link = (u, t) => (safeUrl(u) ? `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t)}</a>` : esc(t));
+    if (e) out.push(esc(L.entityNote(e.label, e.kind, e.date)) + ' ' + link(e.url, 'Wikidata'));
+    // Links rerun the search on the site (this page itself when it is the app).
+    const app = global.document && global.document.getElementById && global.document.getElementById('trace-form');
+    const base = app && global.location && /^https?:$/.test(global.location.protocol) ? global.location.origin + global.location.pathname : SITE;
+    const rerun = since => `${base}?term=${encodeURIComponent(D.term)}` + ((D.aliases || []).length ? '&alias=' + encodeURIComponent(D.aliases.join(', ')) : '') +
+      (D.meaning ? '&meaning=' + encodeURIComponent(D.meaning) : '') + `&since=${since}`;
+    if (h) {
+      out.push(esc(h.named && e ? L.hiddenNamed(h.n, h.year, e.label, e.date) : L.hiddenAsked(h.n, h.year)) + ` <a href="${esc(rerun('all'))}">${esc(L.showAll)}</a>`);
+    }
+    if (o && e) out.push(esc(L.olderUse(o.n, e.label, e.date)) + ` <a href="${esc(rerun(o.year))}">${esc(L.onlySince(o.year))}</a>`);
+    if (bad.length) {
+      const w = bad[0];
+      out.push(esc(L.misdated(bad.length)) + ' ' + esc(L.misdatedEg(w.year, w.cites)) + ' ' + link(w.url, w.title));
+    }
+    return out;
+  }
 
   // --- renderer ---------------------------------------------------------------------
 
@@ -585,6 +616,9 @@
         const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
         headline.textContent = L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
       } else headline.textContent = '';
+      // Names and left-out records: say what the counts leave out, and why.
+      const notes = scopeNotes(D, L);
+      if (notes.length) headline.insertAdjacentHTML('beforeend', notes.map(n => `<span class="dnote">${n}</span>`).join(''));
     }
 
     renderBar();
@@ -695,7 +729,7 @@
   }
 
   global.renderTimeline = renderTimeline;
-  const helpers = { onsetYear, awakening, takeoff, mainRun, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf };
+  const helpers = { onsetYear, awakening, takeoff, mainRun, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf, scopeNotes, LABELS_EN };
   global.IdealineTimeline = helpers;
   if (typeof module !== 'undefined' && module.exports) module.exports = Object.assign({ renderTimeline }, helpers);
 })(typeof window !== 'undefined' ? window : globalThis);

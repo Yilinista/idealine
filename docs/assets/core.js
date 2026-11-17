@@ -272,14 +272,137 @@
     return found.sort((a, b) => b.phrase.split(' ').length - a.phrase.split(' ').length || b.count - a.count);
   }
 
+  // --- names: organizations and software (Wikidata) -------------------------------
+
+  // A name such as "OpenAI" or "PyTorch" cannot appear in a paper written before the
+  // thing existed, so earlier records are misdated or use the words in another sense.
+  // Wikidata says whether the term names an organization or software, and since when.
+  const WIKIDATA = 'https://www.wikidata.org/w/api.php';
+  const WIKIDATA_AGENT = 'idealine (https://github.com/Yilinista/idealine)';
+  // Classes (instance of, or one subclass step up) that count as a name with a start date.
+  const ORG_CLASSES = new Set(['Q43229', 'Q4830453', 'Q783794', 'Q6881511', 'Q163740', 'Q31855', 'Q18388277']);
+  const SOFTWARE_CLASSES = new Set(['Q7397', 'Q1077784', 'Q166142', 'Q115305900', 'Q3621696', 'Q870780', 'Q1130645', 'Q341', 'Q188860', 'Q271680', 'Q131406845', 'Q9143']);
+  const NOT_A_NAME = new Set(['Q7889']);  // video games share names with everything
+  const MIN_SITELINKS = 5;  // well-known items only: obscure items with the same label are often noise
+
+  const claims = (e, p) => (((e && e.claims) || {})[p] || []).filter(s => s && s.rank !== 'deprecated' && s.mainsnak && s.mainsnak.datavalue);
+  const claimIds = (e, p) => claims(e, p).map(s => s.mainsnak.datavalue.value && s.mainsnak.datavalue.value.id).filter(Boolean);
+
+  // Earliest of inception (P571) and publication date (P577): { year, date }, date as
+  // precise as Wikidata has it ("2015-12-08", "2023-02" or "2016").
+  function startDate(e) {
+    let best = null;
+    for (const p of ['P571', 'P577']) for (const s of claims(e, p)) {
+      const m = /^\+(\d{1,4})-(\d\d)-(\d\d)/.exec((s.mainsnak.datavalue.value || {}).time || '');
+      if (!m) continue;
+      const year = +m[1], date = m[1].padStart(4, '0') + (m[2] !== '00' ? '-' + m[2] + (m[3] !== '00' ? '-' + m[3] : '') : '');
+      if (!best || date < best.date) best = { year, date };
+    }
+    return best;
+  }
+
+  function nameKind(classes) {
+    for (const c of classes) if (ORG_CLASSES.has(c)) return 'organization';
+    for (const c of classes) if (SOFTWARE_CLASSES.has(c)) return 'software';
+    return null;
+  }
+
+  // The organization or software the term names, or null (a concept, an unknown word,
+  // an ambiguous one, or Wikidata unreachable: the run goes on without it).
+  // floor: the first year a paper can name it (software is often named a year before release).
+  async function lookupEntity(term, { fetchFn, timeoutMs = 5000 } = {}) {
+    const f = fetchFn || ((...a) => global.fetch(...a));
+    const get = async params => {
+      const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timer = ctl ? setTimeout(() => ctl.abort(), timeoutMs) : null;
+      try {
+        const r = await f(`${WIKIDATA}?${new URLSearchParams({ ...params, format: 'json', origin: '*' })}`, { headers: { 'Api-User-Agent': WIKIDATA_AGENT }, signal: ctl ? ctl.signal : undefined });
+        if (!r.ok) throw new Error(`Wikidata ${r.status}`);
+        return await r.json();
+      } finally { if (timer) clearTimeout(timer); }
+    };
+    const q = String(term || '').trim().replace(/\s+/g, ' ');
+    if (!q || q.length > 100) return null;
+    try {
+      const hits = (await get({ action: 'wbsearchentities', search: q, language: 'en', uselang: 'en', type: 'item', limit: '7' })).search || [];
+      const text = h => String((h.match && h.match.text) || '').trim().replace(/\s+/g, ' ');
+      // The item's own name (not an alias), exact spelling first ("cursor" the UI element,
+      // "Cursor" the editor), then any case.
+      const labels = hits.filter(h => h.match && h.match.type === 'label');
+      const hit = labels.find(h => text(h) === q) || labels.find(h => text(h).toLowerCase() === q.toLowerCase());
+      if (!hit || !/^Q\d+$/.test(hit.id || '')) return null;
+      const e = ((await get({ action: 'wbgetentities', ids: hit.id, props: 'claims|sitelinks|labels|descriptions', languages: 'en' })).entities || {})[hit.id];
+      if (!e) return null;
+      const p31 = claimIds(e, 'P31');
+      const when = startDate(e);
+      if (!when || !p31.length || p31.some(c => NOT_A_NAME.has(c)) || Object.keys(e.sitelinks || {}).length < MIN_SITELINKS) return null;
+      let kind = nameKind(p31);
+      if (!kind) {
+        const parents = (await get({ action: 'wbgetentities', ids: p31.slice(0, 20).join('|'), props: 'claims' })).entities || {};
+        kind = nameKind(Object.values(parents).flatMap(c => claimIds(c, 'P279')));
+      }
+      if (!kind) return null;
+      return {
+        id: hit.id, label: (e.labels && e.labels.en && e.labels.en.value) || q,
+        description: (e.descriptions && e.descriptions.en && e.descriptions.en.value) || '',
+        kind, date: when.date, year: when.year, floor: kind === 'software' ? when.year - 1 : when.year,
+        url: `https://www.wikidata.org/wiki/${hit.id}`,
+      };
+    } catch (_) { return null; }
+  }
+
+  // Leave out the years before a name existed when they look like stray, misdated
+  // records: few in all, scattered (no year with more than a handful), and outnumbered by
+  // the papers after. Otherwise the words had an older meaning, so keep them and say so.
+  // Absolute numbers, not a share: papers grow so fast that a real older meaning can be a
+  // tiny share of a popular name's total.
+  const STRAY_MAX = 30, STRAY_PER_YEAR = 5;
+  function nameScope(counts, entity) {
+    if (!entity || !Number.isInteger(entity.floor)) return { since: null, olderUse: null };
+    const pre = counts.filter(([y]) => y < entity.floor);
+    const before = pre.reduce((n, [, c]) => n + c, 0);
+    const after = counts.filter(([y]) => y >= entity.floor).reduce((n, [, c]) => n + c, 0);
+    if (!before) return { since: null, olderUse: null };
+    if (before <= STRAY_MAX && after > before && pre.every(([, c]) => c <= STRAY_PER_YEAR)) return { since: entity.floor, olderUse: null };
+    return { since: null, olderUse: { n: before, year: entity.floor } };
+  }
+
+  // Early records whose date cannot be right: they cite work published more than a year
+  // after their own date. Checks the papers from before the onset (rare, often misdated).
+  async function citesLater(oa, works, onset, maxPapers = 25) {
+    const suspects = [...works].filter(w => onset != null && w.year && w.year < onset && (w.refs || []).length).slice(0, maxPapers);
+    if (!suspects.length) return [];
+    const ids = [...new Set(suspects.flatMap(w => w.refs))].slice(0, 300);
+    const years = new Map();
+    for (let i = 0; i < ids.length; i += 100) {
+      const data = await oa.get({ filter: 'openalex_id:' + ids.slice(i, i + 100).join('|'), per_page: '100', select: 'id,publication_year' });
+      for (const d of data.results || []) years.set(String(d.id || '').split('/').pop(), d.publication_year || 0);
+    }
+    const out = [];
+    for (const w of suspects) {
+      const late = Math.max(0, ...w.refs.map(r => years.get(r) || 0));
+      if (late > w.year + 1) out.push({ work: w, cites: late });
+    }
+    return out;
+  }
+
   async function harvest(oa, term, aliases, opts = {}) {
     // fine: count young terms by quarter (extra requests), on by default only with an OpenAlex key.
-    const { earliest = 25, topCited = 150, recent = 60, maxEvidence = 160, onStep = () => {}, fine = !!oa.apiKey } = opts;
+    // entity: what lookupEntity found for the term; since: leave out earlier years (the reader asked).
+    const { earliest = 25, topCited = 150, recent = 60, maxEvidence = 160, onStep = () => {}, fine = !!oa.apiKey, entity = null } = opts;
     // Search with singular/plural variants too, but keep only the user's spellings as aliases.
     const spellings = withInflections(term, aliases);
     const query = phraseQuery(term, spellings);
     onStep('Counting papers per year…');
-    const counts = await oa.yearCounts(query);
+    let counts = await oa.yearCounts(query);
+    const scope = nameScope(counts, entity);
+    const since = Number.isInteger(opts.since) ? opts.since : scope.since;
+    let hiddenBefore = null;
+    if (since != null) {
+      const n = counts.filter(([y]) => y < since).reduce((a, [, c]) => a + c, 0);
+      if (n) hiddenBefore = { n, year: since, named: since === scope.since };
+      counts = counts.filter(([y]) => y >= since);
+    }
     let quarters = [], undated = [];
     const fy = fine ? fineYears(counts) : [];
     if (fy.length) {
@@ -289,14 +412,23 @@
     const pattern = termPattern(term, spellings);
     const works = new Map();
     const add = list => list.forEach(w => { if (!works.has(w.id)) works.set(w.id, w); });
+    const base = { term, aliases, quarters, undated, evidence: [], eras: [], milestones: [], summary: '', model: null, generated: new Date().toISOString().slice(0, 10),
+      entity, hiddenBefore, olderUse: since == null ? scope.olderUse : null, misdated: [] };
+    if (!counts.length) return { ...base, counts };
     onStep('Reading the earliest papers…');
-    add(await oa.works(query, 'publication_date:asc', earliest));
+    add(await oa.works(query, 'publication_date:asc', earliest, since ?? undefined));
     onStep('Reading the most-cited papers…');
-    add(await oa.works(query, 'cited_by_count:desc', topCited));
-    if (counts.length) {
-      onStep('Reading recent papers…');
-      const latest = Math.max(...counts.map(c => c[0]));
-      add(await oa.works(query, 'cited_by_count:desc', recent, latest - 1));
+    add(await oa.works(query, 'cited_by_count:desc', topCited, since ?? undefined));
+    onStep('Reading recent papers…');
+    const latest = Math.max(...counts.map(c => c[0]));
+    add(await oa.works(query, 'cited_by_count:desc', recent, Math.max(latest - 1, since ?? -Infinity)));
+    // Drop early records that cite later work (best effort: one or two small requests).
+    let misdated = [];
+    try { misdated = await citesLater(oa, works.values(), onsetYear(counts)); } catch (_) { misdated = []; }
+    if (misdated.length) {
+      const m = new Map(counts);
+      for (const { work: w } of misdated) { works.delete(w.id); m.set(w.year, (m.get(w.year) || 0) - 1); }
+      counts = [...m].filter(([, c]) => c > 0).sort((a, b) => a[0] - b[0]);
     }
     countInSet(works);
     const key = w => w.date || String(w.year ?? 9999);
@@ -315,10 +447,20 @@
     }
     const evidence = [];
     for (const [w, sents, fromTitle] of perWork) for (const s of sents) evidence.push({ eid: `E${evidence.length + 1}`, text: s, work: w, fromTitle });
-    return { term, aliases, counts, quarters, undated, evidence, eras: [], milestones: [], summary: '', model: null, generated: new Date().toISOString().slice(0, 10) };
+    return { ...base, counts, evidence, misdated: misdated.map(({ work: w, cites }) => ({ title: w.title, year: w.year, url: w.url, cites })) };
   }
 
   // --- analyze ------------------------------------------------------------------
+
+  // What the model should know about names and left-out records. Same text as term.py.
+  function scopeLines(t) {
+    const out = [], e = t.entity, h = t.hiddenBefore, o = t.olderUse, k = (t.misdated || []).length;
+    if (e) out.push(`The term names ${e.kind === 'organization' ? 'an organization' : 'software'}: ${e.label}${e.description ? ` (${e.description})` : ''}, since ${e.date} (Wikidata ${e.id}).`);
+    if (h) out.push(`Papers dated before ${h.year} were left out (${h.n})` + (h.named && e ? `: well before ${e.label} existed, so their dates are wrong or the words mean something else.` : ', as the reader asked.'));
+    if (o && e) out.push(`${o.n} papers dated before ${o.year} use these words before ${e.label} existed: that is another meaning of the words.`);
+    if (k) out.push(`${k} early paper${k === 1 ? ' was' : 's were'} left out because ${k === 1 ? 'it cites' : 'they cite'} work published years after ${k === 1 ? 'its' : 'their'} own date (the date is wrong).`);
+    return out;
+  }
 
   // outputLang: optional extra instruction (e.g. write labels in Chinese), appended last.
   function buildPrompt(t, outputLang) {
@@ -327,6 +469,7 @@
       ...(t.meaning ? [`Meaning the reader has in mind: ${t.meaning}`] : []),
       `Papers per year: ${t.counts.map(([y, c]) => `${y}: ${c}`).join(', ')}`,
       ...((t.quarters || []).length ? [`Papers per quarter (papers dated only by year left out): ${t.quarters.map(([k, c]) => `${k}: ${c}`).join(', ')}`] : []),
+      ...scopeLines(t),
       '',
       'Evidence:',
     ];
@@ -540,6 +683,10 @@
       focus: t.focus || '',
       otherSenses: (t.otherSenses || []).map(s => ({ label: s.label, meaning: s.meaning, evidence: ev(s.evidence) })),
       roots: t.roots || null,
+      entity: t.entity ? { id: t.entity.id, label: t.entity.label, description: t.entity.description, kind: t.entity.kind, date: t.entity.date, url: t.entity.url } : null,
+      hiddenBefore: t.hiddenBefore || null,
+      olderUse: t.olderUse || null,
+      misdated: t.misdated || [],
       senses: (t.senses || []).map(s => ({ key: s.key, label: s.label, definition: s.definition, related: s.related })),
       evidenceCount: t.evidence.length,
       eras: t.eras.map(e => ({ start: e.start, end: e.end, label: e.label, meaning: e.meaning, evidence: ev(e.evidence) })),
@@ -553,7 +700,7 @@
     };
   }
 
-  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, shorterPhrases, suggestPhrases, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData, answerProgress };
+  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, lookupEntity, startDate, nameScope, citesLater, scopeLines, inflections, withInflections, shorterPhrases, suggestPhrases, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData, answerProgress };
   global.IdealineCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -19,7 +19,7 @@ from datetime import date
 from importlib import resources
 from typing import Any
 
-from .openalex import OpenAlexClient, Work, phrase_query
+from .openalex import OpenAlexClient, OpenAlexError, Work, phrase_query
 
 MILESTONE_KINDS = ("ancestor", "origin", "coined", "popularized", "redefined", "applied", "critique")
 DEFAULT_MODEL = "claude-opus-5-5"
@@ -90,6 +90,10 @@ class TermTimeline:
     focus: str = ""  # the meaning the timeline follows, as the model names it
     other_senses: list[Sense] = field(default_factory=list)
     senses: list[Sense] = field(default_factory=list)  # every meaning found, related or not
+    entity: dict | None = None  # the organization or software the term names (Wikidata)
+    hidden_before: dict | None = None  # {n, year, named}: papers left out before a year
+    older_use: dict | None = None  # {n, year}: papers using the words before the name existed
+    misdated: list[dict] = field(default_factory=list)  # early records that cite later work
 
     @property
     def total(self) -> int:
@@ -289,6 +293,41 @@ def find_roots(client: OpenAlexClient, t: TermTimeline) -> dict:
     return {**rpys(items), "papers": papers, "refs": len(ids)}
 
 
+STRAY_MAX, STRAY_PER_YEAR = 30, 5
+
+
+def name_scope(counts: dict[int, int], entity: dict | None) -> tuple[int | None, dict | None]:
+    """(since, older_use): leave out the years before a name existed when they look like
+    stray, misdated records (few, scattered, outnumbered by later papers); otherwise the
+    words had an older meaning, so keep them and say so. Same rule as nameScope in web/core.js."""
+    if not entity or not isinstance(entity.get("floor"), int):
+        return None, None
+    floor = entity["floor"]
+    pre = [c for y, c in counts.items() if y < floor]
+    before, after = sum(pre), sum(c for y, c in counts.items() if y >= floor)
+    if not before:
+        return None, None
+    if before <= STRAY_MAX and after > before and all(c <= STRAY_PER_YEAR for c in pre):
+        return floor, None
+    return None, {"n": before, "year": floor}
+
+
+def cites_later(client: OpenAlexClient, works, onset: int | None, max_papers: int = 25) -> list[tuple[Work, int]]:
+    """Early records whose date cannot be right: they cite work published more than a
+    year after their own date. Checks the papers from before the onset."""
+    suspects = [w for w in works if onset is not None and w.year and w.year < onset and w.refs][:max_papers]
+    if not suspects:
+        return []
+    ids = list(dict.fromkeys(r for w in suspects for r in w.refs))[:300]
+    years = {w.work_id: w.year or 0 for w in client.works_by_ids(ids)}
+    out = []
+    for w in suspects:
+        late = max([years.get(r, 0) for r in w.refs] + [0])
+        if late > w.year + 1:
+            out.append((w, late))
+    return out
+
+
 def harvest(
     client: OpenAlexClient,
     term: str,
@@ -298,11 +337,25 @@ def harvest(
     recent: int = 60,
     max_evidence: int = 160,
     fine: bool | None = None,
+    entity: dict | None = None,
+    since: int | None = None,
 ) -> TermTimeline:
+    """entity: what wikidata.lookup_entity found for the term; since: leave out earlier years."""
     # Search with singular/plural variants too, but keep only the user's spellings as aliases.
     spellings = with_inflections(term, aliases)
     query = phrase_query(term, spellings)
     counts = client.year_counts(query)
+    scope_since, older_use = name_scope(counts, entity)
+    asked = since
+    since = asked if asked is not None else scope_since
+    hidden_before = None
+    if since is not None:
+        n = sum(c for y, c in counts.items() if y < since)
+        if n:
+            hidden_before = {"n": n, "year": since, "named": since == scope_since}
+        counts = {y: c for y, c in counts.items() if y >= since}
+    if asked is not None:
+        older_use = None
     # Young terms are also counted by quarter (extra requests): by default only with a key.
     if fine is None:
         fine = bool(getattr(client, "has_key", False))
@@ -312,15 +365,32 @@ def harvest(
 
     # Four requests per term (OpenAlex bills per request): earliest uses,
     # most-cited overall, most-cited of the last two years, and the counts above.
+    def timeline(evidence: list[Evidence], bad: list[tuple[Work, int]]) -> TermTimeline:
+        return TermTimeline(term=term, aliases=aliases, counts=counts, evidence=evidence, quarters=quarters, undated=undated,
+                            entity=entity, hidden_before=hidden_before, older_use=older_use,
+                            misdated=[{"title": w.title, "year": w.year, "url": w.url, "cites": c} for w, c in bad])
+
+    if not counts:
+        return timeline([], [])
     works: dict[str, Work] = {}
-    for w in client.works(query, "publication_date:asc", earliest):
+    for w in client.works(query, "publication_date:asc", earliest, since=since):
         works.setdefault(w.work_id, w)
-    for w in client.works(query, "cited_by_count:desc", top_cited):
+    for w in client.works(query, "cited_by_count:desc", top_cited, since=since):
         works.setdefault(w.work_id, w)
-    if counts:
-        latest = max(counts)
-        for w in client.works(query, "cited_by_count:desc", recent, since=latest - 1):
-            works.setdefault(w.work_id, w)
+    latest = max(counts)
+    for w in client.works(query, "cited_by_count:desc", recent, since=max(latest - 1, since if since is not None else latest - 1)):
+        works.setdefault(w.work_id, w)
+    # Drop early records that cite later work (best effort: one or two small requests).
+    try:
+        bad = cites_later(client, works.values(), onset_year(counts))
+    except OpenAlexError:
+        bad = []
+    for w, _ in bad:
+        works.pop(w.work_id, None)
+        if w.year in counts:
+            counts[w.year] -= 1
+            if counts[w.year] <= 0:
+                del counts[w.year]
 
     count_in_set(works)
     ordered = sorted(works.values(), key=lambda w: (w.date or str(w.year or 9999), -w.cited_by))
@@ -344,7 +414,7 @@ def harvest(
     for w, sents, from_title in per_work:
         for s in sents:
             evidence.append(Evidence(f"E{len(evidence) + 1}", s, w, from_title=from_title))
-    return TermTimeline(term=term, aliases=aliases, counts=counts, evidence=evidence, quarters=quarters, undated=undated)
+    return timeline(evidence, bad)
 
 
 # --- analyze -------------------------------------------------------------------
@@ -480,6 +550,25 @@ OUTPUT_LANG = {
 }
 
 
+def scope_lines(t: TermTimeline) -> list[str]:
+    """What the model should know about names and left-out records. Same text as core.js."""
+    out, e, h, o, k = [], t.entity, t.hidden_before, t.older_use, len(t.misdated)
+    if e:
+        kind = "an organization" if e["kind"] == "organization" else "software"
+        desc = f" ({e['description']})" if e.get("description") else ""
+        out.append(f"The term names {kind}: {e['label']}{desc}, since {e['date']} (Wikidata {e['id']}).")
+    if h:
+        out.append(f"Papers dated before {h['year']} were left out ({h['n']})" + (
+            f": well before {e['label']} existed, so their dates are wrong or the words mean something else."
+            if h.get("named") and e else ", as the reader asked."))
+    if o and e:
+        out.append(f"{o['n']} papers dated before {o['year']} use these words before {e['label']} existed: that is another meaning of the words.")
+    if k:
+        out.append(f"{k} early paper{' was' if k == 1 else 's were'} left out because {'it cites' if k == 1 else 'they cite'} "
+                   f"work published years after {'its' if k == 1 else 'their'} own date (the date is wrong).")
+    return out
+
+
 def build_prompt(t: TermTimeline, lang: str = "en") -> str:
     counts = ", ".join(f"{y}: {c}" for y, c in t.counts.items())
     lines = [
@@ -487,6 +576,7 @@ def build_prompt(t: TermTimeline, lang: str = "en") -> str:
         *([f"Meaning the reader has in mind: {t.meaning}"] if t.meaning else []),
         f"Papers per year: {counts}",
         *([f"Papers per quarter (papers dated only by year left out): {', '.join(f'{k}: {c}' for k, c in t.quarters)}"] if t.quarters else []),
+        *scope_lines(t),
         "",
         "Evidence:",
     ]

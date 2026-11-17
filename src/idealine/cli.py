@@ -25,6 +25,7 @@ from .render_term import to_html as term_html
 from .render_term import to_markdown as term_markdown
 from .s2 import DEFAULT_CACHE_DIR, S2Client, S2Error
 from .term import AnalyzeError, Sense, analyze, baseline, find_roots, harvest, load_totals, totals_asof
+from .wikidata import lookup_entity
 
 
 def slugify(text: str, max_len: int = 50) -> str:
@@ -57,6 +58,8 @@ def term_parser() -> argparse.ArgumentParser:
     p.add_argument("--roots", action="store_true", help="Also find the term's roots: the years and works its papers cite most (about 10-20 more OpenAlex requests).")
     p.add_argument("--meaning", default="", help='Which meaning to follow when the words have several, e.g. "AI agents that use tools".')
     p.add_argument("--lang", default="en", choices=["en", "zh"], help="Language of the summary, eras and notes (default en; zh = Simplified Chinese).")
+    p.add_argument("--since", type=int, default=None, help="Leave out papers dated before this year.")
+    p.add_argument("--no-wikidata", action="store_true", help="Do not ask Wikidata whether the term names an organization or software.")
     _common(p)
     return p
 
@@ -89,18 +92,30 @@ def confirm(args, what: str) -> bool:
 
 def run_term(argv: list[str], oa: OpenAlexClient | None, llm_client) -> int:
     args = term_parser().parse_args(argv)
+    if args.since is not None and not 1000 <= args.since <= date.today().year + 1:
+        log(f"--since must be a year between 1000 and {date.today().year + 1}.")
+        return 2
     if re.fullmatch(r"[A-Z0-9]{2,5}", args.term.strip()):
         log(f'Note: "{args.term}" looks like an acronym and may match unrelated fields. '
             'Spelling it out works better, e.g. idealine "recursive self-improvement" --alias RSI')
     oa = oa or OpenAlexClient(cache_dir=None if args.no_cache else DEFAULT_CACHE_DIR, log=log)
     try:
         log(f'Searching OpenAlex for "{args.term}"...')
-        t = harvest(oa, args.term, args.alias)
+        entity = None if args.no_wikidata else lookup_entity(args.term)
+        if entity:
+            log(f"  {entity['label']} is {'an organization' if entity['kind'] == 'organization' else 'software'} "
+                f"(Wikidata {entity['id']}, since {entity['date']}).")
+        t = harvest(oa, args.term, args.alias, entity=entity, since=args.since)
         t.meaning = (args.meaning or "").strip()
         t.totals, t.totals_asof = load_totals(), totals_asof()
     except OpenAlexError as err:
         log(f"Error: {err}")
         return 2
+    if not t.counts and t.hidden_before:
+        h = t.hidden_before
+        log(f"No papers from {h['year']} on use this phrase; {h['n']} earlier papers were left out"
+            + (" (try --since with an earlier year)." if args.since is not None else " (see --no-wikidata)."))
+        return 1
     if not t.counts:
         log("No papers use this exact phrase. Check the spelling or add --alias.")
         return 1

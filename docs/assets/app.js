@@ -436,7 +436,11 @@
     if (!keep && /^#[mq]-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
     const live = forceLive;
     forceLive = false;
-    if (!live && !aliases.length && !meaning && READY[term.toLowerCase()]) {
+    // ?since= (the "only papers from Y on" / "show all years" links) stays with the term
+    // it came with, for every run of that term; 0 means all years, with no name check.
+    if (urlSince && urlSince.term !== term.toLowerCase()) urlSince = null;
+    const since = urlSince ? urlSince.year : null;
+    if (!live && since == null && !aliases.length && !meaning && READY[term.toLowerCase()]) {
       busy = true;
       pending(term);
       status('');
@@ -474,11 +478,19 @@
     const step = m => { if (progress.from(m)) status(''); else status(m); };
     try {
       const oa = new C.OpenAlex({ apiKey: oaKey, log: step });
-      const t = await C.harvest(oa, term, aliases, { onStep: step });
+      // Does the term name an organization or software? Then records from before it
+      // existed are left out. Best effort: null when Wikidata is slow or unsure.
+      const entity = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(term) ? null : await C.lookupEntity(term);
+      const t = await C.harvest(oa, term, aliases, { onStep: step, entity, since: since ?? undefined });
       t.meaning = meaning;
       const T = await loadTotals();
       t.totals = T.totals;
       t.totalsAsOf = T.fetched;
+      if (!t.counts.length && t.hiddenBefore) {
+        const h = t.hiddenBefore, err = new C.IdealineError(I.T.en.noPapersSince(term, h.year, h.n));
+        err.local = () => tx().noPapersSince(term, h.year, h.n);
+        throw err;
+      }
       if (!t.counts.length || !t.evidence.length) {
         // OpenAlex is mostly English: a Chinese/Japanese/Korean term usually finds nothing.
         const cjk = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(term);
@@ -523,7 +535,7 @@
       progress.finish();
       show(lastData, false, 'result');
       status(acronymHint ? () => tx().acronym : '');
-      setUrl(term, aliases, meaning);
+      setUrl(term, aliases, meaning, since);
     } catch (e) {
       const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
       if (known && /OpenAlex key/.test(e.message)) openRow('row-oakey');
@@ -555,9 +567,11 @@
   // kind: 'example' (ready-made), 'interim' (free view while the model reads), 'result'.
   let shownKind = 'example';
   let keepHash = false;  // preserve the first shared passage or milestone link
-  function setUrl(term, aliases, meaning) {
+  let urlSince = null;  // { term, year } from a ?since= link, used by the next run of that term
+  function setUrl(term, aliases, meaning, since) {
     const u = new URL(location.href);
     u.searchParams.set('term', term);
+    if (since != null) u.searchParams.set('since', since === 0 ? 'all' : String(since)); else u.searchParams.delete('since');
     if (meaning) u.searchParams.set('meaning', meaning); else u.searchParams.delete('meaning');
     if (aliases.length) u.searchParams.set('alias', aliases.join(', ')); else u.searchParams.delete('alias');
     history.replaceState(null, '', u);
@@ -640,10 +654,13 @@
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
     $('meaning').value = (params.get('meaning') || '').slice(0, 200);
+    const sinceP = params.get('since'), sinceY = sinceP === 'all' ? 0 : Number(sinceP);
+    if (sinceP && Number.isInteger(sinceY) && (sinceY === 0 || (sinceY >= 1000 && sinceY <= 2100))) urlSince = { term: $('term').value.replace(/\s+/g, ' ').trim().toLowerCase(), year: sinceY };
     if ($('aliases').value || $('meaning').value) { $('opts').open = true; syncRows(); }
     // Start after load, so the browser's own jump to a #fragment cannot pull the page away.
     const go = () => setTimeout(() => {
-      if (providerSel.value === 'none' || (READY[$('term').value.toLowerCase()] && !$('meaning').value)) $('trace-form').requestSubmit();
+      // Never start a paid model run by itself: a ?since= link always needs a live run.
+      if (providerSel.value === 'none' || (READY[$('term').value.toLowerCase()] && !$('meaning').value && !urlSince)) $('trace-form').requestSubmit();
       else formMsg(() => tx().pressTrace);
     }, 0);
     if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });

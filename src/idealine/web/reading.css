@@ -246,3 +246,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 #tester-msg{font-size:.78rem}
 #tester-msg:empty{display:none}
 .slist>.srow[hidden]:first-child+.srow{border-top:0}
+
+/* Notes under the headline: names, left-out records */
+.headline .dnote{display:block;margin-top:4px;font-size:.85rem;color:var(--ink-soft)}
+.headline .dnote a{color:inherit;text-decoration:underline;text-underline-offset:2px}

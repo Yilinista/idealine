@@ -7,7 +7,7 @@ import json
 import re
 from importlib import resources
 
-from .term import TermTimeline
+from .term import TermTimeline, scope_lines
 
 REPO_URL = "https://github.com/Yilinista/idealine"
 SITE_URL = "https://yilinista.github.io/idealine/"
@@ -37,6 +37,10 @@ def to_data(t: TermTimeline) -> dict:
         "totals": [[y, t.totals[y]] for y in range(min(t.counts), max(t.counts) + 1) if y in t.totals] if t.counts else [],
         "totalsAsOf": t.totals_asof if t.totals else "",
         "roots": t.roots,
+        "entity": {k: t.entity.get(k) for k in ("id", "label", "description", "kind", "date", "url")} if t.entity else None,
+        "hiddenBefore": t.hidden_before,
+        "olderUse": t.older_use,
+        "misdated": t.misdated,
         # Every quoted sentence, for the evidence lane under the chart.
         "quotes": ev([e.eid for e in t.evidence]),
         "total": t.total,
@@ -70,6 +74,9 @@ def to_markdown(t: TermTimeline) -> str:
         out += [t.summary, ""]
     span = f"{min(t.counts)}–{max(t.counts)}" if t.counts else "n/a"
     out += [f"{t.total} papers in OpenAlex use this term ({span}); {len(t.evidence)} sentences read.", ""]
+    notes = scope_lines(t)
+    if notes:
+        out += [*(f"> {n}" for n in notes), ""]
     if t.focus and t.other_senses:
         out += [f"Follows: {t.focus}", "", "## Same words, other meanings (left out)", ""]
         for s in t.other_senses:
@@ -132,6 +139,8 @@ blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
 .headline{margin:-6px 0 12px;font-size:.95rem;color:var(--ink-soft)}
 .headline:empty{display:none}
+.headline .dnote{display:block;margin-top:4px;font-size:.85rem}
+.headline .dnote a{color:inherit;text-decoration:underline}
 .tlbar{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 8px}
 .tlseg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
 .tlseg button{font:inherit;font-size:.78rem;padding:3px 10px;border:0;background:transparent;color:var(--muted);cursor:pointer}

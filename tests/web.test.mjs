@@ -666,3 +666,160 @@ test('a test code opens the key sealed by scripts/seal_key.py, and a wrong code 
   await assert.rejects(P.unsealKey(null, fx.code), /No test key/);
   await assert.rejects(P.unsealKey({ ...fx.blob, provider: 'nope' }, fx.code), /No test key/);
 });
+
+// --- names (Wikidata) and misdated records ---------------------------------------
+
+// A fake Wikidata: search hits, then entities by ID (items and their classes).
+function fakeWikidata(hits, entities, calls = []) {
+  return async url => {
+    const u = new URL(url);
+    calls.push(u);
+    if (u.searchParams.get('action') === 'wbsearchentities') return resp(200, { search: hits });
+    const out = {};
+    for (const id of u.searchParams.get('ids').split('|')) if (entities[id]) out[id] = entities[id];
+    return resp(200, { entities: out });
+  };
+}
+const snak = (p, value) => ({ [p]: [{ rank: 'normal', mainsnak: { datavalue: { value } } }] });
+const item = (p31, dates, links = 20, extra = {}) => ({
+  labels: { en: { value: extra.label || 'X' } }, descriptions: { en: { value: extra.desc || 'd' } },
+  sitelinks: Object.fromEntries(Array.from({ length: links }, (_, i) => [`w${i}`, {}])),
+  claims: { P31: p31.map(id => ({ rank: 'normal', mainsnak: { datavalue: { value: { id } } } })),
+    ...(dates.inc ? snak('P571', { time: dates.inc }) : {}), ...(dates.pub ? snak('P577', { time: dates.pub }) : {}) },
+});
+const hit = (id, text) => ({ id, match: { type: 'label', text } });
+
+test('lookupEntity: an organization gets its founding year as the floor', async () => {
+  const calls = [];
+  const e = await C.lookupEntity('OpenAI', { fetchFn: fakeWikidata([hit('Q1', 'OpenAI')],
+    { Q1: item(['Q4830453'], { inc: '+2015-12-08T00:00:00Z' }, 99, { label: 'OpenAI', desc: 'AI lab' }) }, calls) });
+  assert.deepEqual(e, { id: 'Q1', label: 'OpenAI', description: 'AI lab', kind: 'organization', date: '2015-12-08', year: 2015, floor: 2015, url: 'https://www.wikidata.org/wiki/Q1' });
+  assert.equal(calls.length, 2);  // class matched directly: no parent lookup
+  assert.equal(calls[0].searchParams.get('origin'), '*');
+});
+
+test('lookupEntity: software found one subclass step up starts a year before release', async () => {
+  const e = await C.lookupEntity('Cursor', { fetchFn: fakeWikidata([hit('Q9', 'cursor'), hit('Q2', 'Cursor')],
+    { Q2: item(['Q13741'], { pub: '+2023-01-00T00:00:00Z' }), Q13741: { claims: { P279: [{ rank: 'normal', mainsnak: { datavalue: { value: { id: 'Q166142' } } } }] } } }) });
+  assert.equal(e.id, 'Q2');  // exact spelling wins over the lower-case concept
+  assert.equal(e.kind, 'software');
+  assert.equal(e.date, '2023-01');
+  assert.equal(e.floor, 2022);
+});
+
+test('lookupEntity: concepts, games, obscure items, undated items and errors give null', async () => {
+  const one = (ent, h = [hit('Q1', 'x')]) => C.lookupEntity('x', { fetchFn: fakeWikidata(h, { Q1: ent, Q5: { claims: {} } }) });
+  assert.equal(await one(item(['Q5'], { inc: '+2020-00-00T00:00:00Z' })), null);            // a concept class
+  assert.equal(await one(item(['Q7889', 'Q7397'], { pub: '+2019-05-03T00:00:00Z' })), null); // a video game
+  assert.equal(await one(item(['Q7397'], { pub: '+2019-05-03T00:00:00Z' }, 2)), null);       // few sitelinks
+  assert.equal(await one(item(['Q7397'], {})), null);                                        // no start date
+  assert.equal(await one(item(['Q7397'], { pub: '+2019-05-03T00:00:00Z' }), [hit('Q1', 'xy')]), null); // not an exact match
+  assert.equal(await C.lookupEntity('x', { fetchFn: async () => { throw new Error('offline'); } }), null);
+  assert.equal(await C.lookupEntity('x', { fetchFn: async () => resp(503, {}) }), null);
+});
+
+test('nameScope leaves out a few stray early records, but keeps an older meaning', () => {
+  const e = { floor: 2015 };
+  const few = [[1986, 2], [2011, 2], [2016, 5], [2020, 900]];
+  assert.deepEqual(C.nameScope(few, e), { since: 2015, olderUse: null });
+  const many = [[1990, 400], [2010, 600], [2021, 50], [2024, 900]];
+  assert.deepEqual(C.nameScope(many, e), { since: null, olderUse: { n: 1000, year: 2015 } });
+  assert.deepEqual(C.nameScope([[2016, 5]], e), { since: null, olderUse: null });
+  assert.deepEqual(C.nameScope(few, null), { since: null, olderUse: null });
+});
+
+test('harvest with a name leaves out earlier years and asks OpenAlex only from the floor', async () => {
+  const calls = [];
+  const oa = new C.OpenAlex({ fetchFn: fakeOpenAlex(calls), sleep: async () => {} });
+  const entity = { id: 'Q1', label: 'CoT Inc', description: '', kind: 'organization', date: '2020', year: 2020, floor: 2020, url: 'u' };
+  const t = await C.harvest(oa, 'chain of thought', [], { entity });
+  assert.deepEqual(t.counts, [[2022, 10], [2025, 30]]);
+  assert.deepEqual(t.hiddenBefore, { n: 1, year: 2020, named: true });
+  assert.match(new URL(calls[1].url).searchParams.get('filter'), /publication_year:>2019$/);
+  assert.match(new URL(calls[3].url).searchParams.get('filter'), /publication_year:>2023$/);
+  const d = C.toData(t);
+  assert.equal(d.entity.label, 'CoT Inc');
+  assert.deepEqual(d.hiddenBefore, { n: 1, year: 2020, named: true });
+  assert.match(C.buildPrompt(t), /The term names an organization: CoT Inc, since 2020 \(Wikidata Q1\)\.\nPapers dated before 2020 were left out \(1\): well before CoT Inc existed/);
+});
+
+test('harvest with ?since= leaves out earlier years without a name', async () => {
+  const oa = new C.OpenAlex({ fetchFn: fakeOpenAlex([]), sleep: async () => {} });
+  const t = await C.harvest(oa, 'chain of thought', [], { since: 2023 });
+  assert.deepEqual(t.counts, [[2025, 30]]);
+  assert.deepEqual(t.hiddenBefore, { n: 11, year: 2023, named: false });
+  assert.match(C.scopeLines(t).join('\n'), /^Papers dated before 2023 were left out \(11\), as the reader asked\.$/);
+});
+
+test('harvest drops an early record that cites later work, and takes it off the counts', async () => {
+  const calls = [];
+  const early = { ...work(1, 1990, 'Early paper', 'We study chain of thought in people. Nothing else here.', 5), referenced_works: ['https://openalex.org/W77'] };
+  const fetchFn = async url => {
+    calls.push(url);
+    const u = new URL(url);
+    if (u.searchParams.get('group_by')) return resp(200, { group_by: [{ key: '1990', count: 1 }, { key: '2022', count: 10 }, { key: '2025', count: 30 }] });
+    if (/openalex_id:/.test(u.searchParams.get('filter'))) return resp(200, { results: [{ id: 'https://openalex.org/W77', publication_year: 2021 }] });
+    return resp(200, { results: [early, ...WORKS.slice(1)] });
+  };
+  const t = await C.harvest(new C.OpenAlex({ fetchFn, sleep: async () => {} }), 'chain of thought', []);
+  assert.equal(calls.length, 5);
+  assert.deepEqual(t.counts, [[2022, 10], [2025, 30]]);
+  assert.ok(t.evidence.every(e => e.work.year !== 1990));
+  assert.deepEqual(t.misdated, [{ title: 'Early paper', year: 1990, url: 'https://doi.org/10.1/1', cites: 2021 }]);
+  assert.match(C.buildPrompt(t), /1 early paper was left out because it cites work published years after its own date/);
+});
+
+test('harvest keeps an early record whose references are older (the check is not a filter on age)', async () => {
+  const early = { ...work(1, 1990, 'Early paper', 'We study chain of thought in people.', 5), referenced_works: ['https://openalex.org/W77'] };
+  const fetchFn = async url => {
+    const u = new URL(url);
+    if (u.searchParams.get('group_by')) return resp(200, { group_by: [{ key: '1990', count: 1 }, { key: '2022', count: 10 }, { key: '2025', count: 30 }] });
+    if (/openalex_id:/.test(u.searchParams.get('filter'))) return resp(200, { results: [{ id: 'https://openalex.org/W77', publication_year: 1985 }] });
+    return resp(200, { results: [early, ...WORKS.slice(1)] });
+  };
+  const t = await C.harvest(new C.OpenAlex({ fetchFn, sleep: async () => {} }), 'chain of thought', []);
+  assert.deepEqual(t.counts, [[1990, 1], [2022, 10], [2025, 30]]);
+  assert.deepEqual(t.misdated, []);
+});
+
+test('scope notes escape OpenAlex titles and link the narrower search on the site', () => {
+  const I = require('../src/idealine/web/i18n.js');
+  const D = { term: 'Cursor', aliases: [], entity: { id: 'Q2', label: 'Cursor', kind: 'software', date: '2023-01', url: 'https://www.wikidata.org/wiki/Q2' },
+    olderUse: { n: 5000, year: 2022 }, misdated: [{ title: '<img src=x onerror=alert(1)>', year: 1986, cites: 2021, url: 'javascript:alert(1)' }] };
+  const notes = TL.scopeNotes(D, TL.LABELS_EN);
+  assert.equal(notes.length, 3);
+  assert.match(notes[0], /^Cursor is software, started 2023-01: .* <a href="https:\/\/www\.wikidata\.org\/wiki\/Q2"/);
+  assert.match(notes[1], /href="https:\/\/yilinista\.github\.io\/idealine\/\?term=Cursor&amp;since=2022">Show only papers from 2022 on</);
+  assert.ok(!notes[2].includes('<img') && notes[2].includes('&lt;img') && !notes[2].includes('javascript:'));
+  const zh = Object.assign({}, TL.LABELS_EN, I.T.zh);
+  assert.match(TL.scopeNotes({ term: 'OpenAI', entity: D.entity, hiddenBefore: { n: 10, year: 2015, named: true } }, zh)[1], /^已排除 10 篇标注在 2015 年之前的论文/);
+});
+
+test('starting-point labels are plain text in both languages (no function source on the page)', () => {
+  for (const lang of ['en', 'zh']) for (const k of ['earlier', 'different', 'recent']) assert.equal(typeof R.TEXT[lang][k], 'string', `${lang}.${k}`);
+  assert.equal(R.TEXT.en.andEarlier(1979), '1979 and earlier');
+});
+
+test('nameScope keeps a real older meaning even when it is a tiny share of a popular name', () => {
+  const e = { floor: 1994 };
+  // Like "Amazon": a steady older meaning, dwarfed by later papers.
+  assert.deepEqual(C.nameScope([[1980, 40], [1990, 60], [2020, 90000]], e), { since: null, olderUse: { n: 100, year: 1994 } });
+  // Few, but bunched in one year: not scattered junk.
+  assert.deepEqual(C.nameScope([[1990, 12], [2020, 900]], e), { since: null, olderUse: { n: 12, year: 1994 } });
+  // Everything before the floor: never hide it all.
+  assert.deepEqual(C.nameScope([[1980, 3], [1990, 2]], e), { since: null, olderUse: { n: 5, year: 1994 } });
+});
+
+test('lookupEntity ignores alias matches (a common word that is only an alias of a product)', async () => {
+  const e = await C.lookupEntity('copilot', { fetchFn: fakeWikidata([{ id: 'Q1', match: { type: 'alias', text: 'copilot' } }],
+    { Q1: item(['Q7397'], { pub: '+2023-02-07T00:00:00Z' }) }) });
+  assert.equal(e, null);
+});
+
+test('scope notes: hidden years can be brought back, and reruns keep aliases and meaning', () => {
+  const D = { term: 'OpenAI', aliases: ['Open AI'], meaning: 'the company', entity: { id: 'Q1', label: 'OpenAI', kind: 'organization', date: '2015-12-08', url: 'https://www.wikidata.org/wiki/Q1' },
+    hiddenBefore: { n: 10, year: 2015, named: true } };
+  const n = TL.scopeNotes(D, TL.LABELS_EN)[1];
+  assert.match(n, /^Left out: 10 papers dated before 2015, well before OpenAI existed \(2015-12-08\)/);
+  assert.match(n, /href="https:\/\/yilinista\.github\.io\/idealine\/\?term=OpenAI&amp;alias=Open%20AI&amp;meaning=the%20company&amp;since=all">Show all years</);
+});
