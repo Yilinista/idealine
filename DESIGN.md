@@ -1,11 +1,11 @@
 # idealine: design (v1)
 
-Date: 2026-11-17. Status: Phase 2 implemented locally; review and deployment pending. Mode: builder (course bonus project; the goal
+Date: 2026-11-17. Status: deployed on GitHub Pages; the timeline is the front door again (see "Scope and front door" below). Mode: builder (course bonus project; the goal
 is the full build → launch → feedback → iterate loop, per Lecture 8).
 
 ## Problem
 
-Students and readers meet unfamiliar AI terms and need to choose papers worth
+Students and readers meet unfamiliar research terms (AI first, but any field) and need to choose papers worth
 reading. Phrase counts and model-generated history do not by themselves answer
 what a paper means by a term. The immediate task is to compare actual uses and
 leave with a source they can read and cite.
@@ -62,8 +62,21 @@ shown dashed if not found.
   HTTP. Successful live OpenAlex searches and real-reader
   usefulness remain unverified. No new model generation or user study is claimed.
 
-The design explorations below document the earlier timeline direction. They are
-retained as background; the reading brief above defines the current front door.
+## Scope and front door (2026-11-17, later)
+
+- **Front door:** after trying the reading brief, Yilin said the direction was wrong
+  (in chat). The timeline is the main view again; the source cards and evidence list
+  sit below it as its evidence.
+- **Any field:** Yilin approved widening the copy from "AI terms" to research terms
+  in any field (in chat). The pipeline already had no AI-specific filter or prompt
+  wording (checked in `term.py` and `web/core.js`). Example chips now include
+  placebo effect, cognitive dissonance and dark matter; these run live searches
+  until ready-made pages are generated. Acronym and common-word collisions are more
+  likely outside AI (e.g. "transformer"); the "Other spellings" and "Which meaning?"
+  fields are the current mitigation, untested on non-AI terms.
+
+The design explorations below document the earlier timeline direction and remain the
+basis of the current timeline.
 
 A second, smaller mode (`idealine claim`) traces one claim of one paper through
 the sentences that cite it, labeled supports / refutes / refines / mentions.

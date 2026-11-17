@@ -65,7 +65,7 @@ LOGO = (
     '<line x1="17" y1="5" x2="17" y2="15" stroke="var(--redefined)" stroke-width="1.5"/><circle cx="17" cy="5" r="2.6" fill="var(--redefined)"/></svg>'
 )
 
-CHIPS = ("world model", "vibe coding", "reward hacking", "in-context learning", "CRISPR")
+CHIPS = ("world model", "vibe coding", "CRISPR", "placebo effect", "cognitive dissonance", "dark matter")
 
 PAGE_CSS = """
 main{max-width:1120px}
@@ -289,8 +289,8 @@ def main() -> None:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="{CSP}">
 <meta name="referrer" content="no-referrer">
-<title>idealine · where did this AI idea come from?</title>
-<meta name="description" content="A reading brief for AI terms. Compare quoted passages from papers, check their sources, and find what to read next.">
+<title>idealine · where did this idea come from?</title>
+<meta name="description" content="Type a research term from any field and see when it appeared in papers and how its meaning shifted, with a quoted sentence behind every step.">
 <style>{CSS}{PAGE_CSS}</style></head>
 <body class="home"><a class="skip-link" href="#result">Skip to sources</a><main>
 <nav>
@@ -298,8 +298,8 @@ def main() -> None:
   <span class="links"><a href="#how" data-i18n="navHow">How it works</a><a href="{REPO_URL}">GitHub</a><span class="langseg" id="lang" role="group" aria-label="Language"><button type="button" data-lang="zh" aria-pressed="false">中</button><button type="button" data-lang="en" aria-pressed="true">EN</button></span></span>
 </nav>
 <section class="hero">
-  <div class="hero-copy"><span class="eyebrow" data-i18n="heroEyebrow">A timeline for AI ideas</span>
-  <h1 data-i18n="heroTitle">Where did this AI idea come from?</h1>
+  <div class="hero-copy"><span class="eyebrow" data-i18n="heroEyebrow">A timeline for research terms, any field</span>
+  <h1 data-i18n="heroTitle">Where did this idea come from?</h1>
   <p data-i18n="heroSub">Type a term. See when it appeared, how its meaning shifted, with a quoted sentence from a paper behind every step.</p></div>
   <aside class="hero-example"><span class="eyebrow" data-i18n="exampleEyebrow">Example timeline · world model</span><blockquote>Our <mark>world model</mark> can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.</blockquote><cite>Ha &amp; Schmidhuber · 2018 · <a href="https://arxiv.org/abs/1803.10122" target="_blank" rel="noopener noreferrer">World Models</a></cite><a href="terms/world-model.html" data-i18n="exampleLink">Explore the reading brief ↗</a></aside>
   {TRACE_FORM.format(chips=chips)}

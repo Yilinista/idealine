@@ -2,9 +2,10 @@
 
 **Understand the term. Read the evidence.**
 
-idealine turns an AI term into a short reading brief: a few starting papers,
-the abstract passages that use the term, and links to read further. Compare the
-uses, browse the sample, and copy a passage with its source. The evidence comes
+idealine turns a research term from any field (AI, biology, psychology, physics, …)
+into a timeline: when papers started using it, how its meaning shifted, and the
+abstract sentences behind each step, with links to read further. Browse the
+sample and copy a passage with its source. The evidence comes
 before the optional model interpretation; this is a reading aid, not a complete
 history or a claim about who coined the term.
 
@@ -70,7 +71,8 @@ Tips:
   last word is added for you (*world model* also finds *world models*).
 - Very old dates in OpenAlex are sometimes wrong, so records from before a term was in regular
   use are marked "date may be wrong".
-- It works for any field OpenAlex covers, not only AI.
+- It works for any field OpenAlex covers, not only AI. Most ready-made examples are AI terms;
+  CRISPR is the first from another field.
 
 ## How it works
 

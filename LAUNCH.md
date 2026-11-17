@@ -29,8 +29,8 @@ without checking the underlying evidence. This implementation has not been pushe
 
 ## Draft: classmates
 
-> hey! for my bonus project I made idealine: type an AI term (like "recursive
-> self-improvement") and it shows where the term came from and how the meaning shifted,
+> hey! for my bonus project I made idealine: type a research term from any field (like "recursive
+> self-improvement" or "CRISPR") and it shows where the term came from and how the meaning shifted,
 > on one timeline, with the quote behind every step. try any term here: <link>
 > (free without a key; paste your own Claude / OpenAI / Gemini / OpenRouter key for the full version,
 > it only goes from your browser to that provider)
@@ -39,7 +39,7 @@ without checking the underlying evidence. This implementation has not been pushe
 
 ## Draft: Show HN
 
-**Title:** Show HN: Idealine – see where an AI term came from, with a quote behind every step
+**Title:** Show HN: Idealine – see where a research term came from, with a quote behind every step
 
 > AI vocabulary shifts fast. "Recursive self-improvement" was a niche AI-safety idea for
 > 15 years (under 10 papers a year), then 611 papers used it in 2026, mostly meaning agents
