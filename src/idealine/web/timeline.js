@@ -561,10 +561,17 @@
     if (headline) {
       const cs = D.counts || [];
       if (cs.length && (D.total || cs.reduce((a, [, c]) => a + c, 0)) >= 20) {
-        const ta = takeoff(cs);
-        const pk = cs.reduce((a, b) => (b[1] > a[1] ? b : a));
-        const before = ta ? Math.max(...cs.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
-        headline.textContent = L.headline({ first: cs[0][0], ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
+        // "First seen": skip stray records cut off from the main run of use by more than
+        // three empty years (often misdated), the same rule the source cards use.
+        const on = onsetYear(cs);
+        const nz = cs.filter(([, c]) => c > 0).map(([y]) => y);
+        let first = nz[0];
+        for (let i = 1; i < nz.length; i++) if (nz[i] - nz[i - 1] > 3 && on && nz[i] <= on) first = nz[i];
+        const main = cs.filter(([y]) => y >= first);
+        const ta0 = main.length >= 3 ? takeoff(main) : null, ta = ta0 && ta0 > first ? ta0 : null;
+        const pk = main.reduce((a, b) => (b[1] > a[1] ? b : a));
+        const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
+        headline.textContent = L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
       } else headline.textContent = '';
     }
 

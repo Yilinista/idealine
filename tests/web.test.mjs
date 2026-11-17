@@ -581,3 +581,9 @@ test('roots: plan picks repeated references; rpys marks the peak year', () => {
   assert.equal(r.peaks[0].title, 'Root paper');
   assert.equal(r.spectrum.length, 10);
 });
+
+test('every browser script parses', () => {
+  for (const f of ['i18n.js', 'core.js', 'providers.js', 'timeline.js', 'reading.js']) assert.doesNotThrow(() => require(`../src/idealine/web/${f}`), f);
+  const I = require('../src/idealine/web/i18n.js');
+  assert.ok(I.T.en.heroTitle && I.T.zh.heroTitle);
+});

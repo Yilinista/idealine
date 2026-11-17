@@ -179,7 +179,7 @@ TRACE_FORM = """
 <form id="trace-form" autocomplete="off">
   <div class="search">
     <input id="term" required minlength="2" maxlength="80" aria-label="Term" data-i18n-aria="termLabel" data-i18n-ph="termPh" placeholder="Try “world model” or “in-context learning”">
-    <button class="btn" id="go" type="submit" data-i18n="go">Find sources</button>
+    <button class="btn" id="go" type="submit" data-i18n="go">Trace it</button>
   </div>
   <div class="chips">{chips}</div>
   <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
@@ -278,7 +278,7 @@ def main() -> None:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="{CSP}">
 <meta name="referrer" content="no-referrer">
-<title>idealine · understand the term, read the evidence</title>
+<title>idealine · where did this AI idea come from?</title>
 <meta name="description" content="A reading brief for AI terms. Compare quoted passages from papers, check their sources, and find what to read next.">
 <style>{CSS}{PAGE_CSS}</style></head>
 <body class="home"><a class="skip-link" href="#result">Skip to sources</a><main>
@@ -287,10 +287,10 @@ def main() -> None:
   <span class="links"><a href="#how" data-i18n="navHow">How it works</a><a href="{REPO_URL}">GitHub</a><span class="langseg" id="lang" role="group" aria-label="Language"><button type="button" data-lang="zh" aria-pressed="false">中</button><button type="button" data-lang="en" aria-pressed="true">EN</button></span></span>
 </nav>
 <section class="hero">
-  <div class="hero-copy"><span class="eyebrow" data-i18n="heroEyebrow">A reading companion for AI ideas</span>
-  <h1 data-i18n="heroTitle">Understand the term. Read the evidence.</h1>
-  <p data-i18n="heroSub">A few useful papers. Their actual words. Find out how an idea is used, and decide what to read next.</p></div>
-  <aside class="hero-example"><span class="eyebrow" data-i18n="exampleEyebrow">Inside a reading brief · world model</span><blockquote>Our <mark>world model</mark> can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.</blockquote><cite>Ha &amp; Schmidhuber · 2018 · <a href="https://arxiv.org/abs/1803.10122" target="_blank" rel="noopener noreferrer">World Models</a></cite><a href="terms/world-model.html" data-i18n="exampleLink">Explore the reading brief ↗</a></aside>
+  <div class="hero-copy"><span class="eyebrow" data-i18n="heroEyebrow">A timeline for AI ideas</span>
+  <h1 data-i18n="heroTitle">Where did this AI idea come from?</h1>
+  <p data-i18n="heroSub">Type a term. See when it appeared, how its meaning shifted, with a quoted sentence from a paper behind every step.</p></div>
+  <aside class="hero-example"><span class="eyebrow" data-i18n="exampleEyebrow">Example timeline · world model</span><blockquote>Our <mark>world model</mark> can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment.</blockquote><cite>Ha &amp; Schmidhuber · 2018 · <a href="https://arxiv.org/abs/1803.10122" target="_blank" rel="noopener noreferrer">World Models</a></cite><a href="terms/world-model.html" data-i18n="exampleLink">Explore the reading brief ↗</a></aside>
   {TRACE_FORM.format(chips=chips)}
 </section>
 {RESULT}

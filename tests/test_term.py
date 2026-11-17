@@ -284,7 +284,8 @@ def test_reading_pages_share_a_self_contained_reader_and_source_metadata():
     assert 'data-reading-back href="../"' in page
     assert '<script src' not in page
     assert page.count('</script>') == 2
-    assert '<p class="headline"' not in page
+    # The timeline leads the page again; the reader draws it into these parts.
+    assert 'class="timeline-main"' in page and 'data-part="chart"' in page
 
 
 def test_reviewed_guides_match_saved_quotes_in_both_languages():

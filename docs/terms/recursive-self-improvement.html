@@ -210,6 +210,10 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .skip-link:focus{top:12px}
 @media(max-width:760px){main{padding:18px 20px 44px}.reading-layout{grid-template-columns:minmax(0,1fr);gap:16px}.reading-aside{position:static;grid-row:1;padding:12px 0;border-top:0;border-bottom:1px solid var(--line)}.reading-aside>p{font-size:1.12rem;margin:6px 0 12px}.reading-aside>a{border:0;padding:0}.aside-count{display:none}.source-card{padding:20px}.home .hero{grid-template-columns:1fr;gap:0;margin-top:28px}.home .hero-example{display:none}.home .hero-copy h1{max-width:550px}.home .hero-copy>p{margin-bottom:18px}.brief-meta span+span{margin-left:0}.home .keyline{line-height:1.7}.home .result-h h2{font-size:1.9rem}}
 @media(max-width:460px){main{padding:16px 14px 36px}.source-card{padding:18px 16px}.source-card blockquote{font-size:1.12rem}.source-actions{gap:8px}.source-actions button,.source-actions a{min-height:40px}.home nav .links{gap:10px}.home nav .links>a{font-size:.75rem}.home .hero-copy h1{font-size:2.2rem}.home .search{padding-left:12px}.home .search input{font-size:.89rem}.home .btn{padding:11px 12px}.evidence-filters label{min-width:120px}.section-heading>span{width:100%}}
+/* The timeline leads the result; the source cards below are its evidence. */
+.timeline-main{margin:6px 0 34px}
+.timeline-main .timeline-summary{font-size:1.02rem;line-height:1.6;max-width:72ch;color:var(--fg);margin:0 0 10px}
+.timeline-main .card{margin-top:8px}
 </style></head>
 <body>
 <a class="skip-link" href="#reading">Skip to sources</a>
@@ -243,10 +247,10 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       saveKey: 'Save and check key', checking: 'Checking the key…',
       keyOk: short => `${short} accepted the key. You're set: press Find sources.`,
       modelOn: (short, model) => `Using ${short} (${model}) for suggested meanings and diagnostics.`, modelOff: 'not checked yet', change: 'Change',
-      heroEyebrow: 'A reading companion for AI ideas', exampleEyebrow: 'Inside a reading brief · world model', exampleLink: 'Explore the reading brief ↗', downloads: 'Downloads & tools',
-      heroTitle: 'Understand the term. Read the evidence.',
-      heroSub: 'A few useful papers. Their actual words. Find out how an idea is used, and decide what to read next.',
-      termPh: 'Try “world model” or “in-context learning”', termLabel: 'Term', go: 'Find sources',
+      heroEyebrow: 'A timeline for AI ideas', exampleEyebrow: 'Example timeline · world model', exampleLink: 'Open the full timeline ↗', downloads: 'Downloads & tools',
+      heroTitle: 'Where did this AI idea come from?',
+      heroSub: 'Type a term. See when it appeared, how its meaning shifted, with a quoted sentence from a paper behind every step.',
+      termPh: 'Try “world model” or “in-context learning”', termLabel: 'Term', go: 'Trace it',
       freeLine: 'Read source passages for free. For optional meaning labels,', addKey: 'add your own model key',
       optsSummary: 'Search options & optional model key',
       aliasesLabel: 'Other spellings (optional, comma-separated)', aliasesPh: 'e.g. mixture-of-experts, MoE layer',
@@ -258,7 +262,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       privacyKey: (host, short) => `Your key goes straight from your browser to ${host}. This site has no server and never sees it. One request per term, about 15–25k input tokens, billed to your ${short} account.`,
       oakeyLabel: 'OpenAlex key (optional, free; use it if OpenAlex says the daily budget is used up)',
       forget: 'Forget saved keys', forgotten: 'Saved keys removed from this browser.',
-      exampleTag: 'Example reading brief', resultTag: 'Your reading brief', interimTag: 'First look · the model is still reading',
+      exampleTag: 'Example timeline', resultTag: 'Your timeline', interimTag: 'First look · the model is still reading',
       step_count: 'Counting papers per year in OpenAlex', step_early: 'Reading the earliest papers', step_cited: 'Reading the most-cited papers',
       step_recent: 'Reading recent papers', step_model: 'The model reads the quotes and builds eras and milestones', step_links: 'Linking milestones to papers',
       stepModelN: (short, n) => `${short} reads ${n} quoted sentences and builds eras and milestones (often 30–90 s)`,
@@ -270,11 +274,11 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       }[stage] || '…'),
       seconds: n => ` · ${n} s`,
       keptFree: 'Showing the free source passages instead.',
-      tracingTag: 'Finding sources…', failedTag: 'No sources yet', readyTag: 'Prepared reading brief',
+      tracingTag: 'Finding sources…', failedTag: 'No sources yet', readyTag: 'Ready-made timeline',
       readyNote: date => `Made in advance (${date}), so it opens instantly.`,
       traceLive: 'Refresh from live data',
       thin: n => `Only ${n} papers use this term, so it is very new or rare; the timeline will be thin.`,
-      suggest: 'Meanwhile, these prepared reading briefs open instantly:',
+      suggest: 'Meanwhile, these ready-made timelines open instantly:',
       howKindsH: 'Milestone types',
       howKinds: 'origin: first use · coined: someone names it · popularized: it spreads · redefined: the meaning shifts · applied: used in a new field · critique: pushback · ancestor: an older idea it builds on',
       howLimitsH: 'Limits',
@@ -300,7 +304,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       noPapersCjk: term => `No paper titles or abstracts in OpenAlex use “${term}”. Most papers there are in English, so try the English term (for example “vibe coding”).`,
       noMilestones: 'The model returned no milestones backed by the quoted sentences. Try again, or try another model.',
       acronym: 'Tip: acronyms often match other fields; the spelled-out term usually gives a cleaner timeline.',
-      pressTrace: 'Press Find sources to run it with your key.',
+      pressTrace: 'Press Trace it to run it with your key.',
       wentWrong: m => 'Something went wrong: ' + m,
       // timeline
       legendDashed: 'dashed = no link found', legendBars: 'bars = papers per year',
@@ -346,10 +350,10 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       saveKey: '保存并检查 key', checking: '正在检查 key……',
       keyOk: short => `${short} 的 key 可用，已就绪：点击“查找来源”。`,
       modelOn: (short, model) => `已启用模型：${short}（${model}），用于建议词义与诊断图表。`, modelOff: '尚未检查', change: '更改',
-      heroEyebrow: 'AI 概念的阅读伴侣', exampleEyebrow: '阅读简报示例 · world model', exampleLink: '打开阅读简报 ↗', downloads: '下载与工具',
-      heroTitle: '理解术语，从原文开始。',
-      heroSub: '几篇有用的论文，作者真实的表达。比较概念的不同用法，找到下一篇值得读的文献。',
-      termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '查找来源',
+      heroEyebrow: 'AI 概念的时间线', exampleEyebrow: '示例时间线 · world model', exampleLink: '打开完整时间线 ↗', downloads: '下载与工具',
+      heroTitle: '这个 AI 概念是从哪来的？',
+      heroSub: '输入一个术语，看它何时出现、含义怎么变，每一步都有论文原句作证。',
+      termPh: '输入英文术语，如 “world model” 或 “attention mechanism”', termLabel: '术语', go: '画时间线',
       freeLine: '免费阅读原文。若想使用可选词义标签，', addKey: '填入你自己的模型 key',
       optsSummary: '搜索选项与可选模型 key',
       aliasesLabel: '其他写法（可选，用逗号分隔）', aliasesPh: '例如 mixture-of-experts, MoE layer',
@@ -361,7 +365,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       privacyKey: (host, short) => `你的 key 只会从你的浏览器直接发给 ${host}。本站没有服务器，看不到你的 key。每个术语一次请求，约 1.5–2.5 万输入 token，费用记在你的 ${short} 账户。`,
       oakeyLabel: 'OpenAlex key（可选，免费；如果提示 OpenAlex 今日额度用完，就填这个）',
       forget: '清除已保存的 key', forgotten: '已从这个浏览器清除保存的 key。',
-      exampleTag: '阅读简报示例', resultTag: '你的阅读简报', interimTag: '初步结果 · 模型还在阅读',
+      exampleTag: '示例时间线', resultTag: '你的时间线', interimTag: '初步结果 · 模型还在阅读',
       step_count: '统计 OpenAlex 每年的论文数', step_early: '读取最早的论文', step_cited: '读取被引最多的论文',
       step_recent: '读取最新的论文', step_model: '模型阅读原句，划分时期和里程碑', step_links: '把里程碑链接到论文',
       stepModelN: (short, n) => `${short} 正在阅读 ${n} 条原句，划分时期和里程碑（通常 30–90 秒）`,
@@ -373,11 +377,11 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       }[stage] || '…'),
       seconds: n => ` · ${n} 秒`,
       keptFree: '先为你显示免费的原文证据。',
-      tracingTag: '正在查找来源……', failedTag: '暂时没有来源', readyTag: '预先准备的阅读简报',
+      tracingTag: '正在画时间线……', failedTag: '暂时没有来源', readyTag: '现成的时间线',
       readyNote: date => `这是预先生成的完整版（${date}），所以能直接打开。`,
       traceLive: '用实时数据刷新',
       thin: n => `只有 ${n} 篇论文用到这个词，说明它很新或很少见，时间线会比较单薄。`,
-      suggest: '可以先看看这些准备好的阅读简报，点开即看：',
+      suggest: '可以先看看这些现成的时间线，点开即看：',
       howKindsH: '里程碑类型',
       howKinds: '起源：最早使用 · 命名：有人给它起了名 · 流行：开始被广泛使用 · 含义转变：意思变了 · 跨界应用：用到新领域 · 批评：反对或质疑 · 前身：它所继承的更早的想法',
       howLimitsH: '局限',
@@ -403,7 +407,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       noPapersCjk: term => `OpenAlex 里没有论文的标题或摘要用到“${term}”。那里的论文大多是英文，请输入英文术语（例如 “vibe coding”）。`,
       noMilestones: '模型没有给出有原句支撑的里程碑。请重试，或换一个模型。',
       acronym: '提示：缩写常会匹配到其他领域，写全称通常更准确。',
-      pressTrace: '点击“查找来源”用你的 key 运行。',
+      pressTrace: '点击“画时间线”用你的 key 运行。',
       wentWrong: m => '出错了：' + m,
       legendDashed: '虚线 = 没找到链接', legendBars: '柱子 = 每年论文数',
       legendBarsQ: '柱子 = 每年论文数，近几年按季度',
@@ -1073,10 +1077,17 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     if (headline) {
       const cs = D.counts || [];
       if (cs.length && (D.total || cs.reduce((a, [, c]) => a + c, 0)) >= 20) {
-        const ta = takeoff(cs);
-        const pk = cs.reduce((a, b) => (b[1] > a[1] ? b : a));
-        const before = ta ? Math.max(...cs.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
-        headline.textContent = L.headline({ first: cs[0][0], ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
+        // "First seen": skip stray records cut off from the main run of use by more than
+        // three empty years (often misdated), the same rule the source cards use.
+        const on = onsetYear(cs);
+        const nz = cs.filter(([, c]) => c > 0).map(([y]) => y);
+        let first = nz[0];
+        for (let i = 1; i < nz.length; i++) if (nz[i] - nz[i - 1] > 3 && on && nz[i] <= on) first = nz[i];
+        const main = cs.filter(([y]) => y >= first);
+        const ta0 = main.length >= 3 ? takeoff(main) : null, ta = ta0 && ta0 > first ? ta0 : null;
+        const pk = main.reduce((a, b) => (b[1] > a[1] ? b : a));
+        const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
+        headline.textContent = L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
       } else headline.textContent = '';
     }
 
@@ -1220,13 +1231,13 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       meaningNote: 'Meaning labels are model suggestions. The original passages stay in their source language.',
       curve: 'How often the phrase appears', curveNote: 'All phrase matches in OpenAlex titles and abstracts, including other meanings. Counts do not establish who introduced an idea.',
       count: n => `${n.toLocaleString('en-US')} phrase matches`, partial: 'Snapshot year; incomplete',
-      method: 'Method & limitations', diagnostics: 'Explore the original timeline & diagnostics',
+      method: 'Method & limitations', diagnostics: 'Explore the original timeline & diagnostics', timelineTitle: 'How the term developed',
       methodText: 'OpenAlex supplies phrase counts and a sample of early, highly cited, and recent papers. Abstracts can be missing or truncated, and metadata can be wrong. A title match is not an abstract quotation. Books, posts, and ideas expressed in other words may be absent.',
       methodModel: 'The optional model proposes meanings, eras, and milestones from these passages. A source link does not prove a model label. Diagnostic plots describe the sample, not a validated history.',
       modelSummary: 'Model interpretation — verify against the passages',
       noModel: 'No model was used. The passages are available without meaning labels.',
       modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
-      originalHint: 'Click a milestone to inspect its evidence. All labels below are suggestions.',
+      originalHint: 'Click a milestone to see the sentences behind it. Labels are suggestions; the quotes are the evidence.',
     },
     zh: {
       start: '从这些原文开始', browse: '浏览原文证据', route: '简短阅读路线', suggested: '建议阅读起点',
@@ -1248,11 +1259,11 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       meaningNote: '词义标签是模型的建议；原文保留来源语言。',
       curve: '词组出现的频率', curveNote: '统计 OpenAlex 标题与摘要中的所有词组匹配，包括其他含义。数量不能证明谁最先提出一个概念。',
       count: n => `${n.toLocaleString('en-US')} 条词组匹配`, partial: '快照所在年份，尚不完整',
-      method: '方法与局限', diagnostics: '查看原时间线与诊断图表',
+      method: '方法与局限', diagnostics: '查看原时间线与诊断图表', timelineTitle: '这个词的来龙去脉',
       methodText: 'OpenAlex 提供词组数量，以及较早、被引较多和近期论文的样本。摘要可能缺失或截断，元数据可能有误。标题匹配不等于摘要引文。书籍、博客及使用其他表达的概念可能未收录。',
       methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
       modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
-      originalHint: '点击里程碑查看证据。以下标签均为建议。',
+      originalHint: '点击里程碑，看它依据的原句。标签只是建议，原句才是证据。',
     },
   };
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1343,19 +1354,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     </article>`;
   }
 
-  function usageChart(model, T) {
-    if (!model.counts.length) return '';
-    const counts = model.counts, max = Math.max(...counts.map(([,n]) => n)), start = counts[0][0], end = counts[counts.length-1][0];
-    const width = 680, height = 82, step = width / (end-start+1);
-    const bars = counts.map(([year,n]) => {
-      const h = Math.max(2, n/max*height);
-      return `<rect x="${(year-start)*step}" y="${height-h}" width="${Math.max(.8,step*.72)}" height="${h}" class="${year === model.snapshot ? 'partial-bar' : ''}"><title>${year}: ${n}${year === model.snapshot ? ' · ' + esc(T.partial) : ''}</title></rect>`;
-    }).join('');
-    return `<section class="usage-panel"><div class="section-heading"><h3>${esc(T.curve)}</h3><span>${esc(T.count(counts.reduce((s,[,n])=>s+n,0)))}</span></div><p>${esc(T.curveNote)}</p><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(T.curve + '. ' + T.curveNote)}">${bars}</svg><div class="usage-axis"><span>${start}</span><span>${end}${model.snapshot === end ? ' · ' + esc(T.partial) : ''}</span></div></section>`;
-  }
-
   // opts.pending: a model is still reading; opts.applyHash: false for the built-in example;
-  // opts.showRoots: open the original timeline at its roots section.
+  // opts.showRoots: scroll to the roots section after a roots lookup.
   function renderReadingBrief(d, root, lang = 'en', opts = {}) {
     lang = lang === 'zh' ? 'zh' : 'en';
     const T = TEXT[lang], model = readingModel(d), host = root.querySelector('[data-part="reading"]');
@@ -1367,6 +1367,9 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const years = [...new Set(model.quotes.map(q => q.year).filter(Boolean))].sort((a,b)=>b-a);
     const senseKeys = [...new Set(model.quotes.map(q=>q.sense || 'untagged'))];
     host.innerHTML = `<div class="brief-meta"><span>${esc(T.scope)}</span><span>${esc(T.saved)} ${esc(d.generated || '—')}</span></div>
+      <section class="timeline-main" aria-label="${esc(T.timelineTitle)}">${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<p class="headline" data-part="headline"></p>
+      <div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div>
+      <div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div></section>
       <div class="reading-layout"><section class="reading-main"><div class="section-heading"><h3>${esc(T.start)}</h3><span>${esc(model.curated ? T.route : T.suggested)}</span></div><p class="section-intro">${esc(model.curated ? T.intro : T.auto)}</p>
       ${model.featured.map((q,i)=>card(q,true,i)).join('') || `<p class="empty-state">${esc(model.quotes.length ? T.noFeatured : T.noQuotes)}</p>`}</section>
       <aside class="reading-aside"><span class="eyebrow">${esc(T.question)}</span><p>${esc(localized(d.readingGuide?.question,lang) || T.defaultQuestion)}</p><a href="#evidence" data-browse>${esc(T.browse)} <span>↘</span></a><div class="aside-count">${esc(T.matches(model.quotes.length))}</div></aside></div>
@@ -1376,10 +1379,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       ${senseKeys.some(k=>k!=='untagged') ? `<label>${esc(T.meaning)}<select data-filter="sense"><option value="">${esc(T.allMeanings)}</option>${senseKeys.map(k=>`<option value="${esc(k)}">${esc(senseMap.get(k) || T.untagged)}</option>`).join('')}</select></label>` : ''}
       <label>${esc(T.sort)}<select data-filter="order"><option value="newest">${esc(T.newest)}</option><option value="oldest">${esc(T.oldest)}</option></select></label></div>
       <p class="filter-status" role="status" aria-live="polite"></p><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
-      ${usageChart(model,T)}
-      <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p>
-      ${d.summary ? `<h3>${esc(T.modelSummary)}</h3><p>${esc(d.summary)}</p>` : ''}
-      <details class="timeline-diagnostics"><summary>${esc(T.diagnostics)}</summary><div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div></details></details>`;
+      <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details>`;
     const browser = host.querySelector('.evidence-browser'), list = host.querySelector('.quote-results'), more = host.querySelector('.load-more');
     let limit = 12;
     function refresh() {
@@ -1420,20 +1420,16 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
         status.appendChild(area);area.focus();area.select();
       }
     };
-    const diagnostics=host.querySelector('.timeline-diagnostics');
-    diagnostics.addEventListener('toggle',()=> {
-      if (diagnostics.open && global.renderTimeline) {
-        const I=global.IdealineI18n, labels=I ? Object.assign({kinds:I.KINDS[lang]},I.T[lang]) : {};
-        global.renderTimeline(d,diagnostics,labels);
-      }
-    });
+    // The timeline leads the page: where the term came from and how its meaning moved.
+    // The source cards below are the evidence for it.
+    const timeline=host.querySelector('.timeline-main');
+    if (global.renderTimeline) {
+      const I=global.IdealineI18n, labels=I ? Object.assign({kinds:I.KINDS[lang]},I.T[lang]) : {};
+      global.renderTimeline(d,timeline,labels);
+    }
     const hash=opts.applyHash === false ? '' : global.location?.hash || '';
     if (hash.startsWith('#q-')) reveal(hash.slice(3));
-    if (hash.startsWith('#m-') || opts.showRoots) {host.querySelector('.method-panel').open=true;diagnostics.open=true;}
-    if (opts.showRoots) {
-      // The toggle event that draws the timeline fires asynchronously; scroll after it.
-      setTimeout(() => host.querySelector('[data-part="roots"]')?.scrollIntoView({block:'start'}), 50);
-    }
+    if (opts.showRoots) setTimeout(() => host.querySelector('[data-part="roots"]')?.scrollIntoView({block:'start'}), 50);
   }
 
   function mountPage(d, lang) {

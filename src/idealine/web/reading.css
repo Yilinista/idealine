@@ -117,3 +117,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .skip-link:focus{top:12px}
 @media(max-width:760px){main{padding:18px 20px 44px}.reading-layout{grid-template-columns:minmax(0,1fr);gap:16px}.reading-aside{position:static;grid-row:1;padding:12px 0;border-top:0;border-bottom:1px solid var(--line)}.reading-aside>p{font-size:1.12rem;margin:6px 0 12px}.reading-aside>a{border:0;padding:0}.aside-count{display:none}.source-card{padding:20px}.home .hero{grid-template-columns:1fr;gap:0;margin-top:28px}.home .hero-example{display:none}.home .hero-copy h1{max-width:550px}.home .hero-copy>p{margin-bottom:18px}.brief-meta span+span{margin-left:0}.home .keyline{line-height:1.7}.home .result-h h2{font-size:1.9rem}}
 @media(max-width:460px){main{padding:16px 14px 36px}.source-card{padding:18px 16px}.source-card blockquote{font-size:1.12rem}.source-actions{gap:8px}.source-actions button,.source-actions a{min-height:40px}.home nav .links{gap:10px}.home nav .links>a{font-size:.75rem}.home .hero-copy h1{font-size:2.2rem}.home .search{padding-left:12px}.home .search input{font-size:.89rem}.home .btn{padding:11px 12px}.evidence-filters label{min-width:120px}.section-heading>span{width:100%}}
+/* The timeline leads the result; the source cards below are its evidence. */
+.timeline-main{margin:6px 0 34px}
+.timeline-main .timeline-summary{font-size:1.02rem;line-height:1.6;max-width:72ch;color:var(--fg);margin:0 0 10px}
+.timeline-main .card{margin-top:8px}

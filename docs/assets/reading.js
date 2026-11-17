@@ -26,13 +26,13 @@
       meaningNote: 'Meaning labels are model suggestions. The original passages stay in their source language.',
       curve: 'How often the phrase appears', curveNote: 'All phrase matches in OpenAlex titles and abstracts, including other meanings. Counts do not establish who introduced an idea.',
       count: n => `${n.toLocaleString('en-US')} phrase matches`, partial: 'Snapshot year; incomplete',
-      method: 'Method & limitations', diagnostics: 'Explore the original timeline & diagnostics',
+      method: 'Method & limitations', diagnostics: 'Explore the original timeline & diagnostics', timelineTitle: 'How the term developed',
       methodText: 'OpenAlex supplies phrase counts and a sample of early, highly cited, and recent papers. Abstracts can be missing or truncated, and metadata can be wrong. A title match is not an abstract quotation. Books, posts, and ideas expressed in other words may be absent.',
       methodModel: 'The optional model proposes meanings, eras, and milestones from these passages. A source link does not prove a model label. Diagnostic plots describe the sample, not a validated history.',
       modelSummary: 'Model interpretation — verify against the passages',
       noModel: 'No model was used. The passages are available without meaning labels.',
       modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
-      originalHint: 'Click a milestone to inspect its evidence. All labels below are suggestions.',
+      originalHint: 'Click a milestone to see the sentences behind it. Labels are suggestions; the quotes are the evidence.',
     },
     zh: {
       start: '从这些原文开始', browse: '浏览原文证据', route: '简短阅读路线', suggested: '建议阅读起点',
@@ -54,11 +54,11 @@
       meaningNote: '词义标签是模型的建议；原文保留来源语言。',
       curve: '词组出现的频率', curveNote: '统计 OpenAlex 标题与摘要中的所有词组匹配，包括其他含义。数量不能证明谁最先提出一个概念。',
       count: n => `${n.toLocaleString('en-US')} 条词组匹配`, partial: '快照所在年份，尚不完整',
-      method: '方法与局限', diagnostics: '查看原时间线与诊断图表',
+      method: '方法与局限', diagnostics: '查看原时间线与诊断图表', timelineTitle: '这个词的来龙去脉',
       methodText: 'OpenAlex 提供词组数量，以及较早、被引较多和近期论文的样本。摘要可能缺失或截断，元数据可能有误。标题匹配不等于摘要引文。书籍、博客及使用其他表达的概念可能未收录。',
       methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
       modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
-      originalHint: '点击里程碑查看证据。以下标签均为建议。',
+      originalHint: '点击里程碑，看它依据的原句。标签只是建议，原句才是证据。',
     },
   };
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -149,19 +149,8 @@
     </article>`;
   }
 
-  function usageChart(model, T) {
-    if (!model.counts.length) return '';
-    const counts = model.counts, max = Math.max(...counts.map(([,n]) => n)), start = counts[0][0], end = counts[counts.length-1][0];
-    const width = 680, height = 82, step = width / (end-start+1);
-    const bars = counts.map(([year,n]) => {
-      const h = Math.max(2, n/max*height);
-      return `<rect x="${(year-start)*step}" y="${height-h}" width="${Math.max(.8,step*.72)}" height="${h}" class="${year === model.snapshot ? 'partial-bar' : ''}"><title>${year}: ${n}${year === model.snapshot ? ' · ' + esc(T.partial) : ''}</title></rect>`;
-    }).join('');
-    return `<section class="usage-panel"><div class="section-heading"><h3>${esc(T.curve)}</h3><span>${esc(T.count(counts.reduce((s,[,n])=>s+n,0)))}</span></div><p>${esc(T.curveNote)}</p><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(T.curve + '. ' + T.curveNote)}">${bars}</svg><div class="usage-axis"><span>${start}</span><span>${end}${model.snapshot === end ? ' · ' + esc(T.partial) : ''}</span></div></section>`;
-  }
-
   // opts.pending: a model is still reading; opts.applyHash: false for the built-in example;
-  // opts.showRoots: open the original timeline at its roots section.
+  // opts.showRoots: scroll to the roots section after a roots lookup.
   function renderReadingBrief(d, root, lang = 'en', opts = {}) {
     lang = lang === 'zh' ? 'zh' : 'en';
     const T = TEXT[lang], model = readingModel(d), host = root.querySelector('[data-part="reading"]');
@@ -173,6 +162,9 @@
     const years = [...new Set(model.quotes.map(q => q.year).filter(Boolean))].sort((a,b)=>b-a);
     const senseKeys = [...new Set(model.quotes.map(q=>q.sense || 'untagged'))];
     host.innerHTML = `<div class="brief-meta"><span>${esc(T.scope)}</span><span>${esc(T.saved)} ${esc(d.generated || '—')}</span></div>
+      <section class="timeline-main" aria-label="${esc(T.timelineTitle)}">${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<p class="headline" data-part="headline"></p>
+      <div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div>
+      <div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div></section>
       <div class="reading-layout"><section class="reading-main"><div class="section-heading"><h3>${esc(T.start)}</h3><span>${esc(model.curated ? T.route : T.suggested)}</span></div><p class="section-intro">${esc(model.curated ? T.intro : T.auto)}</p>
       ${model.featured.map((q,i)=>card(q,true,i)).join('') || `<p class="empty-state">${esc(model.quotes.length ? T.noFeatured : T.noQuotes)}</p>`}</section>
       <aside class="reading-aside"><span class="eyebrow">${esc(T.question)}</span><p>${esc(localized(d.readingGuide?.question,lang) || T.defaultQuestion)}</p><a href="#evidence" data-browse>${esc(T.browse)} <span>↘</span></a><div class="aside-count">${esc(T.matches(model.quotes.length))}</div></aside></div>
@@ -182,10 +174,7 @@
       ${senseKeys.some(k=>k!=='untagged') ? `<label>${esc(T.meaning)}<select data-filter="sense"><option value="">${esc(T.allMeanings)}</option>${senseKeys.map(k=>`<option value="${esc(k)}">${esc(senseMap.get(k) || T.untagged)}</option>`).join('')}</select></label>` : ''}
       <label>${esc(T.sort)}<select data-filter="order"><option value="newest">${esc(T.newest)}</option><option value="oldest">${esc(T.oldest)}</option></select></label></div>
       <p class="filter-status" role="status" aria-live="polite"></p><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
-      ${usageChart(model,T)}
-      <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p>
-      ${d.summary ? `<h3>${esc(T.modelSummary)}</h3><p>${esc(d.summary)}</p>` : ''}
-      <details class="timeline-diagnostics"><summary>${esc(T.diagnostics)}</summary><div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div></details></details>`;
+      <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details>`;
     const browser = host.querySelector('.evidence-browser'), list = host.querySelector('.quote-results'), more = host.querySelector('.load-more');
     let limit = 12;
     function refresh() {
@@ -226,20 +215,16 @@
         status.appendChild(area);area.focus();area.select();
       }
     };
-    const diagnostics=host.querySelector('.timeline-diagnostics');
-    diagnostics.addEventListener('toggle',()=> {
-      if (diagnostics.open && global.renderTimeline) {
-        const I=global.IdealineI18n, labels=I ? Object.assign({kinds:I.KINDS[lang]},I.T[lang]) : {};
-        global.renderTimeline(d,diagnostics,labels);
-      }
-    });
+    // The timeline leads the page: where the term came from and how its meaning moved.
+    // The source cards below are the evidence for it.
+    const timeline=host.querySelector('.timeline-main');
+    if (global.renderTimeline) {
+      const I=global.IdealineI18n, labels=I ? Object.assign({kinds:I.KINDS[lang]},I.T[lang]) : {};
+      global.renderTimeline(d,timeline,labels);
+    }
     const hash=opts.applyHash === false ? '' : global.location?.hash || '';
     if (hash.startsWith('#q-')) reveal(hash.slice(3));
-    if (hash.startsWith('#m-') || opts.showRoots) {host.querySelector('.method-panel').open=true;diagnostics.open=true;}
-    if (opts.showRoots) {
-      // The toggle event that draws the timeline fires asynchronously; scroll after it.
-      setTimeout(() => host.querySelector('[data-part="roots"]')?.scrollIntoView({block:'start'}), 50);
-    }
+    if (opts.showRoots) setTimeout(() => host.querySelector('[data-part="roots"]')?.scrollIntoView({block:'start'}), 50);
   }
 
   function mountPage(d, lang) {
