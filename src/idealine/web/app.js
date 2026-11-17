@@ -3,7 +3,7 @@
 // and is sent only to the provider they picked. This site has no server.
 (function () {
   'use strict';
-  const C = window.IdealineCore, P = window.IdealineProviders;
+  const C = window.IdealineCore, P = window.IdealineProviders, I = window.IdealineI18n;
   const $ = id => document.getElementById(id);
   const SPEC = JSON.parse($('spec').textContent);
   const store = {
@@ -12,16 +12,39 @@
     del(k) { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } },
   };
   const KEY_PREFIX = 'idealine.key.';
-  let lastData = null, busy = false;
+  let lastData = null, shown = null, busy = false, lastStatus = null;
+  // Ready-made example timeline, one per interface language when available.
+  let examples = {};
+  try { examples = JSON.parse($('example').textContent) || {}; } catch (e) { /* no example */ }
+  const exampleFor = l => examples[l] || examples.en || null;
+  const otherLang = () => (lang === 'zh' ? 'en' : 'zh');
 
-  // --- gallery filter ---------------------------------------------------------
-  const filter = $('filter');
-  if (filter) {
-    filter.addEventListener('input', () => {
-      const q = filter.value.toLowerCase().trim();
-      document.querySelectorAll('.tcard').forEach(c => { c.style.display = !q || c.dataset.q.includes(q) ? '' : 'none'; });
-    });
+  // --- language -----------------------------------------------------------------
+  let lang = I.detectLang(store.get('idealine.lang'), navigator.language);
+  const tx = () => I.T[lang];
+  const labels = () => Object.assign({ kinds: I.KINDS[lang] }, tx());
+
+  function applyLang() {
+    const T = tx();
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(e => { const v = T[e.dataset.i18n]; if (typeof v === 'string') e.textContent = v; });
+    document.querySelectorAll('[data-i18n-ph]').forEach(e => { e.placeholder = T[e.dataset.i18nPh]; });
+    document.querySelectorAll('[data-i18n-aria]').forEach(e => { e.setAttribute('aria-label', T[e.dataset.i18nAria]); });
+    document.querySelectorAll('.cardmeta').forEach(e => { e.textContent = T.cardMeta(Number(e.dataset.total), Number(e.dataset.n)); });
+    document.querySelectorAll('.tcard').forEach(c => { c.href = (lang === 'zh' && c.dataset.hrefZh) || c.dataset.hrefEn; });
+    const lb = $('lang');
+    lb.textContent = T.langToggle;
+    lb.title = T.langToggleTitle;
+    $('r-tag').textContent = lastData ? T.resultTag : T.exampleTag;
+    syncProvider();
+    if (shown) show(shown === exampleFor(otherLang()) ? exampleFor(lang) : shown, false);
+    if (lastStatus) status(lastStatus.key ? lastStatus.key() : lastStatus.msg, lastStatus.isError);
   }
+  $('lang').addEventListener('click', () => {
+    lang = lang === 'zh' ? 'en' : 'zh';
+    store.set('idealine.lang', lang);
+    applyLang();
+  });
 
   // --- provider picker ----------------------------------------------------------
   const providerSel = $('provider'), modelIn = $('model'), keyIn = $('key'), remember = $('remember');
@@ -31,27 +54,28 @@
     o.textContent = p.label;
     providerSel.appendChild(o);
   }
-  function syncProvider() {
-    const id = providerSel.value, p = P.PROVIDERS[id];
+  function syncProvider(loadSaved) {
+    const id = providerSel.value, p = P.PROVIDERS[id], T = tx();
     const needsKey = id !== 'none';
     $('keyrow').hidden = !needsKey;
     if (!needsKey) {
-      $('privacy').textContent = 'Free mode: no model, no key. You get the usage curve plus the earliest and most-cited papers.';
+      $('privacy').textContent = T.privacyFree;
       return;
     }
+    $('keylink').href = p.keyUrl;
+    $('keylink').textContent = T.getKey(p.short);
+    $('privacy').textContent = T.privacyKey(p.host, p.short);
+    if (!loadSaved) return;
     modelIn.value = store.get('idealine.model.' + id) || p.defaultModel;
     keyIn.placeholder = p.keyHint;
-    $('keylink').href = p.keyUrl;
-    $('keylink').textContent = `Get a ${p.short} key`;
     const saved = store.get(KEY_PREFIX + id);
     keyIn.value = saved || '';
     remember.checked = !!saved;
-    $('privacy').textContent = `Your key goes straight from your browser to ${p.host}. This site has no server and never sees it. One request per term, about 15–25k input tokens, billed to your ${p.short} account.`;
   }
   providerSel.value = store.get('idealine.provider') || 'none';
   if (!P.PROVIDERS[providerSel.value] && providerSel.value !== 'none') providerSel.value = 'none';
-  providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(); });
-  syncProvider();
+  providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(true); });
+  syncProvider(true);
   remember.addEventListener('change', () => {
     if (!remember.checked) { store.del(KEY_PREFIX + providerSel.value); store.del('idealine.openalexKey'); }
   });
@@ -61,14 +85,22 @@
     keyIn.value = '';
     $('oakey').value = '';
     remember.checked = false;
-    status('Saved keys removed from this browser.');
+    status(() => tx().forgotten);
   });
   $('oakey').value = store.get('idealine.openalexKey') || '';
+  $('open-opts').addEventListener('click', () => {
+    const d = $('opts');
+    d.open = true;
+    if (providerSel.value === 'none') providerSel.focus(); else keyIn.focus();
+  });
 
   // --- run --------------------------------------------------------------------
+  // msg: a string (translated if known) or a function returning text in the current language.
   function status(msg, isError) {
+    lastStatus = msg ? (typeof msg === 'function' ? { key: msg, isError } : { msg, isError }) : null;
     const s = $('status');
-    s.textContent = msg || '';
+    const text = typeof msg === 'function' ? msg() : I.trMessage(lang, msg || '');
+    s.textContent = text || '';
     s.classList.toggle('error', !!isError);
   }
 
@@ -81,14 +113,20 @@
     return out.slice(0, 5);
   }
 
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    $('term').value = c.textContent;
+    $('aliases').value = '';
+    $('trace-form').requestSubmit();
+  }));
+
   $('trace-form').addEventListener('submit', async ev => {
     ev.preventDefault();
     if (busy) return;
     const term = $('term').value.replace(/\s+/g, ' ').trim();
     const aliases = parseAliases($('aliases').value).filter(a => a.toLowerCase() !== term.toLowerCase());
     const providerId = providerSel.value, key = keyIn.value.trim(), model = modelIn.value.trim();
-    if (term.length < 2) return status('Type a term first.', true);
-    if (providerId !== 'none' && !key) return status(`Paste your ${P.PROVIDERS[providerId].short} key, or pick "No model" for the free view.`, true);
+    if (term.length < 2) return status(() => tx().needTerm, true);
+    if (providerId !== 'none' && !key) { $('opts').open = true; return status(() => tx().needKey(P.PROVIDERS[providerId].short), true); }
     if (providerId !== 'none') {
       if (remember.checked) store.set(KEY_PREFIX + providerId, key); else store.del(KEY_PREFIX + providerId);
       store.set('idealine.model.' + providerId, model);
@@ -98,53 +136,60 @@
 
     busy = true;
     $('go').disabled = true;
-    $('result').hidden = true;
-    lastData = null;
     const acronymHint = /^[A-Z0-9]{2,5}$/.test(term) && !aliases.length;
+    const runLang = lang;
     try {
       const oa = new C.OpenAlex({ apiKey: oaKey, log: m => status(m) });
       const t = await C.harvest(oa, term, aliases, { onStep: status });
       if (!t.counts.length || !t.evidence.length) {
-        throw new C.IdealineError(`No paper titles or abstracts in OpenAlex use “${term}”. Try another spelling or add one under “Other spellings”.`);
+        throw new C.IdealineError(I.T[runLang].noPapers(term));
       }
       if (providerId === 'none') {
         C.baseline(t);
       } else {
         const p = P.PROVIDERS[providerId];
-        status(`Asking ${p.short} (${model}) to read ${t.evidence.length} sentences. This can take a minute…`);
-        const data = await P.callModel(providerId, { key, model, system: SPEC.system, prompt: C.buildPrompt(t), schema: SPEC.schema });
+        status(() => tx().asking(p.short, model, t.evidence.length));
+        const prompt = C.buildPrompt(t, (SPEC.outputLang || {})[runLang]);
+        const data = await P.callModel(providerId, { key, model, system: SPEC.system, prompt, schema: SPEC.schema });
         t.model = model;
         await C.applyAnalysis(t, data, oa, status);
         if (!t.milestones.length) {
-          throw new C.IdealineError('The model returned no milestones backed by the quoted sentences. Try again, or try another model.');
+          throw new C.IdealineError(I.T.en.noMilestones);
         }
       }
       lastData = C.toData(t);
-      show(lastData);
-      status(acronymHint ? 'Tip: acronyms often match other fields; the spelled-out term usually gives a cleaner timeline.' : '');
+      show(lastData, true);
+      status(acronymHint ? () => tx().acronym : '');
       const u = new URL(location.href);
       u.searchParams.set('term', term);
       if (aliases.length) u.searchParams.set('alias', aliases.join(', ')); else u.searchParams.delete('alias');
       history.replaceState(null, '', u);
     } catch (e) {
-      status(e instanceof C.IdealineError || e instanceof P.ProviderError ? e.message : 'Something went wrong: ' + (e && e.message ? e.message : e), true);
+      const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
+      if (known && /OpenAlex key/.test(e.message)) $('opts').open = true;
+      const m = e && e.message ? e.message : String(e);
+      if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones, true);
+      else status(known ? m : (() => tx().wentWrong(m)), true);
     } finally {
       busy = false;
       $('go').disabled = false;
     }
   });
 
-  function show(d) {
-    const r = $('result');
-    r.hidden = false;
+  function show(d, scroll) {
+    shown = d;
+    $('result').hidden = false;
+    const T = tx();
+    const isExample = !lastData || d !== lastData;
+    $('r-tag').textContent = isExample ? T.exampleTag : T.resultTag;
+    $('r-actions').hidden = isExample;
     $('r-term').textContent = d.term;
     $('r-summary').textContent = d.summary || '';
     const years = d.counts.map(c => c[0]);
     const span = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : 'n/a';
-    $('r-meta').textContent = `${d.total.toLocaleString('en-US')} papers in OpenAlex use this term (${span}). ` +
-      (d.model ? `Proposed by ${d.model} from ${d.evidenceCount} quoted sentences only; check the quotes.` : 'No model: milestones are the earliest and most-cited papers that use the term.');
-    window.renderTimeline(d, r);
-    r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('r-meta').textContent = T.meta(d.total, span, d.model, d.evidenceCount);
+    window.renderTimeline(d, $('result'), labels());
+    if (scroll) $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // --- downloads: a standalone page (same as the CLI's) and the JSON -----------
@@ -196,12 +241,15 @@ renderTimeline(JSON.parse(document.getElementById('data').textContent));</script
     if (lastData) download(slug(lastData.term) + '.json', JSON.stringify(lastData, null, 2), 'application/json');
   });
 
-  // --- ?term= links prefill the form (never auto-spend a key) ------------------
+  // --- start: example timeline, then ?term= links (never auto-spend a key) ------
+  applyLang();
+  if (exampleFor(lang)) show(exampleFor(lang), false); else $('result').hidden = true;
   const params = new URLSearchParams(location.search);
   if (params.get('term')) {
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
+    if ($('aliases').value) $('opts').open = true;
     if (providerSel.value === 'none') $('trace-form').requestSubmit();
-    else status('Press Trace to run it with your key.');
+    else status(() => tx().pressTrace);
   }
 })();

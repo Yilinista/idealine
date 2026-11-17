@@ -107,6 +107,13 @@ compare two terms on one axis, and alerts when a term's meaning shifts. Not in v
   A Content-Security-Policy limits scripts to the site's own files and network calls to OpenAlex
   and the four providers. All paper text and model output is escaped or set as text; links must
   be http(s).
+- Interface text lives in `web/i18n.js` (English and Simplified Chinese). Runtime messages from
+  `core.js`/`providers.js` stay English in code and are mapped to Chinese by pattern; anything
+  unmatched is shown in English. In Chinese, one extra line in the prompt (`OUTPUT_LANG` in
+  `term.py`, shared with the CLI's `--lang zh`) asks the model to write labels in Chinese.
+- Look: search first (one pill input, example chips), the model-key settings folded away, and a
+  ready-made example timeline in the result slot until the visitor traces their own. Light by
+  default, dark palette when the system is in dark mode; term pages share the same tokens.
 
 ## Known limits
 

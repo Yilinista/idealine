@@ -9,7 +9,7 @@ import httpx
 from idealine.cli import main, slugify
 from idealine.openalex import BASE_URL, OpenAlexClient, abstract_from_index, phrase_query
 from idealine.render_term import to_html, to_markdown
-from idealine.term import analyze, apply_analysis, baseline, harvest, sentences_with_term, term_pattern
+from idealine.term import OUTPUT_LANG, TermTimeline, analyze, apply_analysis, baseline, build_prompt, harvest, sentences_with_term, term_pattern
 
 
 def _inv(text):
@@ -307,3 +307,10 @@ def test_chinese_sentences_split():
 
     out = sentences_with_term("第一句没有。基于注意力机制的模型很好！最后一句。", term_pattern("注意力机制", []))
     assert out == ["基于注意力机制的模型很好！"]
+
+
+def test_build_prompt_output_language():
+    t = TermTimeline(term="x", aliases=[], counts={2020: 1}, evidence=[])
+    assert "Output language" not in build_prompt(t)
+    assert build_prompt(t, "zh").endswith("Output language: " + OUTPUT_LANG["zh"])
+    assert "Output language" not in build_prompt(t, "fr")

@@ -82,7 +82,7 @@
         if (resp.status === 429) {
           const ra = Number(resp.headers.get('retry-after') || '');
           if (ra > 120) {
-            throw new IdealineError(`OpenAlex's free daily budget for your network is used up (resets in about ${waitText(ra)}, at midnight UTC). Add a free OpenAlex key under "More options", or try again later.`);
+            throw new IdealineError(`OpenAlex's free daily budget for your network is used up (resets in about ${waitText(ra)}, at midnight UTC). Add a free OpenAlex key under "Options and model key", or try again later.`);
           }
           if (attempt < 4) {
             const wait = ra > 0 ? ra * 1000 : delay;
@@ -228,7 +228,8 @@
 
   // --- analyze ------------------------------------------------------------------
 
-  function buildPrompt(t) {
+  // outputLang: optional extra instruction (e.g. write labels in Chinese), appended last.
+  function buildPrompt(t, outputLang) {
     const lines = [
       `Term: ${t.term}` + (t.aliases.length ? ` (also: ${t.aliases.join(', ')})` : ''),
       `Papers per year: ${t.counts.map(([y, c]) => `${y}: ${c}`).join(', ')}`,
@@ -238,6 +239,7 @@
     for (const e of t.evidence) {
       lines.push(`[${e.eid}] (${e.work.year}, cited ${e.work.citedBy}x, ${e.fromTitle ? 'title' : 'abstract'} of "${e.work.title}") ${e.text}`);
     }
+    if (outputLang) lines.push('', 'Output language: ' + outputLang);
     return lines.join('\n');
   }
 

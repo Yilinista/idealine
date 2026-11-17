@@ -292,7 +292,15 @@ class AnalyzeError(RuntimeError):
     pass
 
 
-def build_prompt(t: TermTimeline) -> str:
+# Extra instruction so the model writes its labels in the reader's language.
+# Paper titles and quotes stay in their original language.
+OUTPUT_LANG = {
+    "zh": "Write the summary, era labels, era meanings, and every milestone \"why\" in Simplified Chinese. "
+    "Keep milestone titles as the work titles in their original language, and keep evidence IDs unchanged.",
+}
+
+
+def build_prompt(t: TermTimeline, lang: str = "en") -> str:
     counts = ", ".join(f"{y}: {c}" for y, c in t.counts.items())
     lines = [
         f"Term: {t.term}" + (f" (also: {', '.join(t.aliases)})" if t.aliases else ""),
@@ -303,6 +311,8 @@ def build_prompt(t: TermTimeline) -> str:
     for e in t.evidence:
         kind = "title" if e.from_title else "abstract"
         lines.append(f"[{e.eid}] ({e.work.year}, cited {e.work.cited_by}x, {kind} of \"{e.work.title}\") {e.text}")
+    if lang in OUTPUT_LANG:
+        lines += ["", "Output language: " + OUTPUT_LANG[lang]]
     return "\n".join(lines)
 
 
@@ -376,6 +386,7 @@ def analyze(
     resolver: OpenAlexClient | None = None,
     model: str = DEFAULT_MODEL,
     effort: str = "medium",
+    lang: str = "en",
 ) -> TermTimeline:
     if not t.evidence:
         raise AnalyzeError("No sentences use this term, so there is nothing to analyze.")
@@ -387,7 +398,7 @@ def analyze(
         model=model,
         max_tokens=16000,
         system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": build_prompt(t)}],
+        messages=[{"role": "user", "content": build_prompt(t, lang)}],
         output_config={"effort": effort, "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}},
     )
     if response.stop_reason == "refusal":

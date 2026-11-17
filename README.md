@@ -27,6 +27,10 @@ so do not tick it on a shared computer. A spending limit on your provider accoun
 
 You can download each result as a self-contained HTML page or as JSON.
 
+The page is in English and Simplified Chinese (the 中文 / EN button; it starts in your browser's
+language). In Chinese, the model writes the summary, eras and notes in Chinese; paper titles and
+quotes stay in their original language.
+
 ## Use it from the command line
 
 You need [uv](https://docs.astral.sh/uv/getting-started/installation/) (one install command).
@@ -50,7 +54,7 @@ It asks before calling the API (one request per term), then writes `mixture-of-e
 Tips:
 - OpenAlex gives everyone on a network a small free daily budget (each term uses 4–16
   requests). If you hit it, get a [free OpenAlex key](https://help.openalex.org/api/authentication/)
-  (in the browser: "More options"; on the command line: `export OPENALEX_API_KEY=...`).
+  (in the browser: "Options and model key"; on the command line: `export OPENALEX_API_KEY=...`).
 - Spell terms out. Acronyms like "RSI" also match finance and medicine.
 - Add other spellings (`--alias`, or the "Other spellings" box). The singular/plural of the
   last word is added for you (*world model* also finds *world models*).
@@ -87,6 +91,7 @@ idealine claim "Compute-optimal models should scale data and parameters equally"
 | `--no-llm` | Skip the model; no key needed |
 | `--model ID` | Claude model (default `claude-opus-5-5`) |
 | `--effort` | `low`, `medium` (default), or `high` |
+| `--lang` | `en` (default) or `zh`: write the summary, eras and notes in Simplified Chinese |
 | `--out DIR` | Output folder (default: current folder) |
 | `-y, --yes` | Do not ask before calling the API |
 | `--no-cache` | Refetch instead of using cached API responses |

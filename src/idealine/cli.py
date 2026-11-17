@@ -53,6 +53,7 @@ def term_parser() -> argparse.ArgumentParser:
     p.add_argument("term", help='The term, spelled out, e.g. "recursive self-improvement".')
     p.add_argument("--alias", action="append", default=[], help="Another spelling to include (repeatable).")
     p.add_argument("--effort", default="medium", choices=["low", "medium", "high"], help="Model effort (default medium).")
+    p.add_argument("--lang", default="en", choices=["en", "zh"], help="Language of the summary, eras and notes (default en; zh = Simplified Chinese).")
     _common(p)
     return p
 
@@ -103,7 +104,7 @@ def run_term(argv: list[str], oa: OpenAlexClient | None, llm_client) -> int:
     if confirm(args, f"{len(t.evidence)} sentences"):
         log(f"Tracing eras and milestones with {args.model}...")
         try:
-            analyze(t, client=llm_client, resolver=oa, model=args.model, effort=args.effort)
+            analyze(t, client=llm_client, resolver=oa, model=args.model, effort=args.effort, lang=args.lang)
         except AnalyzeError as err:
             log(f"Error: {err}")
             return 3

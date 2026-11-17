@@ -17,8 +17,24 @@
   const safeUrl = u => (typeof u === 'string' && /^https?:\/\//i.test(u) ? u : null);
   const reEsc = w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-  function renderTimeline(D, root) {
+  // Interface text; pass a partial object as the third argument to translate it.
+  const LABELS_EN = {
+    kinds: {},
+    papers: n => `${n} papers`,
+    yearPapers: (y, n) => `${y}: ${n} papers`,
+    timelineOf: term => `Timeline of ${term}`,
+    inSample: 'Linked paper uses the term itself.',
+    resolved: title => `Named in the quotes; matched to “${title}” in OpenAlex. Check the match.`,
+    unresolved: 'Named in the quotes but not found in OpenAlex, so there is no link.',
+    titleOf: 'Title of ',
+    legendDashed: 'dashed = no link found',
+    legendBars: 'bars = papers per year',
+  };
+
+  function renderTimeline(D, root, labels) {
     root = root || document;
+    const L = Object.assign({}, LABELS_EN, labels || {});
+    const kindName = k => (L.kinds && L.kinds[k]) || k;
     const part = name => root.querySelector(`[data-part="${name}"]`);
     const chart = part('chart'), detail = part('detail');
     chart.textContent = '';
@@ -62,7 +78,7 @@
       const W = Math.max(avail, ...lanes.map(r => r + 24), acc + 20);
       const eraH = D.eras.length ? 44 : 0, top = eraH + 10;
       const axisY = top + nLanes * laneH + axisPad, barH = 70, H = axisY + barH + 34;
-      const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Timeline of ${D.term}` });
+      const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': L.timelineOf(D.term) });
 
       // Era bands; labels alternate between two rows and are cut to fit.
       D.eras.forEach((e, k) => {
@@ -80,7 +96,7 @@
       for (const [y, c] of counts) {
         const h = Math.max(1.5, Math.sqrt(c / maxC) * barH);
         const r = el('rect', { x: X(y) - WY(y) * 0.34, y: axisY + 6, width: Math.max(1.5, WY(y) * 0.68), height: h, fill: css('bar'), rx: 2 }, svg);
-        el('title', {}, r).textContent = `${y}: ${c} papers`;
+        el('title', {}, r).textContent = L.yearPapers(y, c);
       }
       el('line', { x1: left - 10, x2: W - 20, y1: axisY, y2: axisY, stroke: css('line'), 'stroke-width': 2 }, svg);
       const tickYears = new Set([...counts.keys(), ...D.milestones.map(m => m.year)]);
@@ -95,12 +111,12 @@
       const peak = [...counts].sort((a, b) => b[1] - a[1])[0];
       if (peak) {
         const t = el('text', { x: X(peak[0]) + WY(peak[0]) * 0.4, y: axisY + 20, class: 'muted', 'font-size': 10.5 }, svg);
-        t.textContent = `${peak[1]} papers`;
+        t.textContent = L.papers(peak[1]);
       }
 
       msLaid.forEach(m => {
         const y = axisY - axisPad - m.lane * laneH;
-        const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${m.kind}: ${m.title}` }, svg);
+        const g = el('g', { class: 'ms', tabindex: 0, role: 'button', 'aria-label': `${m.year} ${kindName(m.kind)}: ${m.title}` }, svg);
         el('rect', { x: m.x - 10, y: y - 12, width: m.label.length * 6.3 + 70, height: 24, fill: 'transparent' }, g);
         el('line', { x1: m.x, x2: m.x, y1: y, y2: axisY, stroke: css(m.kind), 'stroke-width': 1.5, 'stroke-dasharray': m.link === 'unresolved' ? '3 3' : '' }, g);
         el('circle', { cx: m.x, cy: y, r: 7, fill: css(m.kind) }, g);
@@ -121,23 +137,23 @@
       const url = safeUrl(m.url);
       const title = url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title)}</a>` : esc(m.title);
       const status = {
-        'in-sample': 'Linked paper uses the term itself.',
-        'resolved': `Named in the quotes; matched to “${esc(m.workTitle)}” in OpenAlex. Check the match.`,
-        'unresolved': 'Named in the quotes but not found in OpenAlex, so there is no link.',
+        'in-sample': esc(L.inSample),
+        'resolved': esc(L.resolved(m.workTitle || '')),
+        'unresolved': esc(L.unresolved),
       }[m.link] || '';
       const quotes = (m.evidence || []).map(e => {
         const eu = safeUrl(e.url);
         const src = eu ? `<a href="${esc(eu)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>` : esc(e.title);
-        return `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? 'Title of ' : ''}${src} · ${esc(e.authors)}, ${esc(e.year)}</cite></blockquote>`;
+        return `<blockquote>${mark(e.text)}<cite>${e.fromTitle ? esc(L.titleOf) : ''}${src} · ${esc(e.authors)}, ${esc(e.year)}</cite></blockquote>`;
       }).join('');
-      detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kind)}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
+      detail.innerHTML = `<div class="kind" style="color:var(--${kind})">${esc(m.year)} · ${esc(kindName(kind))}</div><h2>${title}</h2><p class="why">${esc(m.why)}</p>${quotes}<div class="status">${status}</div>`;
     }
 
     build();
     const legend = part('legend');
     if (legend) {
-      legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${k}</span>`).join('') +
-        '<span>dashed = no link found</span><span>bars = papers per year</span>';
+      legend.innerHTML = KINDS.filter(k => D.milestones.some(m => m.kind === k)).map(k => `<span><i style="background:var(--${k})"></i>${esc(kindName(k))}</span>`).join('') +
+        `<span>${esc(L.legendDashed)}</span><span>${esc(L.legendBars)}</span>`;
     }
     const eras = part('eras');
     if (eras) eras.innerHTML = D.eras.map(e => `<div class="era"><b>${esc(e.start)}–${esc(e.end)}</b><h3>${esc(e.label)}</h3><p>${esc(e.meaning)}</p></div>`).join('');

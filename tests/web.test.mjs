@@ -284,3 +284,32 @@ test('Chinese text splits into sentences at 。！？', () => {
   const out = C.sentencesWithTerm('第一句没有。基于注意力机制的模型很好！最后一句。', C.termPattern('注意力机制', []));
   assert.deepEqual(out, ['基于注意力机制的模型很好！']);
 });
+
+// --- interface language -------------------------------------------------------
+const I = require('../src/idealine/web/i18n.js');
+
+test('language follows the saved choice, then the browser', () => {
+  assert.equal(I.detectLang('en', 'zh-CN'), 'en');
+  assert.equal(I.detectLang(null, 'zh-TW'), 'zh');
+  assert.equal(I.detectLang(null, 'en-US'), 'en');
+  assert.equal(I.detectLang('fr', undefined), 'en');
+});
+
+test('both languages define the same interface keys', () => {
+  assert.deepEqual(Object.keys(I.T.zh).sort(), Object.keys(I.T.en).sort());
+  assert.deepEqual(Object.keys(I.KINDS.zh).sort(), Object.keys(I.KINDS.en).sort());
+});
+
+test('known runtime messages are translated; unknown ones stay as they are', () => {
+  assert.equal(I.trMessage('zh', 'Counting papers per year…'), '正在统计每年的论文数……');
+  assert.match(I.trMessage('zh', 'Claude rejected the key (401). Check that you pasted the whole key and that it is active.'), /^Claude 拒绝了这个 key（401）/);
+  assert.match(I.trMessage('zh', "OpenAlex's free daily budget for your network is used up (resets in about 3 h, at midnight UTC). Add a free OpenAlex key under \"Options and model key\", or try again later."), /3 小时/);
+  assert.equal(I.trMessage('zh', 'Something new'), 'Something new');
+  assert.equal(I.trMessage('en', 'Counting papers per year…'), 'Counting papers per year…');
+});
+
+test('buildPrompt appends the output-language instruction only when given', () => {
+  const t = { term: 'x', aliases: [], counts: [[2020, 1]], evidence: [] };
+  assert.ok(!C.buildPrompt(t).includes('Output language'));
+  assert.ok(C.buildPrompt(t, 'Write in Simplified Chinese.').endsWith('Output language: Write in Simplified Chinese.'));
+});

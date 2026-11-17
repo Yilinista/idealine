@@ -1,9 +1,7 @@
 {
  "term": "recursive self-improvement",
- "aliases": [
-  "recursively self-improving"
- ],
- "summary": "Recursive self-improvement began in the AGI and singularity literature of the early 2010s as the idea that an AI could repeatedly improve its own design, possibly triggering an intelligence explosion that raised safety and ethics worries. Today it mostly names a concrete, benchmarked engineering goal: LLM agents and AI research systems that turn feedback into lasting improvements to themselves, their harnesses, or the process of building AI.",
+ "aliases": [],
+ "summary": "In this evidence, recursive self-improvement first appears around 2010 as a theoretical idea from AGI and AI-safety writing: an AI that improves itself in ways that make it better at further improvement, possibly leading to an intelligence explosion or technological singularity. Since about 2023, and especially in 2025-2026, it mostly names practical engineering loops in which LLM agents, harnesses, or models use their own outputs, failures, and experiments to improve themselves, and these loops are measured with benchmarks and governed by safety frameworks.",
  "counts": [
   [
    2007,
@@ -15,7 +13,7 @@
   ],
   [
    2012,
-   4
+   3
   ],
   [
    2013,
@@ -27,7 +25,7 @@
   ],
   [
    2015,
-   5
+   3
   ],
   [
    2016,
@@ -35,15 +33,15 @@
   ],
   [
    2017,
-   5
+   3
   ],
   [
    2018,
-   6
+   5
   ],
   [
    2020,
-   5
+   3
   ],
   [
    2021,
@@ -59,39 +57,30 @@
   ],
   [
    2024,
-   9
+   8
   ],
   [
    2025,
-   54
+   47
   ],
   [
    2026,
-   648
+   611
   ]
  ],
- "total": 760,
+ "total": 707,
  "model": "claude-opus-5-5",
  "generated": "2026-11-17",
- "evidenceCount": 61,
+ "evidenceCount": 156,
  "eras": [
   {
    "start": 2010,
    "end": 2015,
-   "label": "Formal limits and AGI safety",
-   "meaning": "A hypothetical capability of AGI programs to rewrite themselves, studied through formal definitions, complexity limits, and proposals to keep early self-improvement slow and human-guided.",
+   "label": "Theoretical AGI self-modification",
+   "meaning": "RSI was a theoretical property of seed or general AI systems that modify themselves, studied for its limits and for how to keep goal systems friendly and stable across iterations.",
    "evidence": [
     {
      "id": "E1",
-     "text": "We formally define recursively self improving programs and show that such programs exist, but that their algorithmic complexity cannot grow faster than O(log n) given fixed goals.",
-     "title": "A Model for Recursively Self Improving Programs",
-     "year": 2010,
-     "url": "https://openalex.org/W2114098175",
-     "authors": "Matt B. Mahoney",
-     "fromTitle": false
-    },
-    {
-     "id": "E2",
      "text": "Of central importance is an understanding of the limits of recursive self improvement (RSI).",
      "title": "A Model for Recursively Self Improving Programs",
      "year": 2010,
@@ -100,7 +89,7 @@
      "fromTitle": false
     },
     {
-     "id": "E3",
+     "id": "E2",
      "text": "Ensure that the early stages of recursive self-improvement occur relatively slowly and with rich human involvement. 5.",
      "title": "Nine Ways to Bias Open-Source AGI Toward Friendliness",
      "year": 2012,
@@ -109,7 +98,7 @@
      "fromTitle": false
     },
     {
-     "id": "E6",
+     "id": "E4",
      "text": "Through value-driven dynamic priority scheduling controlling the parallel execution of a vast number of reasoning threads, the system achieves recursive self-improvement after it leaves the lab, within the boundaries imposed by its designers.",
      "title": "Bounded Recursive Self-Improvement",
      "year": 2013,
@@ -118,7 +107,25 @@
      "fromTitle": false
     },
     {
-     "id": "E9",
+     "id": "E5",
+     "text": "We subsequently argue that embedding the concomitant intelligence-amplification of biological humans as a necessary intermediary goal between each successive iteration of recursive self-improvement – such that the AGI conceives of such an intermediary step as a necessary sub-goal of its own self-modification – constitutes the best logistical method of maintaining approximate intelligence equality amongst biological humans and recursively self-im…",
+     "title": "The Maximally Distributed Intelligence Explosion",
+     "year": 2014,
+     "url": "https://openalex.org/W2403309555",
+     "authors": "Francesco Albert Bosco Cortese",
+     "fromTitle": false
+    },
+    {
+     "id": "E6",
+     "text": "We ultimately argue that this approach bypasses the seeming impasse of needing to design, develop and articulate a motivational system possessing a top-level utility function that doesn’t decay over repeated iterations of recursive self-improvement in order to have a safe recursively self-modifying AGI.",
+     "title": "The Maximally Distributed Intelligence Explosion",
+     "year": 2014,
+     "url": "https://openalex.org/W2403309555",
+     "authors": "Francesco Albert Bosco Cortese",
+     "fromTitle": false
+    },
+    {
+     "id": "E7",
      "text": "The chapter creates stable, hierarchy-dominated goal systems, and ensures that the early stages of recursive self-improvement occur relatively slowly and with rich human involvement.",
      "title": "Nine Ways to Bias Open‐Source Artificial General Intelligence Toward Friendliness",
      "year": 2014,
@@ -127,42 +134,24 @@
      "fromTitle": false
     },
     {
-     "id": "E10",
+     "id": "E8",
      "text": "In this work we provide definitions for Recursively Self-Improving software, survey different types of self-improving software, review the relevant literature, analyze limits on computation restricting recursive self-improvement and introduce RSI Convergence Theory which aims to predict general behavior of RSI systems.",
      "title": "From Seed AI to Technological Singularity via Recursively Self-Improving Software",
      "year": 2015,
      "url": "https://doi.org/10.48550/arxiv.1502.06512",
      "authors": "Roman V. Yampolskiy",
      "fromTitle": false
-    },
-    {
-     "id": "E12",
-     "text": "On the Limits of Recursively Self-Improving AGI",
-     "title": "On the Limits of Recursively Self-Improving AGI",
-     "year": 2015,
-     "url": "https://doi.org/10.1007/978-3-319-21365-1_40",
-     "authors": "Roman V. Yampolskiy",
-     "fromTitle": true
     }
    ]
   },
   {
-   "start": 2014,
+   "start": 2016,
    "end": 2021,
    "label": "Singularity and catastrophe driver",
-   "meaning": "The mechanism behind a hypothetical intelligence explosion and technological singularity, invoked in risk models, ethics, and broader social commentary.",
+   "meaning": "RSI was mainly invoked as the mechanism behind a hypothetical intelligence explosion, technological singularity, or superintelligence catastrophe, with occasional loose borrowing into other fields.",
    "evidence": [
     {
-     "id": "E7",
-     "text": "We argue that the most effective solution paradigm in machine ethics aiming to maximize safe relations between humans and recursively self-improving AI is to maximize the approximate equality between humans and AGI.",
-     "title": "The Maximally Distributed Intelligence Explosion",
-     "year": 2014,
-     "url": "https://openalex.org/W2403309555",
-     "authors": "Francesco Albert Bosco Cortese",
-     "fromTitle": false
-    },
-    {
-     "id": "E14",
+     "id": "E10",
      "text": "The technological singularity is defined as a hy- pothetical event in which artificial intelligence would be capable of recursive self-improvement or of autonomously building smarter and more pow- erful machines than itself, up to the point of an “in- telligence explosion”, that yields an intelligence sur- passing all current human control or understanding.",
      "title": "Technological Singularity – The Dark Side",
      "year": 2016,
@@ -171,7 +160,7 @@
      "fromTitle": false
     },
     {
-     "id": "E15",
+     "id": "E11",
      "text": "This paper presents a graphical model of major pathways to ASI catastrophe, focusing on ASI created via recursive self-improvement.",
      "title": "A model of pathways to artificial superintelligence catastrophe for risk and decision analysis",
      "year": 2016,
@@ -180,7 +169,7 @@
      "fromTitle": false
     },
     {
-     "id": "E17",
+     "id": "E13",
      "text": "When artificially-general intelligence is capable of recursive self-improvement, a hypothetical ‘runaway effect’ — an intelligence explosion — might happen, yielding an intelligence surpassing all current human control or understanding.",
      "title": "EE2: Intelligent machines: Will the technological singularity happen?",
      "year": 2017,
@@ -189,7 +178,7 @@
      "fromTitle": false
     },
     {
-     "id": "E19",
+     "id": "E14",
      "text": "This paper examines the paperclip apocalypse concern for artificial general intelligence.This arises when a superintelligent AI with a simple goal (ie., producing paperclips) accumulates power so that all resources are devoted towards that goal and are unavailable for any other use.Conditions are provided under which a paper apocalypse can arise but the model also shows that, under certain architectures for recursive self-improvement of AIs, tha…",
      "title": "Self-Regulating Artificial General Intelligence",
      "year": 2018,
@@ -198,7 +187,16 @@
      "fromTitle": false
     },
     {
-     "id": "E21",
+     "id": "E15",
+     "text": "The singularity is a hypothetical event where machines are capable of recursive self-improvement leading to an intelligence explosion.",
+     "title": "The Machine that Goes “Ping”: Machine Learning and Pattern Recognition",
+     "year": 2018,
+     "url": "https://doi.org/10.1201/9781315151670-3",
+     "authors": "J. Rogel-Salazar",
+     "fromTitle": false
+    },
+    {
+     "id": "E17",
      "text": "There is a need for a strong bioethical and computational ethics framework to ensure that this is hardwired into the rules we give to the machines for recursive self-improvement.",
      "title": "Artificial intelligence (AI) in healthcare and biomedical research: Why a strong computational/AI bioethics framework is required?",
      "year": 2018,
@@ -207,24 +205,33 @@
      "fromTitle": false
     },
     {
-     "id": "E24",
+     "id": "E18",
      "text": "A person will teach robots with a cognitive mind to increase professionalism by recursive self-improvement to technological singularity.",
      "title": "Formation and Management of Industry 5.0 by Systems with Artificial Intelligence and Technological Singularity",
      "year": 2020,
      "url": "https://doi.org/10.11648/j.ajmie.20200502.12",
      "authors": "Evgeniy Bryndin",
      "fromTitle": false
+    },
+    {
+     "id": "E19",
+     "text": "Recursive Self-Improvement for Camera Image and Signal Processing Pipeline",
+     "title": "Recursive Self-Improvement for Camera Image and Signal Processing Pipeline",
+     "year": 2021,
+     "url": "https://openalex.org/W3213705071",
+     "authors": "Chandrajit Bajaj et al.",
+     "fromTitle": true
     }
    ]
   },
   {
    "start": 2022,
    "end": 2024,
-   "label": "Partial self-improvement in practice",
-   "meaning": "Concrete systems such as self-modifying networks, self-improving code scaffolds, and language-game learning were presented as partial or prototype forms of recursive self-improvement, alongside continued governance debate.",
+   "label": "Early machine-learning instantiations",
+   "meaning": "Researchers began linking RSI to concrete learning systems such as self-modifying neural networks, self-improving code generators, and language-game self-play, while noting these were only partial forms.",
    "evidence": [
     {
-     "id": "E28",
+     "id": "E20",
      "text": "In principle, such NNs can meta-learn to learn, and meta-meta-learn to meta-learn to learn, and so on, in the sense of recursive self-improvement.",
      "title": "A Modern Self-Referential Weight Matrix That Learns to Modify Itself",
      "year": 2022,
@@ -233,16 +240,7 @@
      "fromTitle": false
     },
     {
-     "id": "E29",
-     "text": "Recursive Self-Improvement and the Acceleration Dilemma: A Critical Analysis of Exponential AI Development and Governance Challenges",
-     "title": "Recursive Self-Improvement and the Acceleration Dilemma: A Critical Analysis of Exponential AI Development and Governance Challenges",
-     "year": 2023,
-     "url": "https://doi.org/10.13140/rg.2.2.14788.90243",
-     "authors": "Azizi Othman",
-     "fromTitle": true
-    },
-    {
-     "id": "E32",
+     "id": "E21",
      "text": "Since the language models themselves are not altered, this is not full recursive self-improvement.",
      "title": "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation",
      "year": 2023,
@@ -251,12 +249,21 @@
      "fromTitle": false
     },
     {
-     "id": "E35",
+     "id": "E23",
      "text": "Considering the special case of agents with matching input and output spaces (namely, language), we argue that such pure recursive self-improvement, dubbed \"Socratic learning\", can boost performance vastly beyond what is present in its initial data or knowledge, and is only limited by time, as well as gradual misalignment concerns.",
      "title": "Boundless Socratic Learning with Language Games",
      "year": 2024,
      "url": "https://doi.org/10.48550/arxiv.2411.16905",
      "authors": "Tom Schaul",
+     "fromTitle": false
+    },
+    {
+     "id": "E22",
+     "text": "Prevailing trends of AI R&D are leading to increasing humanization of AI, to the emergence of concerning behaviors, and toward possible recursive self-improvement.",
+     "title": "Multiple unnatural attributes of AI undermine common anthropomorphically biased takeover speculations",
+     "year": 2024,
+     "url": "https://doi.org/10.1007/s00146-024-02134-4",
+     "authors": "Preston W. Estep",
      "fromTitle": false
     }
    ]
@@ -264,20 +271,20 @@
   {
    "start": 2025,
    "end": 2026,
-   "label": "Agentic RSI engineering",
-   "meaning": "A measurable research program in which LLM agents, harnesses, and AI research loops improve themselves and the process of building AI, evaluated with dedicated benchmarks.",
+   "label": "Agentic engineering loops and benchmarks",
+   "meaning": "RSI became a broad research program and label for agent, harness, model, and robot frameworks that turn experience and failures into persistent improvements, alongside benchmarks, taxonomies, economic models, and safety studies.",
    "evidence": [
     {
-     "id": "E36",
-     "text": "We then propose a theoretical framework to assess whether existing LLM technologies could satisfy the conditions for singularity, with a focus on recursive self-improvement (RSI) and autonomous code generation.",
-     "title": "Large language models: assessment for singularity",
+     "id": "E24",
+     "text": "Recursive Self-Improvement (RSI) enables intelligence systems to autonomously refine their capabilities.",
+     "title": "Generating on Generated: An Approach Towards Self-Evolving Diffusion Models",
      "year": 2025,
-     "url": "https://doi.org/10.1007/s00146-025-02271-4",
-     "authors": "Ryunosuke Ishizaki et al.",
+     "url": "https://doi.org/10.48550/arxiv.2502.09963",
+     "authors": "Xulu Zhang et al.",
      "fromTitle": false
     },
     {
-     "id": "E38",
+     "id": "E29",
      "text": "The possibility of a rapid, \"software-only\" intelligence explosion brought on by AI's recursive self-improvement (RSI) is a subject of intense debate within the AI community.",
      "title": "Will Compute Bottlenecks Prevent an Intelligence Explosion?",
      "year": 2025,
@@ -286,7 +293,7 @@
      "fromTitle": false
     },
     {
-     "id": "E40",
+     "id": "E31",
      "text": "First, recursive self-improvement is a strong signal of progress toward AGI/SI; the Darwin Gödel Machine (DGM) modifies its own code.",
      "title": "Highlights of the Issue: Governance, Agents, Evolutionary Search",
      "year": 2025,
@@ -295,16 +302,7 @@
      "fromTitle": false
     },
     {
-     "id": "E43",
-     "text": "A Survey of Agentic Reasoning for Large Language Models: Towards Recursively Self-Improving and Collective Agents",
-     "title": "A Survey of Agentic Reasoning for Large Language Models: Towards Recursively Self-Improving and Collective Agents",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2601.12538",
-     "authors": "Tianxin Wei et al.",
-     "fromTitle": true
-    },
-    {
-     "id": "E48",
+     "id": "E51",
      "text": "The taxonomy separates bounded self-refinement -- convergent, evaluable, and industrial practice -- from open-ended recursive self-improvement (RSI), which remains bounded by grounding requirements, collapse dynamics, and compute constraints on every measured axis.",
      "title": "Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops",
      "year": 2026,
@@ -313,7 +311,7 @@
      "fromTitle": false
     },
     {
-     "id": "E51",
+     "id": "E56",
      "text": "Recursive self-improvement (RSI) requires AI systems that improve the process of building AI (i.e., AI4AI); machine learning engineering (MLE) offers a concrete, executable testbed for studying this capability.",
      "title": "Frontis-MA1: Training an AI4AI Model towards Recursive Self-Improvement in Machine Learning Engineering",
      "year": 2026,
@@ -322,7 +320,7 @@
      "fromTitle": false
     },
     {
-     "id": "E53",
+     "id": "E69",
      "text": "Recursive self-improvement (RSI) asks whether an AI system can improve the process that produces AI systems, so that the next system inherits the improvement.",
      "title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
      "year": 2026,
@@ -331,7 +329,7 @@
      "fromTitle": false
     },
     {
-     "id": "E57",
+     "id": "E85",
      "text": "Recent work extends recursive self-improvement (RSI) to agent harnesses for long-horizon coding and terminal tasks, enabling agents to improve execution mechanisms from experience.",
      "title": "ModularRSI: Modular and Generalizable Recursive Harness Self-Improvement",
      "year": 2026,
@@ -340,12 +338,30 @@
      "fromTitle": false
     },
     {
-     "id": "E60",
-     "text": "We refer to this loop as recursive self-improvement.",
-     "title": "Recursive self-improvement of AI research agents",
+     "id": "E91",
+     "text": "Recent methods increasingly automate this process by iteratively proposing and selecting component-wise edits of an agent harness, practically establishing a form of recursive self-improvement (RSI) at the agent-system level.",
+     "title": "RRSI: Regularized Recursive Self-Improvement of Agent Harnesses",
      "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2609.26457",
-     "authors": "Dhruv Srikanth et al.",
+     "url": "https://doi.org/10.48550/arxiv.2609.24972",
+     "authors": "Peng Xia et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E103",
+     "text": "Rapid advances in AI are bringing recursive self-improvement (RSI) closer to practice, with growing progress in model self-training, self-evolving agents, and automated AI development.",
+     "title": "Evolutionary Safety of Recursive Self-Improving AI: Taxonomy, Risk Discovery, and Evaluation",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2609.31186",
+     "authors": "Chang Gong et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E136",
+     "text": "This study investigates Physical Recursive Self-Improvement (Physical RSI), in which physical experience guides lasting updates to both a robot's capabilities and its improvement procedure, making subsequent improvement more effective across tasks.",
+     "title": "Who Improves the Robot? Toward Physical Recursive Self-Improvement",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2610.18842",
+     "authors": "Zhou Hai et al.",
      "fromTitle": false
     }
    ]
@@ -356,7 +372,7 @@
    "year": 2010,
    "kind": "origin",
    "title": "A Model for Recursively Self Improving Programs",
-   "why": "The earliest evidence gives a formal definition of recursively self-improving programs and argues that their complexity growth is limited.",
+   "why": "This is the earliest evidence use; it names RSI and frames understanding its limits as central.",
    "url": "https://openalex.org/W2114098175",
    "workTitle": "A Model for Recursively Self Improving Programs",
    "authors": "Matt B. Mahoney",
@@ -364,15 +380,6 @@
    "evidence": [
     {
      "id": "E1",
-     "text": "We formally define recursively self improving programs and show that such programs exist, but that their algorithmic complexity cannot grow faster than O(log n) given fixed goals.",
-     "title": "A Model for Recursively Self Improving Programs",
-     "year": 2010,
-     "url": "https://openalex.org/W2114098175",
-     "authors": "Matt B. Mahoney",
-     "fromTitle": false
-    },
-    {
-     "id": "E2",
      "text": "Of central importance is an understanding of the limits of recursive self improvement (RSI).",
      "title": "A Model for Recursively Self Improving Programs",
      "year": 2010,
@@ -386,14 +393,14 @@
    "year": 2012,
    "kind": "applied",
    "title": "Nine Ways to Bias Open-Source AGI Toward Friendliness",
-   "why": "It frames recursive self-improvement as a safety concern and recommends that its early stages proceed slowly with human involvement.",
+   "why": "It ties RSI to AI safety by recommending that the early stages of self-improvement proceed slowly and with rich human involvement.",
    "url": "https://openalex.org/W2325164173",
    "workTitle": "Nine Ways to Bias Open-Source AGI Toward Friendliness",
    "authors": "Ben Goertzel et al.",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E3",
+     "id": "E2",
      "text": "Ensure that the early stages of recursive self-improvement occur relatively slowly and with rich human involvement. 5.",
      "title": "Nine Ways to Bias Open-Source AGI Toward Friendliness",
      "year": 2012,
@@ -402,7 +409,7 @@
      "fromTitle": false
     },
     {
-     "id": "E9",
+     "id": "E7",
      "text": "The chapter creates stable, hierarchy-dominated goal systems, and ensures that the early stages of recursive self-improvement occur relatively slowly and with rich human involvement.",
      "title": "Nine Ways to Bias Open‐Source Artificial General Intelligence Toward Friendliness",
      "year": 2014,
@@ -414,16 +421,16 @@
   },
   {
    "year": 2013,
-   "kind": "applied",
+   "kind": "redefined",
    "title": "Bounded Recursive Self-Improvement",
-   "why": "It describes an architecture meant to achieve self-improvement within designer-imposed boundaries, making it the most-cited early work in the evidence.",
+   "why": "It recasts RSI as something an implemented system achieves within boundaries imposed by its designers.",
    "url": "https://doi.org/10.48550/arxiv.1312.6764",
    "workTitle": "Bounded Recursive Self-Improvement",
    "authors": "Eric Nivel et al.",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E6",
+     "id": "E4",
      "text": "Through value-driven dynamic priority scheduling controlling the parallel execution of a vast number of reasoning threads, the system achieves recursive self-improvement after it leaves the lab, within the boundaries imposed by its designers.",
      "title": "Bounded Recursive Self-Improvement",
      "year": 2013,
@@ -437,14 +444,14 @@
    "year": 2015,
    "kind": "popularized",
    "title": "From Seed AI to Technological Singularity via Recursively Self-Improving Software",
-   "why": "It surveys the literature, defines the term, and introduces an RSI Convergence Theory, tying it to the singularity.",
+   "why": "It gives formal definitions, surveys types of self-improving software, analyzes computational limits, and proposes RSI Convergence Theory.",
    "url": "https://doi.org/10.48550/arxiv.1502.06512",
    "workTitle": "From Seed AI to Technological Singularity via Recursively Self-Improving Software",
    "authors": "Roman V. Yampolskiy",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E10",
+     "id": "E8",
      "text": "In this work we provide definitions for Recursively Self-Improving software, survey different types of self-improving software, review the relevant literature, analyze limits on computation restricting recursive self-improvement and introduce RSI Convergence Theory which aims to predict general behavior of RSI systems.",
      "title": "From Seed AI to Technological Singularity via Recursively Self-Improving Software",
      "year": 2015,
@@ -458,18 +465,27 @@
    "year": 2016,
    "kind": "applied",
    "title": "A model of pathways to artificial superintelligence catastrophe for risk and decision analysis",
-   "why": "It brought recursive self-improvement into formal risk and decision analysis as a pathway to superintelligence catastrophe.",
+   "why": "This highly cited paper puts RSI at the center of risk analysis as the route to catastrophic superintelligence.",
    "url": "https://doi.org/10.1080/0952813x.2016.1186228",
    "workTitle": "A model of pathways to artificial superintelligence catastrophe for risk and decision analysis",
    "authors": "Anthony Michael Barrett et al.",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E15",
+     "id": "E11",
      "text": "This paper presents a graphical model of major pathways to ASI catastrophe, focusing on ASI created via recursive self-improvement.",
      "title": "A model of pathways to artificial superintelligence catastrophe for risk and decision analysis",
      "year": 2016,
      "url": "https://doi.org/10.1080/0952813x.2016.1186228",
+     "authors": "Anthony Michael Barrett et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E12",
+     "text": "This paper presents a graphical model of major pathways to ASI catastrophe, focusing on ASI created via recursive self-improvement.",
+     "title": "A Model of Pathways to Artificial Superintelligence Catastrophe for Risk and Decision Analysis",
+     "year": 2016,
+     "url": "https://doi.org/10.48550/arxiv.1607.07730",
      "authors": "Anthony Michael Barrett et al.",
      "fromTitle": false
     }
@@ -479,14 +495,14 @@
    "year": 2022,
    "kind": "redefined",
    "title": "A Modern Self-Referential Weight Matrix That Learns to Modify Itself",
-   "why": "It ties the term to concrete neural networks that meta-learn to learn, recursively.",
+   "why": "It connects RSI to neural networks that meta-learn to learn at successive levels.",
    "url": "https://doi.org/10.48550/arxiv.2202.05780",
    "workTitle": "A Modern Self-Referential Weight Matrix That Learns to Modify Itself",
    "authors": "Kazuki Irie et al.",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E28",
+     "id": "E20",
      "text": "In principle, such NNs can meta-learn to learn, and meta-meta-learn to meta-learn to learn, and so on, in the sense of recursive self-improvement.",
      "title": "A Modern Self-Referential Weight Matrix That Learns to Modify Itself",
      "year": 2022,
@@ -500,14 +516,14 @@
    "year": 2023,
    "kind": "critique",
    "title": "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation",
-   "why": "This highly cited work on self-improving code scaffolds itself cautions that, because the language model is unchanged, its method is not full recursive self-improvement.",
+   "why": "This highly cited work builds a self-improving code generator but cautions that, because the language model itself is not altered, it is not full RSI.",
    "url": "https://doi.org/10.48550/arxiv.2310.02304",
    "workTitle": "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation",
    "authors": "Eric Zelikman et al.",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E32",
+     "id": "E21",
      "text": "Since the language models themselves are not altered, this is not full recursive self-improvement.",
      "title": "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation",
      "year": 2023,
@@ -519,16 +535,46 @@
   },
   {
    "year": 2025,
+   "kind": "applied",
+   "title": "Highlights of the Issue: Governance, Agents, Evolutionary Search",
+   "why": "It presents RSI, exemplified by the Darwin Gödel Machine modifying its own code, as a strong signal of progress toward AGI and as an active research theme.",
+   "url": "https://doi.org/10.70777/si.v2i3.15417",
+   "workTitle": "Highlights of the Issue: Governance, Agents, Evolutionary Search",
+   "authors": "Kristen W. Carlson",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E30",
+     "text": "Recursive Self-Improvement (RSI) In the next issue we will publish more articles on RSI, for instance, using reinforcement learning (RL).",
+     "title": "Highlights of the Issue: Governance, Agents, Evolutionary Search",
+     "year": 2025,
+     "url": "https://doi.org/10.70777/si.v2i3.15417",
+     "authors": "Kristen W. Carlson",
+     "fromTitle": false
+    },
+    {
+     "id": "E31",
+     "text": "First, recursive self-improvement is a strong signal of progress toward AGI/SI; the Darwin Gödel Machine (DGM) modifies its own code.",
+     "title": "Highlights of the Issue: Governance, Agents, Evolutionary Search",
+     "year": 2025,
+     "url": "https://doi.org/10.70777/si.v2i3.15417",
+     "authors": "Kristen W. Carlson",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2025,
    "kind": "critique",
    "title": "Will Compute Bottlenecks Prevent an Intelligence Explosion?",
-   "why": "It questions whether a software-only intelligence explosion driven by RSI is possible given compute limits.",
+   "why": "It addresses the intense debate over whether a software-only intelligence explosion driven by RSI is plausible given compute limits.",
    "url": "https://doi.org/10.48550/arxiv.2507.23181",
    "workTitle": "Will Compute Bottlenecks Prevent an Intelligence Explosion?",
    "authors": "Parker Whitfill et al.",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E38",
+     "id": "E29",
      "text": "The possibility of a rapid, \"software-only\" intelligence explosion brought on by AI's recursive self-improvement (RSI) is a subject of intense debate within the AI community.",
      "title": "Will Compute Bottlenecks Prevent an Intelligence Explosion?",
      "year": 2025,
@@ -540,81 +586,108 @@
   },
   {
    "year": 2026,
-   "kind": "popularized",
-   "title": "A Survey of Agentic Reasoning for Large Language Models: Towards Recursively Self-Improving and Collective Agents",
-   "why": "This widely cited survey frames recursively self-improving LLM agents as a central research direction, during a year with a surge of papers on the term.",
-   "url": "https://doi.org/10.48550/arxiv.2601.12538",
-   "workTitle": "A Survey of Agentic Reasoning for Large Language Models: Towards Recursively Self-Improving and Collective Agents",
-   "authors": "Tianxin Wei et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E43",
-     "text": "A Survey of Agentic Reasoning for Large Language Models: Towards Recursively Self-Improving and Collective Agents",
-     "title": "A Survey of Agentic Reasoning for Large Language Models: Towards Recursively Self-Improving and Collective Agents",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2601.12538",
-     "authors": "Tianxin Wei et al.",
-     "fromTitle": true
-    }
-   ]
-  },
-  {
-   "year": 2026,
    "kind": "redefined",
-   "title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
-   "why": "It recasts RSI as AI improving the process that produces AI, measured through benchmarks.",
-   "url": "https://doi.org/10.48550/arxiv.2608.20318",
-   "workTitle": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
-   "authors": "Yizhe Chi et al.",
-   "link": "in-sample",
-   "evidence": [
-    {
-     "id": "E53",
-     "text": "Recursive self-improvement (RSI) asks whether an AI system can improve the process that produces AI systems, so that the next system inherits the improvement.",
-     "title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2608.20318",
-     "authors": "Yizhe Chi et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E51",
-     "text": "Recursive self-improvement (RSI) requires AI systems that improve the process of building AI (i.e., AI4AI); machine learning engineering (MLE) offers a concrete, executable testbed for studying this capability.",
-     "title": "Frontis-MA1: Training an AI4AI Model towards Recursive Self-Improvement in Machine Learning Engineering",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2607.28568",
-     "authors": "Junlin Yang et al.",
-     "fromTitle": false
-    },
-    {
-     "id": "E49",
-     "text": "Recursive self-improvement requires turning evidence of model failures into better models.",
-     "title": "RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement",
-     "year": 2026,
-     "url": "https://doi.org/10.48550/arxiv.2607.25886",
-     "authors": "Fanqing Meng et al.",
-     "fromTitle": false
-    }
-   ]
-  },
-  {
-   "year": 2026,
-   "kind": "critique",
    "title": "Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops",
-   "why": "It separates practical bounded self-refinement from open-ended RSI, which it argues remains limited by grounding requirements, collapse dynamics, and compute.",
+   "why": "Its taxonomy separates bounded self-refinement, which it calls industrial practice, from open-ended RSI, which it describes as still constrained.",
    "url": "https://doi.org/10.48550/arxiv.2607.07663",
    "workTitle": "Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops",
    "authors": "Mingguang Chen et al.",
    "link": "in-sample",
    "evidence": [
     {
-     "id": "E48",
+     "id": "E51",
      "text": "The taxonomy separates bounded self-refinement -- convergent, evaluable, and industrial practice -- from open-ended recursive self-improvement (RSI), which remains bounded by grounding requirements, collapse dynamics, and compute constraints on every measured axis.",
      "title": "Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops",
      "year": 2026,
      "url": "https://doi.org/10.48550/arxiv.2607.07663",
      "authors": "Mingguang Chen et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2026,
+   "kind": "popularized",
+   "title": "RRSI: Regularized Recursive Self-Improvement of Agent Harnesses",
+   "why": "It reflects the dominant 2026 usage, in which iterative edits to agent harnesses count as practical RSI at the agent-system level.",
+   "url": "https://doi.org/10.48550/arxiv.2609.24972",
+   "workTitle": "RRSI: Regularized Recursive Self-Improvement of Agent Harnesses",
+   "authors": "Peng Xia et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E91",
+     "text": "Recent methods increasingly automate this process by iteratively proposing and selecting component-wise edits of an agent harness, practically establishing a form of recursive self-improvement (RSI) at the agent-system level.",
+     "title": "RRSI: Regularized Recursive Self-Improvement of Agent Harnesses",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2609.24972",
+     "authors": "Peng Xia et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E92",
+     "text": "We introduce Regularized Recursive Self-Improvement of Agent Harnesses (RRSI), which incorporates the principles of regularizations into harness self-improvement by constraining the evolution candidate proposal and selection.",
+     "title": "RRSI: Regularized Recursive Self-Improvement of Agent Harnesses",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2609.24972",
+     "authors": "Peng Xia et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E85",
+     "text": "Recent work extends recursive self-improvement (RSI) to agent harnesses for long-horizon coding and terminal tasks, enabling agents to improve execution mechanisms from experience.",
+     "title": "ModularRSI: Modular and Generalizable Recursive Harness Self-Improvement",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2609.14857",
+     "authors": "Siwei Wu et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E145",
+     "text": "Recent approaches improve harnesses through recursive self-improvement (RSI), but their performance gains often come with higher execution costs.",
+     "title": "HarnessPro: Recursive Harness Self-Improvement with Pareto Optimization for Performance-Cost Trade-offs",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2610.26770",
+     "authors": "Zhuoshi Pan et al.",
+     "fromTitle": false
+    }
+   ]
+  },
+  {
+   "year": 2026,
+   "kind": "applied",
+   "title": "Who Improves the Robot? Toward Physical Recursive Self-Improvement",
+   "why": "It extends RSI to physical robots, where physical experience updates both a robot's capabilities and its improvement procedure.",
+   "url": "https://doi.org/10.48550/arxiv.2610.18842",
+   "workTitle": "Who Improves the Robot? Toward Physical Recursive Self-Improvement",
+   "authors": "Zhou Hai et al.",
+   "link": "in-sample",
+   "evidence": [
+    {
+     "id": "E136",
+     "text": "This study investigates Physical Recursive Self-Improvement (Physical RSI), in which physical experience guides lasting updates to both a robot's capabilities and its improvement procedure, making subsequent improvement more effective across tasks.",
+     "title": "Who Improves the Robot? Toward Physical Recursive Self-Improvement",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2610.18842",
+     "authors": "Zhou Hai et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E146",
+     "text": "In this paper, we systematically investigate the mechanisms, scaling behavior, and generalization of physical Recursive self-improvement.",
+     "title": "Where is Physical RSI capability from? An Observational Scaling Law of LLM-as-policy",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2610.26848",
+     "authors": "Zekai Li et al.",
+     "fromTitle": false
+    },
+    {
+     "id": "E117",
+     "text": "We introduce PhysEvo, a framework for physical recursive self-improvement (RSI) around a single frozen model.",
+     "title": "PhysEvo: Astra Can Act, Let It",
+     "year": 2026,
+     "url": "https://doi.org/10.48550/arxiv.2610.08995",
+     "authors": "Wenqing Tian et al.",
      "fromTitle": false
     }
    ]

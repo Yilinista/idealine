@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from importlib import resources
 
 from .term import TermTimeline
@@ -72,21 +73,21 @@ def to_markdown(t: TermTimeline) -> str:
 
 
 CSS = r"""
-:root{--bg:#f7f5f0;--panel:#fffdf8;--fg:#1c1b19;--muted:#6d6a63;--line:#e3dfd5;--accent:#2b59c3;
---ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#2b59c3;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
---bar:#cfc8b8;--era1:rgba(43,89,195,.07);--era2:rgba(183,121,31,.08)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141413;--panel:#1c1c1a;--fg:#ecebe6;--muted:#a19e96;--line:#34322e;--accent:#7ea2ff;
---ancestor:#a99bd6;--origin:#4fc7b9;--coined:#7ea2ff;--popularized:#6cc77a;--redefined:#e5b25a;--applied:#9d95f0;--critique:#f08a5d;
---bar:#4a463e;--era1:rgba(126,162,255,.09);--era2:rgba(229,178,90,.09)}}
+:root{--bg:#fbfaf7;--panel:#ffffff;--fg:#1c1b19;--muted:#6d6a63;--ink-soft:#4a4844;--line:#e4e0d6;--accent:#3b5bdb;--on-accent:#ffffff;
+--ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#3b5bdb;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
+--bar:#cfc8b8;--era1:rgba(59,91,219,.07);--era2:rgba(183,121,31,.08);--glow:#e8edff;--shadow:0 8px 28px rgba(40,50,90,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1014;--panel:#161920;--fg:#ecebe6;--muted:#9a978f;--ink-soft:#c9c6be;--line:#2a2e37;--accent:#f0b85a;--on-accent:#1a1408;
+--ancestor:#b6a6ff;--origin:#5fd3c4;--coined:#7ea2ff;--popularized:#7bd88f;--redefined:#f0b85a;--applied:#a99cf5;--critique:#ff8a65;
+--bar:#3a4050;--era1:rgba(240,184,90,.07);--era2:rgba(110,180,255,.07);--glow:rgba(240,184,90,.12);--shadow:0 12px 40px rgba(0,0,0,.45)}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -120px,var(--glow) 0%,transparent 70%) no-repeat,var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
 main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
 .brand{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .brand a{color:inherit}
-h1{font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
-.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px}
+h1{font-family:ui-serif,Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
+.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px;color:var(--ink-soft)}
 .meta{color:var(--muted);font-size:.86rem}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:22px;box-shadow:var(--shadow);overflow:hidden}
 .scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
 svg text{fill:var(--fg);font-size:11.5px}
 svg .muted{fill:var(--muted)}
@@ -99,7 +100,7 @@ svg .muted{fill:var(--muted)}
 .hint{font-size:.8rem;color:var(--muted);padding:10px 16px 0}
 .detail{padding:18px 20px}
 .kind{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
-.detail h2{font-family:ui-serif,Georgia,serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
+.detail h2{font-family:ui-serif,Georgia,"Songti SC","Noto Serif SC",serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
 .detail h2 a{color:inherit}
 .why{margin:0 0 10px}
 .status{font-size:.78rem;color:var(--muted)}
@@ -108,7 +109,7 @@ blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8r
 blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
 .eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
-.era{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.era{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
 .era h3{margin:2px 0 6px;font-size:1rem}
 .era p{margin:0;font-size:.92rem}
@@ -130,41 +131,77 @@ def to_html(t: TermTimeline) -> str:
     return html_from_data(to_data(t))
 
 
+# Page text for timelines whose labels the model wrote in Chinese (`--lang zh`).
+PAGE_TEXT = {
+    "en": {
+        "tagline": "where did this idea come from?",
+        "meta": "{total} papers in OpenAlex use this term ({span}). ",
+        "how_model": "Proposed by <code>{model}</code> from {n} quoted sentences only; every milestone shows its quotes so you can check it.",
+        "how_none": "No model was used: milestones are the earliest and most-cited papers that use the term.",
+        "hint": "Click a dot to see the quotes behind it. Scroll sideways for earlier years.",
+        "details": "How this was made and what it can miss",
+        "details_body": "Counts and papers come from <a href=\"https://openalex.org\">OpenAlex</a>, searching titles and abstracts for the exact phrase. "
+        "Sentences come from abstracts, so works without an abstract (often older books and essays) only appear if the newer papers name them. "
+        "Labels are generated and can be wrong; the quotes are the evidence. Generated {generated}.",
+        "footer": "Made with <a href=\"{repo}\">idealine</a>. Want another term? <a href=\"{site}\">Trace it yourself</a>.",
+    },
+    "zh": {
+        "tagline": "这个概念从哪里来？",
+        "meta": "OpenAlex 中有 {total} 篇论文使用这个词（{span}）。",
+        "how_model": "时期和里程碑由 <code>{model}</code> 仅根据 {n} 条原句生成；每个里程碑都附有原句，方便核对。",
+        "how_none": "未使用模型：里程碑是使用这个词的最早和被引最多的论文。",
+        "hint": "点击圆点查看背后的原文句子。左右滑动可以看更早的年份。",
+        "details": "这页是怎么做的，可能漏掉什么",
+        "details_body": "数量和论文来自 <a href=\"https://openalex.org\">OpenAlex</a>，在标题和摘要里搜索完全一致的词组。"
+        "句子取自摘要，所以没有摘要的作品（常见于较早的书和文章）只有在后来的论文提到时才会出现。"
+        "标签由模型生成，可能有误，请以原句为准。生成于 {generated}。",
+        "footer": "由 <a href=\"{repo}\">idealine</a> 生成。想查别的词？<a href=\"{site}\">自己追溯一个</a>。",
+    },
+}
+_HAN = re.compile(r"[\u4e00-\u9fff]")
+
+
+def page_lang(d: dict) -> str:
+    return "zh" if _HAN.search(d.get("summary") or "") else "en"
+
+
 def html_from_data(d: dict) -> str:
     """Render from the saved JSON, so a page can be re-rendered without new API calls."""
     data = json.dumps(d, ensure_ascii=False).replace("<", "\\u003c")
     e = html.escape
+    lang = page_lang(d)
+    T = PAGE_TEXT[lang]
     years = [y for y, _ in d["counts"]]
     span = f"{min(years)}–{max(years)}" if years else "n/a"
-    how = (
-        f"Proposed by <code>{e(d['model'])}</code> from {d['evidenceCount']} quoted sentences only; "
-        "every milestone shows its quotes so you can check it."
-        if d.get("model") else
-        "No model was used: milestones are the earliest and most-cited papers that use the term."
+    how = T["how_model"].format(model=e(d["model"]), n=d["evidenceCount"]) if d.get("model") else T["how_none"]
+    js = JS if lang == "en" else (
+        _web("i18n.js") + TIMELINE_JS
+        + "\nrenderTimeline(JSON.parse(document.getElementById('data').textContent), document, "
+        "Object.assign({kinds: IdealineI18n.KINDS.zh}, IdealineI18n.T.zh));\n"
     )
     return f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="{'zh-CN' if lang == 'zh' else 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(d['term'])} · idealine</title>
 <meta name="description" content="Where the term {e(d['term'])} came from and how its meaning changed, with quotes from the papers.">
 <style>{CSS}</style></head>
 <body><main>
-<div class="brand"><a href="{REPO_URL}">idealine</a> · where did this idea come from?</div>
+<div class="brand"><a href="{REPO_URL}">idealine</a> · {T["tagline"]}</div>
 <h1>{e(d['term'])}</h1>
 <p class="summary">{e(d.get('summary') or '')}</p>
-<p class="meta">{d['total']:,} papers in OpenAlex use this term ({span}). {how}</p>
+<p class="meta">{T["meta"].format(total=f"{d['total']:,}", span=span)}{how}</p>
 <div class="card">
-  <div class="hint">Click a dot to see the quotes behind it. Scroll sideways for earlier years.</div>
+  <div class="hint">{T["hint"]}</div>
   <div class="scroller"><div data-part="chart"></div></div>
   <div class="legend" data-part="legend"></div>
   <div class="detail" data-part="detail" aria-live="polite"></div>
 </div>
 <div class="eras" data-part="eras"></div>
-<details><summary>How this was made and what it can miss</summary>
-<p>Counts and papers come from <a href="https://openalex.org">OpenAlex</a>, searching titles and abstracts for the exact phrase. Sentences come from abstracts, so works without an abstract (often older books and essays) only appear if the newer papers name them. Labels are generated and can be wrong; the quotes are the evidence. Generated {e(d['generated'])}.</p>
+<details><summary>{T["details"]}</summary>
+<p>{T["details_body"].format(generated=e(d["generated"]))}</p>
 </details>
-<footer>Made with <a href="{REPO_URL}">idealine</a>. Want another term? <a href="{SITE_URL}">Trace it yourself</a>.</footer>
+<footer>{T["footer"].format(repo=REPO_URL, site=SITE_URL)}</footer>
 </main>
 <script type="application/json" id="data">{data}</script>
-<script>{JS}</script>
+<script>{js}</script>
 </body></html>
 """
