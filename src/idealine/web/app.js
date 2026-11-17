@@ -36,6 +36,7 @@
     $('lang').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
     syncKeyline();
     if (lastCheck) showCheck(lastCheck.fn, lastCheck.cls);
+    if (lastTester) testerMsg(lastTester.fn, lastTester.cls);
     syncProvider();
     progress.relabel();
     renderSeg();
@@ -121,7 +122,7 @@
   }
   providerSel.value = store.get('idealine.provider') || 'none';
   if (!P.PROVIDERS[providerSel.value] && providerSel.value !== 'none') providerSel.value = 'none';
-  providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(true); keyChecked = false; showCheck(null); syncKeyline(); });
+  providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(true); keyChecked = false; dropTester(); showCheck(null); syncKeyline(); });
   syncProvider(true);
   renderSeg();
   // The OpenAlex key needs no check, so save it as soon as "remember" is on (ready-made
@@ -142,13 +143,13 @@
     keyIn.value = '';
     $('oakey').value = '';
     remember.checked = false;
-    keyChecked = false; showCheck(null); syncKeyline();
+    keyChecked = false; dropTester(); showCheck(null); syncKeyline();
     formMsg(() => tx().forgotten);
   });
   $('oakey').value = store.get('idealine.openalexKey') || '';
   if ($('oakey').value) remember.checked = true;
   // --- "Save and check key": a free request that confirms the key, then fold the panel away ---
-  let keyChecked = false, lastCheck = null;
+  let keyChecked = false, lastCheck = null, testerKey = false; // testerKey: the key came from a test code
   function showCheck(fn, cls) {
     lastCheck = fn ? { fn, cls } : null;
     const s = $('keycheck');
@@ -175,6 +176,7 @@
     set('aliases', $('aliases').value.trim() ? short($('aliases').value.trim()) : T.svNone);
     set('meaning', $('meaning').value.trim() ? short($('meaning').value.trim()) : T.svNone);
     set('oakey', $('oakey').value.trim() ? T.svSet : T.svOaHow, $('oakey').value.trim() ? '' : 'link');
+    set('tester', testerKey ? T.svTesterOn : T.svNone, testerKey ? 'ok' : '');
   }
   function openRow(id) {
     $('opts').open = true;
@@ -184,18 +186,27 @@
     if (r.open) document.querySelectorAll('.srow[open]').forEach(o => { if (o !== r) o.open = false; });
   }));
   ['aliases', 'meaning', 'oakey'].forEach(k => $(k).addEventListener('input', syncRows));
-  keyIn.addEventListener('input', () => { keyChecked = false; showCheck(null); syncKeyline(); });
+  keyIn.addEventListener('input', () => { keyChecked = false; dropTester(); showCheck(null); syncKeyline(); });
   modelIn.addEventListener('change', () => { const p = P.PROVIDERS[providerSel.value]; if (p) store.set('idealine.model.' + providerSel.value, modelIn.value); syncKeyline(); });
   $('r-addkey').addEventListener('click', () => {
     openRow(providerSel.value === 'none' ? 'row-provider' : 'row-key');
     $('opts').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   $('change-key').addEventListener('click', () => { openRow('row-key'); keyIn.focus(); });
-  $('save-key').addEventListener('click', async () => {
+  // "Check": a free request that confirms the key, then folds the panel away. Returns
+  // null on success or a function giving the error text. Checks run one at a time.
+  let checking = Promise.resolve();
+  function checkCurrentKey() {
+    const run = checking.then(checkOnce, checkOnce);
+    checking = run.catch(() => {});
+    return run;
+  }
+  $('save-key').addEventListener('click', () => { checkCurrentKey(); });
+  async function checkOnce() {
     const id = providerSel.value, key = keyIn.value.trim(), p = P.PROVIDERS[id];
-    if (!p) return;
-    if (!key) return showCheck(() => tx().needKey(p.short), 'error');
-    if (remember.checked) store.set(KEY_PREFIX + id, key); else store.del(KEY_PREFIX + id);
+    if (!p) return () => tx().needKey('');
+    if (!key) { const f = () => tx().needKey(p.short); showCheck(f, 'error'); return f; }
+    if (!testerKey) { if (remember.checked) store.set(KEY_PREFIX + id, key); else store.del(KEY_PREFIX + id); }
     store.set('idealine.model.' + id, modelIn.value.trim() || p.defaultModel);
     const oaKey = $('oakey').value.trim();
     if (oaKey && remember.checked) store.set('idealine.openalexKey', oaKey);
@@ -208,15 +219,58 @@
       showCheck(() => tx().keyOk(p.short), 'ok');
       syncKeyline();
       setTimeout(() => { if (keyChecked) { $('opts').open = false; $('term').focus(); } }, 900);
+      return null;
     } catch (e) {
       keyChecked = false;
-      const m = e && e.message ? e.message : String(e);
-      showCheck(() => I.trMessage(lang, m), 'error');
+      const m = e && e.message ? e.message : String(e), f = () => I.trMessage(lang, m);
+      showCheck(f, 'error');
       syncKeyline();
+      return f;
     } finally {
       $('save-key').disabled = false;
     }
-  });
+  }
+
+  // --- shared test key: an invited tester types a code (see scripts/seal_key.py) ---
+  const sealed = (() => { try { return JSON.parse(($('tester-key') || {}).textContent || 'null'); } catch (_) { return null; } })();
+  if (sealed && P.PROVIDERS[sealed.provider]) { $('row-tester').hidden = false; $('tester-link').hidden = false; }
+  const testerMsg = (fn, cls) => { lastTester = fn ? { fn, cls } : null; $('tester-msg').textContent = fn ? fn() : ''; $('tester-msg').className = cls || ''; };
+  let lastTester = null;
+  // The key field no longer holds the shared key: forget it, and the message (unless kept to explain a failure).
+  function dropTester(keepMsg) {
+    if (!testerKey && !lastTester) return;
+    testerKey = false;
+    if (!keepMsg) testerMsg(null);
+    syncRows();
+  }
+  async function unlockTester() {
+    const code = $('tester-code').value;
+    if (!code.trim() || !sealed) return;
+    $('tester-unlock').disabled = true;
+    try {
+      const key = await P.unsealKey(sealed, code);
+      // Switch provider for this visit only: a later visit without the code starts as before.
+      const savedProvider = store.get('idealine.provider');
+      providerSel.value = sealed.provider;
+      providerSel.dispatchEvent(new Event('change'));
+      if (savedProvider == null) store.del('idealine.provider'); else store.set('idealine.provider', savedProvider);
+      keyIn.value = key;
+      testerKey = true;
+      $('tester-code').value = '';
+      syncRows();
+      testerMsg(() => tx().checking, '');
+      const err = await checkCurrentKey(); // the usual free check; the shared key is never stored
+      if (!testerKey) return;
+      if (err) { testerMsg(err, 'error'); dropTester(true); } else testerMsg(() => tx().testerOk(P.PROVIDERS[sealed.provider].short), 'ok');
+    } catch (e) {
+      testerMsg(() => tx().testerBad, 'error');
+    } finally {
+      $('tester-unlock').disabled = false;
+    }
+  }
+  $('tester-unlock').addEventListener('click', unlockTester);
+  $('tester-code').addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); unlockTester(); } });
+  $('open-tester').addEventListener('click', () => { openRow('row-tester'); $('tester-code').focus(); });
 
   $('open-opts').addEventListener('click', () => {
     if (providerSel.value === 'none') { openRow('row-provider'); ($('prov-seg').querySelector('[aria-pressed=true]') || $('prov-seg')).focus(); } else { openRow('row-key'); keyIn.focus(); }
@@ -398,7 +452,7 @@
     }
     if (providerId !== 'none' && !key) { openRow('row-key'); return formMsg(() => tx().needKey(P.PROVIDERS[providerId].short), true); }
     if (providerId !== 'none') {
-      if (remember.checked) store.set(KEY_PREFIX + providerId, key); else store.del(KEY_PREFIX + providerId);
+      if (!testerKey) { if (remember.checked) store.set(KEY_PREFIX + providerId, key); else store.del(KEY_PREFIX + providerId); }
       store.set('idealine.model.' + providerId, model);
     }
     const oaKey = $('oakey').value.trim();

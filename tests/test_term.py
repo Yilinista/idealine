@@ -479,3 +479,22 @@ def test_baseline_marks_the_last_three_years():
     assert [m.work.work_id for m in t.milestones if m.year >= 2024] == ["i", "j", "k"]
     ids = [m.work.work_id for m in t.milestones]
     assert len(ids) == len(set(ids))
+
+
+def test_seal_key_matches_the_browser_fixture():
+    import base64
+    import importlib.util
+    import json as _json
+    from pathlib import Path
+
+    import pytest
+    pytest.importorskip("cryptography")
+    root = Path(__file__).resolve().parent.parent
+    spec = importlib.util.spec_from_file_location("seal_key", root / "scripts" / "seal_key.py")
+    sk = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sk)
+    fx = _json.loads((root / "tests" / "fixtures" / "sealed-key.json").read_text())
+    b = fx["blob"]
+    again = sk.seal(fx["key"], " ABCD-efgh-jkmn", "openai", base64.b64decode(b["salt"]), base64.b64decode(b["iv"]), b["iter"])
+    assert again == b
+    assert len(sk.normalize(sk.new_code())) == 12

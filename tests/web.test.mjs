@@ -655,3 +655,14 @@ test('chart and headline share one takeoff year, ignoring stray early records', 
   assert.ok(r.ta === null || r.ta > r.first);
   assert.equal(TL.mainRun([]).ta, null);
 });
+
+test('a test code opens the key sealed by scripts/seal_key.py, and a wrong code does not', async () => {
+  const fx = JSON.parse(require('node:fs').readFileSync(new URL('./fixtures/sealed-key.json', import.meta.url), 'utf8'));
+  assert.equal(await P.unsealKey(fx.blob, '  ABCD-efgh-JKMN '), fx.key);  // case, spaces and dashes ignored, like seal_key.py
+  assert.equal(await P.unsealKey(fx.blob, 'abcd efgh jkmn'), fx.key);
+  assert.equal(await P.unsealKey(fx.blob, 'abcdefghjkmn'), fx.key);
+  assert.equal(await P.unsealKey(fx.blob, 'abcd–efgh–jkmn'), fx.key);  // en dash from a phone keyboard
+  await assert.rejects(P.unsealKey(fx.blob, 'abcd-efgh-jkmm'), /did not work/);
+  await assert.rejects(P.unsealKey(null, fx.code), /No test key/);
+  await assert.rejects(P.unsealKey({ ...fx.blob, provider: 'nope' }, fx.code), /No test key/);
+});

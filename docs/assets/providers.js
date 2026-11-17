@@ -272,7 +272,25 @@
     return adapter({ ...opts, fetchFn: opts.fetchFn || ((...a) => global.fetch(...a)) });
   }
 
-  const api = { PROVIDERS, ProviderError, callModel, checkKey, listModels, modelIds, parseJson, sseParser };
+  // Shared test key for invited testers: AES-GCM ciphertext made by scripts/seal_key.py,
+  // opened with a code (PBKDF2-SHA256). Anyone with the code can read the key, so the
+  // key must be narrow, spend-capped, and revoked after testing.
+  async function unsealKey(blob, code, subtle) {
+    subtle = subtle || (global.crypto && global.crypto.subtle);
+    if (!blob || blob.v !== 1 || !PROVIDERS[blob.provider] || !subtle) throw new ProviderError('No test key on this site.');
+    const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const enc = new TextEncoder().encode(String(code || '').toLowerCase().replace(/[^a-z0-9]/g, ''));  // same rule as seal_key.py
+    const base = await subtle.importKey('raw', enc, 'PBKDF2', false, ['deriveKey']);
+    const aes = await subtle.deriveKey({ name: 'PBKDF2', salt: b64(blob.salt), iterations: blob.iter, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    try {
+      return new TextDecoder().decode(await subtle.decrypt({ name: 'AES-GCM', iv: b64(blob.iv) }, aes, b64(blob.ct)));
+    } catch (_) {
+      throw new ProviderError('That test code did not work.');
+    }
+  }
+
+  const api = { PROVIDERS, ProviderError, callModel, checkKey, listModels, modelIds, parseJson, sseParser, unsealKey };
   global.IdealineProviders = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

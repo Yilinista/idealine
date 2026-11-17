@@ -81,8 +81,8 @@ nav a:hover{color:var(--fg)}
 .langseg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .keyok{color:var(--origin);font-weight:600}
 #keycheck{font-size:.85rem;color:var(--muted)}
-#keycheck.ok{color:var(--origin)}
-#keycheck.error{color:var(--critique)}
+#keycheck.ok,#tester-msg.ok{color:var(--origin)}
+#keycheck.error,#tester-msg.error{color:var(--critique)}
 .hero{text-align:center;max-width:760px;margin:60px auto 0}
 .hero h1{font-size:clamp(2.1rem,5.4vw,3.6rem);letter-spacing:-.02em;margin:0 0 14px}
 .hero>p{font-size:1.1rem;color:var(--ink-soft);margin:0 auto 28px;max-width:600px}
@@ -182,10 +182,12 @@ TRACE_FORM = """
     <button class="btn" id="go" type="submit" data-i18n="go">Trace it</button>
   </div>
   <div class="chips">{chips}</div>
-  <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
+  <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)<span id="tester-link" hidden> · <button type="button" class="linkish" id="open-tester" data-i18n="haveCode">Have a test code?</button></span></span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
   <details class="opts" id="opts">
     <summary data-i18n="optsSummary">Settings</summary>
     <div class="opts-body slist">
+      <details class="srow" id="row-tester" hidden><summary><span class="sl" data-i18n="testerLabel">Test code</span><span class="sv" id="sv-tester"></span></summary>
+        <div class="sedit"><p class="opts-hint" data-i18n="testerHint">Got a test code from the author? Enter it to use a shared test key. No key of your own needed.</p><div class="keybox"><input id="tester-code" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Test code" data-i18n-aria="testerLabel" placeholder="xxxx-xxxx-xxxx"><button id="tester-unlock" type="button" data-i18n="testerUnlock">Unlock</button></div><div id="tester-msg" role="status" aria-live="polite"></div></div></details>
       <details class="srow" id="row-provider"><summary><span class="sl" data-i18n="optsModelH">Model</span><span class="sv" id="sv-provider"></span></summary>
         <div class="sedit"><p class="opts-hint" data-i18n="optsModelP">Optional · adds eras, milestones and meaning labels</p><div class="seg" id="prov-seg" role="group" aria-label="Model" data-i18n-aria="optsModelH"></div><select id="provider" hidden aria-hidden="true" tabindex="-1"><option value="none" data-i18n="providerNone">No model</option></select><p class="privacy" id="privacy"></p></div></details>
       <div id="keyrow" hidden>
@@ -260,6 +262,10 @@ def main() -> None:
     chips = "".join(f'<button type="button" class="chip">{html.escape(c)}</button>' for c in CHIPS)
     # A content hash in each URL, so a browser never pairs a new page with old cached
     # scripts (GitHub Pages lets browsers keep assets for about 10 minutes).
+    # Shared test key (ciphertext only, from scripts/seal_key.py); absent unless a test is running.
+    sealed = resources.files("idealine") / "web" / "tester-key.json"
+    tester_json = (f'<script type="application/json" id="tester-key">{json.dumps(json.loads(sealed.read_text(encoding="utf-8")))}</script>\n'
+                   if sealed.is_file() else "")
     scripts = "".join(f'<script src="assets/{n}?v={_short_hash(DOCS / "assets" / n)}"></script>' for n in WEB_FILES)
     example_json = json.dumps(examples, ensure_ascii=False).replace("<", "\\u003c")
     # Ready-made timelines: typed term or alias (lowercase) -> data files, so they open without API calls.
@@ -310,7 +316,7 @@ def main() -> None:
 <script type="application/json" id="spec">{spec_json()}</script>
 <script type="application/json" id="example">{example_json}</script>
 <script type="application/json" id="ready">{ready_json}</script>
-{scripts}
+{tester_json}{scripts}
 </body></html>
 """
     (DOCS / "index.html").write_text(page, encoding="utf-8")

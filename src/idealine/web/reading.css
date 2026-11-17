@@ -241,3 +241,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .card .mslist{padding:0 8px}
 .card .detail{padding:18px 16px}
 .mslist button{display:grid;grid-template-columns:1.6em minmax(0,1fr);align-items:baseline}
+
+/* Test-code row: hidden unless the site carries a sealed test key. */
+#tester-msg{font-size:.78rem}
+#tester-msg:empty{display:none}
+.slist>.srow[hidden]:first-child+.srow{border-top:0}

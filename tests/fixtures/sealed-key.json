@@ -1,0 +1,12 @@
+{
+ "blob": {
+  "v": 1,
+  "provider": "openai",
+  "iter": 1000,
+  "salt": "AAECAwQFBgcICQoLDA0ODw==",
+  "iv": "AAECAwQFBgcICQoL",
+  "ct": "0BC/2VUx3A4UdDD1U6GBWukGa9q2bsLNK+dqLcOiOcPd79p+IOY="
+ },
+ "code": "abcd-efgh-jkmn",
+ "key": "sk-test-NOT-A-REAL-KEY"
+}

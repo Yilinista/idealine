@@ -16,6 +16,20 @@ Text as posted:
 
 Replies go to `FEEDBACK.md`, with what each one changed.
 
+## Shared test key for paid testers
+
+Testers type a code under Settings → Test code and use a shared OpenAI key; they need no key
+of their own. The key is sealed with the code (`scripts/seal_key.py`); only ciphertext is on
+the site. Anyone with the code can extract the key, so the key is limited:
+
+- its own OpenAI project, `idealine-testers`, with a $1 monthly hard spend limit;
+- permissions: List models (read) and Chat completions (request) only;
+- revoked when testing ends.
+
+Turn on: `uv run --with cryptography python scripts/seal_key.py` (paste the key at the hidden
+prompt; it prints the code), then rebuild and push. Turn off: `uv run python scripts/seal_key.py --remove`,
+rebuild, push, and revoke the key in the OpenAI dashboard.
+
 The checklist and drafts below were written before launch and are kept for reference.
 
 ## Before posting
