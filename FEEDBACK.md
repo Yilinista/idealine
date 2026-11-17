@@ -1,0 +1,20 @@
+# Feedback log
+
+Every piece of user feedback, and what it changed. Newest first.
+
+| Date | Who (handle or "classmate") | Where | What they said | What changed | Commit / issue |
+|---|---|---|---|---|---|
+| | | | | | |
+
+## Pre-launch findings (my own testing)
+
+| Date | Finding | What changed |
+|---|---|---|
+| 2026-11-17 | OpenAlex returned "free daily budget used up" after ~2 terms of testing (shared per IP, resets midnight UTC). Strangers on a shared network would hit this too. | Cut requests per term from ~20 to 4, fail fast with a clear message instead of retrying, and support an optional free `OPENALEX_API_KEY`. |
+| 2026-11-17 | *chain-of-thought* has scattered uses back to 1914, so an even year axis spent most of its width on empty decades. | Year widths now follow activity; 1914–2026 fits on one screen and the 2021–26 shift is readable. |
+| 2026-11-17 | Claim mode on real data: 45 of 47 labeled sentences were plain "mentions". Random citing sentences rarely test a claim, so the timeline felt empty. But those sentences often *name* the key follow-up papers ("a replication attempt (Besiroglu et al., 2024) found…"). | Pivoted the main product to term timelines, where the model builds milestones from what many sentences name. Claim mode kept as a secondary command. |
+| 2026-11-17 | OpenAlex `search` also matches full text, so 2026 had 1,291 "papers" for *recursive self-improvement* but the sampled abstracts rarely used the phrase: only 11 sentences, and the 2025–26 surge was invisible. | Switched to `title_and_abstract.search`. Counts dropped to 760 (more honest) and evidence rose to 61 sentences covering every era. |
+| 2026-11-17 | Evidence was capped in date order, which would drop the newest years first. | Cap now keeps one sentence per work, then thins evenly across time. |
+| 2026-11-17 | Timeline page: right-most labels clipped, overlapping era labels collided, and milestone hit areas were too small to click reliably. | Width now fits the labels, era labels alternate rows and truncate with a tooltip, and each milestone has a larger click target. |
+| 2026-11-17 | Semantic Scholar rate-limits anonymous use within two calls, and rejects offsets ≥ 10,000 (hit on a paper with 48,751 citations). | Retries with backoff (about 4 min max), on-disk cache, offset cap. |
+| 2026-11-17 | Semantic Scholar returns citations newest first, so the first 300 citations of a 2022 paper were all from 2026. | Claim mode samples pages evenly across the whole citation list. |

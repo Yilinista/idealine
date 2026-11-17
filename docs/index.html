@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>idealine · where did this AI idea come from?</title>
+<meta name="description" content="Interactive timelines of where AI terms came from and how their meaning changed, with a quote behind every step.">
+<style>
+:root{--bg:#f7f5f0;--panel:#fffdf8;--fg:#1c1b19;--muted:#6d6a63;--line:#e3dfd5;--accent:#2b59c3;
+--ancestor:#7a6aa8;--origin:#0f8a7e;--coined:#2b59c3;--popularized:#2f8a3e;--redefined:#b7791f;--applied:#5a4fcf;--critique:#c2410c;
+--bar:#cfc8b8;--era1:rgba(43,89,195,.07);--era2:rgba(183,121,31,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141413;--panel:#1c1c1a;--fg:#ecebe6;--muted:#a19e96;--line:#34322e;--accent:#7ea2ff;
+--ancestor:#a99bd6;--origin:#4fc7b9;--coined:#7ea2ff;--popularized:#6cc77a;--redefined:#e5b25a;--applied:#9d95f0;--critique:#f08a5d;
+--bar:#4a463e;--era1:rgba(126,162,255,.09);--era2:rgba(229,178,90,.09)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+.brand{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand a{color:inherit}
+h1{font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:6px 0 10px}
+.summary{font-size:1.08rem;max-width:760px;margin:0 0 8px}
+.meta{color:var(--muted);font-size:.86rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:22px}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg text{fill:var(--fg);font-size:11.5px}
+svg .muted{fill:var(--muted)}
+.ms{cursor:pointer;outline:none}
+.ms circle{stroke:var(--panel);stroke-width:2.5}
+.ms:hover circle,.ms:focus circle,.ms.sel circle{stroke:var(--fg)}
+.ms.sel text{font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.hint{font-size:.8rem;color:var(--muted);padding:10px 16px 0}
+.detail{padding:18px 20px}
+.kind{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.detail h2{font-family:ui-serif,Georgia,serif;font-size:1.3rem;margin:4px 0 6px;line-height:1.3}
+.detail h2 a{color:inherit}
+.why{margin:0 0 10px}
+.status{font-size:.78rem;color:var(--muted)}
+blockquote{margin:10px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line);color:var(--fg)}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.8rem;margin-top:3px}
+blockquote cite a{color:inherit}
+mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.eras{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:22px}
+.era{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.era b{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
+.era h3{margin:2px 0 6px;font-size:1rem}
+.era p{margin:0;font-size:.92rem}
+details{margin-top:28px;color:var(--muted);font-size:.88rem}
+details summary{cursor:pointer}
+footer{margin-top:36px;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+
+.hero{max-width:720px}
+.hero p{font-size:1.1rem;margin:0 0 6px}
+.search{width:100%;max-width:420px;font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--fg);margin:20px 0 6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:18px}
+.tcard{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
+.tcard:hover,.tcard:focus{border-color:var(--accent);transform:translateY(-2px)}
+.tcard h2{font-family:ui-serif,Georgia,serif;font-size:1.25rem;margin:0 0 6px}
+.tcard p{margin:0 0 10px;font-size:.9rem;color:var(--muted)}
+.spark{display:block;width:100%;height:44px;fill:var(--bar)}
+.tmeta{font-size:.78rem;color:var(--muted);margin-top:8px}
+.how{margin-top:40px;max-width:720px}
+.how pre{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:.85rem}
+</style></head>
+<body><main>
+<div class="brand"><a href="https://github.com/Yilinista/idealine">idealine</a></div>
+<div class="hero">
+<h1>Where did this AI idea come from?</h1>
+<p>AI moves fast, and its words move with it. Pick a term to see when it first appeared, who shaped it, and how its meaning shifted, on one timeline. Every step shows the sentence it is based on.</p>
+</div>
+<input class="search" type="search" placeholder="Filter terms…" aria-label="Filter terms" oninput="filter(this.value)">
+<div class="grid" id="grid"><a class="tcard" href="terms/chain-of-thought.html" data-q="chain-of-thought chain of thought prompting"><h2>chain-of-thought</h2><p>&quot;Chain of thought&quot; began as an everyday English phrase for a connected sequence of ideas or reasoning, used for decades in literature, history, and science writing.</p><svg class="spark" viewBox="0 0 220 44" width="220" height="44" aria-hidden="true"><rect x="0.0" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="74.0" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="75.9" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="81.8" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="93.5" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="103.2" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="118.8" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="120.7" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="138.2" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="144.1" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="148.0" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="167.4" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="173.3" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="175.2" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="177.2" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="179.1" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="181.1" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="183.0" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="185.0" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="186.9" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="190.8" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="192.7" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="194.7" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="196.6" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="198.6" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="200.5" y="42.4" width="1.4" height="1.6" rx="1"/><rect x="202.5" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="204.4" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="206.4" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="208.3" y="42.5" width="1.4" height="1.5" rx="1"/><rect x="210.3" y="41.0" width="1.4" height="3.0" rx="1"/><rect x="212.2" y="33.4" width="1.4" height="10.6" rx="1"/><rect x="214.2" y="24.5" width="1.4" height="19.5" rx="1"/><rect x="216.1" y="9.0" width="1.4" height="35.0" rx="1"/><rect x="218.1" y="0.0" width="1.4" height="44.0" rx="1"/></svg><div class="tmeta">12,091 papers · 1914–2026 · 12 milestones</div></a><a class="tcard" href="terms/recursive-self-improvement.html" data-q="recursive self-improvement recursively self-improving"><h2>recursive self-improvement</h2><p>Recursive self-improvement began in the AGI and singularity literature of the early 2010s as the idea that an AI could repeatedly improve its own design, possibly triggering an intelligence explosion that raised safety and ethics worries.</p><svg class="spark" viewBox="0 0 220 44" width="220" height="44" aria-hidden="true"><rect x="0.0" y="42.3" width="7.7" height="1.7" rx="1"/><rect x="33.0" y="42.3" width="7.7" height="1.7" rx="1"/><rect x="55.0" y="40.5" width="7.7" height="3.5" rx="1"/><rect x="66.0" y="41.6" width="7.7" height="2.4" rx="1"/><rect x="77.0" y="41.0" width="7.7" height="3.0" rx="1"/><rect x="88.0" y="40.1" width="7.7" height="3.9" rx="1"/><rect x="99.0" y="40.5" width="7.7" height="3.5" rx="1"/><rect x="110.0" y="40.1" width="7.7" height="3.9" rx="1"/><rect x="121.0" y="39.8" width="7.7" height="4.2" rx="1"/><rect x="143.0" y="40.1" width="7.7" height="3.9" rx="1"/><rect x="154.0" y="42.3" width="7.7" height="1.7" rx="1"/><rect x="165.0" y="39.1" width="7.7" height="4.9" rx="1"/><rect x="176.0" y="40.5" width="7.7" height="3.5" rx="1"/><rect x="187.0" y="38.8" width="7.7" height="5.2" rx="1"/><rect x="198.0" y="31.3" width="7.7" height="12.7" rx="1"/><rect x="209.0" y="0.0" width="7.7" height="44.0" rx="1"/></svg><div class="tmeta">760 papers · 2007–2026 · 11 milestones</div></a></div>
+<section class="how">
+<h2>Trace your own term</h2>
+<p>Works for any field OpenAlex covers, not just AI. No API key needed for the basic view; add an Anthropic key for eras and milestones.</p>
+<pre>uvx --from git+https://github.com/Yilinista/idealine idealine "mixture of experts" --alias "mixture-of-experts"</pre>
+<p>Missing a term? <a href="https://github.com/Yilinista/idealine/issues/new?title=Term+request:+">Request it</a> and I will add it here.</p>
+</section>
+<footer>Data: <a href="https://openalex.org">OpenAlex</a>. Eras and milestones are proposed by Claude from quoted sentences only and can be wrong; the quotes are the evidence. <a href="https://github.com/Yilinista/idealine">Source on GitHub</a>.</footer>
+</main>
+<script>
+function filter(q){q=q.toLowerCase().trim();document.querySelectorAll('.tcard').forEach(c=>{c.style.display=!q||c.dataset.q.includes(q)?'':'none'})}
+</script>
+</body></html>

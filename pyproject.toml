@@ -1,0 +1,30 @@
+[project]
+name = "idealine"
+version = "0.1.0"
+description = "Trace how one research claim was supported, refuted, or revised over time, with a quote and link for every step."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx>=0.27",
+    "anthropic>=2.0",
+]
+keywords = ["literature-review", "citations", "semantic-scholar", "research", "llm"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+    "Environment :: Console",
+]
+
+[project.scripts]
+idealine = "idealine.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/idealine"]
