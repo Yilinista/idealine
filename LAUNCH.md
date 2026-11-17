@@ -4,7 +4,7 @@
 
 | Date | Where | Link | By |
 |---|---|---|---|
-| 2026-11-17 | X | (link to add) | Yilin |
+| 2026-11-17 | X | https://x.com/fairyyy999/status/2122762424205885481 | Yilin |
 
 Text as posted:
 
