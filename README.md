@@ -65,7 +65,7 @@ It asks before calling the API (one request per term), then writes `mixture-of-e
 Tips:
 - OpenAlex gives everyone on a network a small free daily budget (each term uses 4–16
   requests). If you hit it, get a [free OpenAlex key](https://help.openalex.org/api/authentication/)
-  (in the browser: "Options and model key"; on the command line: `export OPENALEX_API_KEY=...`).
+  (in the browser: "Settings → More options", which lists the sign-up steps; on the command line: `export OPENALEX_API_KEY=...`).
 - Spell terms out. Acronyms like "RSI" also match finance and medicine.
 - Add other spellings (`--alias`, or the "Other spellings" box). The singular/plural of the
   last word is added for you (*world model* also finds *world models*).

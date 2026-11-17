@@ -245,34 +245,56 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .qr-actions button:hover,.qr-actions a:hover{color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
 .quote-row .copy-status:not(:empty){margin-top:6px}
 
-/* Settings: three labelled groups in one card, fields sized to their content. */
+@media(max-width:760px){.evidence-filters label{flex:1 1 140px}.evidence-filters select{max-width:none}.filter-status{flex-basis:100%;margin:0}}
+@media(max-width:460px){.quote-row{grid-template-columns:1fr}.qr-year{padding:0 0 2px}.qr-actions{margin-left:0}}
+.alt-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.alt-row .chip{margin:0;border-color:var(--accent);color:var(--accent)}
+
+/* Settings: one light column. Provider is a row of buttons, the version a menu,
+   rarely needed fields fold under "More options". */
 .home .opts{max-width:none;margin:12px 0 0;padding:0;border:0;border-radius:0;background:transparent}
 .home .opts[open]{padding:0}
 .home .opts>summary{font-size:.8rem;color:var(--muted);padding:6px 0}
 .home .opts>summary:hover{color:var(--fg)}
-.opts-body{margin-top:10px;max-width:880px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
-.opts-group{display:grid;grid-template-columns:190px minmax(0,1fr);gap:10px 28px;padding:20px 24px}
-.opts-group+.opts-group{border-top:1px solid var(--line)}
-.opts-head h3{font-size:.88rem;font-weight:600;margin:0;color:var(--fg)}
-.opts-head p{font-size:.76rem;color:var(--muted);margin:4px 0 0;line-height:1.5}
-.opts-fields{display:flex;flex-direction:column;gap:12px;min-width:0}
-.opts .field-row,.opts .opts-fields.field-row{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px}
-.opts .field-row>.field{flex:1 1 200px;min-width:0}
-.opts .field-row>.field.grow{flex:2 1 300px}
-.opts .field>label{display:block;font-size:.74rem;color:var(--muted);margin-bottom:4px}
-.opts input:not([type=checkbox]),.opts select{height:38px;padding:0 12px;font-size:.88rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);width:100%}
-.opts .select select{padding-right:34px}
-.opts input:not([type=checkbox]):focus,.opts select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
-.opts .inline{display:flex;gap:8px}
-.opts .inline input{flex:1;min-width:0}
-.home .opts .btn.ghost{height:38px;padding:0 14px;font-size:.82rem;border-radius:6px}
-.field-note{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:.78rem}
-.field-note:has(#keycheck:empty) #keycheck{display:none}
-.home .opts .privacy{font-size:.76rem;color:var(--muted);margin:0;line-height:1.55}
-.opts label.check{font-size:.8rem}
-@media(max-width:760px){.opts-group{grid-template-columns:1fr;padding:16px}.evidence-filters label{flex:1 1 140px}.evidence-filters select{max-width:none}.filter-status{flex-basis:100%;margin:0}}
-@media(max-width:460px){.quote-row{grid-template-columns:1fr}.qr-year{padding:0 0 2px}.qr-actions{margin-left:0}}
-#keyrow .field-note{margin-top:8px}
+.opts-body{margin-top:8px;max-width:560px;padding:18px 20px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);display:flex;flex-direction:column;gap:14px}
+.opts-sec{display:flex;flex-direction:column;gap:10px}
+.opts-title{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;font-size:.84rem;font-weight:600;color:var(--fg)}
+.opts-hint{font-size:.74rem;font-weight:400;color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:inherit;font-size:.8rem;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink-soft);cursor:pointer}
+.seg button:hover{border-color:var(--accent);color:var(--accent)}
+.seg button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.opts input:not([type=checkbox]),.opts select{width:100%;height:36px;padding:0 11px;font:inherit;font-size:.85rem;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--fg)}
+.opts input:not([type=checkbox]):focus,.opts select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.opts .select select{padding-right:32px}
+.keybox{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:3px}
+.keybox:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.opts .keybox input{border:0;height:30px;box-shadow:none;flex:1;min-width:0}
+.opts .keybox input:focus{box-shadow:none}
+.keybox button{font:inherit;font-size:.78rem;font-weight:600;height:30px;padding:0 14px;border:0;border-radius:6px;background:var(--accent);color:var(--on-accent);cursor:pointer;white-space:nowrap}
+.keybox button:disabled{opacity:.55;cursor:wait}
+.keymeta{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.78rem;color:var(--muted)}
+.keymeta label{white-space:nowrap}
+.keymeta .select{flex:1;min-width:0}
+.opts .keymeta select{height:32px;font-size:.8rem}
+.keymeta a{white-space:nowrap;color:var(--accent)}
+#keycheck{font-size:.78rem;margin-top:6px}
+#keycheck:empty{display:none}
+.home .opts .privacy{font-size:.74rem;color:var(--muted);margin:0;line-height:1.55}
+.opts-more{margin:0;border-top:1px solid var(--line);padding-top:10px;color:var(--fg);font-size:inherit}
+.opts-more>summary{list-style:none;display:flex;align-items:center;gap:8px;width:fit-content;font-size:.8rem;color:var(--ink-soft);cursor:pointer}
+.opts-more>summary::-webkit-details-marker{display:none}
+.opts-more>summary::before{content:"";width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
+.opts-more[open]>summary::before{transform:rotate(45deg)}
+.opts-more-body{display:flex;flex-direction:column;gap:12px;padding-top:12px}
+.opts .f{display:flex;flex-direction:column;gap:5px}
+.opts .f>label,.opts label.f>span{display:block;font-size:.76rem;color:var(--ink-soft);margin:0}
+.oa-how{margin:2px 0 0;padding-left:18px;font-size:.74rem;color:var(--muted);line-height:1.6}
+.oa-how a{color:var(--accent)}
+.opts-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 14px;border-top:1px solid var(--line);padding-top:10px}
+.opts label.check{display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--muted);margin:0}
+.opts label.check input{width:auto;height:auto}
+@media(max-width:460px){.opts-body{padding:16px 14px 12px}.keymeta{flex-wrap:wrap}.keymeta .select{flex-basis:100%;order:3}}
 </style></head>
 <body>
 <a class="skip-link" href="#reading">Skip to sources</a>
@@ -303,7 +325,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
   const T = {
     en: {
       langGroup: 'Language',
-      saveKey: 'Check & save', checking: 'Checking the key…',
+      saveKey: 'Check', checking: 'Checking the key…',
       keyOk: short => `${short} accepted the key. You're set: press Trace it.`,
       modelOn: (short, model) => `Using ${short} (${model}) for suggested meanings and diagnostics.`, modelOff: 'not checked yet', change: 'Change',
       heroEyebrow: 'A timeline for research terms, any field', exampleEyebrow: 'Example timeline · world model', exampleLink: 'Open the full timeline ↗', downloads: 'Downloads & tools',
@@ -311,14 +333,15 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       heroSub: 'Type a term. See when it appeared, how its meaning shifted, with a quoted sentence from a paper behind every step.',
       termPh: 'Try “world model” or “placebo effect”', termLabel: 'Term', go: 'Trace it',
       freeLine: 'Read source passages for free. For optional meaning labels,', addKey: 'add your own model key',
-      optsSummary: 'Settings: model key and search options',
-      optsModelH: 'Model', optsModelP: 'Optional. Adds eras, milestones and meaning labels.',
+      optsSummary: 'Settings', optsMore: 'More options', provNone: 'No model', recommended: 'recommended', tier_faster: 'faster, cheaper', tier_fastest: 'fastest, cheapest',
+      oaStep1: 'Create a free account at', oaStep1b: '(about 30 seconds).', oaStep2: 'Open', oaStep2Link: 'Settings → API key', oaStep2b: 'and copy the key.', oaStep3: 'Paste it above. It gives about 10× the free daily budget.',
+      optsModelH: 'Model', optsModelP: 'Optional · adds eras, milestones and meaning labels',
       optsSearchH: 'Search', optsSearchP: 'Optional. Narrow what counts as this term.',
-      optsDeviceH: 'OpenAlex & this device', optsDeviceP: 'Only needed if OpenAlex says the daily budget is used up.',
+      optsDeviceH: 'OpenAlex & this device', optsDeviceP: '· only if OpenAlex says the daily budget is used up',
       aliasesLabel: 'Other spellings, comma-separated', aliasesPh: 'e.g. mixture-of-experts, MoE layer',
       meaningLabel: 'Which meaning? (needs a model)', meaningPh: 'e.g. AI agents that plan and use tools on their own',
       providerLabel: 'Model', providerNone: 'No model (free source passages)',
-      keyLabel: 'API key', modelLabel: 'Model ID', remember: 'Remember keys on this device (not on a shared computer)',
+      keyLabel: 'API key', modelLabel: 'Version', remember: 'Remember keys on this device (not on a shared computer)',
       getKey: p => `Get a ${p} key`,
       privacyFree: 'Read source passages and phrase counts without a model. OpenAlex may require its free key if your network reaches its daily budget.',
       privacyKey: (host, short) => `Your key goes straight from your browser to ${host}. This site has no server and never sees it. One request per term, about 15–25k input tokens, billed to your ${short} account.`,
@@ -341,6 +364,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       traceLive: 'Refresh from live data',
       thin: n => `Only ${n} papers use this term, so it is very new or rare; the timeline will be thin.`,
       suggest: 'Meanwhile, these ready-made timelines open instantly:',
+      altIntro: 'Papers do use these shorter forms. Click one to trace it:', altCount: n => `${n.toLocaleString('en-US')} papers`,
       howKindsH: 'Milestone types',
       howKinds: 'origin: first use · coined: someone names it · popularized: it spreads · redefined: the meaning shifts · applied: used in a new field · critique: pushback · ancestor: an older idea it builds on',
       howLimitsH: 'Limits',
@@ -375,7 +399,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       otherSenses: n => `The same words also mean ${n === 1 ? 'one unrelated thing' : n + ' unrelated things'} in these papers. Left out of eras and milestones; the bars still count them.`,
       otherSensesShow: 'Show the other meanings',
       quotesN: n => `${n} quote${n === 1 ? '' : 's'}`,
-      wrongSense: 'Meant another one? Describe it under “Options and model key” → “Which meaning?”, then trace again.',
+      wrongSense: 'Meant another one? Describe it under “Settings → More options” → “Which meaning?”, then trace again.',
       quarterPapers: (y, q, n) => `${y} Q${q}: ${n} papers`,
       undated: n => `${n} dated only by year, not in any quarter`,
       papers: n => `${n} papers`, yearPapers: (y, n) => `${y}: ${n} papers`, timelineOf: term => `Timeline of ${term}`,
@@ -409,7 +433,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     },
     zh: {
       langGroup: '语言',
-      saveKey: '检查并保存', checking: '正在检查 key……',
+      saveKey: '检查', checking: '正在检查 key……',
       keyOk: short => `${short} 的 key 可用，已就绪：点击“画时间线”。`,
       modelOn: (short, model) => `已启用模型：${short}（${model}），用于建议词义与诊断图表。`, modelOff: '尚未检查', change: '更改',
       heroEyebrow: '学术术语的时间线 · 不限领域', exampleEyebrow: '示例时间线 · world model', exampleLink: '打开完整时间线 ↗', downloads: '下载与工具',
@@ -417,14 +441,15 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       heroSub: '输入一个术语，看它何时出现、含义怎么变，每一步都有论文原句作证。',
       termPh: '输入英文术语，如 “world model” 或 “placebo effect”', termLabel: '术语', go: '画时间线',
       freeLine: '免费阅读原文。若想使用可选词义标签，', addKey: '填入你自己的模型 key',
-      optsSummary: '设置：模型 key 与搜索选项',
-      optsModelH: '模型', optsModelP: '可选。用来划分时期、里程碑和词义标签。',
+      optsSummary: '设置', optsMore: '更多选项', provNone: '不用模型', recommended: '推荐', tier_faster: '更快更省', tier_fastest: '最快最省',
+      oaStep1: '在', oaStep1b: '免费注册一个账号（约 30 秒）。', oaStep2: '打开', oaStep2Link: '设置 → API key', oaStep2b: '，复制里面的 key。', oaStep3: '粘贴到上面的框里。有 key 后每日额度约为免费的 10 倍。',
+      optsModelH: '模型', optsModelP: '可选 · 用来划分时期、里程碑和词义标签',
       optsSearchH: '搜索', optsSearchP: '可选。限定哪些用法算这个词。',
-      optsDeviceH: 'OpenAlex 与本机', optsDeviceP: '只有提示 OpenAlex 今日额度用完时才需要。',
+      optsDeviceH: 'OpenAlex 与本机', optsDeviceP: '· 提示今日额度用完时再填',
       aliasesLabel: '其他写法，用逗号分隔', aliasesPh: '例如 mixture-of-experts, MoE layer',
       meaningLabel: '你指的是哪个意思？（需要模型）', meaningPh: '例如：能自己规划、调用工具的 AI 智能体',
       providerLabel: '模型', providerNone: '不用模型（免费原文证据）',
-      keyLabel: 'API key', modelLabel: '模型 ID', remember: '在这台设备上记住 key（公共电脑请勿勾选）',
+      keyLabel: 'API key', modelLabel: '型号', remember: '在这台设备上记住 key（公共电脑请勿勾选）',
       getKey: p => `获取 ${p} key`,
       privacyFree: '无需模型即可阅读原文和词组数量。若所在网络达到 OpenAlex 每日限额，可填写免费的 OpenAlex key。',
       privacyKey: (host, short) => `你的 key 只会从你的浏览器直接发给 ${host}。本站没有服务器，看不到你的 key。每个术语一次请求，约 1.5–2.5 万输入 token，费用记在你的 ${short} 账户。`,
@@ -447,6 +472,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       traceLive: '用实时数据刷新',
       thin: n => `只有 ${n} 篇论文用到这个词，说明它很新或很少见，时间线会比较单薄。`,
       suggest: '可以先看看这些现成的时间线，点开即看：',
+      altIntro: '论文里用的是这些更短的说法，点一下就能画时间线：', altCount: n => `${n.toLocaleString('en-US')} 篇`,
       howKindsH: '里程碑类型',
       howKinds: '起源：最早使用 · 命名：有人给它起了名 · 流行：开始被广泛使用 · 含义转变：意思变了 · 跨界应用：用到新领域 · 批评：反对或质疑 · 前身：它所继承的更早的想法',
       howLimitsH: '局限',
@@ -479,7 +505,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       follows: '这条时间线跟踪的意思：',
       otherSenses: n => `这些论文里，同一个词还有 ${n} 种不相干的意思。它们没放进时期和里程碑，但柱子里的论文数仍包括它们。`,
       otherSensesShow: '看看其他意思', quotesN: n => `${n} 句原文`,
-      wrongSense: '不是你想要的意思？在“选项与模型 key”→“你指的是哪个意思？”里写一句描述，再追溯一次。', quarterPapers: (y, q, n) => `${y} 年第 ${q} 季度：${n} 篇`,
+      wrongSense: '不是你想要的意思？在“设置 → 更多选项”→“你指的是哪个意思？”里写一句描述，再追溯一次。', quarterPapers: (y, q, n) => `${y} 年第 ${q} 季度：${n} 篇`,
       undated: n => `其中 ${n} 篇只标了年份，没算进任何季度`,
       papers: n => `${n} 篇`, yearPapers: (y, n) => `${y} 年：${n} 篇`, timelineOf: term => `${term} 的时间线`,
       inSample: '链接的论文本身就用到了这个词。',
@@ -527,7 +553,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     [/^Looking up “(.*)”…$/, m => `正在查找“${m[1]}”……`],
     [/^OpenAlex is busy; retrying in (\d+) s…$/, m => `OpenAlex 繁忙，${m[1]} 秒后重试……`],
     [/^OpenAlex returned (\d+); retrying…$/, m => `OpenAlex 返回 ${m[1]}，正在重试……`],
-    [/^OpenAlex's free daily budget for your network is used up \(resets in about (.+?), at midnight UTC\)\./, m => `你所在网络的 OpenAlex 免费额度今天已用完（大约 ${m[1].replace(' min', ' 分钟').replace(' h', ' 小时')}后重置，即 UTC 午夜）。可以在“选项与模型 key”里填一个免费的 OpenAlex key，或稍后再试。`],
+    [/^OpenAlex's free daily budget for your network is used up \(resets in about (.+?), at midnight UTC\)\./, m => `你所在网络的 OpenAlex 免费额度今天已用完（大约 ${m[1].replace(' min', ' 分钟').replace(' h', ' 小时')}后重置，即 UTC 午夜）。可以在“设置 → 更多选项”里填一个免费的 OpenAlex key（有申请步骤），或稍后再试。`],
     [/^OpenAlex is rate-limiting requests right now/, () => 'OpenAlex 正在限流，请等一分钟再试。'],
     [/^Could not reach OpenAlex/, () => '连不上 OpenAlex，请检查网络后重试。'],
     [/^OpenAlex error (\d+)\.$/, m => `OpenAlex 出错（${m[1]}）。`],

@@ -9,7 +9,7 @@
   const PROVIDERS = {
     anthropic: {
       label: 'Claude (Anthropic key)', short: 'Anthropic', host: 'api.anthropic.com',
-      defaultModel: 'claude-opus-5-5', keyHint: 'sk-ant-…', keyUrl: 'https://console.anthropic.com/settings/keys',
+      defaultModel: 'claude-opus-5-5', models: { 'claude-sonnet-5-5': 'faster', 'claude-haiku-5-5': 'fastest' }, keyHint: 'sk-ant-…', keyUrl: 'https://console.anthropic.com/settings/keys',
     },
     openai: {
       label: 'OpenAI (OpenAI key)', short: 'OpenAI', host: 'api.openai.com',
@@ -237,6 +237,33 @@
     return true;
   }
 
+  // Models the visitor can pick after a key check: the provider's own list, filtered
+  // to chat models that can return JSON. Best effort: any failure returns [].
+  const LIST = {
+    anthropic: key => ['https://api.anthropic.com/v1/models?limit=100', CHECK.anthropic(key)[1]],
+    openai: key => CHECK.openai(key),
+    gemini: key => ['https://generativelanguage.googleapis.com/v1beta/models?pageSize=200', { 'x-goog-api-key': key }],
+    openrouter: () => ['https://openrouter.ai/api/v1/models', {}],
+  };
+  function modelIds(providerId, j) {
+    let rows = (j && (j.data || j.models)) || [];
+    if (!Array.isArray(rows)) return [];
+    if (providerId === 'gemini') rows = rows.filter(r => (r.supportedGenerationMethods || []).includes('generateContent')).map(r => ({ id: String(r.name || '').replace(/^models\//, '') }));
+    if (providerId === 'openrouter') rows = rows.filter(r => (r.supported_parameters || []).includes('structured_outputs'));
+    let ids = rows.map(r => r && r.id).filter(x => typeof x === 'string' && x && x.length < 120);
+    if (providerId === 'openai') ids = ids.filter(x => /^(gpt-|o\d)/.test(x) && !/(embedding|audio|tts|transcribe|image|realtime|search|instruct)/.test(x));
+    return [...new Set(ids)].sort().slice(0, 150);
+  }
+  async function listModels(providerId, key, fetchFn) {
+    const make = LIST[providerId];
+    if (!make || !key) return [];
+    try {
+      const [url, headers] = make(key);
+      const resp = await (fetchFn || ((...a) => global.fetch(...a)))(url, { headers });
+      return resp.ok ? modelIds(providerId, await resp.json()) : [];
+    } catch (_) { return []; }
+  }
+
   async function callModel(providerId, opts) {
     const adapter = adapters[providerId];
     if (!adapter) throw new ProviderError('Unknown provider.');
@@ -245,7 +272,7 @@
     return adapter({ ...opts, fetchFn: opts.fetchFn || ((...a) => global.fetch(...a)) });
   }
 
-  const api = { PROVIDERS, ProviderError, callModel, checkKey, parseJson, sseParser };
+  const api = { PROVIDERS, ProviderError, callModel, checkKey, listModels, modelIds, parseJson, sseParser };
   global.IdealineProviders = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

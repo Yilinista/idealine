@@ -463,7 +463,7 @@ test('both languages define the same interface keys', () => {
 test('known runtime messages are translated; unknown ones stay as they are', () => {
   assert.equal(I.trMessage('zh', 'Counting papers per year…'), '正在统计每年的论文数……');
   assert.match(I.trMessage('zh', 'Claude rejected the key (401). Check that you pasted the whole key and that it is active.'), /^Claude 拒绝了这个 key（401）/);
-  assert.match(I.trMessage('zh', "OpenAlex's free daily budget for your network is used up (resets in about 3 h, at midnight UTC). Add a free OpenAlex key under \"Options and model key\", or try again later."), /3 小时/);
+  assert.match(I.trMessage('zh', "OpenAlex's free daily budget for your network is used up (resets in about 3 h, at midnight UTC). Add a free OpenAlex key under \"Settings → More options\", or try again later."), /3 小时/);
   assert.equal(I.trMessage('zh', 'Something new'), 'Something new');
   assert.equal(I.trMessage('en', 'Counting papers per year…'), 'Counting papers per year…');
 });
@@ -586,4 +586,38 @@ test('every browser script parses', () => {
   for (const f of ['i18n.js', 'core.js', 'providers.js', 'timeline.js', 'reading.js']) assert.doesNotThrow(() => require(`../src/idealine/web/${f}`), f);
   const I = require('../src/idealine/web/i18n.js');
   assert.ok(I.T.en.heroTitle && I.T.zh.heroTitle);
+});
+
+test('a phrase with no papers offers shorter forms, never a lone word', () => {
+  assert.deepEqual(C.shorterPhrases('real-time omni models'), ['real time omni models', 'omni models', 'real-time omni']);
+  for (const bad of ['of experts', 'mixture of']) assert.ok(!C.shorterPhrases('mixture of experts routing').includes(bad));
+  assert.ok(C.shorterPhrases('mixture of experts routing').includes('mixture of experts') || C.shorterPhrases('mixture of experts routing').includes('experts routing'));
+  assert.ok(C.shorterPhrases('scaling laws for neural language models').includes('scaling laws'), 'long phrases still reach the core term');
+  assert.deepEqual(C.shorterPhrases('omni model'), ['omni-model']);
+  assert.deepEqual(C.shorterPhrases('agentic'), []);
+  assert.ok(C.shorterPhrases('a b c d e f').length <= 4);
+});
+
+test('shorter-form suggestions keep only phrases with papers, most used first, and fail quietly', async () => {
+  const seen = [];
+  const oa = { count: async q => { seen.push(q); return q.includes('"omni models"') ? 120 : q.includes('"real-time omni"') ? 3 : 0; } };
+  assert.deepEqual(await C.suggestPhrases(oa, 'real-time omni models'), [{ phrase: 'omni models', count: 120 }, { phrase: 'real-time omni', count: 3 }]);
+  assert.ok(seen.some(q => q.includes('"omni models"') && q.includes('"omni model"')), 'singular/plural counted together');
+  const broken = { count: async () => { throw new C.IdealineError('budget'); } };
+  assert.deepEqual(await C.suggestPhrases(broken, 'real-time omni models'), []);
+});
+
+test('OpenAlex count reads meta.count from a one-result request', async () => {
+  const urls = [];
+  const oa = new C.OpenAlex({ fetchFn: async u => { urls.push(u); return resp(200, { meta: { count: 42 }, results: [] }); } });
+  assert.equal(await oa.count('"omni model"'), 42);
+  assert.ok(urls[0].includes('per_page=1') && urls[0].includes('title_and_abstract.search.exact'));
+});
+
+test('model menus list only chat models that can return JSON, and never fail loudly', async () => {
+  assert.deepEqual(P.modelIds('openai', { data: [{ id: 'gpt-6.1-terra' }, { id: 'text-embedding-3-large' }, { id: 'gpt-4o-realtime-preview' }, { id: 'o4-mini' }] }), ['gpt-6.1-terra', 'o4-mini']);
+  assert.deepEqual(P.modelIds('gemini', { models: [{ name: 'models/gemini-4-hydrogen', supportedGenerationMethods: ['generateContent'] }, { name: 'models/embed-1', supportedGenerationMethods: ['embedContent'] }] }), ['gemini-4-hydrogen']);
+  assert.deepEqual(P.modelIds('openrouter', { data: [{ id: 'a/x', supported_parameters: ['structured_outputs'] }, { id: 'b/y', supported_parameters: [] }] }), ['a/x']);
+  assert.deepEqual(await P.listModels('anthropic', 'k', async () => { throw new Error('offline'); }), []);
+  assert.deepEqual(await P.listModels('anthropic', 'k', async () => resp(401, {})), []);
 });

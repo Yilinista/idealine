@@ -184,39 +184,32 @@ TRACE_FORM = """
   <div class="chips">{chips}</div>
   <div class="keyline"><span id="keyline-free"><span data-i18n="freeLine">Free: usage curve + key papers. For eras and milestones,</span> <button type="button" class="linkish" id="open-opts" data-i18n="addKey">add your own model key</button> (Claude · OpenAI · Gemini · OpenRouter)</span><span id="keyline-on" hidden><span id="keyline-text"></span> <button type="button" class="linkish" id="change-key" data-i18n="change">Change</button></span></div>
   <details class="opts" id="opts">
-    <summary data-i18n="optsSummary">Settings: model key and search options</summary>
+    <summary data-i18n="optsSummary">Settings</summary>
     <div class="opts-body">
-      <section class="opts-group">
-        <div class="opts-head"><h3 data-i18n="optsModelH">Model</h3><p data-i18n="optsModelP">Optional. Adds eras, milestones and meaning labels.</p></div>
-        <div class="opts-fields">
-          <div class="field"><label for="provider" data-i18n="providerLabel">Model</label><div class="select"><select id="provider"><option value="none" data-i18n="providerNone">No model (free: usage curve + key papers)</option></select></div></div>
-          <div id="keyrow" hidden>
-            <div class="field-row">
-              <div class="field grow"><label for="key" data-i18n="keyLabel">API key</label><div class="inline"><input id="key" type="password" spellcheck="false" autocomplete="off"><button class="btn ghost" id="save-key" type="button" data-i18n="saveKey">Check &amp; save</button></div></div>
-              <div class="field"><label for="model" data-i18n="modelLabel">Model ID</label><input id="model" spellcheck="false"></div>
-            </div>
-            <div class="field-note"><span id="keycheck" role="status" aria-live="polite"></span><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
-          </div>
-          <p class="privacy" id="privacy"></p>
+      <div class="opts-sec">
+        <div class="opts-title"><span id="prov-label" data-i18n="optsModelH">Model</span><span class="opts-hint" data-i18n="optsModelP">Optional. Adds eras, milestones and meaning labels.</span></div>
+        <div class="seg" id="prov-seg" role="group" aria-labelledby="prov-label"></div>
+        <select id="provider" hidden aria-hidden="true" tabindex="-1"><option value="none" data-i18n="providerNone">No model</option></select>
+        <div id="keyrow" hidden>
+          <div class="keybox"><input id="key" type="password" spellcheck="false" autocomplete="off" aria-label="API key" data-i18n-aria="keyLabel"><button id="save-key" type="button" data-i18n="saveKey">Check</button></div>
+          <div class="keymeta"><label for="model" data-i18n="modelLabel">Model</label><span class="select"><select id="model"></select></span><a id="keylink" target="_blank" rel="noopener noreferrer" href="#">Get a key</a></div>
+          <div id="keycheck" role="status" aria-live="polite"></div>
         </div>
-      </section>
-      <section class="opts-group">
-        <div class="opts-head"><h3 data-i18n="optsSearchH">Search</h3><p data-i18n="optsSearchP">Optional. Narrow what counts as this term.</p></div>
-        <div class="opts-fields field-row">
-          <div class="field"><label for="aliases" data-i18n="aliasesLabel">Other spellings, comma-separated</label><input id="aliases" maxlength="200" data-i18n-ph="aliasesPh" placeholder="e.g. mixture-of-experts, MoE layer"></div>
-          <div class="field"><label for="meaning" data-i18n="meaningLabel">Which meaning? (needs a model)</label><input id="meaning" maxlength="200" data-i18n-ph="meaningPh" placeholder="e.g. AI agents that plan and use tools on their own"></div>
+        <p class="privacy" id="privacy"></p>
+      </div>
+      <details class="opts-more" id="opts-more">
+        <summary data-i18n="optsMore">More options</summary>
+        <div class="opts-more-body">
+          <label class="f"><span data-i18n="aliasesLabel">Other spellings, comma-separated</span><input id="aliases" maxlength="200" data-i18n-ph="aliasesPh" placeholder="e.g. mixture-of-experts, MoE layer"></label>
+          <label class="f"><span data-i18n="meaningLabel">Which meaning? (needs a model)</span><input id="meaning" maxlength="200" data-i18n-ph="meaningPh" placeholder="e.g. AI agents that plan and use tools on their own"></label>
+          <div class="f"><label for="oakey"><span data-i18n="oakeyLabel">OpenAlex key (free)</span> <span class="opts-hint" data-i18n="optsDeviceP">· only if OpenAlex says the daily budget is used up</span></label><input id="oakey" type="password" spellcheck="false" autocomplete="off">
+            <ol class="oa-how"><li><span data-i18n="oaStep1">Create a free account at</span> <a href="https://openalex.org/signup" target="_blank" rel="noopener noreferrer">openalex.org/signup</a> <span data-i18n="oaStep1b">(about 30 seconds).</span></li><li><span data-i18n="oaStep2">Open</span> <a href="https://openalex.org/settings/api-key" target="_blank" rel="noopener noreferrer" data-i18n="oaStep2Link">Settings → API key</a> <span data-i18n="oaStep2b">and copy the key.</span></li><li data-i18n="oaStep3">Paste it above. It gives about 10× the free daily budget.</li></ol></div>
         </div>
-      </section>
-      <section class="opts-group">
-        <div class="opts-head"><h3 data-i18n="optsDeviceH">OpenAlex &amp; this device</h3><p data-i18n="optsDeviceP">Only needed if OpenAlex says the daily budget is used up.</p></div>
-        <div class="opts-fields">
-          <div class="field"><label for="oakey" data-i18n="oakeyLabel">OpenAlex key (free)</label><input id="oakey" type="password" spellcheck="false" autocomplete="off"></div>
-          <div class="field-note">
-            <label class="check"><input type="checkbox" id="remember"> <span data-i18n="remember">Remember keys on this device (not on a shared computer)</span></label>
-            <button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button>
-          </div>
-        </div>
-      </section>
+      </details>
+      <div class="opts-foot">
+        <label class="check"><input type="checkbox" id="remember"> <span data-i18n="remember">Remember keys on this device</span></label>
+        <button class="linkbtn" id="forget" type="button" data-i18n="forget">Forget saved keys</button>
+      </div>
     </div>
   </details>
 </form>

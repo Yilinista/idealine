@@ -85,7 +85,7 @@
         if (resp.status === 429) {
           const ra = Number(resp.headers.get('retry-after') || '');
           if (ra > 120) {
-            throw new IdealineError(`OpenAlex's free daily budget for your network is used up (resets in about ${waitText(ra)}, at midnight UTC). Add a free OpenAlex key under "Options and model key", or try again later.`);
+            throw new IdealineError(`OpenAlex's free daily budget for your network is used up (resets in about ${waitText(ra)}, at midnight UTC). Add a free OpenAlex key under "Settings → More options", or try again later.`);
           }
           if (attempt < 4) {
             const wait = ra > 0 ? ra * 1000 : delay;
@@ -101,6 +101,11 @@
         throw new IdealineError(`OpenAlex error ${resp.status}.`);
       }
       throw new IdealineError('OpenAlex kept failing; try again in a minute.');
+    }
+
+    async count(query) {
+      const data = await this.get({ filter: oaFilter(query), per_page: '1', select: 'id' });
+      return (data.meta && Number(data.meta.count)) || 0;
     }
 
     async yearCounts(query) {
@@ -231,6 +236,40 @@
   function countInSet(works) {
     for (const w of works.values()) w.inSet = 0;
     for (const w of works.values()) for (const r of new Set(w.refs || [])) if (r !== w.id && works.has(r)) works.get(r).inSet++;
+  }
+
+  // When a phrase finds nothing, papers often use another form: hyphen or space
+  // ("real-time" / "real time"), or a shorter run of its words ("real-time omni
+  // models" -> "omni models"). Runs are two words at least and never start or end on
+  // a function word ("mixture of"), and the shortest runs come first, so long
+  // phrases still reach their core term ("scaling laws").
+  const EDGE_WORDS = /^(a|an|the|of|for|in|on|to|with|by|from|via|at|as|and|or|is|are|vs|using|based)$/i;
+  function shorterPhrases(term, max = 4) {
+    const t = term.replace(/\s+/g, ' ').trim(), words = t.split(' '), out = [];
+    const add = p => { if (p && p.toLowerCase() !== t.toLowerCase() && !out.some(x => x.toLowerCase() === p.toLowerCase())) out.push(p); };
+    if (t.includes('-')) add(t.replace(/-/g, ' '));
+    else if (words.length === 2 || words.length === 3) add(words.join('-'));
+    for (let k = 2; k < words.length; k++) {
+      for (let i = words.length - k; i >= 0; i--) {  // ending on the last word first: usually the head noun
+        const run = words.slice(i, i + k);
+        if (!EDGE_WORDS.test(run[0]) && !EDGE_WORDS.test(run[k - 1])) add(run.join(' '));
+      }
+    }
+    return out.slice(0, max);
+  }
+
+  // Paper counts for the shorter forms (one small request each, singular/plural
+  // included). Best effort: any OpenAlex error just means no suggestions.
+  async function suggestPhrases(oa, term, max = 4) {
+    const found = [];
+    for (const p of shorterPhrases(term, max)) {
+      try {
+        const n = await oa.count(phraseQuery(p, withInflections(p, [])));
+        if (n > 0) found.push({ phrase: p, count: n });
+      } catch (_) { break; }
+    }
+    // Longer (more specific) forms first, then by use.
+    return found.sort((a, b) => b.phrase.split(' ').length - a.phrase.split(' ').length || b.count - a.count);
   }
 
   async function harvest(oa, term, aliases, opts = {}) {
@@ -503,7 +542,7 @@
     };
   }
 
-  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData, answerProgress };
+  const api = { IdealineError, OpenAlex, KINDS, abstractFromIndex, workFromJson, phraseQuery, oaFilter, termPattern, sentencesWithTerm, harvest, inflections, withInflections, shorterPhrases, suggestPhrases, onsetYear, fineYears, countInSet, rootsPlan, rpys, findRoots, inFocus, buildPrompt, titleOverlap, applyAnalysis, baseline, toData, answerProgress };
   global.IdealineCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

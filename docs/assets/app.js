@@ -38,14 +38,16 @@
     if (lastCheck) showCheck(lastCheck.fn, lastCheck.cls);
     syncProvider();
     progress.relabel();
+    renderSeg();
+    fillModels(providerSel.value, modelIn.value);
     if (lastForm) formMsg(lastForm.fn, lastForm.isError);
-    if (shownKind === 'pending' || shownKind === 'failed') pending(pendingTerm, shownKind === 'failed');
+    if (shownKind === 'pending' || shownKind === 'failed') pending(pendingTerm, shownKind === 'failed', lastAlternatives);
     else if (shownKind === 'ready' && shown) {
       const keep = shown;
       loadReady(keep.term, lang).then(d => { if (shown === keep && d) { lastData = d; show(d, false, 'ready'); } });
       show(keep, false, 'ready');
     } else if (shown) show(shownKind === 'example' ? exampleFor(lang) : shown, false, shownKind);
-    if (lastStatus) status(lastStatus.key ? lastStatus.key() : lastStatus.msg, lastStatus.isError);
+    if (lastStatus) status(lastStatus.key || lastStatus.msg, lastStatus.isError);
   }
   $('lang').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     if (b.dataset.lang === lang) return;
@@ -62,6 +64,42 @@
     o.textContent = p.label;
     providerSel.appendChild(o);
   }
+  // The visible picker is a row of buttons; the hidden <select> stays the source of truth.
+  const seg = $('prov-seg');
+  function renderSeg() {
+    seg.textContent = '';
+    for (const o of providerSel.options) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.id = o.value;
+      b.textContent = o.value === 'none' ? tx().provNone : P.PROVIDERS[o.value].label.split(' (')[0];
+      b.setAttribute('aria-pressed', String(o.value === providerSel.value));
+      b.addEventListener('click', () => {
+        if (providerSel.value === o.value) return;
+        providerSel.value = o.value;
+        providerSel.dispatchEvent(new Event('change'));
+      });
+      seg.appendChild(b);
+    }
+  }
+  providerSel.addEventListener('change', renderSeg);
+  // The model version is a choice, not a text field: the recommended default, a few
+  // known alternatives, and after a key check the provider's own list.
+  const fetchedModels = {};
+  function fillModels(id, chosen) {
+    const p = P.PROVIDERS[id];
+    if (!p) return;
+    const notes = p.models || {};
+    const ids = [...new Set([p.defaultModel, ...Object.keys(notes), ...(chosen ? [chosen] : []), ...(fetchedModels[id] || [])])];
+    modelIn.textContent = '';
+    for (const m of ids) {
+      const o = document.createElement('option');
+      o.value = m;
+      o.textContent = m === p.defaultModel ? `${m} · ${tx().recommended}` : notes[m] ? `${m} · ${tx()['tier_' + notes[m]]}` : m;
+      modelIn.appendChild(o);
+    }
+    modelIn.value = chosen && ids.includes(chosen) ? chosen : p.defaultModel;
+  }
   function syncProvider(loadSaved) {
     const id = providerSel.value, p = P.PROVIDERS[id], T = tx();
     const needsKey = id !== 'none';
@@ -74,7 +112,7 @@
     $('keylink').textContent = T.getKey(p.short);
     $('privacy').textContent = T.privacyKey(p.host, p.short);
     if (!loadSaved) return;
-    modelIn.value = store.get('idealine.model.' + id) || p.defaultModel;
+    fillModels(id, store.get('idealine.model.' + id) || p.defaultModel);
     keyIn.placeholder = p.keyHint;
     const saved = store.get(KEY_PREFIX + id);
     keyIn.value = saved || '';
@@ -84,6 +122,7 @@
   if (!P.PROVIDERS[providerSel.value] && providerSel.value !== 'none') providerSel.value = 'none';
   providerSel.addEventListener('change', () => { store.set('idealine.provider', providerSel.value); syncProvider(true); keyChecked = false; showCheck(null); syncKeyline(); });
   syncProvider(true);
+  renderSeg();
   remember.addEventListener('change', () => {
     if (!remember.checked) { store.del(KEY_PREFIX + providerSel.value); store.del('idealine.openalexKey'); }
   });
@@ -115,7 +154,7 @@
     }
   }
   keyIn.addEventListener('input', () => { keyChecked = false; showCheck(null); syncKeyline(); });
-  modelIn.addEventListener('input', syncKeyline);
+  modelIn.addEventListener('change', () => { const p = P.PROVIDERS[providerSel.value]; if (p) store.set('idealine.model.' + providerSel.value, modelIn.value); syncKeyline(); });
   $('change-key').addEventListener('click', () => { $('opts').open = true; keyIn.focus(); });
   $('save-key').addEventListener('click', async () => {
     const id = providerSel.value, key = keyIn.value.trim(), p = P.PROVIDERS[id];
@@ -130,6 +169,7 @@
     try {
       await P.checkKey(id, key);
       keyChecked = true;
+      P.listModels(id, key).then(list => { if (list.length && providerSel.value === id) { fetchedModels[id] = list; fillModels(id, modelIn.value); } });
       showCheck(() => tx().keyOk(p.short), 'ok');
       syncKeyline();
       setTimeout(() => { if (keyChecked) { $('opts').open = false; $('term').focus(); } }, 900);
@@ -146,7 +186,7 @@
   $('open-opts').addEventListener('click', () => {
     const d = $('opts');
     d.open = true;
-    if (providerSel.value === 'none') providerSel.focus(); else keyIn.focus();
+    if (providerSel.value === 'none') ($('prov-seg').querySelector('[aria-pressed=true]') || $('prov-seg')).focus(); else keyIn.focus();
   });
 
   // --- progress: a step list with a running clock, so a slow run never looks stuck ---
@@ -221,37 +261,48 @@
     .then(j => ({ totals: j.totals || [], fetched: j.fetched || '' })).catch(() => ({ totals: [], fetched: '' })));
 
   // Result area while a run is going or after it failed: the term, steps and messages.
-  function pending(term, failed) {
+  function pending(term, failed, alternatives) {
     const r = $('result');
     r.hidden = false;
     r.classList.add('pending');
     shownKind = failed ? 'failed' : 'pending';
     pendingTerm = term;
+    lastAlternatives = failed ? alternatives || null : null;
     $('r-term').textContent = term;
     $('r-tag').textContent = failed ? tx().failedTag : tx().tracingTag;
     $('r-tag').classList.toggle('pulse', !failed);
     $('r-live').hidden = true;
-    renderSuggest(failed);
+    renderSuggest(failed, alternatives);
   }
-  let pendingTerm = '';
-  function renderSuggest(on) {
+  let pendingTerm = '', lastAlternatives = null;
+  function chip(label, term) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip';
+    b.textContent = label;
+    b.addEventListener('click', () => { $('term').value = term; $('aliases').value = ''; $('meaning').value = ''; $('trace-form').requestSubmit(); });
+    return b;
+  }
+  function renderSuggest(on, alternatives) {
     const box = $('r-suggest');
     box.textContent = '';
     box.hidden = !on;
     if (!on) return;
+    if (alternatives && alternatives.length) {
+      const p = document.createElement('p');
+      p.textContent = tx().altIntro;
+      box.appendChild(p);
+      const row = document.createElement('div');
+      row.className = 'alt-row';
+      alternatives.forEach(a => row.appendChild(chip(`${a.phrase} · ${tx().altCount(a.count)}`, a.phrase)));
+      box.appendChild(row);
+    }
     const seen = new Set(), terms = [];
     for (const [k, v] of Object.entries(READY)) if (!seen.has(v.en)) { seen.add(v.en); terms.push(v.term || k); }
     const p = document.createElement('p');
     p.textContent = tx().suggest;
     box.appendChild(p);
-    terms.slice(0, 8).forEach(t => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'chip';
-      b.textContent = t;
-      b.addEventListener('click', () => { $('term').value = t; $('aliases').value = ''; $('meaning').value = ''; $('trace-form').requestSubmit(); });
-      box.appendChild(b);
-    });
+    terms.slice(0, 8).forEach(t => box.appendChild(chip(t, t)));
   }
 
   function status(msg, isError) {
@@ -344,6 +395,8 @@
         const cjk = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(term);
         const err = new C.IdealineError(I.T.en[cjk ? 'noPapersCjk' : 'noPapers'](term));
         err.local = () => tx()[cjk ? 'noPapersCjk' : 'noPapers'](term);
+        // Offer shorter forms that papers do use, with their counts (a few small requests).
+        if (!cjk && !aliases.length) err.alternatives = await C.suggestPhrases(oa, term);
         throw err;
       }
       if (providerId === 'none') {
@@ -384,11 +437,11 @@
       setUrl(term, aliases, meaning);
     } catch (e) {
       const known = e instanceof C.IdealineError || e instanceof P.ProviderError;
-      if (known && /OpenAlex key/.test(e.message)) $('opts').open = true;
+      if (known && /OpenAlex key/.test(e.message)) { $('opts').open = true; $('opts-more').open = true; }
       const m = e && e.message ? e.message : String(e);
       progress.finish();
       // If the model step failed, keep the free view as the result.
-      if (interim) { lastData = interim; show(interim, false, 'result'); } else pending(term, true);
+      if (interim) { lastData = interim; show(interim, false, 'result'); } else pending(term, true, e && e.alternatives);
       const kept = interim ? () => ' ' + tx().keptFree : () => '';
       if (e && e.local) status(() => e.local() + kept(), true);
       else if (known && m === I.T.en.noMilestones) status(() => tx().noMilestones + kept(), true);
@@ -496,7 +549,7 @@
     $('term').value = params.get('term').slice(0, 80);
     $('aliases').value = (params.get('alias') || '').slice(0, 200);
     $('meaning').value = (params.get('meaning') || '').slice(0, 200);
-    if ($('aliases').value || $('meaning').value) $('opts').open = true;
+    if ($('aliases').value || $('meaning').value) { $('opts').open = true; $('opts-more').open = true; }
     // Start after load, so the browser's own jump to a #fragment cannot pull the page away.
     const go = () => setTimeout(() => {
       if (providerSel.value === 'none' || (READY[$('term').value.toLowerCase()] && !$('meaning').value)) $('trace-form').requestSubmit();
