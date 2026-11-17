@@ -160,3 +160,24 @@ def test_markdown_carries_the_notes():
     entity = {"id": "Q1", "label": "CoT Inc", "description": "", "kind": "organization", "date": "2020", "year": 2020, "floor": 2020, "url": "u"}
     md = to_markdown(harvest(_oa(1985, []), "chain of thought", [], entity=entity))
     assert "> The term names an organization: CoT Inc, since 2020 (Wikidata Q1)." in md
+
+
+def test_site_csp_allows_every_host_the_browser_code_calls():
+    """The live page fetches from core.js and providers.js; a host missing from the CSP fails silently."""
+    import importlib.util
+    import re
+    from pathlib import Path
+    root = Path(__file__).resolve().parent.parent
+    spec = importlib.util.spec_from_file_location("build_gallery", root / "scripts" / "build_gallery.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    connect = re.search(r"connect-src ([^;]+)", mod.CSP).group(1).split()
+    hosts = set()
+    for f in ("core.js", "providers.js"):
+        text = (root / "src" / "idealine" / "web" / f).read_text(encoding="utf-8")
+        hosts |= set(re.findall(r"'(https://[a-z0-9.-]+)(?:/[^']*)?'", text))
+    # Links only (opened by the visitor, never fetched): key pages, the repo, the site.
+    hosts -= {"https://github.com", "https://yilinista.github.io", "https://doi.org", "https://openalex.org",
+              "https://aistudio.google.com", "https://console.anthropic.com", "https://platform.openai.com"}
+    missing = sorted(h for h in hosts if h not in connect)
+    assert not missing, missing

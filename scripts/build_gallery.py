@@ -16,10 +16,10 @@ from idealine.term import OUTPUT_LANG, OUTPUT_SCHEMA, SYSTEM_PROMPT
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 from idealine.render_term import SITE_URL  # noqa: E402
 WEB_FILES = ("i18n.js", "core.js", "providers.js", "timeline.js", "reading.js", "app.js")
-# The page talks only to OpenAlex and the model provider the visitor picks.
+# The page talks only to OpenAlex, Wikidata (is the term a name?) and the model provider the visitor picks.
 CSP = (
     "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
-    "connect-src 'self' https://api.openalex.org https://api.anthropic.com https://api.openai.com "
+    "connect-src 'self' https://api.openalex.org https://www.wikidata.org https://api.anthropic.com https://api.openai.com "
     "https://generativelanguage.googleapis.com https://openrouter.ai; base-uri 'none'; form-action 'none'"
 )
 
