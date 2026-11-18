@@ -207,7 +207,9 @@
     partial: d => `not over yet (data as of ${d})`,
     burst: 'burst', takeoff: y => `takeoff ${y}`,
     takeoffTip: 'Takeoff: the year the curve leaves its slow start (Ke et al. 2015). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
-    headline: h => `First seen ${h.first}` + (h.ta ? `; under ${h.before} papers a year until ${h.ta - 1}, then took off` : '') + `; ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : '') + '.',
+    headline: h => `First seen ${h.first}` + (h.ta ? ` · took off ${h.ta}` : '') + ` · ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
+    notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
+    milestonesN: n => `All ${n} milestones`,
     laneBySense: 'ticks = quoted sentences, coloured by meaning',
     laneByField: 'ticks = quoted sentences, coloured by the paper’s field',
     fieldUnknown: 'field unknown', otherFields: 'other fields', unclear: 'meaning unclear', otherMeanings: 'other meanings',
@@ -556,14 +558,16 @@
     function renderList(compact) {
       const card = chart.closest('.card');
       if (!card) return;
-      let list = card.querySelector('.mslist');
-      if (!compact) { if (list) list.remove(); return; }
-      if (!list) {
-        list = document.createElement('ol');
-        list.className = 'mslist';
-        const lg = card.querySelector('[data-part="legend"]');
-        card.insertBefore(list, lg ? lg.nextSibling : null);
+      let fold = card.querySelector('.msfold');
+      if (!compact) { if (fold) fold.remove(); return; }
+      if (!fold) {
+        fold = document.createElement('details');
+        fold.className = 'msfold';
+        fold.innerHTML = `<summary>${esc(L.milestonesN(D.milestones.length))}</summary><ol class="mslist"></ol>`;
+        const key = card.querySelector('.chart-key');
+        card.insertBefore(fold, key || null);
       }
+      const list = fold.querySelector('.mslist');
       list.innerHTML = D.milestones.map((m, i) => `<li><button type="button"${i === selected ? ' class="sel"' : ''}><b>${i + 1}</b> ${esc(m.year)} · ${esc(kindName(KIND_OK(m.kind)))} · ${esc(m.title)}</button></li>`).join('');
       list.querySelectorAll('button').forEach((b, i) => b.addEventListener('click', () => { select(i, true); if (detail.scrollIntoView) detail.scrollIntoView({ block: 'nearest' }); }));
     }
@@ -618,7 +622,10 @@
       } else headline.textContent = '';
       // Names and left-out records: say what the counts leave out, and why.
       const notes = scopeNotes(D, L);
-      if (notes.length) headline.insertAdjacentHTML('beforeend', notes.map(n => `<span class="dnote">${n}</span>`).join(''));
+      // Folded under the headline: they matter for trust, but most readers skip them.
+      const old = headline.nextElementSibling;
+      if (old && old.classList.contains('dnotes')) old.remove();
+      if (notes.length) headline.insertAdjacentHTML('afterend', `<details class="dnotes"><summary>${esc(L.notesN(notes.length))}</summary>${notes.map(n => `<p class="dnote">${n}</p>`).join('')}</details>`);
     }
 
     renderBar();
@@ -718,7 +725,8 @@
     let want = '';
     try { want = global.location ? decodeURIComponent((global.location.hash || '').slice(1)) : ''; } catch (e) { /* bad % escape */ }
     const hit = want ? slugs.indexOf(want) : -1;
-    select(hit >= 0 ? hit : 0, false);
+    // No milestone open by default: the three cards under the chart are the summary.
+    if (hit >= 0) select(hit, false);
     if (hit >= 0 && detail && detail.scrollIntoView) setTimeout(() => detail.scrollIntoView({ block: 'center' }), 0);
     // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
     const sc = chart.closest('.scroller');

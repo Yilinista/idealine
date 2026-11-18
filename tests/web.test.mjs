@@ -834,3 +834,30 @@ test('citesLater: a pre-onset record copyrighted years later, within the active 
   assert.deepEqual(out.map(o => [o.work.id, o.cites, o.why]), [['W1', 2025, 'copyright']]);
   assert.equal(C.copyrightYear({ title: '', abstract: '(c) 2003 and Copyright 2007' }), 2007);
 });
+
+test('story cards: start, took off, now from milestones, skipping ancestors', () => {
+  require('../src/idealine/web/timeline.js');  // sets globalThis.IdealineTimeline (takeoff year)
+  const counts = [[2000, 1], [2001, 1], [2002, 1], [2003, 1], [2004, 2], [2005, 3], [2006, 40], [2007, 120], [2008, 300]];
+  const ms = [
+    { year: 1950, kind: 'ancestor', title: 'Old idiom', why: 'a' },
+    { year: 2001, kind: 'origin', title: 'First paper', why: 'b', url: 'https://example.org/1' },
+    { year: 2006, kind: 'popularized', title: 'Big paper', why: 'c' },
+    { year: 2007, kind: 'applied', title: 'Later', why: 'd' },
+    { year: 2008, kind: 'critique', title: 'Newest', why: 'e' },
+  ];
+  const d = { counts, milestones: ms, quotes: [] };
+  const cards = R.storyCards(d, R.readingModel(d));
+  assert.deepEqual(cards.map(c => [c.key, c.year, c.title]), [['start', 2001, 'First paper'], ['takeoff', 2006, 'Big paper'], ['now', 2008, 'Newest']]);
+  assert.equal(cards[0].line, 'b');
+  assert.equal(cards[0].quote, false);
+});
+
+test('story cards: without a model, use dated linked passages', () => {
+  require('../src/idealine/web/timeline.js');
+  const counts = [[2000, 1], [2001, 1], [2002, 1], [2003, 1], [2004, 2], [2005, 3], [2006, 40], [2007, 120], [2008, 300]];
+  const q = (id, year, extra = {}) => ({ id, year, text: `A world model ${id}.`, title: `T${id}`, url: `https://example.org/${id}`, ...extra });
+  const d = { counts, quotes: [q('a', 2001), q('b', 2003), q('c', 2007), q('d', 2008), q('e', 2008, { fromTitle: true })] };
+  const cards = R.storyCards(d, R.readingModel(d));
+  assert.deepEqual(cards.map(c => [c.key, c.year, c.title, c.quote]), [['start', 2001, 'Ta', true], ['takeoff', 2007, 'Tc', true], ['now', 2008, 'Td', true]]);
+  assert.deepEqual(R.storyCards({ counts: [], quotes: [] }, R.readingModel({})), []);
+});

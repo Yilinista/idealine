@@ -19,7 +19,7 @@
       dateWarning: 'Sparse early record — check the date', futureWarning: 'Date is after this snapshot — check the source',
       year: 'Year', allYears: 'All years', meaning: 'Suggested meaning', allMeanings: 'All meanings',
       period: 'Period', meaningShort: 'Meaning', otherMeanings: 'Other meanings', otherTip: 'Meanings that only share the words', all: 'All', decade: d => `${d}s`, andEarlier: y => `${y} and earlier`, newestShort: 'Newest', oldestShort: 'Oldest',
-      sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', more: 'Show more passages',
+      sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', morePassages: 'Show more passages',
       shown: (n, total) => `${n} of ${total} passages`, matches: n => `${n} passages in the sample`,
       none: 'No passages match these filters. Try another year or meaning.',
       noQuotes: 'No source passages are available in this result. Try a different spelling or another term.',
@@ -34,6 +34,8 @@
       noModel: 'No model was used. The passages are available without meaning labels.',
       modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
       originalHint: 'Click a milestone to see the sentences behind it. Labels are suggestions; the quotes are the evidence.',
+      story: { start: 'Start', takeoff: 'Took off', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
+      more: 'More: summary, meanings, all quotes, method',
     },
     zh: {
       start: '从这些原文开始', browse: '浏览原文证据', route: '简短阅读路线', suggested: '建议阅读起点',
@@ -48,7 +50,7 @@
       dateWarning: '稀疏早期记录，请核对日期', futureWarning: '日期晚于数据快照，请核对来源',
       year: '年份', allYears: '所有年份', meaning: '建议词义', allMeanings: '所有词义', sort: '排序',
       period: '年代', meaningShort: '词义', otherMeanings: '其他意思', otherTip: '只是同名、与本时间线无关的意思', all: '全部', decade: d => `${d} 年代`, andEarlier: y => `${y} 年及以前`, newestShort: '最新', oldestShort: '最早',
-      newest: '从新到旧', oldest: '从旧到新', more: '显示更多原文',
+      newest: '从新到旧', oldest: '从旧到新', morePassages: '显示更多原文',
       shown: (n, total) => `已显示 ${n} / ${total} 段原文`, matches: n => `样本包含 ${n} 段原文`,
       none: '没有符合筛选条件的原文。请换一个年份或词义。',
       noQuotes: '这个结果暂无来源原文。请尝试其他写法或术语。',
@@ -61,6 +63,8 @@
       methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
       modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
       originalHint: '点击里程碑，看它依据的原句。标签只是建议，原句才是证据。',
+      story: { start: '起点', takeoff: '起飞', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
+      more: '更多：总结、词义、全部原文、方法',
     },
   };
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -113,7 +117,47 @@
       for (const q of eligible) { if (featured.length >= 3) break; add(q); }
       featured.sort((a,b) => a.year-b.year);
     }
-    return { quotes, featured, curated, counts, snapshot };
+    const senses = d.senses || [];
+    const relatedKeys = new Set(senses.filter(s => s.related).map(s => s.key));
+    const eligible = quotes.filter(q => q.url && q.year && !q.warning && !q.fromTitle && (!relatedKeys.size || relatedKeys.has(q.sense))).sort((a,b) => a.year-b.year);
+    return { quotes, featured, curated, counts, snapshot, eligible };
+  }
+
+  // Three moments for the top of the page: where the term starts, when it took off, and
+  // where it is now. From the model's milestones when there are any (their one-line
+  // "why" is easier to read than an abstract), else from sampled passages.
+  function storyCards(d, model) {
+    const TL = global.IdealineTimeline;
+    const run = TL && model.counts.length ? TL.mainRun(model.counts) : null;
+    const ta = run && run.ta || null;
+    const out = [], used = new Set();
+    const ms = (d.milestones || []).filter(m => m && m.kind !== 'ancestor' && Number(m.year)).sort((a, b) => a.year - b.year);
+    const add = (key, x, fromQuote) => {
+      if (!x) return;
+      used.add(x);
+      out.push(fromQuote
+        ? { key, year: x.year, title: x.title || '', url: x.url, authors: x.authors || '', line: x.text, quote: true }
+        : { key, year: +x.year, title: x.title || '', url: safeUrl(x.url), authors: x.authors || '', line: x.why || '', quote: false });
+    };
+    const free = list => list.filter(x => !used.has(x));
+    if (ms.length) {
+      add('start', ms.find(m => m.kind === 'origin' || m.kind === 'coined') || ms[0]);
+      if (ta) add('takeoff', free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => +m.year >= ta));
+      add('now', free(ms).pop());
+    } else {
+      const el = model.eligible || [];
+      add('start', el[0], true);
+      if (ta) add('takeoff', free(el).find(q => q.year >= ta), true);
+      add('now', free(el).pop(), true);
+    }
+    return out;
+  }
+
+  function storyCard(c, T, terms) {
+    const title = esc(c.title);
+    return `<article class="story-card"><div class="sc-top"><span class="sc-label">${esc(T.story[c.key])}</span><span class="sc-year">${esc(c.year)}</span></div>
+      ${c.line ? `<p class="sc-line">${c.quote ? `“${highlight(c.line, terms)}”` : esc(c.line)}</p>` : ''}
+      <p class="sc-src">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}${c.authors ? ` <span>· ${esc(c.authors)}</span>` : ''}</p></article>`;
   }
 
   const senseKey = q => (q.sense && q.sense !== 'unclear' ? q.sense : 'untagged');
@@ -211,8 +255,6 @@
     if (!host) return;
     const terms = [d.term, ...(d.aliases || [])];
     const senseMap = new Map((d.senses || []).map(s => [s.key, s.label]));
-    const card = (q, featured, index) => quoteCard(q, {lang, terms, featured,
-      label: featured ? [T.earlier,T.different,T.recent][index] : q.sense ? `${T.suggestedMeaning}: ${senseMap.get(q.sense) || T.untagged}` : T.untagged});
     const colorOf = senseColors(d.senses);
     const present = new Set(model.quotes.map(senseKey));
     const order = [...(d.senses || []).filter(s => s.related), ...(d.senses || []).filter(s => !s.related)].map(s => s.key);
@@ -223,19 +265,18 @@
     const senseKeys = [...order.filter(k => related.has(k) && present.has(k)), ...(others.size ? ['other'] : []), ...(present.has('untagged') ? ['untagged'] : [])];
     const buckets = yearBuckets(model.quotes, T);
     const chip = (v, label, n, color, tip) => `<button type="button" class="fchip" data-v="${esc(v)}"${tip ? ` title="${esc(tip)}"` : ''}>${color ? `<i style="background:${esc(color)}"></i>` : ''}${esc(label)}<span class="n">${n}</span></button>`;
-    host.innerHTML = `<div class="brief-meta"><span>${esc(T.scope)}</span><span>${esc(T.saved)} ${esc(d.generated || '—')}</span></div>
-      <section class="timeline-main" aria-label="${esc(T.timelineTitle)}">${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<p class="headline" data-part="headline"></p>
-      <div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div>
-      <div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div></section>
-      <div class="reading-layout"><section class="reading-main"><div class="section-heading"><h3>${esc(T.start)}</h3><span>${esc(model.curated ? T.route : T.suggested)}</span></div><p class="section-intro">${esc(model.curated ? T.intro : T.auto)}</p>
-      ${model.featured.map((q,i)=>card(q,true,i)).join('') || `<p class="empty-state">${esc(model.quotes.length ? T.noFeatured : T.noQuotes)}</p>`}</section>
-      <aside class="reading-aside"><span class="eyebrow">${esc(T.question)}</span><p>${esc(localized(d.readingGuide?.question,lang) || T.defaultQuestion)}</p><a href="#evidence" data-browse>${esc(T.browse)} <span>↘</span></a><div class="aside-count">${esc(T.matches(model.quotes.length))}</div></aside></div>
+    const story = storyCards(d, model);
+    host.innerHTML = `<section class="timeline-main" aria-label="${esc(T.timelineTitle)}"><p class="headline" data-part="headline"></p>
+      <div class="card"><div class="scroller"><div data-part="chart"></div></div><div class="detail" data-part="detail" aria-live="polite"></div><details class="chart-key"><summary>${esc(T.chartKey)}</summary><p class="hint">${esc(T.originalHint)}</p><div class="legend" data-part="legend"></div></details></div>
+      ${story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms)).join('')}</div>` : ''}</section>
+      <details class="more-panel"><summary>${esc(T.more)}</summary>
+      ${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<div class="senses" data-part="senses"></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div>
       <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
       <p>${esc(d.model ? T.meaningNote : opts.pending ? T.modelPending : T.noModel)}</p><div class="ev-filters">
       ${senseKeys.some(k=>k!=='untagged') ? `<div class="frow"><span class="flabel">${esc(T.meaningShort)}</span><div class="fchips" data-f="sense" role="group" aria-label="${esc(T.meaning)}">${chip('', T.all, model.quotes.length)}${senseKeys.map(k=>k === 'other' ? chip('other', T.otherMeanings, model.quotes.filter(q=>others.has(senseKey(q))).length, '#868e96', T.otherTip) : chip(k, senseMap.get(k) || T.untagged, model.quotes.filter(q=>senseKey(q)===k).length, colorOf(k))).join('')}</div></div>` : ''}
       ${buckets.length > 1 ? `<div class="frow"><span class="flabel">${esc(T.period)}</span><div class="fchips" data-f="year" role="group" aria-label="${esc(T.year)}">${chip('', T.all, model.quotes.length)}${buckets.map(b=>chip(b.v, b.label, b.n)).join('')}</div></div>` : ''}
-      <div class="fbar"><p class="filter-status" role="status" aria-live="polite"></p><div class="sortseg" data-f="order" role="group" aria-label="${esc(T.sort)}"><button type="button" data-v="newest">${esc(T.newestShort)}</button><button type="button" data-v="oldest">${esc(T.oldestShort)}</button></div></div></div><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
-      <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details>`;
+      <div class="fbar"><p class="filter-status" role="status" aria-live="polite"></p><div class="sortseg" data-f="order" role="group" aria-label="${esc(T.sort)}"><button type="button" data-v="newest">${esc(T.newestShort)}</button><button type="button" data-v="oldest">${esc(T.oldestShort)}</button></div></div></div><div class="quote-results"></div><button type="button" class="load-more">${esc(T.morePassages)}</button></details>
+      <details class="method-panel"><summary>${esc(T.method)}</summary><p class="brief-meta"><span>${esc(T.scope)}</span> <span>${esc(T.saved)} ${esc(d.generated || '—')}</span></p><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details></details>`;
     const browser = host.querySelector('.evidence-browser'), list = host.querySelector('.quote-results'), more = host.querySelector('.load-more');
     let limit = 12;
     const state = { sense: '', year: '', order: 'newest' };
@@ -255,8 +296,9 @@
     function reveal(id) {
       const q = model.quotes.find(q=>q.id===id);
       if (!q) return;
-      let target = [...host.querySelectorAll('.featured-source')].find(el=>el.id===`q-${id}`);
-      if (!target) {
+      let target = null;
+      {
+        host.querySelector('.more-panel').open = true;
         browser.open = true;
         Object.assign(state, { sense: '', year: '', order: 'newest' });
         limit = model.quotes.length; refresh();
@@ -267,7 +309,6 @@
     }
     host.onclick = async ev => {
       const button = ev.target.closest('[data-copy]'), passage = ev.target.closest('[data-passage]');
-      if (ev.target.closest('[data-browse]')) { ev.preventDefault(); browser.open=true; browser.scrollIntoView({block:'start'}); }
       if (passage) {ev.preventDefault(); global.history.replaceState(null,'',`#q-${passage.dataset.passage}`);reveal(passage.dataset.passage);}
       if (!button) return;
       const q = model.quotes.find(q=>q.id===button.dataset.copy), status = button.closest('article').querySelector('.copy-status');
@@ -311,7 +352,7 @@
     const libraries=[spec.i18nJs,spec.timelineJs,spec.readingJs].map(noEnd).join('\n');
     return `<!doctype html>\n<html lang="${lang==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.term)} · idealine</title><style>${spec.css}</style></head><body>${body}<script type="application/json" id="data">${JSON.stringify(d).replace(/</g,'\\u003c')}</script><script>${libraries}\nIdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent),${JSON.stringify(lang)});</script></body></html>`;
   }
-  const api={TEXT,safeUrl,readingModel,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
+  const api={TEXT,safeUrl,readingModel,storyCards,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
   global.IdealineReading=api;
   if(typeof module!=='undefined' && module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

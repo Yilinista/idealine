@@ -40,8 +40,6 @@ blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
 .headline{margin:-6px 0 12px;font-size:.95rem;color:var(--ink-soft)}
 .headline:empty{display:none}
-.headline .dnote{display:block;margin-top:4px;font-size:.85rem}
-.headline .dnote a{color:inherit;text-decoration:underline}
 .tlbar{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 8px}
 .tlseg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
 .tlseg button{font:inherit;font-size:.78rem;padding:3px 10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
@@ -224,10 +222,10 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .select::after{content:"";position:absolute;right:13px;top:50%;width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
 
 /* Disclosure headings share one chevron instead of the browser triangle. */
-.evidence-browser>summary,.method-panel>summary,.file-tools>summary,.timeline-diagnostics>summary,.home .opts>summary{list-style:none;display:flex;align-items:center;gap:10px;width:fit-content}
-.evidence-browser>summary::-webkit-details-marker,.method-panel>summary::-webkit-details-marker,.file-tools>summary::-webkit-details-marker,.timeline-diagnostics>summary::-webkit-details-marker,.home .opts>summary::-webkit-details-marker{display:none}
-.evidence-browser>summary::before,.method-panel>summary::before,.file-tools>summary::before,.timeline-diagnostics>summary::before,.home .opts>summary::before{content:"";flex:none;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
-.evidence-browser[open]>summary::before,.method-panel[open]>summary::before,.file-tools[open]>summary::before,.timeline-diagnostics[open]>summary::before,.home .opts[open]>summary::before{transform:rotate(45deg)}
+.evidence-browser>summary,.method-panel>summary,.more-panel>summary,.file-tools>summary,.timeline-diagnostics>summary,.home .opts>summary{list-style:none;display:flex;align-items:center;gap:10px;width:fit-content}
+.evidence-browser>summary::-webkit-details-marker,.method-panel>summary::-webkit-details-marker,.more-panel>summary::-webkit-details-marker,.file-tools>summary::-webkit-details-marker,.timeline-diagnostics>summary::-webkit-details-marker,.home .opts>summary::-webkit-details-marker{display:none}
+.evidence-browser>summary::before,.method-panel>summary::before,.more-panel>summary::before,.file-tools>summary::before,.timeline-diagnostics>summary::before,.home .opts>summary::before{content:"";flex:none;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
+.evidence-browser[open]>summary::before,.method-panel[open]>summary::before,.more-panel[open]>summary::before,.file-tools[open]>summary::before,.timeline-diagnostics[open]>summary::before,.home .opts[open]>summary::before{transform:rotate(45deg)}
 .evidence-browser>summary span{margin-left:0;font-variant-numeric:tabular-nums}
 
 /* Evidence list: compact rows, year first, so many passages can be scanned. */
@@ -342,9 +340,27 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 #tester-msg:empty{display:none}
 .slist>.srow[hidden]:first-child+.srow{border-top:0}
 
-/* Notes under the headline: names, left-out records */
-.headline .dnote{display:block;margin-top:4px;font-size:.85rem;color:var(--ink-soft)}
-.headline .dnote a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+/* Short result: headline, chart, three cards. Everything else is folded. */
+.timeline-main .headline{font-size:1.05rem;color:var(--fg);margin:0 0 6px}
+.dnotes,.chart-key,.msfold{font-size:.82rem;color:var(--ink-soft);margin:4px 0 8px}
+.dnotes>summary,.chart-key>summary,.msfold>summary,.more-panel>summary{cursor:pointer;color:var(--muted);width:fit-content}
+.dnotes .dnote{margin:6px 0 0;line-height:1.5}
+.dnotes .dnote a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.card .chart-key,.card .msfold{padding:0 16px}
+.card .chart-key .hint{padding:6px 0 0}
+.card .detail:empty{display:none}
+.story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.story-card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.sc-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.sc-year{font-variant-numeric:tabular-nums;font-weight:600;color:var(--fg)}
+.sc-line{margin:8px 0;font-size:.92rem;line-height:1.5;color:var(--fg);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sc-src{margin:0;font-size:.8rem;line-height:1.4;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sc-src a{color:inherit}
+.more-panel{border-top:1px solid var(--line);padding-top:18px;margin-top:8px}
+.more-panel>summary{font-size:.94rem;font-weight:600;color:var(--fg)}
+.more-panel[open]>summary{margin-bottom:14px}
+.more-panel .brief-meta{padding:0;display:block}
+@media(max-width:760px){.story{grid-template-columns:minmax(0,1fr)}}
 </style></head>
 <body>
 <a class="skip-link" href="#reading">Skip to sources</a>
@@ -467,7 +483,9 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       shareOf: (y, v) => `${y}: ${fmtShare(v)} per million papers in OpenAlex`, perMillion: v => `${fmtShare(v)} per million`,
       partial: d => `not over yet (data as of ${d})`, burst: 'burst', takeoff: y => `takeoff ${y}`,
       takeoffTip: 'Takeoff: the year the curve leaves its slow start (Ke et al. 2015). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
-      headline: h => `First seen ${h.first}` + (h.ta ? `; under ${h.before} papers a year until ${h.ta - 1}, then took off` : '') + `; ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : '') + '.',
+      headline: h => `First seen ${h.first}` + (h.ta ? ` · took off ${h.ta}` : '') + ` · ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
+      notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
+      milestonesN: n => `All ${n} milestones`,
       laneBySense: 'ticks = quoted sentences, coloured by meaning', laneByField: 'ticks = quoted sentences, coloured by the paper’s field',
       fieldUnknown: 'field unknown', otherFields: 'other fields', unclear: 'meaning unclear', otherMeanings: 'other meanings',
       mixTitle: 'Meanings in this era', moved: v => `meaning moved ${v} since the previous era (0 = same mix, 1 = no overlap)`,
@@ -585,7 +603,9 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       shareOf: (y, v) => `${y} 年：OpenAlex 每百万篇论文中 ${fmtShare(v)} 篇`, perMillion: v => `每百万篇 ${fmtShare(v)} 篇`,
       partial: d => `还没结束（数据截至 ${d}）`, burst: '爆发期', takeoff: y => `${y} 起飞`,
       takeoffTip: '起飞点：曲线离开缓慢起步的那一年（Ke 等，2015）。爆发期：使用量异常高的年份（Kleinberg，2002）。两者都由论文数算出，没用模型。',
-      headline: h => `最早见于 ${h.first} 年` + (h.ta ? `；到 ${h.ta - 1} 年为止每年不到 ${h.before} 篇，之后起飞` : '') + `；${h.peakYear} 年 ${h.peak.toLocaleString('en-US')} 篇` + (h.partialPeak ? '（截至目前）' : '') + '。',
+      headline: h => `最早见于 ${h.first} 年` + (h.ta ? ` · ${h.ta} 年起飞` : '') + ` · ${h.peakYear} 年 ${h.peak.toLocaleString('en-US')} 篇` + (h.partialPeak ? '（截至目前）' : ''),
+      notesN: n => `${n} 条数据说明`,
+      milestonesN: n => `全部 ${n} 个里程碑`,
       laneBySense: '刻度 = 每句原文，颜色表示词义', laneByField: '刻度 = 每句原文，颜色表示论文所属领域',
       fieldUnknown: '领域未知', otherFields: '其他领域', unclear: '词义不确定', otherMeanings: '其他意思',
       mixTitle: '这个时期里的词义构成', moved: v => `和上一时期相比，词义变化 ${v}（0 = 构成相同，1 = 完全不同）`,
@@ -891,7 +911,9 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     partial: d => `not over yet (data as of ${d})`,
     burst: 'burst', takeoff: y => `takeoff ${y}`,
     takeoffTip: 'Takeoff: the year the curve leaves its slow start (Ke et al. 2015). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
-    headline: h => `First seen ${h.first}` + (h.ta ? `; under ${h.before} papers a year until ${h.ta - 1}, then took off` : '') + `; ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : '') + '.',
+    headline: h => `First seen ${h.first}` + (h.ta ? ` · took off ${h.ta}` : '') + ` · ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
+    notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
+    milestonesN: n => `All ${n} milestones`,
     laneBySense: 'ticks = quoted sentences, coloured by meaning',
     laneByField: 'ticks = quoted sentences, coloured by the paper’s field',
     fieldUnknown: 'field unknown', otherFields: 'other fields', unclear: 'meaning unclear', otherMeanings: 'other meanings',
@@ -1240,14 +1262,16 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     function renderList(compact) {
       const card = chart.closest('.card');
       if (!card) return;
-      let list = card.querySelector('.mslist');
-      if (!compact) { if (list) list.remove(); return; }
-      if (!list) {
-        list = document.createElement('ol');
-        list.className = 'mslist';
-        const lg = card.querySelector('[data-part="legend"]');
-        card.insertBefore(list, lg ? lg.nextSibling : null);
+      let fold = card.querySelector('.msfold');
+      if (!compact) { if (fold) fold.remove(); return; }
+      if (!fold) {
+        fold = document.createElement('details');
+        fold.className = 'msfold';
+        fold.innerHTML = `<summary>${esc(L.milestonesN(D.milestones.length))}</summary><ol class="mslist"></ol>`;
+        const key = card.querySelector('.chart-key');
+        card.insertBefore(fold, key || null);
       }
+      const list = fold.querySelector('.mslist');
       list.innerHTML = D.milestones.map((m, i) => `<li><button type="button"${i === selected ? ' class="sel"' : ''}><b>${i + 1}</b> ${esc(m.year)} · ${esc(kindName(KIND_OK(m.kind)))} · ${esc(m.title)}</button></li>`).join('');
       list.querySelectorAll('button').forEach((b, i) => b.addEventListener('click', () => { select(i, true); if (detail.scrollIntoView) detail.scrollIntoView({ block: 'nearest' }); }));
     }
@@ -1302,7 +1326,10 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       } else headline.textContent = '';
       // Names and left-out records: say what the counts leave out, and why.
       const notes = scopeNotes(D, L);
-      if (notes.length) headline.insertAdjacentHTML('beforeend', notes.map(n => `<span class="dnote">${n}</span>`).join(''));
+      // Folded under the headline: they matter for trust, but most readers skip them.
+      const old = headline.nextElementSibling;
+      if (old && old.classList.contains('dnotes')) old.remove();
+      if (notes.length) headline.insertAdjacentHTML('afterend', `<details class="dnotes"><summary>${esc(L.notesN(notes.length))}</summary>${notes.map(n => `<p class="dnote">${n}</p>`).join('')}</details>`);
     }
 
     renderBar();
@@ -1402,7 +1429,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     let want = '';
     try { want = global.location ? decodeURIComponent((global.location.hash || '').slice(1)) : ''; } catch (e) { /* bad % escape */ }
     const hit = want ? slugs.indexOf(want) : -1;
-    select(hit >= 0 ? hit : 0, false);
+    // No milestone open by default: the three cards under the chart are the summary.
+    if (hit >= 0) select(hit, false);
     if (hit >= 0 && detail && detail.scrollIntoView) setTimeout(() => detail.scrollIntoView({ block: 'center' }), 0);
     // Start scrolled so the newest milestone's dot and label are in view (narrow screens).
     const sc = chart.closest('.scroller');
@@ -1438,7 +1466,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       dateWarning: 'Sparse early record — check the date', futureWarning: 'Date is after this snapshot — check the source',
       year: 'Year', allYears: 'All years', meaning: 'Suggested meaning', allMeanings: 'All meanings',
       period: 'Period', meaningShort: 'Meaning', otherMeanings: 'Other meanings', otherTip: 'Meanings that only share the words', all: 'All', decade: d => `${d}s`, andEarlier: y => `${y} and earlier`, newestShort: 'Newest', oldestShort: 'Oldest',
-      sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', more: 'Show more passages',
+      sort: 'Order', newest: 'Newest first', oldest: 'Oldest first', morePassages: 'Show more passages',
       shown: (n, total) => `${n} of ${total} passages`, matches: n => `${n} passages in the sample`,
       none: 'No passages match these filters. Try another year or meaning.',
       noQuotes: 'No source passages are available in this result. Try a different spelling or another term.',
@@ -1453,6 +1481,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       noModel: 'No model was used. The passages are available without meaning labels.',
       modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
       originalHint: 'Click a milestone to see the sentences behind it. Labels are suggestions; the quotes are the evidence.',
+      story: { start: 'Start', takeoff: 'Took off', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
+      more: 'More: summary, meanings, all quotes, method',
     },
     zh: {
       start: '从这些原文开始', browse: '浏览原文证据', route: '简短阅读路线', suggested: '建议阅读起点',
@@ -1467,7 +1497,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       dateWarning: '稀疏早期记录，请核对日期', futureWarning: '日期晚于数据快照，请核对来源',
       year: '年份', allYears: '所有年份', meaning: '建议词义', allMeanings: '所有词义', sort: '排序',
       period: '年代', meaningShort: '词义', otherMeanings: '其他意思', otherTip: '只是同名、与本时间线无关的意思', all: '全部', decade: d => `${d} 年代`, andEarlier: y => `${y} 年及以前`, newestShort: '最新', oldestShort: '最早',
-      newest: '从新到旧', oldest: '从旧到新', more: '显示更多原文',
+      newest: '从新到旧', oldest: '从旧到新', morePassages: '显示更多原文',
       shown: (n, total) => `已显示 ${n} / ${total} 段原文`, matches: n => `样本包含 ${n} 段原文`,
       none: '没有符合筛选条件的原文。请换一个年份或词义。',
       noQuotes: '这个结果暂无来源原文。请尝试其他写法或术语。',
@@ -1480,6 +1510,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
       modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
       originalHint: '点击里程碑，看它依据的原句。标签只是建议，原句才是证据。',
+      story: { start: '起点', takeoff: '起飞', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
+      more: '更多：总结、词义、全部原文、方法',
     },
   };
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1532,7 +1564,47 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       for (const q of eligible) { if (featured.length >= 3) break; add(q); }
       featured.sort((a,b) => a.year-b.year);
     }
-    return { quotes, featured, curated, counts, snapshot };
+    const senses = d.senses || [];
+    const relatedKeys = new Set(senses.filter(s => s.related).map(s => s.key));
+    const eligible = quotes.filter(q => q.url && q.year && !q.warning && !q.fromTitle && (!relatedKeys.size || relatedKeys.has(q.sense))).sort((a,b) => a.year-b.year);
+    return { quotes, featured, curated, counts, snapshot, eligible };
+  }
+
+  // Three moments for the top of the page: where the term starts, when it took off, and
+  // where it is now. From the model's milestones when there are any (their one-line
+  // "why" is easier to read than an abstract), else from sampled passages.
+  function storyCards(d, model) {
+    const TL = global.IdealineTimeline;
+    const run = TL && model.counts.length ? TL.mainRun(model.counts) : null;
+    const ta = run && run.ta || null;
+    const out = [], used = new Set();
+    const ms = (d.milestones || []).filter(m => m && m.kind !== 'ancestor' && Number(m.year)).sort((a, b) => a.year - b.year);
+    const add = (key, x, fromQuote) => {
+      if (!x) return;
+      used.add(x);
+      out.push(fromQuote
+        ? { key, year: x.year, title: x.title || '', url: x.url, authors: x.authors || '', line: x.text, quote: true }
+        : { key, year: +x.year, title: x.title || '', url: safeUrl(x.url), authors: x.authors || '', line: x.why || '', quote: false });
+    };
+    const free = list => list.filter(x => !used.has(x));
+    if (ms.length) {
+      add('start', ms.find(m => m.kind === 'origin' || m.kind === 'coined') || ms[0]);
+      if (ta) add('takeoff', free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => +m.year >= ta));
+      add('now', free(ms).pop());
+    } else {
+      const el = model.eligible || [];
+      add('start', el[0], true);
+      if (ta) add('takeoff', free(el).find(q => q.year >= ta), true);
+      add('now', free(el).pop(), true);
+    }
+    return out;
+  }
+
+  function storyCard(c, T, terms) {
+    const title = esc(c.title);
+    return `<article class="story-card"><div class="sc-top"><span class="sc-label">${esc(T.story[c.key])}</span><span class="sc-year">${esc(c.year)}</span></div>
+      ${c.line ? `<p class="sc-line">${c.quote ? `“${highlight(c.line, terms)}”` : esc(c.line)}</p>` : ''}
+      <p class="sc-src">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}${c.authors ? ` <span>· ${esc(c.authors)}</span>` : ''}</p></article>`;
   }
 
   const senseKey = q => (q.sense && q.sense !== 'unclear' ? q.sense : 'untagged');
@@ -1630,8 +1702,6 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     if (!host) return;
     const terms = [d.term, ...(d.aliases || [])];
     const senseMap = new Map((d.senses || []).map(s => [s.key, s.label]));
-    const card = (q, featured, index) => quoteCard(q, {lang, terms, featured,
-      label: featured ? [T.earlier,T.different,T.recent][index] : q.sense ? `${T.suggestedMeaning}: ${senseMap.get(q.sense) || T.untagged}` : T.untagged});
     const colorOf = senseColors(d.senses);
     const present = new Set(model.quotes.map(senseKey));
     const order = [...(d.senses || []).filter(s => s.related), ...(d.senses || []).filter(s => !s.related)].map(s => s.key);
@@ -1642,19 +1712,18 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const senseKeys = [...order.filter(k => related.has(k) && present.has(k)), ...(others.size ? ['other'] : []), ...(present.has('untagged') ? ['untagged'] : [])];
     const buckets = yearBuckets(model.quotes, T);
     const chip = (v, label, n, color, tip) => `<button type="button" class="fchip" data-v="${esc(v)}"${tip ? ` title="${esc(tip)}"` : ''}>${color ? `<i style="background:${esc(color)}"></i>` : ''}${esc(label)}<span class="n">${n}</span></button>`;
-    host.innerHTML = `<div class="brief-meta"><span>${esc(T.scope)}</span><span>${esc(T.saved)} ${esc(d.generated || '—')}</span></div>
-      <section class="timeline-main" aria-label="${esc(T.timelineTitle)}">${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<p class="headline" data-part="headline"></p>
-      <div class="senses" data-part="senses"></div><div class="card"><div class="hint">${esc(T.originalHint)}</div><div class="scroller"><div data-part="chart"></div></div><div class="legend" data-part="legend"></div><div class="detail" data-part="detail" aria-live="polite"></div></div>
-      <div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div></section>
-      <div class="reading-layout"><section class="reading-main"><div class="section-heading"><h3>${esc(T.start)}</h3><span>${esc(model.curated ? T.route : T.suggested)}</span></div><p class="section-intro">${esc(model.curated ? T.intro : T.auto)}</p>
-      ${model.featured.map((q,i)=>card(q,true,i)).join('') || `<p class="empty-state">${esc(model.quotes.length ? T.noFeatured : T.noQuotes)}</p>`}</section>
-      <aside class="reading-aside"><span class="eyebrow">${esc(T.question)}</span><p>${esc(localized(d.readingGuide?.question,lang) || T.defaultQuestion)}</p><a href="#evidence" data-browse>${esc(T.browse)} <span>↘</span></a><div class="aside-count">${esc(T.matches(model.quotes.length))}</div></aside></div>
+    const story = storyCards(d, model);
+    host.innerHTML = `<section class="timeline-main" aria-label="${esc(T.timelineTitle)}"><p class="headline" data-part="headline"></p>
+      <div class="card"><div class="scroller"><div data-part="chart"></div></div><div class="detail" data-part="detail" aria-live="polite"></div><details class="chart-key"><summary>${esc(T.chartKey)}</summary><p class="hint">${esc(T.originalHint)}</p><div class="legend" data-part="legend"></div></details></div>
+      ${story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms)).join('')}</div>` : ''}</section>
+      <details class="more-panel"><summary>${esc(T.more)}</summary>
+      ${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<div class="senses" data-part="senses"></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div>
       <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
       <p>${esc(d.model ? T.meaningNote : opts.pending ? T.modelPending : T.noModel)}</p><div class="ev-filters">
       ${senseKeys.some(k=>k!=='untagged') ? `<div class="frow"><span class="flabel">${esc(T.meaningShort)}</span><div class="fchips" data-f="sense" role="group" aria-label="${esc(T.meaning)}">${chip('', T.all, model.quotes.length)}${senseKeys.map(k=>k === 'other' ? chip('other', T.otherMeanings, model.quotes.filter(q=>others.has(senseKey(q))).length, '#868e96', T.otherTip) : chip(k, senseMap.get(k) || T.untagged, model.quotes.filter(q=>senseKey(q)===k).length, colorOf(k))).join('')}</div></div>` : ''}
       ${buckets.length > 1 ? `<div class="frow"><span class="flabel">${esc(T.period)}</span><div class="fchips" data-f="year" role="group" aria-label="${esc(T.year)}">${chip('', T.all, model.quotes.length)}${buckets.map(b=>chip(b.v, b.label, b.n)).join('')}</div></div>` : ''}
-      <div class="fbar"><p class="filter-status" role="status" aria-live="polite"></p><div class="sortseg" data-f="order" role="group" aria-label="${esc(T.sort)}"><button type="button" data-v="newest">${esc(T.newestShort)}</button><button type="button" data-v="oldest">${esc(T.oldestShort)}</button></div></div></div><div class="quote-results"></div><button type="button" class="load-more">${esc(T.more)}</button></details>
-      <details class="method-panel"><summary>${esc(T.method)}</summary><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details>`;
+      <div class="fbar"><p class="filter-status" role="status" aria-live="polite"></p><div class="sortseg" data-f="order" role="group" aria-label="${esc(T.sort)}"><button type="button" data-v="newest">${esc(T.newestShort)}</button><button type="button" data-v="oldest">${esc(T.oldestShort)}</button></div></div></div><div class="quote-results"></div><button type="button" class="load-more">${esc(T.morePassages)}</button></details>
+      <details class="method-panel"><summary>${esc(T.method)}</summary><p class="brief-meta"><span>${esc(T.scope)}</span> <span>${esc(T.saved)} ${esc(d.generated || '—')}</span></p><p>${esc(T.methodText)}</p><p>${esc(d.model ? T.methodModel : opts.pending ? T.modelPending : T.noModel)}</p></details></details>`;
     const browser = host.querySelector('.evidence-browser'), list = host.querySelector('.quote-results'), more = host.querySelector('.load-more');
     let limit = 12;
     const state = { sense: '', year: '', order: 'newest' };
@@ -1674,8 +1743,9 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     function reveal(id) {
       const q = model.quotes.find(q=>q.id===id);
       if (!q) return;
-      let target = [...host.querySelectorAll('.featured-source')].find(el=>el.id===`q-${id}`);
-      if (!target) {
+      let target = null;
+      {
+        host.querySelector('.more-panel').open = true;
         browser.open = true;
         Object.assign(state, { sense: '', year: '', order: 'newest' });
         limit = model.quotes.length; refresh();
@@ -1686,7 +1756,6 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     }
     host.onclick = async ev => {
       const button = ev.target.closest('[data-copy]'), passage = ev.target.closest('[data-passage]');
-      if (ev.target.closest('[data-browse]')) { ev.preventDefault(); browser.open=true; browser.scrollIntoView({block:'start'}); }
       if (passage) {ev.preventDefault(); global.history.replaceState(null,'',`#q-${passage.dataset.passage}`);reveal(passage.dataset.passage);}
       if (!button) return;
       const q = model.quotes.find(q=>q.id===button.dataset.copy), status = button.closest('article').querySelector('.copy-status');
@@ -1730,7 +1799,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const libraries=[spec.i18nJs,spec.timelineJs,spec.readingJs].map(noEnd).join('\n');
     return `<!doctype html>\n<html lang="${lang==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.term)} · idealine</title><style>${spec.css}</style></head><body>${body}<script type="application/json" id="data">${JSON.stringify(d).replace(/</g,'\\u003c')}<\/script><script>${libraries}\nIdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent),${JSON.stringify(lang)});<\/script></body></html>`;
   }
-  const api={TEXT,safeUrl,readingModel,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
+  const api={TEXT,safeUrl,readingModel,storyCards,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
   global.IdealineReading=api;
   if(typeof module!=='undefined' && module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

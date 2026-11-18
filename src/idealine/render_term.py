@@ -139,8 +139,6 @@ blockquote cite a{color:inherit}
 mark{background:transparent;color:inherit;font-weight:650;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px}
 .headline{margin:-6px 0 12px;font-size:.95rem;color:var(--ink-soft)}
 .headline:empty{display:none}
-.headline .dnote{display:block;margin-top:4px;font-size:.85rem}
-.headline .dnote a{color:inherit;text-decoration:underline}
 .tlbar{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 8px}
 .tlseg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
 .tlseg button{font:inherit;font-size:.78rem;padding:3px 10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
