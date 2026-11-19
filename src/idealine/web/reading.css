@@ -235,6 +235,8 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
 .upsell[hidden]{display:none}
 .upsell p{margin:0;flex:1;font-size:.82rem;line-height:1.55;color:var(--ink-soft)}
 .upsell .btn{flex:none;white-space:nowrap}
+.upsell-acts{display:flex;align-items:center;gap:12px;flex:none}
+.upsell-acts [hidden]{display:none}
 @media(max-width:560px){.upsell{flex-direction:column;align-items:flex-start}}
 
 /* One left inset (16px) for everything inside the timeline card. */

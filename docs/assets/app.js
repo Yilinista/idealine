@@ -192,6 +192,12 @@
     openRow(providerSel.value === 'none' ? 'row-provider' : 'row-key');
     $('opts').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+  // The search box (and its test-code link) is off screen once a result shows, on phones.
+  $('r-tester').addEventListener('click', () => {
+    openRow('row-tester');
+    $('opts').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('tester-code').focus({ preventScroll: true });
+  });
   $('change-key').addEventListener('click', () => { openRow('row-key'); keyIn.focus(); });
   // "Check": a free request that confirms the key, then folds the panel away. Returns
   // null on success or a function giving the error text. Checks run one at a time.
@@ -233,7 +239,7 @@
 
   // --- shared test key: an invited tester types a code (see scripts/seal_key.py) ---
   const sealed = (() => { try { return JSON.parse(($('tester-key') || {}).textContent || 'null'); } catch (_) { return null; } })();
-  if (sealed && P.PROVIDERS[sealed.provider]) { $('row-tester').hidden = false; $('tester-link').hidden = false; }
+  if (sealed && P.PROVIDERS[sealed.provider]) { $('row-tester').hidden = false; $('tester-link').hidden = false; $('r-tester').hidden = false; }
   const testerMsg = (fn, cls) => { lastTester = fn ? { fn, cls } : null; $('tester-msg').textContent = fn ? fn() : ''; $('tester-msg').className = cls || ''; };
   let lastTester = null;
   // The key field no longer holds the shared key: forget it, and the message (unless kept to explain a failure).

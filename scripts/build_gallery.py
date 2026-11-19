@@ -216,7 +216,7 @@ RESULT = """
   <ol id="progress" class="progress" hidden></ol>
   <div id="status" role="status" aria-live="polite"></div>
   <div id="r-suggest" class="suggest" hidden></div>
-  <div id="r-upsell" class="upsell" hidden><p data-i18n="upsellText">Free view: the markers are the earliest and most-cited papers, picked by counting. With your own model key, idealine also splits the history into eras, finds the turning points and labels each passage by meaning.</p><button type="button" class="btn" id="r-addkey" data-i18n="upsellBtn">Add a model key</button></div>
+  <div id="r-upsell" class="upsell" hidden><p data-i18n="upsellText">Free view: the markers are the earliest and most-cited papers, picked by counting. With your own model key, idealine also splits the history into eras, finds the turning points and labels each passage by meaning.</p><span class="upsell-acts"><button type="button" class="btn" id="r-addkey" data-i18n="upsellBtn">Add a model key</button><button type="button" class="linkish" id="r-tester" data-i18n="haveCode" hidden>Have a test code?</button></span></div>
   <div data-part="reading"></div>
   <details class="file-tools" id="r-actions" hidden><summary data-i18n="downloads">Downloads &amp; tools</summary><div class="actions">
     <button class="btn ghost" id="r-roots" type="button" hidden></button>

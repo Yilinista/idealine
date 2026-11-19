@@ -57,29 +57,63 @@
     return best != null && best > t0 && best < tm ? best : null;
   }
 
-  // Takeoff year: from the awakening point, the first year clearly above the slow
-  // start (more than twice its highest yearly count, and at least 3 papers). The
-  // awakening point itself can be the last quiet year, before the term even exists.
-  function takeoff(counts) {
-    const ta = awakening(counts);
-    if (ta == null) return null;
-    const m = new Map(counts);
-    const before = Math.max(0, ...counts.filter(([y]) => y < ta).map(([, c]) => c));
-    const last = counts[counts.length - 1][0];
-    for (let y = ta; y <= last; y++) if ((m.get(y) || 0) > Math.max(2 * before, 2)) return y;
-    return null;
+  // Takeoff year: where the curve bends upward, read on a log scale (log(1 + n), so a
+  // steady exponential is a straight line and has no bend, however fast it grows).
+  // Year y is a candidate when
+  //  - it at least doubles the high of the five years before (and has 3+ papers),
+  //  - the slope over [y-1, y+1] beats the slope over [y-6, y-2] by 0.5 or more
+  //    (about 1.65x faster yearly growth): a clear bend, not noise on a smooth climb.
+  //    A mild bend gets no takeoff (CRISPR, from about 1.5x to 2x a year): a missed
+  //    takeoff is better than a wrong one,
+  //  - the next year stays clearly above the slow start (no one-year spikes),
+  //  - within four years the curve reaches 4x the slow start.
+  // Of the candidates, the earliest whose one-year jump into y is at least 60% of the
+  // biggest wins: the knee itself, not a small year just before it, and not a later
+  // year of the same climb.
+  // Needs three years of slow start, 20+ papers and a peak of 10+. Counts: [[year, n]].
+  // asOf: 'YYYY-MM-DD' of the data. Later years are left out (misdated records). The
+  // unfinished last year (dropped in its first 3 months) is scaled to a full year for
+  // the slopes and for the year before's "stays up" check; the size gates, and the year
+  // itself as a candidate, use its real count, so a projection alone never makes a takeoff.
+  function takeoff(counts, asOf) {
+    const ay = /^\d{4}-\d\d/.test(asOf || '') ? +asOf.slice(0, 4) : null, mo = ay ? +asOf.slice(5, 7) : 12;
+    const raw = new Map();
+    for (const [y, n] of counts) if (Number.isFinite(y) && (!ay || y < ay || (y === ay && mo >= 3))) raw.set(y, Math.max(0, (raw.get(y) || 0) + (Number(n) || 0)));
+    if (raw.size < 2) return null;
+    const years = [...raw.keys()].sort((a, b) => a - b), first = years[0], last = years[years.length - 1];
+    const total = [...raw.values()].reduce((a, b) => a + b, 0), peak = Math.max(...raw.values());
+    if (total < 20 || peak < 10) return null;
+    const scale = y => (y === ay && mo < 12 ? 12 / mo : 1);
+    const m = new Map(years.map(y => [y, Math.round(raw.get(y) * scale(y))]));
+    const c = y => m.get(y) || 0, r = y => raw.get(y) || 0, L = y => Math.log1p(c(y));
+    const high = (a, b) => { let v = 0; for (let y = Math.max(a, first); y <= b; y++) v = Math.max(v, c(y)); return v; };
+    const slope = (a, b) => (b > a ? (L(b) - L(a)) / (b - a) : 0);
+    const cands = [];
+    for (let y = first + 3; y <= last; y++) {
+      const base = high(y - 5, y - 1);
+      if (r(y) < Math.max(2 * base, 3)) continue;
+      if (slope(y - 1, Math.min(y + 1, last)) - slope(Math.max(first, y - 6), y - 2) < 0.5) continue;
+      if (y < last && c(y + 1) < 1.5 * Math.max(base, 1)) continue;
+      let reach = 0;
+      for (let k = y; k <= Math.min(y + 3, last); k++) reach = Math.max(reach, r(k));
+      if (reach < 4 * Math.max(base, 1)) continue;
+      cands.push({ y, jump: L(y) - L(y - 1) });
+    }
+    if (!cands.length) return null;
+    const top = Math.max(...cands.map(k => k.jump));
+    return (cands.find(k => k.jump >= 0.6 * top) || cands[0]).y;
   }
 
   // Takeoff of the main run of use: skip stray records cut off from it by more than
   // three empty years (often misdated), the same rule the source cards use. The chart
   // and the headline both use this, so they name the same year.
-  function mainRun(cs) {
+  function mainRun(cs, asOf) {
     const on = onsetYear(cs);
     const nz = cs.filter(([, c]) => c > 0).map(([y]) => y);
     let first = nz[0];
     for (let i = 1; i < nz.length; i++) if (nz[i] - nz[i - 1] > 3 && on && nz[i] <= on) first = nz[i];
     const main = cs.filter(([y]) => y >= first);
-    const ta0 = main.length >= 3 ? takeoff(main) : null;
+    const ta0 = main.length >= 3 ? takeoff(main, asOf) : null;
     return { first, main, ta: ta0 && ta0 > first ? ta0 : null };
   }
 
@@ -210,7 +244,7 @@
     perMillion: v => `${fmtShare(v)} per million`,
     partial: d => `not over yet (data as of ${d})`,
     burst: 'burst', takeoff: y => `takeoff ${y}`,
-    takeoffTip: 'Takeoff: the year the curve leaves its slow start (Ke et al. 2015). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
+    takeoffTip: 'Takeoff: the first year the curve clearly leaves its slow start and stays up (steady growth has none). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
     headline: h => (h.ta ? `Took off in ${h.ta} · ` : '') + `${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
     notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
     milestonesN: n => `All ${n} milestones`,
@@ -416,7 +450,7 @@
       });
 
       // Takeoff and bursts, computed from the yearly counts (shares when totals exist).
-      const ta = (D.counts || []).length ? mainRun(D.counts).ta : null, bs = bursts(D.counts, D.totals);
+      const ta = (D.counts || []).length ? mainRun(D.counts, D.generated).ta : null, bs = bursts(D.counts, D.totals);
       for (const [a, b] of bs) {
         const xa = X(a), xb = X(b + 1 - 1e-6);
         const r = el('rect', { x: xa, y: axisY + 2, width: Math.max(3, xb - xa), height: barH + 8, fill: css('critique'), opacity: 0.08, rx: 3 }, svg);
@@ -619,7 +653,7 @@
     if (headline) {
       const cs = D.counts || [];
       if (cs.length && (D.total || cs.reduce((a, [, c]) => a + c, 0)) >= 20) {
-        const { first, main, ta } = mainRun(cs);
+        const { first, main, ta } = mainRun(cs, D.generated);
         const pk = main.reduce((a, b) => (b[1] > a[1] ? b : a));
         const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
         headline.textContent = L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });

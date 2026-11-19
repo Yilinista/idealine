@@ -131,32 +131,37 @@
     // The main run of use starts after stray early records (often misdated); the chart
     // and headline skip them too, so the start card never shows an earlier year.
     const first = TL && model.counts.length ? TL.mainRun(model.counts).first : null;
-    const inRun = y => !first || +y >= first;
-    const out = [], used = new Set();
+    // ...and nothing dated after the data was fetched (misdated; the passage list flags it).
+    const inRun = y => (!first || +y >= first) && (!model.snapshot || +y <= model.snapshot);
+    const out = [], used = new Set();  // papers already on a card (by link, else title)
+    const paper = x => safeUrl(x.url) || String(x.title || '').toLowerCase();
     const inSet = new Map(model.quotes.map(q => [q.id, q.inSet || 0]));
     const ms = (d.milestones || []).filter(m => m && m.kind !== 'ancestor' && Number(m.year) && inRun(m.year)).sort((a, b) => a.year - b.year);
-    const add = (key, x, fromQuote) => {
-      if (!x) return;
-      used.add(x);
-      out.push(fromQuote
+    const el = (model.eligible || []).filter(q => inRun(q.year));
+    const card = (key, x) => {
+      if (!x) return null;
+      used.add(paper(x));
+      return x.text != null && x.why == null
         ? { key, year: x.year, title: x.title || '', url: x.url, authors: x.authors || '', line: x.text, quote: true }
-        : { key, year: +x.year, title: x.title || '', url: safeUrl(x.url), authors: x.authors || '', line: x.why || '', quote: false });
+        : { key, year: +x.year, title: x.title || '', url: safeUrl(x.url), authors: x.authors || '', line: x.why || '', quote: false };
     };
-    const free = list => list.filter(x => !used.has(x));
+    const free = list => list.filter(x => !used.has(paper(x)));
+    const cited = list => [...list].sort((a, b) => b.n - a.n)[0]?.x;
+    // Earliest: the earliest dated record, milestone or passage (a sampled passage can
+    // predate the first milestone); in the model view passages of unrelated meanings are
+    // already left out of `el`.
+    const start = card('start', [ms[0], el[0]].filter(Boolean).sort((a, b) => +a.year - +b.year)[0]);
+    // Now: the newest of the rest, picked before the key paper so "Now" is never older.
+    // (Milestones and passages together: the newest milestone can be years older than the
+    // newest dated passage. A milestone wins a tie, its note reads better.)
+    const now = card('now', free([...el, ...ms]).sort((a, b) => +a.year - +b.year || (b.why == null) - (a.why == null)).pop());
     // Key paper: the model's pick of the paper that spread the term; without a model,
     // the one the sampled papers cite most.
-    const cited = list => [...list].sort((a, b) => b.n - a.n)[0]?.x;
-    if (ms.length) {
-      add('start', ms[0]);
-      add('key', d.model ? free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => m.kind === 'redefined')
-        : cited(free(ms).map(m => ({ x: m, n: Math.max(0, ...(m.evidence || []).map(e => inSet.get(e.id) || 0)) })).filter(c => c.n > 0)));
-      add('now', free(ms).pop());
-    } else {
-      const el = (model.eligible || []).filter(q => inRun(q.year));
-      add('start', el[0], true);
-      add('key', cited(free(el).map(q => ({ x: q, n: q.inSet || 0 })).filter(c => c.n > 0)), true);
-      add('now', free(el).pop(), true);
-    }
+    const key = card('key', ms.length && d.model
+      ? free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => m.kind === 'redefined')
+      : ms.length ? cited(free(ms).map(m => ({ x: m, n: Math.max(0, ...(m.evidence || []).map(e => inSet.get(e.id) || 0)) })).filter(c => c.n > 0))
+        : cited(free(el).map(q => ({ x: q, n: q.inSet || 0 })).filter(c => c.n > 0)));
+    out.push(...[start, key, now].filter(Boolean));
     return out;
   }
 

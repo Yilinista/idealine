@@ -868,11 +868,105 @@ test('story cards (free view): key paper is the one the sample cites most; stray
   assert.deepEqual(R.storyCards({ counts: [], quotes: [] }, R.readingModel({})), []);
 });
 
-test('takeoff ignores a slump after the real rise (paid tester #1, OpenAlex counts as of 2026-11-19)', () => {
+test('takeoff ignores a slump after the real rise, and steady growth has none (paid tester #1, OpenAlex counts as of 2026-11-19)', () => {
   const overtourism = [[2000, 1], [2012, 1], [2015, 1], [2017, 7], [2018, 56], [2019, 228], [2020, 313], [2021, 275], [2022, 179], [2023, 185], [2024, 252], [2025, 551], [2026, 672]];
   assert.equal(TL.mainRun(overtourism).ta, 2017);
   const carrying = [[1986, 1], [1987, 1], [1991, 1], [1995, 3], [1997, 1], [1999, 3], [2000, 1], [2001, 1], [2003, 3], [2004, 6], [2005, 6], [2006, 7], [2007, 7], [2008, 4], [2009, 7], [2010, 12],
     [2011, 24], [2012, 18], [2013, 16], [2014, 16], [2015, 18], [2016, 24], [2017, 29], [2018, 20], [2019, 31], [2020, 34], [2021, 36], [2022, 32], [2023, 32], [2024, 42], [2025, 45], [2026, 84]];
   assert.equal(TL.mainRun(carrying).first, 1995);
-  assert.equal(TL.mainRun(carrying).ta, 2011);
+  assert.equal(TL.mainRun(carrying).ta, null);  // slow, steady growth since 1995: no knee
+  // A step from about 1 a year to 12 in 1992; without the 1980s records (dropped as misdated
+  // on the live page) the run starts in 1992 and grows steadily: no takeoff.
+  const place = [[1905, 1], [1967, 1], [1976, 1], [1979, 1], [1983, 1], [1984, 1], [1986, 1], [1989, 1], [1990, 2], [1991, 1], [1992, 12], [1993, 7], [1994, 5], [1995, 4], [1996, 8], [1997, 6], [1998, 18], [1999, 5], [2000, 23], [2001, 20], [2002, 23], [2003, 42], [2004, 39], [2005, 53], [2006, 72], [2007, 56], [2008, 91], [2009, 104], [2010, 142], [2011, 163], [2012, 202], [2013, 205], [2014, 245], [2015, 295], [2016, 273], [2017, 351], [2018, 404], [2019, 443], [2020, 492], [2021, 532], [2022, 479], [2023, 567], [2024, 601], [2025, 921], [2026, 1227]];
+  assert.equal(TL.mainRun(place).ta, 1992);
+  assert.equal(TL.mainRun(place.filter(([y]) => y >= 1992)).ta, null);
+});
+
+test('story cards (free view): an earlier dated passage beats the first sampled milestone', () => {
+  require('../src/idealine/web/timeline.js');
+  const counts = [[1983, 1], [1984, 1], [1986, 1], [1989, 1], [1990, 2], [1992, 12], [2000, 23], [2010, 142], [2025, 921]];
+  const q = (id, year, inSet) => ({ id, year, inSet, text: `Place attachment ${id}.`, title: `T${id}`, url: `https://example.org/${id}` });
+  const quotes = [q('E1', 1983, 0), q('E2', 1992, 61), q('E3', 2025, 0)];
+  const milestones = [[1992, 'E2'], [2025, 'E3']].map(([year, id]) => ({ year, kind: 'popularized', title: `T${id}`, why: 'x', evidence: [{ id }] }));
+  const d = { counts, quotes, milestones };
+  assert.deepEqual(R.storyCards(d, R.readingModel(d)).map(c => [c.key, c.year]), [['start', 1983], ['key', 1992], ['now', 2025]]);
+});
+
+test('takeoff: smooth exponentials and one-year spikes have none (review findings)', () => {
+  for (const r of [1.25, 1.3, 1.5]) {
+    const cs = Array.from({ length: 25 }, (_, i) => [2000 + i, Math.round(2 * r ** i)]);
+    assert.equal(TL.mainRun(cs).ta, null, `growth ${r}`);
+  }
+  const spike = [[2000, 1], [2001, 1], [2002, 2], [2003, 1], [2004, 1], [2005, 2], [2006, 1], [2007, 60], [2008, 2], [2009, 1], [2010, 2], [2011, 1], [2012, 2]];
+  assert.equal(TL.mainRun(spike).ta, null);
+});
+
+test('story cards: one paper per card, Now is never older, Earliest is never later than a passage', () => {
+  require('../src/idealine/web/timeline.js');
+  const counts = [[2000, 1], [2001, 1], [2002, 1], [2003, 1], [2004, 2], [2005, 3], [2006, 40], [2007, 120], [2008, 300]];
+  const q = (id, year, title, inSet) => ({ id, year, title, inSet, text: `A world model ${id}.`, url: `https://example.org/${title}` });
+  const run = d => R.storyCards(d, R.readingModel(d)).map(c => [c.key, c.year, c.title]);
+  // Two sentences from paper A must not fill two cards.
+  assert.deepEqual(run({ counts, quotes: [q('E1', 2001, 'A', 5), q('E2', 2001, 'A', 5), q('E3', 2008, 'B', 0)] }), [['start', 2001, 'A'], ['now', 2008, 'B']]);
+  assert.deepEqual(run({ counts, quotes: [q('E1', 2001, 'A', 0), q('E2', 2008, 'B', 5), q('E3', 2008, 'B', 5)] }), [['start', 2001, 'A'], ['now', 2008, 'B']]);
+  // Model view: the newest milestone is Now, even when it is the popularizing paper.
+  const m = (year, kind, title) => ({ year, kind, title, why: kind });
+  assert.deepEqual(run({ counts, model: 'm', quotes: [], milestones: [m(2001, 'origin', 'O'), m(2005, 'applied', 'Ap'), m(2008, 'popularized', 'P')] }),
+    [['start', 2001, 'O'], ['now', 2008, 'P']]);
+  // Model view: a dated passage earlier than every milestone is the Earliest card.
+  const cards = run({ counts, model: 'm', quotes: [q('E1', 2001, 'Q', 0), q('E2', 2006, 'Pop', 0)], milestones: [m(2006, 'popularized', 'Pop'), m(2008, 'critique', 'C')] });
+  assert.deepEqual(cards, [['start', 2001, 'Q'], ['key', 2006, 'Pop'], ['now', 2008, 'C']]);
+});
+
+test('takeoff: the knee after a long flat start, steps, partial last year (review round 2)', () => {
+  const R = (xs, from) => TL.mainRun(xs.map((v, i) => [from + i, v])).ta;
+  assert.equal(R([...Array(15).fill(3), ...Array.from({ length: 11 }, (_, i) => 6 * 2 ** i)], 2000), 2015);  // doubling for 11 years
+  assert.equal(R([...Array(10).fill(3), 20, 60, 180, 540], 2010), 2020);  // the year counts leave the slow start
+  assert.equal(R([...Array(18).fill(500), ...Array(8).fill(2000)], 2000), 2018);  // a lasting 4x step from a large base
+  assert.equal(R([...Array(8).fill(3), 8, 19, 47, 117, 293, 732, 1831, 200], 2010), 2018);  // partial last year
+  assert.equal(R([1, 1, 1, 1, 1, 4, 10], 2015), null);  // too small (19 papers): no line, no headline
+  // A small year just before the jump is not the knee (review round 3).
+  assert.equal(R([1, 1, 1, 1, 1, 1, 1, 1, 4, 60, 90, 120], 1990), 1999);
+  // Smooth S-curve: no takeoff.
+  assert.equal(R(Array.from({ length: 30 }, (_, i) => Math.round(1000 / (1 + Math.exp(-(i - 15) / 2)))), 1990), null);
+  // The answer does not flip as more years come in (CRISPR: a mild bend, none).
+  const crispr = require('../docs/terms/crispr.json').counts;
+  assert.equal(TL.mainRun(crispr.filter(([y]) => y <= 2014), '2014-12-31').ta, TL.mainRun(crispr, '2026-11-17').ta);
+});
+
+test('story cards: Now is the newest dated record, milestone or passage', () => {
+  require('../src/idealine/web/timeline.js');
+  const counts = [[2000, 1], [2001, 1], [2002, 1], [2003, 1], [2004, 2], [2005, 3], [2006, 40], [2007, 120], [2008, 300]];
+  const q = (id, year) => ({ id, year, text: `A world model ${id}.`, title: `T${id}`, url: `https://example.org/${id}` });
+  const d = { counts, model: 'm', quotes: [q('E1', 2001), q('E2', 2008)], milestones: [{ year: 2001, kind: 'origin', title: 'TE1', why: 'o', url: 'https://example.org/E1' }, { year: 2005, kind: 'popularized', title: 'P', why: 'p' }] };
+  assert.deepEqual(R.storyCards(d, R.readingModel(d)).map(c => [c.key, c.year, c.title]), [['start', 2001, 'TE1'], ['key', 2005, 'P'], ['now', 2008, 'TE2']]);
+});
+
+test('takeoff: unfinished snapshot year and misdated future records (review round 3)', () => {
+  const icl = require('../docs/terms/in-context-learning.json').counts.filter(([y]) => y <= 2022);
+  assert.equal(TL.mainRun([...icl, [2023, 10]], '2023-01-20').ta, 2022);  // January bar is not a fall
+  const rh = require('../docs/terms/reward-hacking.json').counts.filter(([y]) => y <= 2024);
+  assert.equal(TL.mainRun([...rh, [2025, 6]], '2025-02-01').ta, 2024);
+  const rsi = require('../docs/terms/recursive-self-improvement.json').counts.filter(([y]) => y <= 2024);
+  assert.equal(TL.mainRun([...rsi, [2025, 300], [2027, 1]], '2026-11-17').ta, 2025);  // a 2027 record is misdated
+});
+
+test('takeoff: a projected partial year alone is no takeoff; odd counts do not crash (review round 4)', () => {
+  const flat = Array.from({ length: 16 }, (_, i) => [2010 + i, 3]);
+  assert.equal(TL.mainRun([...flat, [2026, 3]], '2026-03-01').ta, null);
+  assert.equal(TL.mainRun([...Array.from({ length: 11 }, (_, i) => [2015 + i, 1]), [2026, 3]], '2026-03-20').ta, null);
+  const neg = Array.from({ length: 20 }, (_, i) => [2001 + i, i < 11 ? -2 : 2 * 3 ** (i - 10)]);
+  assert.doesNotThrow(() => TL.mainRun(neg, '2026-01-01'));
+  assert.equal(TL.mainRun([[2020, 5], [2020, 5], [2021, 'x']], null).ta, null);
+});
+
+test('story cards: nothing dated after the snapshot (review round 4)', () => {
+  require('../src/idealine/web/timeline.js');
+  const counts = [[2018, 1], [2019, 1], [2020, 2], [2021, 3], [2022, 5], [2023, 8], [2024, 13], [2025, 21], [2026, 30]];
+  const q = (id, year) => ({ id, year, text: `A world model ${id}.`, title: `T${id}`, url: `https://example.org/${id}` });
+  const d = { counts, generated: '2026-11-17', quotes: [q('A', 2018), q('B', 2025), q('C', 2027)],
+    milestones: [{ year: 2027, kind: 'popularized', title: 'TC', why: 'The most-cited use from 2027 in the sample (3 citations).', url: 'https://example.org/C' }] };
+  const cards = R.storyCards(d, R.readingModel(d));
+  assert.ok(cards.every(c => c.year <= 2026), JSON.stringify(cards));
+  assert.equal(cards.find(c => c.key === 'now').year, 2025);
 });
