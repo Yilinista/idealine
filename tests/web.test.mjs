@@ -835,8 +835,8 @@ test('citesLater: a pre-onset record copyrighted years later, within the active 
   assert.equal(C.copyrightYear({ title: '', abstract: '(c) 2003 and Copyright 2007' }), 2007);
 });
 
-test('story cards: start, took off, now from milestones, skipping ancestors', () => {
-  require('../src/idealine/web/timeline.js');  // sets globalThis.IdealineTimeline (takeoff year)
+test('story cards: earliest, key paper, now from milestones, skipping ancestors', () => {
+  require('../src/idealine/web/timeline.js');  // sets globalThis.IdealineTimeline
   const counts = [[2000, 1], [2001, 1], [2002, 1], [2003, 1], [2004, 2], [2005, 3], [2006, 40], [2007, 120], [2008, 300]];
   const ms = [
     { year: 1950, kind: 'ancestor', title: 'Old idiom', why: 'a' },
@@ -845,19 +845,34 @@ test('story cards: start, took off, now from milestones, skipping ancestors', ()
     { year: 2007, kind: 'applied', title: 'Later', why: 'd' },
     { year: 2008, kind: 'critique', title: 'Newest', why: 'e' },
   ];
-  const d = { counts, milestones: ms, quotes: [] };
+  const d = { counts, milestones: ms, quotes: [], model: 'm' };
   const cards = R.storyCards(d, R.readingModel(d));
-  assert.deepEqual(cards.map(c => [c.key, c.year, c.title]), [['start', 2001, 'First paper'], ['takeoff', 2006, 'Big paper'], ['now', 2008, 'Newest']]);
+  assert.deepEqual(cards.map(c => [c.key, c.year, c.title]), [['start', 2001, 'First paper'], ['key', 2006, 'Big paper'], ['now', 2008, 'Newest']]);
   assert.equal(cards[0].line, 'b');
   assert.equal(cards[0].quote, false);
 });
 
-test('story cards: without a model, use dated linked passages', () => {
+test('story cards (free view): key paper is the one the sample cites most; stray early records never start', () => {
   require('../src/idealine/web/timeline.js');
-  const counts = [[2000, 1], [2001, 1], [2002, 1], [2003, 1], [2004, 2], [2005, 3], [2006, 40], [2007, 120], [2008, 300]];
-  const q = (id, year, extra = {}) => ({ id, year, text: `A world model ${id}.`, title: `T${id}`, url: `https://example.org/${id}`, ...extra });
-  const d = { counts, quotes: [q('a', 2001), q('b', 2003), q('c', 2007), q('d', 2008), q('e', 2008, { fromTitle: true })] };
-  const cards = R.storyCards(d, R.readingModel(d));
-  assert.deepEqual(cards.map(c => [c.key, c.year, c.title, c.quote]), [['start', 2001, 'Ta', true], ['takeoff', 2007, 'Tc', true], ['now', 2008, 'Td', true]]);
+  // Place-attachment-like: a misdated 1905 record cut off from the main run (from 1983).
+  const counts = [[1905, 1], [1983, 1], [1984, 1], [1986, 1], [1989, 1], [1990, 2], [1992, 12], [1995, 4], [2000, 23], [2010, 142], [2020, 492], [2025, 921]];
+  const q = (id, year, inSet) => ({ id, year, inSet, text: `Place attachment ${id}.`, title: `T${id}`, url: `https://example.org/${id}` });
+  const quotes = [q('E1', 1905, 0), q('E2', 1983, 1), q('E3', 1992, 42), q('E4', 2010, 5), q('E5', 2025, 0)];
+  const ms = [[1905, 'origin', 'E1'], [1983, 'origin', 'E2'], [1992, 'popularized', 'E3'], [2010, 'popularized', 'E4'], [2025, 'popularized', 'E5']]
+    .map(([year, kind, id]) => ({ year, kind, title: `T${id}`, why: 'Cited 5 times.', evidence: [{ id }] }));
+  const d = { counts, quotes, milestones: ms };
+  assert.deepEqual(R.storyCards(d, R.readingModel(d)).map(c => [c.key, c.year]), [['start', 1983], ['key', 1992], ['now', 2025]]);
+  // No milestones: the same rules on the passages.
+  const d2 = { counts, quotes };
+  assert.deepEqual(R.storyCards(d2, R.readingModel(d2)).map(c => [c.key, c.year]), [['start', 1983], ['key', 1992], ['now', 2025]]);
   assert.deepEqual(R.storyCards({ counts: [], quotes: [] }, R.readingModel({})), []);
+});
+
+test('takeoff ignores a slump after the real rise (paid tester #1, OpenAlex counts as of 2026-11-19)', () => {
+  const overtourism = [[2000, 1], [2012, 1], [2015, 1], [2017, 7], [2018, 56], [2019, 228], [2020, 313], [2021, 275], [2022, 179], [2023, 185], [2024, 252], [2025, 551], [2026, 672]];
+  assert.equal(TL.mainRun(overtourism).ta, 2017);
+  const carrying = [[1986, 1], [1987, 1], [1991, 1], [1995, 3], [1997, 1], [1999, 3], [2000, 1], [2001, 1], [2003, 3], [2004, 6], [2005, 6], [2006, 7], [2007, 7], [2008, 4], [2009, 7], [2010, 12],
+    [2011, 24], [2012, 18], [2013, 16], [2014, 16], [2015, 18], [2016, 24], [2017, 29], [2018, 20], [2019, 31], [2020, 34], [2021, 36], [2022, 32], [2023, 32], [2024, 42], [2025, 45], [2026, 84]];
+  assert.equal(TL.mainRun(carrying).first, 1995);
+  assert.equal(TL.mainRun(carrying).ta, 2011);
 });

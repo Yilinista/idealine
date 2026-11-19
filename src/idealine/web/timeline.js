@@ -45,8 +45,12 @@
     const s = fill(counts, first, peak[0]);
     if (peak[1] < 10 || s.length < 4) return null;
     const [t0, c0] = s[0], [tm, cm] = s[s.length - 1];
+    // Only before the curve first reaches a quarter of its peak: a later slump (overtourism
+    // in 2021-22, after its 2018 rise) is not the slow start.
+    const rise = (s.find(([, c]) => c >= cm / 4) || s[s.length - 1])[0];
     let best = null, bestD = 0;
     for (const [t, c] of s) {
+      if (t >= rise) break;
       const d = ((cm - c0) / (tm - t0)) * (t - t0) + c0 - c;  // how far below the line
       if (d > bestD) { bestD = d; best = t; }
     }
@@ -207,7 +211,7 @@
     partial: d => `not over yet (data as of ${d})`,
     burst: 'burst', takeoff: y => `takeoff ${y}`,
     takeoffTip: 'Takeoff: the year the curve leaves its slow start (Ke et al. 2015). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
-    headline: h => `First seen ${h.first}` + (h.ta ? ` · took off ${h.ta}` : '') + ` · ${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
+    headline: h => (h.ta ? `Took off in ${h.ta} · ` : '') + `${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
     notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
     milestonesN: n => `All ${n} milestones`,
     laneBySense: 'ticks = quoted sentences, coloured by meaning',

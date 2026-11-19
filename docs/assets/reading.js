@@ -34,7 +34,7 @@
       noModel: 'No model was used. The passages are available without meaning labels.',
       modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
       originalHint: 'Click a milestone to see the sentences behind it. Labels are suggestions; the quotes are the evidence.',
-      story: { start: 'Start', takeoff: 'Took off', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
+      story: { start: 'Earliest', key: 'Key paper', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
       more: 'More: summary, meanings, all quotes, method',
     },
     zh: {
@@ -63,7 +63,7 @@
       methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
       modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
       originalHint: '点击里程碑，看它依据的原句。标签只是建议，原句才是证据。',
-      story: { start: '起点', takeoff: '起飞', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
+      story: { start: '最早', key: '关键论文', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
       more: '更多：总结、词义、全部原文、方法',
     },
   };
@@ -128,10 +128,13 @@
   // "why" is easier to read than an abstract), else from sampled passages.
   function storyCards(d, model) {
     const TL = global.IdealineTimeline;
-    const run = TL && model.counts.length ? TL.mainRun(model.counts) : null;
-    const ta = run && run.ta || null;
+    // The main run of use starts after stray early records (often misdated); the chart
+    // and headline skip them too, so the start card never shows an earlier year.
+    const first = TL && model.counts.length ? TL.mainRun(model.counts).first : null;
+    const inRun = y => !first || +y >= first;
     const out = [], used = new Set();
-    const ms = (d.milestones || []).filter(m => m && m.kind !== 'ancestor' && Number(m.year)).sort((a, b) => a.year - b.year);
+    const inSet = new Map(model.quotes.map(q => [q.id, q.inSet || 0]));
+    const ms = (d.milestones || []).filter(m => m && m.kind !== 'ancestor' && Number(m.year) && inRun(m.year)).sort((a, b) => a.year - b.year);
     const add = (key, x, fromQuote) => {
       if (!x) return;
       used.add(x);
@@ -140,23 +143,27 @@
         : { key, year: +x.year, title: x.title || '', url: safeUrl(x.url), authors: x.authors || '', line: x.why || '', quote: false });
     };
     const free = list => list.filter(x => !used.has(x));
+    // Key paper: the model's pick of the paper that spread the term; without a model,
+    // the one the sampled papers cite most.
+    const cited = list => [...list].sort((a, b) => b.n - a.n)[0]?.x;
     if (ms.length) {
-      add('start', ms.find(m => m.kind === 'origin' || m.kind === 'coined') || ms[0]);
-      if (ta) add('takeoff', free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => +m.year >= ta));
+      add('start', ms[0]);
+      add('key', d.model ? free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => m.kind === 'redefined')
+        : cited(free(ms).map(m => ({ x: m, n: Math.max(0, ...(m.evidence || []).map(e => inSet.get(e.id) || 0)) })).filter(c => c.n > 0)));
       add('now', free(ms).pop());
     } else {
-      const el = model.eligible || [];
+      const el = (model.eligible || []).filter(q => inRun(q.year));
       add('start', el[0], true);
-      if (ta) add('takeoff', free(el).find(q => q.year >= ta), true);
+      add('key', cited(free(el).map(q => ({ x: q, n: q.inSet || 0 })).filter(c => c.n > 0)), true);
       add('now', free(el).pop(), true);
     }
     return out;
   }
 
-  function storyCard(c, T, terms) {
+  function storyCard(c, T, terms, msg) {
     const title = esc(c.title);
     return `<article class="story-card"><div class="sc-top"><span class="sc-label">${esc(T.story[c.key])}</span><span class="sc-year">${esc(c.year)}</span></div>
-      ${c.line ? `<p class="sc-line">${c.quote ? `“${highlight(c.line, terms)}”` : esc(c.line)}</p>` : ''}
+      ${c.line ? `<p class="sc-line">${c.quote ? `“${highlight(c.line, terms)}”` : esc(msg(c.line))}</p>` : ''}
       <p class="sc-src">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}${c.authors ? ` <span>· ${esc(c.authors)}</span>` : ''}</p></article>`;
   }
 
@@ -268,7 +275,7 @@
     const story = storyCards(d, model);
     host.innerHTML = `<section class="timeline-main" aria-label="${esc(T.timelineTitle)}"><p class="headline" data-part="headline"></p>
       <div class="card"><div class="scroller"><div data-part="chart"></div></div><div class="detail" data-part="detail" aria-live="polite"></div><details class="chart-key"><summary>${esc(T.chartKey)}</summary><p class="hint">${esc(T.originalHint)}</p><div class="legend" data-part="legend"></div></details></div>
-      ${story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms)).join('')}</div>` : ''}</section>
+      ${story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms, global.IdealineI18n?.T?.[lang]?.msg || (x => x))).join('')}</div>` : ''}</section>
       <details class="more-panel"><summary>${esc(T.more)}</summary>
       ${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<div class="senses" data-part="senses"></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div>
       <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
