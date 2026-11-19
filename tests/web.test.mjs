@@ -970,3 +970,15 @@ test('story cards: nothing dated after the snapshot (review round 4)', () => {
   assert.ok(cards.every(c => c.year <= 2026), JSON.stringify(cards));
   assert.equal(cards.find(c => c.key === 'now').year, 2025);
 });
+
+test('story cards on gallery data: idiom passages and other-sense milestones stay off (review round 5)', () => {
+  require('../src/idealine/web/timeline.js');
+  const cot = require('../docs/terms/chain-of-thought.json');
+  const c1 = R.storyCards(cot, R.readingModel(cot));
+  assert.equal(c1[0].key, 'start');
+  assert.equal(c1[0].year, 2022);
+  assert.match(c1[0].title, /Chain-Of-Thought Prompting/i);
+  const rsi = require('../docs/terms/recursive-self-improvement.json');
+  const bad = new Set(rsi.milestones.filter(m => m.checks && m.checks.inSense === false).map(m => m.title));
+  for (const c of R.storyCards(rsi, R.readingModel(rsi))) assert.ok(!bad.has(c.title), c.title);
+});

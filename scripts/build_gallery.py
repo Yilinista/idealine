@@ -96,7 +96,7 @@ nav a:hover{color:var(--fg)}
 .chip{font:inherit;font-size:.86rem;padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);cursor:pointer}
 .chip:hover{background:color-mix(in srgb,var(--accent) 15%,transparent)}
 .keyline{margin:16px auto 0;font-size:.87rem;color:var(--muted)}
-.keyline .linkish{font:inherit;background:none;border:0;padding:0;color:var(--accent);border-bottom:1px dashed var(--accent);cursor:pointer}
+.keyline .linkish,.upsell .linkish{font:inherit;background:none;border:0;padding:0;color:var(--accent);border-bottom:1px dashed var(--accent);cursor:pointer}
 .opts{max-width:640px;margin:14px auto 0;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px 18px;font-size:.92rem;color:var(--fg)}
 .opts>summary{cursor:pointer;color:var(--muted);padding:10px 0;font-size:.88rem}
 .opts[open]{padding-bottom:16px}

@@ -1623,8 +1623,17 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const out = [], used = new Set();  // papers already on a card (by link, else title)
     const paper = x => safeUrl(x.url) || String(x.title || '').toLowerCase();
     const inSet = new Map(model.quotes.map(q => [q.id, q.inSet || 0]));
-    const ms = (d.milestones || []).filter(m => m && m.kind !== 'ancestor' && Number(m.year) && inRun(m.year)).sort((a, b) => a.year - b.year);
-    const el = (model.eligible || []).filter(q => inRun(q.year));
+    // Milestones of this meaning only: not ancestors (an older idea or idiom), and not
+    // ones the model's own check says use the words in another sense.
+    const own = m => m && m.kind !== 'ancestor' && !(m.checks && m.checks.inSense === false);
+    const all = (d.milestones || []).filter(m => m && Number(m.year));
+    const ms = all.filter(m => own(m) && inRun(m.year)).sort((a, b) => a.year - b.year);
+    // Passages in the meaning of those left-out milestones (an idiom the model tags as a
+    // related ancestor) stay off the cards too, unless a kept milestone shares it.
+    const senseOf = new Map(model.quotes.map(q => [q.id, q.sense]));
+    const sensesIn = list => new Set(list.flatMap(m => (m.evidence || []).map(e => senseOf.get(e.id))).filter(Boolean));
+    const kept = sensesIn(ms), other = [...sensesIn(all.filter(m => !own(m)))].filter(k => !kept.has(k));
+    const el = (model.eligible || []).filter(q => inRun(q.year) && !other.includes(q.sense));
     const card = (key, x) => {
       if (!x) return null;
       used.add(paper(x));
