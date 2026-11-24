@@ -139,7 +139,8 @@ wrong, which term you want next. Changes made from feedback are logged in [FEEDB
 git clone https://github.com/Yilinista/idealine && cd idealine
 uv sync
 uv run pytest                          # Python tests, offline
-node --test tests/web.test.mjs         # browser-code tests, offline (Node 20+)
+node --test tests/*.test.mjs           # browser-code tests and page checks, offline (Node 20+)
+node scripts/check_pages.mjs --refresh # re-fetch the real-term snapshots, then check every result page
 uv run python scripts/build_gallery.py # rebuild docs/ (site + gallery) from src/idealine/web and docs/terms/*.json
 python3 -m http.server -d docs 8000    # preview the site at http://localhost:8000
 ```

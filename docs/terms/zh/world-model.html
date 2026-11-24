@@ -484,7 +484,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       yLabel: 'Bars', yPapers: 'Papers', yShare: 'Share of all papers', scaleLabel: 'Scale', scaleLinear: 'Linear', scaleLog: 'Log',
       shareOf: (y, v) => `${y}: ${fmtShare(v)} per million papers in OpenAlex`, perMillion: v => `${fmtShare(v)} per million`,
       partial: d => `not over yet (data as of ${d})`, burst: 'burst', takeoff: y => `takeoff ${y}`,
-      takeoffTip: 'Takeoff: the first year the curve clearly leaves its slow start and stays up (steady growth has none). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
+      takeoffTip: 'Takeoff: the first year the curve clearly leaves its slow start and stays up (steady growth has none; a small early step is skipped when a second takeoff, 50 times bigger, comes later). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
       headline: h => (h.ta ? `Took off in ${h.ta} · ` : '') + `${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
       notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
       milestonesN: n => `All ${n} milestones`,
@@ -604,7 +604,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       yLabel: '柱子', yPapers: '论文数', yShare: '占全部论文', scaleLabel: '刻度', scaleLinear: '线性', scaleLog: '对数',
       shareOf: (y, v) => `${y} 年：OpenAlex 每百万篇论文中 ${fmtShare(v)} 篇`, perMillion: v => `每百万篇 ${fmtShare(v)} 篇`,
       partial: d => `还没结束（数据截至 ${d}）`, burst: '爆发期', takeoff: y => `${y} 起飞`,
-      takeoffTip: '起飞点：曲线第一次明显离开缓慢起步、并且之后没有回落的那一年（稳定增长的曲线没有起飞点）。爆发期：使用量异常高的年份（Kleinberg，2002）。两者都由论文数算出，没用模型。',
+      takeoffTip: '起飞点：曲线第一次明显离开缓慢起步、并且之后没有回落的那一年（稳定增长的曲线没有起飞点；如果后来又有一次大 50 倍以上的起飞，早期的小台阶不算）。爆发期：使用量异常高的年份（Kleinberg，2002）。两者都由论文数算出，没用模型。',
       headline: h => (h.ta ? `${h.ta} 年起飞 · ` : '') + `${h.peakYear} 年 ${h.peak.toLocaleString('en-US')} 篇` + (h.partialPeak ? '（截至目前）' : ''),
       notesN: n => `${n} 条数据说明`,
       milestonesN: n => `全部 ${n} 个里程碑`,
@@ -773,9 +773,16 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
   //    takeoff is better than a wrong one,
   //  - the next year stays clearly above the slow start (no one-year spikes),
   //  - within four years the curve reaches 4x the slow start.
-  // Of the candidates, the earliest whose one-year jump into y is at least 60% of the
-  // biggest wins: the knee itself, not a small year just before it, and not a later
-  // year of the same climb.
+  // Candidates within two years of each other are one rise. With several rises, the
+  // first one wins, unless it only reaches under 2% of the peak: a small early step
+  // next to a much later surge (carbon neutrality: about 40 papers a year from 2006,
+  // then thousands from 2021; mixture of experts and RAG alike, all under 1%). A later
+  // step-up on a curve already in use does not move the takeoff unless the curve grows
+  // over 50-fold after it (then the early level does look like a slow start, and a
+  // refresh can move the year). If every rise is that small, the one that reaches
+  // highest wins. Within it, the earliest year whose
+  // one-year jump is at least 60% of the rise's biggest wins: the knee itself, not a
+  // small year just before it, and not a later year of the same climb.
   // Needs three years of slow start, 20+ papers and a peak of 10+. Counts: [[year, n]].
   // asOf: 'YYYY-MM-DD' of the data. Later years are left out (misdated records). The
   // unfinished last year (dropped in its first 3 months) is scaled to a full year for
@@ -803,11 +810,18 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       let reach = 0;
       for (let k = y; k <= Math.min(y + 3, last); k++) reach = Math.max(reach, r(k));
       if (reach < 4 * Math.max(base, 1)) continue;
-      cands.push({ y, jump: L(y) - L(y - 1) });
+      cands.push({ y, jump: L(y) - L(y - 1), reach });
     }
     if (!cands.length) return null;
-    const top = Math.max(...cands.map(k => k.jump));
-    return (cands.find(k => k.jump >= 0.6 * top) || cands[0]).y;
+    const rises = [];
+    for (const k of cands) {
+      const cur = rises[rises.length - 1];
+      if (cur && k.y - cur[cur.length - 1].y <= 2) cur.push(k); else rises.push([k]);
+    }
+    const reachOf = g => Math.max(...g.map(k => k.reach));
+    const rise = rises.find(g => reachOf(g) >= 0.02 * peak) || rises.reduce((a, b) => (reachOf(b) > reachOf(a) ? b : a));
+    const top = Math.max(...rise.map(k => k.jump));
+    return (rise.find(k => k.jump >= 0.6 * top) || rise[0]).y;
   }
 
   // Takeoff of the main run of use: skip stray records cut off from it by more than
@@ -821,6 +835,21 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const main = cs.filter(([y]) => y >= first);
     const ta0 = main.length >= 3 ? takeoff(main, asOf) : null;
     return { first, main, ta: ta0 && ta0 > first ? ta0 : null };
+  }
+
+  // The takeoff line on the chart, and the headline above it: one source for both, so
+  // the page never names two years (and the page checks run this same code).
+  function chartTakeoff(D) {
+    return (D.counts || []).length ? mainRun(D.counts, D.generated).ta : null;
+  }
+  function headlineText(D, L) {
+    const cs = D.counts || [];
+    if (!cs.length || (D.total || cs.reduce((a, [, c]) => a + c, 0)) < 20) return '';
+    const { first, main } = mainRun(cs, D.generated), ta = chartTakeoff(D);
+    const pk = main.reduce((a, b) => (b[1] > a[1] ? b : a));
+    const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
+    const gen = /^\d{4}-\d{2}-\d{2}$/.test(D.generated || '') ? D.generated : null;
+    return L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: !!gen && +gen.slice(0, 4) === pk[0] });
   }
 
   // Kleinberg (2002) two-state burst detection on yearly counts. With per-year totals
@@ -950,7 +979,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     perMillion: v => `${fmtShare(v)} per million`,
     partial: d => `not over yet (data as of ${d})`,
     burst: 'burst', takeoff: y => `takeoff ${y}`,
-    takeoffTip: 'Takeoff: the first year the curve clearly leaves its slow start and stays up (steady growth has none). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
+    takeoffTip: 'Takeoff: the first year the curve clearly leaves its slow start and stays up (steady growth has none; a small early step is skipped when a second takeoff, 50 times bigger, comes later). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
     headline: h => (h.ta ? `Took off in ${h.ta} · ` : '') + `${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
     notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
     milestonesN: n => `All ${n} milestones`,
@@ -1156,7 +1185,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       });
 
       // Takeoff and bursts, computed from the yearly counts (shares when totals exist).
-      const ta = (D.counts || []).length ? mainRun(D.counts, D.generated).ta : null, bs = bursts(D.counts, D.totals);
+      const ta = chartTakeoff(D), bs = bursts(D.counts, D.totals);
       for (const [a, b] of bs) {
         const xa = X(a), xb = X(b + 1 - 1e-6);
         const r = el('rect', { x: xa, y: axisY + 2, width: Math.max(3, xb - xa), height: barH + 8, fill: css('critique'), opacity: 0.08, rx: 3 }, svg);
@@ -1357,13 +1386,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     // Headline: a data-only sentence about the curve (no model needed).
     const headline = part('headline');
     if (headline) {
-      const cs = D.counts || [];
-      if (cs.length && (D.total || cs.reduce((a, [, c]) => a + c, 0)) >= 20) {
-        const { first, main, ta } = mainRun(cs, D.generated);
-        const pk = main.reduce((a, b) => (b[1] > a[1] ? b : a));
-        const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
-        headline.textContent = L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
-      } else headline.textContent = '';
+      headline.textContent = headlineText(D, L);
       // Names and left-out records: say what the counts leave out, and why.
       const notes = scopeNotes(D, L);
       // Folded under the headline: they matter for trust, but most readers skip them.
@@ -1481,7 +1504,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
   }
 
   global.renderTimeline = renderTimeline;
-  const helpers = { onsetYear, awakening, takeoff, mainRun, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf, scopeNotes, LABELS_EN };
+  const helpers = { onsetYear, awakening, takeoff, mainRun, chartTakeoff, headlineText, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf, scopeNotes, LABELS_EN };
   global.IdealineTimeline = helpers;
   if (typeof module !== 'undefined' && module.exports) module.exports = Object.assign({ renderTimeline }, helpers);
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -1521,7 +1544,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       noModel: 'No model was used. The passages are available without meaning labels.',
       modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
       originalHint: 'Click a milestone to see the sentences behind it. Labels are suggestions; the quotes are the evidence.',
-      story: { start: 'Earliest', key: 'Key paper', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
+      story: { start: 'Earliest', startSense: 'Earliest in this sense', startSample: 'Earliest in the sample', key: 'Key paper', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
       more: 'More: summary, meanings, all quotes, method',
     },
     zh: {
@@ -1550,7 +1573,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
       modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
       originalHint: '点击里程碑，看它依据的原句。标签只是建议，原句才是证据。',
-      story: { start: '最早', key: '关键论文', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
+      story: { start: '最早', startSense: '这个意思最早', startSample: '样本中最早', key: '关键论文', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
       more: '更多：总结、词义、全部原文、方法',
     },
   };
@@ -1657,13 +1680,24 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
       ? free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => m.kind === 'redefined')
       : ms.length ? cited(free(ms).map(m => ({ x: m, n: Math.max(0, ...(m.evidence || []).map(e => inSet.get(e.id) || 0)) })).filter(c => c.n > 0))
         : cited(free(el).map(q => ({ x: q, n: q.inSet || 0 })).filter(c => c.n > 0)));
+    // A start card later than the chart's first bars is not the term's earliest use: the
+    // model view kept only this meaning, the free view only saw a sample. Say which.
+    if (start && first && start.year > first + 1) start.label = d.model ? 'startSense' : 'startSample';
     out.push(...[start, key, now].filter(Boolean));
     return out;
   }
 
+  // The three cards as HTML, in the page's language.
+  function storyHtml(d, lang = 'en', model = readingModel(d)) {
+    lang = lang === 'zh' ? 'zh' : 'en';
+    const T = TEXT[lang], story = storyCards(d, model), terms = [d.term, ...(d.aliases || [])];
+    const msg = global.IdealineI18n?.T?.[lang]?.msg || (x => x);
+    return story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms, msg)).join('')}</div>` : '';
+  }
+
   function storyCard(c, T, terms, msg) {
     const title = esc(c.title);
-    return `<article class="story-card"><div class="sc-top"><span class="sc-label">${esc(T.story[c.key])}</span><span class="sc-year">${esc(c.year)}</span></div>
+    return `<article class="story-card"><div class="sc-top"><span class="sc-label">${esc(T.story[c.label || c.key])}</span><span class="sc-year">${esc(c.year)}</span></div>
       ${c.line ? `<p class="sc-line">${c.quote ? `“${highlight(c.line, terms)}”` : esc(msg(c.line))}</p>` : ''}
       <p class="sc-src">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}${c.authors ? ` <span>· ${esc(c.authors)}</span>` : ''}</p></article>`;
   }
@@ -1773,10 +1807,9 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const senseKeys = [...order.filter(k => related.has(k) && present.has(k)), ...(others.size ? ['other'] : []), ...(present.has('untagged') ? ['untagged'] : [])];
     const buckets = yearBuckets(model.quotes, T);
     const chip = (v, label, n, color, tip) => `<button type="button" class="fchip" data-v="${esc(v)}"${tip ? ` title="${esc(tip)}"` : ''}>${color ? `<i style="background:${esc(color)}"></i>` : ''}${esc(label)}<span class="n">${n}</span></button>`;
-    const story = storyCards(d, model);
     host.innerHTML = `<section class="timeline-main" aria-label="${esc(T.timelineTitle)}"><p class="headline" data-part="headline"></p>
       <div class="card"><div class="scroller"><div data-part="chart"></div></div><div class="detail" data-part="detail" aria-live="polite"></div><details class="chart-key"><summary>${esc(T.chartKey)}</summary><p class="hint">${esc(T.originalHint)}</p><div class="legend" data-part="legend"></div></details></div>
-      ${story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms, global.IdealineI18n?.T?.[lang]?.msg || (x => x))).join('')}</div>` : ''}</section>
+      ${storyHtml(d, lang, model)}</section>
       <details class="more-panel"><summary>${esc(T.more)}</summary>
       ${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<div class="senses" data-part="senses"></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div>
       <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
@@ -1860,7 +1893,7 @@ mark{background:var(--quote-mark);color:var(--fg);font-weight:inherit;text-decor
     const libraries=[spec.i18nJs,spec.timelineJs,spec.readingJs].map(noEnd).join('\n');
     return `<!doctype html>\n<html lang="${lang==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.term)} · idealine</title><style>${spec.css}</style></head><body>${body}<script type="application/json" id="data">${JSON.stringify(d).replace(/</g,'\\u003c')}<\/script><script>${libraries}\nIdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent),${JSON.stringify(lang)});<\/script></body></html>`;
   }
-  const api={TEXT,safeUrl,readingModel,storyCards,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
+  const api={TEXT,safeUrl,readingModel,storyCards,storyHtml,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
   global.IdealineReading=api;
   if(typeof module!=='undefined' && module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

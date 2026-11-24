@@ -34,7 +34,7 @@
       noModel: 'No model was used. The passages are available without meaning labels.',
       modelPending: 'The model is still reading; suggested meaning labels will appear when it is done.',
       originalHint: 'Click a milestone to see the sentences behind it. Labels are suggestions; the quotes are the evidence.',
-      story: { start: 'Earliest', key: 'Key paper', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
+      story: { start: 'Earliest', startSense: 'Earliest in this sense', startSample: 'Earliest in the sample', key: 'Key paper', now: 'Now' }, storyTitle: 'Three moments', chartKey: 'How to read the chart',
       more: 'More: summary, meanings, all quotes, method',
     },
     zh: {
@@ -63,7 +63,7 @@
       methodModel: '可选模型根据这些原文提出词义、时期和里程碑。来源链接不能证明模型标签正确；诊断图表描述的是样本，不是已验证的历史。',
       modelSummary: '模型解读，请对照原文核实', noModel: '未使用模型。可以直接阅读原文，没有模型词义标签。', modelPending: '模型还在阅读，完成后会给出建议的词义标签。',
       originalHint: '点击里程碑，看它依据的原句。标签只是建议，原句才是证据。',
-      story: { start: '最早', key: '关键论文', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
+      story: { start: '最早', startSense: '这个意思最早', startSample: '样本中最早', key: '关键论文', now: '现在' }, storyTitle: '三个时刻', chartKey: '怎么看这张图',
       more: '更多：总结、词义、全部原文、方法',
     },
   };
@@ -170,13 +170,24 @@
       ? free(ms).find(m => m.kind === 'popularized') || free(ms).find(m => m.kind === 'redefined')
       : ms.length ? cited(free(ms).map(m => ({ x: m, n: Math.max(0, ...(m.evidence || []).map(e => inSet.get(e.id) || 0)) })).filter(c => c.n > 0))
         : cited(free(el).map(q => ({ x: q, n: q.inSet || 0 })).filter(c => c.n > 0)));
+    // A start card later than the chart's first bars is not the term's earliest use: the
+    // model view kept only this meaning, the free view only saw a sample. Say which.
+    if (start && first && start.year > first + 1) start.label = d.model ? 'startSense' : 'startSample';
     out.push(...[start, key, now].filter(Boolean));
     return out;
   }
 
+  // The three cards as HTML, in the page's language.
+  function storyHtml(d, lang = 'en', model = readingModel(d)) {
+    lang = lang === 'zh' ? 'zh' : 'en';
+    const T = TEXT[lang], story = storyCards(d, model), terms = [d.term, ...(d.aliases || [])];
+    const msg = global.IdealineI18n?.T?.[lang]?.msg || (x => x);
+    return story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms, msg)).join('')}</div>` : '';
+  }
+
   function storyCard(c, T, terms, msg) {
     const title = esc(c.title);
-    return `<article class="story-card"><div class="sc-top"><span class="sc-label">${esc(T.story[c.key])}</span><span class="sc-year">${esc(c.year)}</span></div>
+    return `<article class="story-card"><div class="sc-top"><span class="sc-label">${esc(T.story[c.label || c.key])}</span><span class="sc-year">${esc(c.year)}</span></div>
       ${c.line ? `<p class="sc-line">${c.quote ? `“${highlight(c.line, terms)}”` : esc(msg(c.line))}</p>` : ''}
       <p class="sc-src">${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}${c.authors ? ` <span>· ${esc(c.authors)}</span>` : ''}</p></article>`;
   }
@@ -286,10 +297,9 @@
     const senseKeys = [...order.filter(k => related.has(k) && present.has(k)), ...(others.size ? ['other'] : []), ...(present.has('untagged') ? ['untagged'] : [])];
     const buckets = yearBuckets(model.quotes, T);
     const chip = (v, label, n, color, tip) => `<button type="button" class="fchip" data-v="${esc(v)}"${tip ? ` title="${esc(tip)}"` : ''}>${color ? `<i style="background:${esc(color)}"></i>` : ''}${esc(label)}<span class="n">${n}</span></button>`;
-    const story = storyCards(d, model);
     host.innerHTML = `<section class="timeline-main" aria-label="${esc(T.timelineTitle)}"><p class="headline" data-part="headline"></p>
       <div class="card"><div class="scroller"><div data-part="chart"></div></div><div class="detail" data-part="detail" aria-live="polite"></div><details class="chart-key"><summary>${esc(T.chartKey)}</summary><p class="hint">${esc(T.originalHint)}</p><div class="legend" data-part="legend"></div></details></div>
-      ${story.length ? `<div class="story" aria-label="${esc(T.storyTitle)}">${story.map(c => storyCard(c, T, terms, global.IdealineI18n?.T?.[lang]?.msg || (x => x))).join('')}</div>` : ''}</section>
+      ${storyHtml(d, lang, model)}</section>
       <details class="more-panel"><summary>${esc(T.more)}</summary>
       ${d.summary ? `<p class="timeline-summary">${esc(d.summary)}</p>` : ''}<div class="senses" data-part="senses"></div><div class="eras" data-part="eras"></div><div class="roots" data-part="roots"></div>
       <details class="evidence-browser" id="evidence"><summary>${esc(T.browse)} <span>${model.quotes.length}</span></summary>
@@ -373,7 +383,7 @@
     const libraries=[spec.i18nJs,spec.timelineJs,spec.readingJs].map(noEnd).join('\n');
     return `<!doctype html>\n<html lang="${lang==='zh'?'zh-CN':'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.term)} · idealine</title><style>${spec.css}</style></head><body>${body}<script type="application/json" id="data">${JSON.stringify(d).replace(/</g,'\\u003c')}</script><script>${libraries}\nIdealineReading.mountPage(JSON.parse(document.getElementById('data').textContent),${JSON.stringify(lang)});</script></body></html>`;
   }
-  const api={TEXT,safeUrl,readingModel,storyCards,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
+  const api={TEXT,safeUrl,readingModel,storyCards,storyHtml,filterQuotes,citationText,highlight,quoteCard,quoteRow,renderReadingBrief,mountPage,pageHtml};
   global.IdealineReading=api;
   if(typeof module!=='undefined' && module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

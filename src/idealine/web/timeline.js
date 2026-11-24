@@ -67,9 +67,16 @@
   //    takeoff is better than a wrong one,
   //  - the next year stays clearly above the slow start (no one-year spikes),
   //  - within four years the curve reaches 4x the slow start.
-  // Of the candidates, the earliest whose one-year jump into y is at least 60% of the
-  // biggest wins: the knee itself, not a small year just before it, and not a later
-  // year of the same climb.
+  // Candidates within two years of each other are one rise. With several rises, the
+  // first one wins, unless it only reaches under 2% of the peak: a small early step
+  // next to a much later surge (carbon neutrality: about 40 papers a year from 2006,
+  // then thousands from 2021; mixture of experts and RAG alike, all under 1%). A later
+  // step-up on a curve already in use does not move the takeoff unless the curve grows
+  // over 50-fold after it (then the early level does look like a slow start, and a
+  // refresh can move the year). If every rise is that small, the one that reaches
+  // highest wins. Within it, the earliest year whose
+  // one-year jump is at least 60% of the rise's biggest wins: the knee itself, not a
+  // small year just before it, and not a later year of the same climb.
   // Needs three years of slow start, 20+ papers and a peak of 10+. Counts: [[year, n]].
   // asOf: 'YYYY-MM-DD' of the data. Later years are left out (misdated records). The
   // unfinished last year (dropped in its first 3 months) is scaled to a full year for
@@ -97,11 +104,18 @@
       let reach = 0;
       for (let k = y; k <= Math.min(y + 3, last); k++) reach = Math.max(reach, r(k));
       if (reach < 4 * Math.max(base, 1)) continue;
-      cands.push({ y, jump: L(y) - L(y - 1) });
+      cands.push({ y, jump: L(y) - L(y - 1), reach });
     }
     if (!cands.length) return null;
-    const top = Math.max(...cands.map(k => k.jump));
-    return (cands.find(k => k.jump >= 0.6 * top) || cands[0]).y;
+    const rises = [];
+    for (const k of cands) {
+      const cur = rises[rises.length - 1];
+      if (cur && k.y - cur[cur.length - 1].y <= 2) cur.push(k); else rises.push([k]);
+    }
+    const reachOf = g => Math.max(...g.map(k => k.reach));
+    const rise = rises.find(g => reachOf(g) >= 0.02 * peak) || rises.reduce((a, b) => (reachOf(b) > reachOf(a) ? b : a));
+    const top = Math.max(...rise.map(k => k.jump));
+    return (rise.find(k => k.jump >= 0.6 * top) || rise[0]).y;
   }
 
   // Takeoff of the main run of use: skip stray records cut off from it by more than
@@ -115,6 +129,21 @@
     const main = cs.filter(([y]) => y >= first);
     const ta0 = main.length >= 3 ? takeoff(main, asOf) : null;
     return { first, main, ta: ta0 && ta0 > first ? ta0 : null };
+  }
+
+  // The takeoff line on the chart, and the headline above it: one source for both, so
+  // the page never names two years (and the page checks run this same code).
+  function chartTakeoff(D) {
+    return (D.counts || []).length ? mainRun(D.counts, D.generated).ta : null;
+  }
+  function headlineText(D, L) {
+    const cs = D.counts || [];
+    if (!cs.length || (D.total || cs.reduce((a, [, c]) => a + c, 0)) < 20) return '';
+    const { first, main } = mainRun(cs, D.generated), ta = chartTakeoff(D);
+    const pk = main.reduce((a, b) => (b[1] > a[1] ? b : a));
+    const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
+    const gen = /^\d{4}-\d{2}-\d{2}$/.test(D.generated || '') ? D.generated : null;
+    return L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: !!gen && +gen.slice(0, 4) === pk[0] });
   }
 
   // Kleinberg (2002) two-state burst detection on yearly counts. With per-year totals
@@ -244,7 +273,7 @@
     perMillion: v => `${fmtShare(v)} per million`,
     partial: d => `not over yet (data as of ${d})`,
     burst: 'burst', takeoff: y => `takeoff ${y}`,
-    takeoffTip: 'Takeoff: the first year the curve clearly leaves its slow start and stays up (steady growth has none). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
+    takeoffTip: 'Takeoff: the first year the curve clearly leaves its slow start and stays up (steady growth has none; a small early step is skipped when a second takeoff, 50 times bigger, comes later). Burst: years of unusually high use (Kleinberg 2002). Both are computed from the counts.',
     headline: h => (h.ta ? `Took off in ${h.ta} · ` : '') + `${h.peak.toLocaleString('en-US')} papers in ${h.peakYear}` + (h.partialPeak ? ' (so far)' : ''),
     notesN: n => `${n} note${n === 1 ? '' : 's'} on the data`,
     milestonesN: n => `All ${n} milestones`,
@@ -450,7 +479,7 @@
       });
 
       // Takeoff and bursts, computed from the yearly counts (shares when totals exist).
-      const ta = (D.counts || []).length ? mainRun(D.counts, D.generated).ta : null, bs = bursts(D.counts, D.totals);
+      const ta = chartTakeoff(D), bs = bursts(D.counts, D.totals);
       for (const [a, b] of bs) {
         const xa = X(a), xb = X(b + 1 - 1e-6);
         const r = el('rect', { x: xa, y: axisY + 2, width: Math.max(3, xb - xa), height: barH + 8, fill: css('critique'), opacity: 0.08, rx: 3 }, svg);
@@ -651,13 +680,7 @@
     // Headline: a data-only sentence about the curve (no model needed).
     const headline = part('headline');
     if (headline) {
-      const cs = D.counts || [];
-      if (cs.length && (D.total || cs.reduce((a, [, c]) => a + c, 0)) >= 20) {
-        const { first, main, ta } = mainRun(cs, D.generated);
-        const pk = main.reduce((a, b) => (b[1] > a[1] ? b : a));
-        const before = ta ? Math.max(...main.filter(([y]) => y < ta).map(([, c]) => c), 0) + 1 : 0;
-        headline.textContent = L.headline({ first, ta, before, peak: pk[1], peakYear: pk[0], partialPeak: genDate && +genDate.slice(0, 4) === pk[0] });
-      } else headline.textContent = '';
+      headline.textContent = headlineText(D, L);
       // Names and left-out records: say what the counts leave out, and why.
       const notes = scopeNotes(D, L);
       // Folded under the headline: they matter for trust, but most readers skip them.
@@ -775,7 +798,7 @@
   }
 
   global.renderTimeline = renderTimeline;
-  const helpers = { onsetYear, awakening, takeoff, mainRun, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf, scopeNotes, LABELS_EN };
+  const helpers = { onsetYear, awakening, takeoff, mainRun, chartTakeoff, headlineText, bursts, jsDistance, senseChange, wordCounts, cosine, timeOf, scopeNotes, LABELS_EN };
   global.IdealineTimeline = helpers;
   if (typeof module !== 'undefined' && module.exports) module.exports = Object.assign({ renderTimeline }, helpers);
 })(typeof window !== 'undefined' ? window : globalThis);

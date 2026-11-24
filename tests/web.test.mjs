@@ -982,3 +982,33 @@ test('story cards on gallery data: idiom passages and other-sense milestones sta
   const bad = new Set(rsi.milestones.filter(m => m.checks && m.checks.inSense === false).map(m => m.title));
   for (const c of R.storyCards(rsi, R.readingModel(rsi))) assert.ok(!bad.has(c.title), c.title);
 });
+
+test('takeoff: the first rise wins unless it stays under 2% of the peak (review rounds 6-7)', () => {
+  const T = require('../src/idealine/web/timeline.js');
+  const mk = (a, y0 = 2000) => a.map((c, i) => [y0 + i, c]);
+  // Rose in 2006 and stayed in use; a later step-up does not move the takeoff.
+  assert.equal(T.takeoff(mk([2, 2, 2, 2, 2, 2, 20, 40, 60, 60, 60, 60, 60, 300, 600, 900]), '2026-11-24'), 2006);
+  // Rose in 2005, faded, came back in 2016: the first rise is the takeoff.
+  assert.equal(T.takeoff(mk([2, 2, 2, 2, 2, 40, 150, 300, 250, 100, 60, 50, 40, 40, 50, 60, 200, 350, 400]), '2026-11-24'), 2005);
+  // A term in real use (250 a year for a decade) keeps its takeoff when it later grows
+  // 20-fold, and one more year of data does not move it.
+  const plateau = [0, 0, 1, 0, 1, 125, 200, 250, 250, 250, 250, 250, 250, 250, 250, 250, 2000, 4000, 5000];
+  assert.equal(T.takeoff(mk(plateau), '2019-06-01'), 2005);
+  assert.equal(T.takeoff(mk([...plateau, 5200]), '2020-06-01'), 2005);
+  // A small early step (about 40 a year, under 2% of a peak in the thousands) does not count.
+  assert.equal(T.takeoff(mk([1, 1, 1, 1, 1, 1, 10, 30, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 400, 1500, 3000, 5000]), '2026-11-24'), 2021);
+});
+
+test('story cards: an Earliest card later than the chart says which earliest it is', () => {
+  require('../src/idealine/web/timeline.js');
+  const counts = [[1990, 2], [1991, 2], [1992, 3], [1993, 2], [1994, 3], [1995, 4], [1996, 40], [1997, 90]];
+  const ms = [{ year: 1996, kind: 'origin', title: 'Late first', why: 'w' }, { year: 1997, kind: 'popularized', title: 'P', why: 'x' }];
+  const d = { counts, milestones: ms, quotes: [], model: 'm' };
+  const label = (dd, lang) => R.storyHtml(dd, lang).match(/class="sc-label">([^<]*)</)[1];
+  assert.equal(label(d, 'en'), 'Earliest in this sense');
+  assert.equal(label(d, 'zh'), '这个意思最早');
+  const free = { ...d, model: undefined, milestones: [] , quotes: [{ id: 'q', year: 1996, text: 'x', title: 'Q', url: 'https://example.org/q' }] };
+  assert.equal(label(free, 'zh'), '样本中最早');
+  const early = { ...d, milestones: [{ ...ms[0], year: 1991 }, ms[1]] };
+  assert.equal(label(early, 'en'), 'Earliest');
+});
